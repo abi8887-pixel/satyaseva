@@ -1,4 +1,4 @@
-# Satyaseva Catechist Sisters — Research Archive
+# Satyaseva Catechist Sisters of the Families — Web & Archive Portal
 
 A small, static, source-verified website about the Satyaseva Catechist Sisters of the
 Families, an indigenous Indian Catholic congregation. Built to be free to host, secure by
@@ -96,3 +96,4 @@ The code (HTML/CSS/JS/Python) here may be reused freely. The written content is 
 paraphrased summary of publicly available third-party sources — see
 `site/docs/CONTENT-SOURCES.md` before reusing prose elsewhere, and verify anything
 load-bearing against the original sources directly.
+
