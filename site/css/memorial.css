@@ -1,0 +1,713 @@
+/* ================================================================
+   memorial.css — In Memoriam / Past Sisters Page Styles
+   Warm High-Performance Hybrid: Sacred Sage, Amber Gold, Warm Cream
+   ================================================================ */
+
+:root {
+  --mem-bg: #faf8f4;
+  --mem-card: #ffffff;
+  --mem-ink: #1a1815;
+  --mem-ink-soft: #3d3934;
+  --mem-ink-faint: #756e65;
+
+  --mem-gold: #c59b27;
+  --mem-gold-deep: #997514;
+  --mem-gold-light: #faf4e8;
+
+  --mem-sage: #2d5a43;
+  --mem-sage-deep: #1b3d2b;
+  --mem-sage-light: #edf5f0;
+  --mem-sage-glow: #f5f9f6;
+
+  --mem-line: #dcd5c9;
+  --mem-line-strong: #1b3d2b;
+  --mem-shadow: 4px 4px 0 rgba(27, 61, 43, 0.15);
+  --mem-shadow-deep: 6px 6px 0 #1b3d2b;
+  --mem-shadow-gold: 4px 4px 0 #c59b27;
+}
+
+body.memorial-page {
+  background-color: var(--mem-bg);
+  color: var(--mem-ink);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ── Navigation Header Adjustments ──────────────────────────── */
+.nav-header {
+  background: var(--mem-card) !important;
+  border-bottom: 2px solid var(--mem-line-strong) !important;
+  padding: 16px 32px !important;
+  width: 100% !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-header-inner {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.back-link {
+  color: var(--mem-sage-deep) !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.back-link svg {
+  color: var(--mem-gold) !important;
+}
+
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+.nav-links a {
+  color: var(--mem-ink) !important;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 14px;
+  border: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active-nav {
+  background: var(--mem-gold-light) !important;
+  border-color: var(--mem-line-strong) !important;
+  color: var(--mem-sage-deep) !important;
+  box-shadow: 2px 2px 0 var(--mem-line-strong);
+}
+
+/* ── Hero Section ───────────────────────────────────────────── */
+.memorial-hero {
+  border-bottom: 2px solid var(--mem-line-strong);
+  background: var(--mem-gold-light);
+  padding: 60px 24px 50px;
+  text-align: center;
+}
+
+.memorial-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.memorial-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mem-gold-deep);
+  background: var(--mem-card);
+  border: 2px solid var(--mem-gold);
+  padding: 6px 14px;
+  box-shadow: 2px 2px 0 var(--mem-gold);
+  margin-bottom: 20px;
+}
+
+.memorial-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(34px, 5vw, 54px);
+  color: var(--mem-sage-deep);
+  margin: 0 0 16px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.memorial-subtitle {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--mem-ink-soft);
+  margin: 0 auto 28px;
+  max-width: 740px;
+}
+
+.memorial-scripture-box {
+  background: var(--mem-card);
+  border: 2px solid var(--mem-line-strong);
+  padding: 20px 28px;
+  box-shadow: 4px 4px 0 var(--mem-shadow);
+  max-width: 680px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+.scripture-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--mem-sage-deep);
+  margin: 0 0 6px;
+}
+
+.scripture-cite {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mem-gold-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-style: normal;
+}
+
+/* ── Container & Main Content ───────────────────────────────── */
+.memorial-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ── Search & Filter Toolbar ────────────────────────────────── */
+.memorial-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding: 18px 24px;
+  background: var(--mem-card);
+  border: 2px solid var(--mem-line-strong);
+  box-shadow: 5px 5px 0 var(--mem-shadow);
+}
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 320px;
+  border: 2px solid var(--mem-line);
+  background: var(--mem-bg);
+  padding: 8px 14px;
+  transition: border-color 0.15s ease;
+}
+
+.search-wrap:focus-within {
+  border-color: var(--mem-gold);
+  background: #ffffff;
+}
+
+.search-wrap svg {
+  color: var(--mem-sage);
+  flex-shrink: 0;
+}
+
+.memorial-search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--mem-ink);
+  outline: none;
+}
+
+.memorial-count-tag {
+  font-family: 'Inter', monospace, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mem-sage-deep);
+  background: var(--mem-sage-light);
+  border: 1px solid var(--mem-sage);
+  padding: 6px 12px;
+}
+
+/* ── Sisters Grid ───────────────────────────────────────────── */
+.memorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.sister-card {
+  background: var(--mem-card);
+  border: 2px solid var(--mem-line-strong);
+  box-shadow: 6px 6px 0 var(--mem-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.15s ease;
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+
+.sister-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--mem-shadow-deep);
+  border-color: var(--mem-gold);
+}
+
+.sister-card-photo-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-size: cover;
+  background-position: center top;
+  border-bottom: 2px solid var(--mem-line-strong);
+  background-color: var(--mem-sage-glow);
+}
+
+.sister-card-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--mem-sage);
+}
+
+.sister-card-photo-placeholder svg {
+  width: 40px;
+  height: 40px;
+}
+
+.card-lifespan-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--mem-gold-light);
+  color: var(--mem-gold-deep);
+  border: 2px solid var(--mem-gold);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 2px 2px 0 var(--mem-gold);
+}
+
+.sister-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sister-card-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  margin: 0 0 6px;
+  color: var(--mem-sage-deep);
+  font-weight: 700;
+}
+
+.sister-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mem-gold-deep);
+  margin-bottom: 12px;
+}
+
+.sister-card-communities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.comm-pill {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--mem-sage-light);
+  color: var(--mem-sage-deep);
+  border: 1px solid var(--mem-sage);
+  padding: 2px 8px;
+}
+
+.sister-card-quote {
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--mem-ink-soft);
+  margin: 0 0 20px;
+  border-left: 3px solid var(--mem-gold);
+  padding-left: 12px;
+}
+
+.sister-card-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mem-sage-deep);
+  border-top: 1.5px solid var(--mem-line);
+  padding-top: 14px;
+}
+
+/* ── Prayer Section ─────────────────────────────────────────── */
+.remembrance-prayer-section {
+  margin-top: 60px;
+}
+
+.prayer-card {
+  background: var(--mem-gold-light);
+  border: 2px solid var(--mem-gold);
+  padding: 40px 32px;
+  box-shadow: 6px 6px 0 var(--mem-shadow);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.prayer-crest {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  background: var(--mem-card);
+  border: 2px solid var(--mem-gold);
+  color: var(--mem-gold-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0 var(--mem-gold);
+}
+
+.prayer-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  color: var(--mem-sage-deep);
+  margin: 0 0 12px;
+}
+
+.prayer-card p {
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--mem-ink);
+  max-width: 620px;
+  margin: 0 auto 16px;
+}
+
+.prayer-note {
+  display: block;
+  font-size: 13px;
+  color: var(--mem-ink-faint);
+  font-style: normal;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── Memorial Modal ─────────────────────────────────────────── */
+.memorial-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.memorial-modal.active {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 30, 24, 0.85);
+}
+
+.memorial-modal-card {
+  position: relative;
+  background: var(--mem-card);
+  border: 2px solid var(--mem-line-strong);
+  max-width: 740px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 10px 10px 0 var(--mem-shadow-deep);
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: transparent;
+  border: 2px solid transparent;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--mem-sage-deep);
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.modal-close-btn:hover {
+  border-color: var(--mem-sage);
+}
+
+.modal-header-hero {
+  display: flex;
+  border-bottom: 2px solid var(--mem-line-strong);
+  background: var(--mem-gold-light);
+  flex-wrap: wrap;
+}
+
+.modal-photo-col {
+  width: 260px;
+  min-height: 240px;
+  background-size: cover;
+  background-position: center top;
+  border-right: 2px solid var(--mem-line-strong);
+  background-color: var(--mem-sage-glow);
+  flex-shrink: 0;
+}
+
+.modal-hero-details {
+  padding: 32px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-lifespan-tag {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mem-gold-deep);
+  background: #ffffff;
+  border: 1px solid var(--mem-gold);
+  padding: 3px 8px;
+  align-self: flex-start;
+  margin-bottom: 10px;
+}
+
+.modal-hero-details h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(22px, 3.5vw, 30px);
+  margin: 0 0 6px;
+  color: var(--mem-sage-deep);
+}
+
+.modal-title-role {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mem-gold-deep);
+  margin-bottom: 12px;
+}
+
+.modal-dates-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--mem-ink-soft);
+  font-weight: 600;
+}
+
+.modal-body-content {
+  padding: 32px;
+}
+
+.modal-quote-box {
+  background: var(--mem-sage-glow);
+  border: 2px solid var(--mem-sage);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.modal-quote-box p {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--mem-sage-deep);
+  margin: 0;
+}
+
+.modal-section h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  color: var(--mem-sage-deep);
+  margin: 0 0 10px;
+  border-bottom: 1.5px solid var(--mem-line);
+  padding-bottom: 6px;
+}
+
+.modal-bio-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--mem-ink);
+  margin: 0 0 24px;
+}
+
+.modal-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  background: var(--mem-bg);
+  border: 2px solid var(--mem-line);
+  padding: 20px;
+}
+
+.modal-detail-item strong {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mem-sage);
+  margin-bottom: 4px;
+}
+
+.modal-detail-item span {
+  font-size: 14px;
+  color: var(--mem-ink);
+}
+
+.communities-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.modal-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: var(--mem-gold-light);
+  border-top: 2px solid var(--mem-line-strong);
+}
+
+.pious-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mem-gold-deep);
+}
+
+.btn-close-modal {
+  padding: 8px 20px;
+  background: var(--mem-sage);
+  color: #ffffff;
+  border: 2px solid var(--mem-line-strong);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--mem-shadow);
+}
+
+.btn-close-modal:hover {
+  background: var(--mem-gold);
+}
+
+/* ── Loading Spinner & Empty State ──────────────────────────── */
+.memorial-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  gap: 16px;
+}
+
+.memorial-loading .spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--mem-line);
+  border-top-color: var(--mem-sage);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.memorial-empty {
+  text-align: center;
+  padding: 60px 20px;
+  border: 2px dashed var(--mem-line);
+  background: var(--mem-card);
+}
+
+.btn-clear-filter {
+  padding: 8px 18px;
+  background: var(--mem-sage);
+  color: #fff;
+  border: 2px solid var(--mem-line-strong);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+/* ── Responsive Mobile Rules ────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav-header {
+    padding: 12px 18px !important;
+  }
+  .memorial-hero {
+    padding: 40px 16px 36px;
+  }
+  .memorial-container {
+    padding: 32px 16px 60px;
+  }
+  .memorial-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .modal-header-hero {
+    flex-direction: column;
+  }
+  .modal-photo-col {
+    width: 100%;
+    min-height: 220px;
+    border-right: none;
+    border-bottom: 2px solid var(--mem-line-strong);
+  }
+  .modal-hero-details {
+    padding: 24px 20px;
+  }
+  .modal-body-content {
+    padding: 20px;
+  }
+}

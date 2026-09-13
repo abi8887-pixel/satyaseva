@@ -1,0 +1,308 @@
+/* ================================================================
+   main.js — Satyaseva Sisters site
+   Handles: sky rays, nav scroll, vine SVG, scroll-linked growth,
+            scroll-reveal, mobile nav toggle, language switching
+   ================================================================ */
+(function(){
+  'use strict';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Ambient sky rays ─────────────────────────────────────────── */
+  var sky = document.getElementById('sky');
+  if (sky) {
+    var beamAngles = [-22,-11,0,11,22];
+    beamAngles.forEach(function(a, i){
+      var r = document.createElement('div');
+      r.className = 'ray';
+      r.style.left = (46 + i*2) + '%';
+      r.style.transform = 'rotate(' + a + 'deg)';
+      r.style.animation = reduced ? 'none' : 'none';
+      sky.appendChild(r);
+    });
+  }
+
+  /* ── Navbar scroll state ──────────────────────────────────────── */
+  var nav = document.getElementById('nav');
+  if (nav) {
+    function onNavScroll(){ nav.classList.toggle('scrolled', window.scrollY > 20); }
+    window.addEventListener('scroll', onNavScroll, {passive:true});
+    onNavScroll();
+  }
+
+  /* ── Mobile hamburger toggle ──────────────────────────────────── */
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', function(){
+      var open = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('active', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    // Close mobile nav when any link is clicked
+    navLinks.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  /* ── Language switching ───────────────────────────────────────── */
+  var langSelect = document.getElementById('lang-select');
+  if (langSelect) {
+    // Detect language from URL params or localStorage
+    var params = new URLSearchParams(window.location.search);
+    var savedLang = params.get('lang') || localStorage.getItem('sscs-lang') || 'en';
+    langSelect.value = savedLang;
+    document.documentElement.lang = savedLang;
+
+    langSelect.addEventListener('change', function(){
+      var lang = this.value;
+      localStorage.setItem('sscs-lang', lang);
+      document.documentElement.lang = lang;
+      // Update URL without reload for bookmarkability
+      var url = new URL(window.location);
+      if (lang === 'en') {
+        url.searchParams.delete('lang');
+      } else {
+        url.searchParams.set('lang', lang);
+      }
+      window.history.replaceState({}, '', url);
+      applyTranslations(lang);
+    });
+
+    // Apply on load if not English
+    if (savedLang !== 'en') {
+      applyTranslations(savedLang);
+    }
+  }
+
+  /* Translation data — Polish */
+  var translations = {
+    pl: {
+      'Our Story': 'Nasza Historia',
+      'Vision & Mission': 'Wizja i Misja',
+      'Ministries': 'Posługi',
+      'Gallery': 'Galeria',
+      'Prayers': 'Modlitwy',
+      'Communities': 'Wspólnoty',
+      'Connect With Us': 'Skontaktuj się',
+      'Home': 'Strona Główna',
+      'Our Foundress': 'Nasza Założycielka'
+    }
+  };
+
+  function applyTranslations(lang) {
+    if (lang === 'en' || !translations[lang]) return;
+    var dict = translations[lang];
+    // Translate nav links and footer links
+    document.querySelectorAll('.nav-links a, .footer-links a, .nav-cta').forEach(function(el){
+      var text = el.textContent.trim();
+      if (dict[text]) el.textContent = dict[text];
+    });
+  }
+
+
+  /* ── Reveal on scroll (content) ───────────────────────────────── */
+  var revealTargets = document.querySelectorAll('.reveal:not(.visible)');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, {threshold:0.15});
+    revealTargets.forEach(function(t){ io.observe(t); });
+  } else {
+    revealTargets.forEach(function(t){ t.classList.add('visible'); });
+  }
+
+  /* ── Service Worker Registration (PWA) ───────────────────────── */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').then(function(reg) {
+        console.log('Satyaseva PWA Service Worker registered:', reg.scope);
+      }).catch(function(err) {
+        console.warn('Satyaseva PWA Service Worker registration failed:', err);
+      });
+    });
+  }
+
+  /* ── GDPR Cookie Consent Banner ──────────────────────────────── */
+  function initCookieConsent() {
+    var consent = localStorage.getItem('sscs-cookie-consent');
+    if (consent) return; // User already interacted
+
+    var banner = document.createElement('div');
+    banner.id = 'sscs-cookie-banner';
+    banner.className = 'cookie-banner-overlay';
+    banner.innerHTML = [
+      '<div class="cookie-banner-content">',
+      '  <div class="cookie-text">',
+      '    <span>🍪</span>',
+      '    <p><strong>We value your privacy.</strong> We use essential cookies to ensure our portal operates securely and smoothly. Read our <a href="privacy.html">Privacy Policy</a> to learn more.</p>',
+      '  </div>',
+      '  <div class="cookie-actions">',
+      '    <button type="button" id="cookie-accept" class="btn btn-primary btn-sm">Accept All</button>',
+      '    <button type="button" id="cookie-essential" class="btn btn-outline btn-sm">Essential Only</button>',
+      '  </div>',
+      '</div>'
+    ].join('');
+    document.body.appendChild(banner);
+
+    var acceptBtn = document.getElementById('cookie-accept');
+    var essentialBtn = document.getElementById('cookie-essential');
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', function() {
+        localStorage.setItem('sscs-cookie-consent', 'all');
+        banner.remove();
+      });
+    }
+
+    if (essentialBtn) {
+      essentialBtn.addEventListener('click', function() {
+        localStorage.setItem('sscs-cookie-consent', 'essential');
+        banner.remove();
+      });
+    }
+  }
+
+  /* ── Universal Dark Mode Toggle ──────────────────────────────── */
+  function initTheme() {
+    var savedTheme = localStorage.getItem('sscs-theme');
+    var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
+
+    if (currentTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+
+    function updateThemeButtons(theme) {
+      document.querySelectorAll('.theme-toggle-btn').forEach(function(btn) {
+        btn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+        btn.setAttribute('title', theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+      });
+    }
+
+    updateThemeButtons(currentTheme);
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.theme-toggle-btn');
+      if (!btn) return;
+      var active = document.documentElement.getAttribute('data-theme') === 'dark';
+      var newTheme = active ? 'light' : 'dark';
+      if (newTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+      localStorage.setItem('sscs-theme', newTheme);
+      updateThemeButtons(newTheme);
+    });
+  }
+
+  /* ── Animated Impact Statistics Counter ───────────────────────── */
+  function initCounters() {
+    var counters = document.querySelectorAll('.counter-animate');
+    if (!counters.length) return;
+
+    function animate(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+      var prefix = el.getAttribute('data-prefix') || '';
+      var suffix = el.getAttribute('data-suffix') || '';
+      var duration = 1800; // ms
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Easing out cubic
+        var easeOut = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(easeOut * target);
+        el.textContent = prefix + current.toLocaleString() + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          el.textContent = prefix + target.toLocaleString() + suffix;
+        }
+      }
+
+      window.requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animate(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      counters.forEach(function(c) { observer.observe(c); });
+    } else {
+      counters.forEach(function(c) { animate(c); });
+    }
+  }
+
+  /* ── Right-click & Inspection Deterrents ─────────────────────── */
+  function initInspectProtection() {
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Disable common DevTools / View-Source shortcuts
+    document.addEventListener('keydown', function(e) {
+      var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      var cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+      // F12 key
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+
+      // Ctrl/Cmd + Shift + I/J/C (Inspect / Console / Element Picker)
+      if (cmdOrCtrl && e.shiftKey && (['I', 'i', 'J', 'j', 'C', 'c'].indexOf(e.key) !== -1 || [73, 74, 67].indexOf(e.keyCode) !== -1)) {
+        e.preventDefault();
+        return false;
+      }
+
+      // Ctrl/Cmd + U (View Source)
+      if (cmdOrCtrl && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
+        e.preventDefault();
+        return false;
+      }
+
+      // Ctrl/Cmd + S (Save Page)
+      if (cmdOrCtrl && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initInspectProtection();
+      initCookieConsent();
+      initTheme();
+      initCounters();
+    });
+  } else {
+    initInspectProtection();
+    initCookieConsent();
+    initTheme();
+    initCounters();
+  }
+})();
+
+

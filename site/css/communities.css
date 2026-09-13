@@ -1,0 +1,124 @@
+/* ================================================================
+   Communities (Grid) Styles
+   ================================================================ */
+
+.hero-section { text-align: center; margin-bottom: 60px; border-bottom: 2px solid var(--ink); padding-bottom: 60px; }
+.hero-section h1 { font-size: clamp(32px, 5vw, 48px); margin: 16px 0; }
+.hero-section p.subtitle { font-size: 18px; color: var(--ink-soft); max-width: 600px; margin: 0 auto; }
+
+.communities-container { padding: 60px 32px; }
+
+.comm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; }
+.comm-card {
+  display: block; /* it's an <a> link */
+  padding: 24px; background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.comm-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.comm-card .badge { display:inline-block; padding: 4px 10px; border: 2px solid var(--ink); background: var(--bg); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; box-shadow: 2px 2px 0 var(--ink); }
+.comm-card h3 { font-size: 24px; margin-bottom: 8px; font-family: 'Playfair Display', serif; }
+.comm-card .location { font-size: 13px; color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; display:flex; align-items:center; gap:8px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+
+.card-photo-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background-size: cover;
+  background-position: center;
+  margin: 16px 0 20px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background-color: var(--line);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.card-photo-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+}
+.photo-badge {
+  position: absolute; bottom: 8px; right: 8px; z-index: 2;
+  background: var(--ink);
+  color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+  padding: 4px 8px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--bg);
+}
+.photo-badge svg { width: 14px; height: 14px; color: #fff; }
+
+.symbolic-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0 20px;
+}
+.sym-tile {
+  aspect-ratio: 16/10;
+  background: var(--bg);
+  border: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 4px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: default;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.comm-card:hover .sym-tile {
+  transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--ink);
+}
+.sym-tile svg { width: 18px; height: 18px; color: var(--ink); }
+.sym-tile span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+}
+
+.desc { font-size: 15px; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.6; }
+.desc p { margin: 0; }
+
+.card-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.comm-card:hover .card-cta { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); background: var(--bg); }
+
+/* Loading state */
+.grid-loading {
+  text-align: center; padding: 80px 20px;
+  color: var(--ink); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+}
+.grid-loading .spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--bg);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .communities-container { padding: 40px 16px; }
+  .comm-grid { grid-template-columns: 1fr; gap: 24px; }
+  .nav-header { padding: 16px; }
+}

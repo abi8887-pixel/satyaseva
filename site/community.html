@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community — Satyaseva Sisters</title>
+<meta name="description" content="Explore this community of the Satyaseva Catechist Sisters — members, ministries, stories, and more.">
+<meta property="og:title" content="Community — Satyaseva Sisters">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://satyasevasisters.org/community.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/community.css">
+</head>
+<body class="community-detail-page">
+
+<header class="nav-header">
+  <div class="nav-header-inner">
+    <a href="communities.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Satyaseva Sisters
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="map.html">Map</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="donate.html" style="color:#38bdf8; font-weight:600;">Donate</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- Loading State -->
+<div class="detail-loading" id="detail-loading">
+  <div class="loading-spinner"></div>
+  <p class="loading-text">Accessing Community Archive…</p>
+</div>
+
+<!-- Hero Section (populated by JS) -->
+<section class="detail-hero-section" id="detail-hero" style="display:none"></section>
+
+<!-- Content Container (populated by JS) -->
+<div class="detail-container">
+  <main id="detail-content" style="display:none"></main>
+  <nav class="detail-nav" id="detail-nav" aria-label="Community navigation"></nav>
+</div>
+
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-label="Photo viewer" aria-hidden="true">
+  <button class="lightbox-btn lightbox-close" id="lightbox-close" aria-label="Close photo viewer">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+  <button class="lightbox-btn lightbox-prev" id="lightbox-prev" aria-label="Previous photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="lightbox-btn lightbox-next" id="lightbox-next" aria-label="Next photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+  <div class="lightbox-content">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="Community photograph">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</div>
+
+<!-- Sister Upload / Guide Modal -->
+<div class="upload-modal" id="upload-modal" role="dialog" aria-label="Upload photos" aria-hidden="true">
+  <div class="upload-modal-card">
+    <button class="modal-close-btn" id="upload-modal-close" aria-label="Close upload window">&times;</button>
+    <h3 id="upload-modal-title">Add Photos</h3>
+    <p class="lead">Add photographs to this community's gallery. No coding needed — photos update automatically!</p>
+    
+    <div id="upload-status" class="upload-status"></div>
+
+    <div class="upload-dropzone" id="upload-dropzone">
+      <input type="file" id="upload-file-input" accept="image/*" multiple style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <strong>Click to select photo or drag &amp; drop here</strong>
+      <span>Supports JPG, PNG, WEBP files</span>
+    </div>
+
+    <div class="upload-options" style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+      <input type="text" id="upload-sister-name" placeholder="Your name (e.g. Sr. Philomena SCS)" style="padding:8px 12px;border:1.5px solid #222;font-size:13px;width:100%;box-sizing:border-box;font-family:inherit;">
+      <input type="text" id="upload-photo-caption" placeholder="Photo caption / note (optional)" style="padding:8px 12px;border:1.5px solid #222;font-size:13px;width:100%;box-sizing:border-box;font-family:inherit;">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;">
+        <input type="checkbox" id="upload-is-hero">
+        <span>Set as community banner / cover photo (hero.jpg)</span>
+      </label>
+    </div>
+
+    <div class="folder-guide-box">
+      <h4>Direct Folder Drop Option:</h4>
+      <span class="folder-guide-path" id="folder-guide-path">site/images/communities/...</span>
+      <ol>
+        <li>Open the community folder on your computer.</li>
+        <li>Drop any pictures directly into the folder.</li>
+        <li>(Optional) Rename one photo to <code>hero.jpg</code> to make it the top banner.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="footer-glass">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="memorial.html">In Memoriam</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+    <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  </div>
+</footer>
+
+<script src="data/communities-data.js?v=1"></script>
+<script src="js/community-detail.js"></script>
+</body>
+</html>

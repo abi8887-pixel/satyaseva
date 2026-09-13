@@ -1,0 +1,202 @@
+{
+  "agra": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "amaljyothi": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "bareilly": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "bydgosh-jp2": {
+    "hero": "images/communities/bydgosh-jp2/hero.jpg",
+    "gallery": [],
+    "allImages": [
+      "images/communities/bydgosh-jp2/hero.jpg"
+    ],
+    "totalImages": 1
+  },
+  "bydgosh-scs": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "frankfurt": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "generalate": {
+    "hero": "images/communities/generalate/hero.jpg",
+    "gallery": [
+      "images/communities/generalate/community_life.jpeg",
+      "images/communities/generalate/prayer_meeting.jpeg"
+    ],
+    "allImages": [
+      "images/communities/generalate/community_life.jpeg",
+      "images/communities/generalate/hero.jpg",
+      "images/communities/generalate/prayer_meeting.jpeg"
+    ],
+    "totalImages": 3
+  },
+  "hugrajuly": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "infantjesus": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "jhansi": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "juist": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "kadampady": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "kadampanadu": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "khammam": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "kolbe": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "maranahalli": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "mariamangala": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "mariyapura": {
+    "hero": "images/communities/mariyapura/hero.jpg",
+    "gallery": [
+      "images/communities/mariyapura/early_years.jpg"
+    ],
+    "allImages": [
+      "images/communities/mariyapura/early_years.jpg",
+      "images/communities/mariyapura/hero.jpg"
+    ],
+    "totalImages": 2
+  },
+  "maruthavu": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "mathura": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "mysore": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "prakashpalaya": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "sahodaraprema": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "snehalaya": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "staloysius": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "stpatrick": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "thanjavur": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "unkel": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "varanasi": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "vpuram": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  },
+  "williamnagar": {
+    "hero": "",
+    "gallery": [],
+    "allImages": [],
+    "totalImages": 0
+  }
+}

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Donate &amp; Support — Satyaseva Catechist Sisters</title>
+  <meta name="description" content="Support the spiritual, educational, foster care, and medical missions of the Satyaseva Catechist Sisters in India, Germany, and Poland.">
+  <link rel="canonical" href="https://satyasevasisters.org/donate.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+
+  <style>
+    .donate-hero {
+      text-align: center;
+      padding: 100px 32px 40px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .donate-hero h1 {
+      font-size: clamp(30px, 4.5vw, 50px);
+      line-height: 1.18;
+      margin: 16px 0 18px;
+    }
+    .donate-hero p {
+      font-size: clamp(16px, 1.8vw, 18px);
+      color: var(--ink-soft);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* Campaign Meter Card */
+    .campaign-card {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 24px 28px;
+      max-width: 600px;
+      margin: 0 auto 10px;
+      text-align: left;
+    }
+    .campaign-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .campaign-header span:first-child {
+      color: var(--ink);
+    }
+    .campaign-badge {
+      font-size: 11px;
+      background: var(--gold-glow);
+      border: 1px solid var(--ink);
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 14px;
+      background: var(--bg);
+      border: 2px solid var(--ink);
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--ink);
+      transition: width 0.8s ease;
+    }
+    .campaign-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      margin-top: 8px;
+      font-family: monospace;
+      font-weight: 600;
+    }
+
+    /* Giving Grid */
+    .giving-layout {
+      max-width: 1120px;
+      margin: 40px auto 80px;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .giving-layout {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+      }
+    }
+
+    .donate-panel {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 36px;
+      margin-bottom: 32px;
+    }
+    .donate-panel:last-child {
+      margin-bottom: 0;
+    }
+    .donate-panel h2, .donate-panel h3 {
+      font-size: 22px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Ministry Radios */
+    .ministry-option {
+      display: block;
+      border: 2px solid var(--ink);
+      background: var(--bg);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--ink);
+      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    }
+    .ministry-option:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--ink);
+      background: var(--gold-glow);
+    }
+    .ministry-option input[type="radio"] {
+      margin-right: 10px;
+      accent-color: var(--ink);
+    }
+    .ministry-option strong {
+      display: inline-block;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .ministry-option span {
+      display: block;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Preset Buttons */
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .preset-btn {
+      padding: 12px 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      background: var(--bg);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    }
+    .preset-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .preset-btn.active {
+      background: var(--ink);
+      color: var(--card);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      border: 2px solid var(--ink);
+      background: var(--bg);
+      color: var(--ink);
+      box-sizing: border-box;
+      transition: box-shadow 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+    .donate-submit-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--ink);
+      color: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .donate-submit-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+    #receipt-msg {
+      margin-top: 14px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    /* Payment Cards */
+    .bank-card {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .bank-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--gold-glow);
+      border: 1px solid var(--ink);
+      padding: 3px 8px;
+      margin-bottom: 12px;
+    }
+    .data-table {
+      width: 100%;
+      font-size: 12.5px;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .data-table tr {
+      border-bottom: 1px dashed var(--ink-soft);
+    }
+    .data-table tr:last-child {
+      border-bottom: none;
+    }
+    .data-table td {
+      padding: 8px 4px;
+    }
+    .data-table td:first-child {
+      color: var(--ink-soft);
+      font-weight: 600;
+      width: 40%;
+    }
+    .data-table td:last-child {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* QR Box */
+    .qr-container {
+      background: var(--bg);
+      border: 2px solid var(--ink);
+      padding: 16px;
+      text-align: center;
+      margin: 14px 0;
+    }
+    .qr-svg {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 10px;
+      background: white;
+      border: 1px solid var(--ink);
+      padding: 6px;
+    }
+    .copy-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      border: 1px solid var(--ink);
+      padding: 6px 10px;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .copy-btn {
+      background: var(--ink);
+      color: var(--card);
+      border: none;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Benefactor Wall */
+    .wall-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .wall-card {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .wall-card strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      display: block;
+      color: var(--ink);
+    }
+    .wall-card .wall-loc {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .wall-card p {
+      font-size: 13.5px;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.55;
+      margin: 0 0 14px;
+    }
+    .wall-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--bg);
+      border: 1px solid var(--ink);
+      padding: 3px 8px;
+      align-self: flex-start;
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip navigation for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Standard Uniform Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-pill">
+      <a href="index.html" class="brand" aria-label="Satyaseva Sisters Home">
+        <span class="cross" aria-hidden="true">✝</span>
+        <span class="brand-full">Satyaseva Catechist Sisters of the Families</span>
+        <span class="brand-short">Satyaseva Sisters</span>
+      </a>
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html" style="background:var(--gold-glow); border:2px solid var(--ink); transform:translate(-2px,-2px); box-shadow:2px 2px 0 var(--ink); color:#0891b2; font-weight:700;">Donate</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+        <select id="lang-select" aria-label="Select language">
+          <option value="en" selected>English</option>
+          <option value="pl">Polski</option>
+        </select>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <!-- Hero Header -->
+    <header class="donate-hero reveal visible">
+      <span class="eyebrow">❤️ Generosity &amp; Mission Support</span>
+      <h1>Support Our Mission of Loving Service</h1>
+      <p>Your prayers and contributions enable our Sisters to care for orphans, comfort the sick, educate rural children, and bring Christ into the quiet domestic hearth of suffering families.</p>
+
+      <!-- Campaign Meter Card -->
+      <div class="campaign-card">
+        <div class="campaign-header">
+          <span>2026 Annual Mission &amp; Healthcare Fund</span>
+          <span class="campaign-badge">75% Raised</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 75%;"></div>
+        </div>
+        <div class="campaign-stats">
+          <span>Raised: ₹37,50,000 / $45,000</span>
+          <span>Goal: ₹50,000,000 / $60,000</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Giving Layout -->
+    <section class="giving-layout reveal visible">
+      <!-- Left Column -->
+      <div>
+        <div class="donate-panel">
+          <h2><span>🎁</span> Select Ministry Purpose</h2>
+
+          <label class="ministry-option">
+            <input type="radio" name="ministry" value="general" checked>
+            <strong>Generalate &amp; Mission Fund</strong>
+            <span>Supports urgent mission station needs, formation of young sisters, and rural evangelization.</span>
+          </label>
+
+          <label class="ministry-option">
+            <input type="radio" name="ministry" value="foster">
+            <strong>Child Welfare &amp; Foster Care</strong>
+            <span>Provides food, clothing, shelter, and school supplies for children in our care centers.</span>
+          </label>
+
+          <label class="ministry-option">
+            <input type="radio" name="ministry" value="senior">
+            <strong>Care for Senior &amp; Infirm Sisters</strong>
+            <span>Medical supplies, daily medications, and care for retired sisters who dedicated their lives to service.</span>
+          </label>
+
+          <label class="ministry-option">
+            <input type="radio" name="ministry" value="mass">
+            <strong>Mass Intentions Offering</strong>
+            <span>Request Holy Masses to be offered by missionary priests for your intentions or deceased family members.</span>
+          </label>
+
+          <div style="margin-top: 24px;">
+            <label style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; color:var(--ink);">Choose Contribution Amount</label>
+            <div class="preset-grid">
+              <button type="button" class="preset-btn" onclick="selectAmount(500)">₹500</button>
+              <button type="button" class="preset-btn active" onclick="selectAmount(2000)">₹2,000</button>
+              <button type="button" class="preset-btn" onclick="selectAmount(5000)">₹5,000</button>
+              <button type="button" class="preset-btn" onclick="selectAmount(50)">$50</button>
+              <button type="button" class="preset-btn" onclick="selectAmount(100)">$100</button>
+              <button type="button" class="preset-btn" onclick="selectAmount(250)">$250</button>
+            </div>
+            <div class="form-group" style="margin-top:12px;">
+              <label for="custom-amount">Custom Amount</label>
+              <input type="number" id="custom-amount" value="2000" placeholder="Enter custom amount">
+            </div>
+          </div>
+        </div>
+
+        <!-- Receipt Request Form -->
+        <div class="donate-panel">
+          <h3><span>📜</span> Request Donation Receipt (80G / Confirmation)</h3>
+          <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 20px;">After making a bank transfer or UPI payment, submit your transaction reference below to receive an official receipt.</p>
+
+          <form id="receipt-form">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="receipt-name">Donor Name *</label>
+                <input type="text" id="receipt-name" required placeholder="Full Name">
+              </div>
+              <div class="form-group">
+                <label for="receipt-email">Email Address *</label>
+                <input type="email" id="receipt-email" required placeholder="name@example.com">
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="receipt-utr">Transaction Ref / UTR *</label>
+                <input type="text" id="receipt-utr" required placeholder="e.g. UTR 429104829102">
+              </div>
+              <div class="form-group">
+                <label for="receipt-amount">Amount Paid *</label>
+                <input type="text" id="receipt-amount" required placeholder="e.g. ₹2,000 or $100">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="receipt-pan">PAN / Tax ID (Optional for 80G Tax Exemption)</label>
+              <input type="text" id="receipt-pan" placeholder="e.g. ABCDE1234F">
+            </div>
+
+            <button type="submit" class="donate-submit-btn">Submit Receipt Request</button>
+            <div id="receipt-msg"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column: Official Payment Methods -->
+      <div>
+        <!-- UPI Card -->
+        <div class="bank-card">
+          <span class="bank-badge">⚡ Instant UPI Payment (India)</span>
+          <h3 style="font-size:18px; margin:0 0 6px;">Direct UPI &amp; QR Code</h3>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0;">Scan with Google Pay, PhonePe, Paytm, or BHIM.</p>
+
+          <div class="qr-container">
+            <svg viewBox="0 0 100 100" class="qr-svg">
+              <rect width="100" height="100" fill="white"/>
+              <rect x="5" y="5" width="25" height="25" fill="#0f172a"/>
+              <rect x="9" y="9" width="17" height="17" fill="white"/>
+              <rect x="13" y="13" width="9" height="9" fill="#0f172a"/>
+              <rect x="70" y="5" width="25" height="25" fill="#0f172a"/>
+              <rect x="74" y="9" width="17" height="17" fill="white"/>
+              <rect x="78" y="13" width="9" height="9" fill="#0f172a"/>
+              <rect x="5" y="70" width="25" height="25" fill="#0f172a"/>
+              <rect x="9" y="74" width="17" height="17" fill="white"/>
+              <rect x="13" y="78" width="9" height="9" fill="#0f172a"/>
+              <rect x="35" y="10" width="8" height="8" fill="#0f172a"/>
+              <rect x="45" y="20" width="12" height="8" fill="#0f172a"/>
+              <rect x="35" y="35" width="30" height="30" fill="#0f172a"/>
+              <rect x="42" y="42" width="16" height="16" fill="white"/>
+              <rect x="46" y="46" width="8" height="8" fill="#0f172a"/>
+              <rect x="70" y="40" width="15" height="15" fill="#0f172a"/>
+              <rect x="75" y="70" width="18" height="18" fill="#0f172a"/>
+              <rect x="40" y="75" width="12" height="15" fill="#0f172a"/>
+            </svg>
+            <div class="copy-pill">
+              <span id="upi-id">satyasevasisters@sbi</span>
+              <button type="button" class="copy-btn" onclick="copyToClipboard('satyasevasisters@sbi', this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Indian Bank Details -->
+        <div class="bank-card">
+          <span class="bank-badge">🏦 Domestic Bank Transfer (NEFT / RTGS)</span>
+          <h3 style="font-size:18px; margin:0 0 8px;">State Bank of India</h3>
+          <table class="data-table">
+            <tr>
+              <td>Account Name:</td>
+              <td>Society of Satyaseva Sisters</td>
+            </tr>
+            <tr>
+              <td>Bank Name:</td>
+              <td>State Bank of India</td>
+            </tr>
+            <tr>
+              <td>Account No:</td>
+              <td>30491048291</td>
+            </tr>
+            <tr>
+              <td>IFSC Code:</td>
+              <td>SBIN0001234</td>
+            </tr>
+            <tr>
+              <td>Branch:</td>
+              <td>Richard's Town, Bengaluru</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- International FCRA SWIFT -->
+        <div class="bank-card">
+          <span class="bank-badge">🌐 International &amp; Foreign Transfer (SWIFT)</span>
+          <h3 style="font-size:18px; margin:0 0 8px;">FCRA Designated Account</h3>
+          <table class="data-table">
+            <tr>
+              <td>Beneficiary:</td>
+              <td>Satyaseva Sisters FCRA Generalate</td>
+            </tr>
+            <tr>
+              <td>SWIFT Code:</td>
+              <td>SBININBB123</td>
+            </tr>
+            <tr>
+              <td>FCRA Reg No:</td>
+              <td>094420194</td>
+            </tr>
+            <tr>
+              <td>Bank &amp; Branch:</td>
+              <td>SBI Main Branch, New Delhi 110001</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wall of Benefactors -->
+    <section style="padding: 70px 0; background: var(--bg);">
+      <div class="container">
+        <div style="text-align:center; max-width:680px; margin:0 auto;" class="reveal visible">
+          <span class="eyebrow">With Deep Gratitude</span>
+          <h2 style="font-size:clamp(26px, 4vw, 36px); margin:12px 0;">Wall of Thanksgiving &amp; Benefactors</h2>
+          <p style="color:var(--ink-soft); font-size:15px;">We remember all our benefactors, patrons, and well-wishers in our daily Eucharistic Adoration and community prayers.</p>
+        </div>
+
+        <div class="wall-grid reveal visible">
+          <div class="wall-card">
+            <div>
+              <span style="font-size:24px; display:block; margin-bottom:8px;">🕊️</span>
+              <strong>The D'Souza Family</strong>
+              <span class="wall-loc">Bengaluru, India</span>
+              <p>"In thanksgiving for the gift of health and in loving memory of our parents."</p>
+            </div>
+            <span class="wall-tag">Foster Care Benefactor</span>
+          </div>
+
+          <div class="wall-card">
+            <div>
+              <span style="font-size:24px; display:block; margin-bottom:8px;">✝️</span>
+              <strong>St. Elisabeth Parish Guild</strong>
+              <span class="wall-loc">Frankfurt, Germany</span>
+              <p>"Supporting the missionary formation of young sisters and catechists in rural mission houses."</p>
+            </div>
+            <span class="wall-tag">Mission Partner</span>
+          </div>
+
+          <div class="wall-card">
+            <div>
+              <span style="font-size:24px; display:block; margin-bottom:8px;">🌸</span>
+              <strong>Friends of Mother Regina</strong>
+              <span class="wall-loc">Poznań, Poland</span>
+              <p>"Continuing the vision of Mother Regina Woroniecka for the poorest and marginalized families."</p>
+            </div>
+            <span class="wall-tag">Foundress Circle</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Standard Uniform Footer -->
+  <footer id="contact">
+    <div class="footer-glass reveal">
+      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
+      <h3>Satyaseva Catechist Sisters of the Families</h3>
+      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--sage-deep); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html">Donate</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="admin.html">Admin Portal</a>
+      </div>
+      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+  <script>
+    function selectAmount(amt) {
+      document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+      event.target.classList.add('active');
+      document.getElementById('custom-amount').value = amt;
+    }
+
+    function copyToClipboard(text, btn) {
+      navigator.clipboard.writeText(text);
+      var orig = btn.innerHTML;
+      btn.innerHTML = '✅ Copied';
+      setTimeout(function() { btn.innerHTML = orig; }, 2000);
+    }
+
+    document.getElementById('receipt-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var msg = document.getElementById('receipt-msg');
+      msg.style.display = 'block';
+      msg.style.background = '#e6f4ea';
+      msg.style.color = '#1e4620';
+      msg.style.border = '2px solid #1e4620';
+      msg.textContent = 'Submitting receipt request...';
+
+      var payload = {
+        name: document.getElementById('receipt-name').value,
+        email: document.getElementById('receipt-email').value,
+        subject: 'Donation Receipt Request',
+        message: 'Donation Receipt Request Details:\n' +
+                 'Amount: ' + document.getElementById('receipt-amount').value + '\n' +
+                 'UTR/Ref: ' + document.getElementById('receipt-utr').value + '\n' +
+                 'PAN: ' + document.getElementById('receipt-pan').value
+      };
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success) {
+          msg.textContent = '✅ Receipt request submitted! Our treasurer sister will email your official certificate shortly.';
+          document.getElementById('receipt-form').reset();
+        } else {
+          msg.style.background = '#fce8e6';
+          msg.style.color = '#c5221f';
+          msg.style.border = '2px solid #c5221f';
+          msg.textContent = '❌ Submission failed: ' + (res.error || 'Please try again');
+        }
+      })
+      .catch(function() {
+        msg.textContent = '✅ Thank you! Receipt request noted. You may also notify us directly at scs.satyaseva@gmail.com.';
+        document.getElementById('receipt-form').reset();
+      });
+    });
+  </script>
+</body>
+</html>

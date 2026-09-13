@@ -1,0 +1,66 @@
+name: Deploy Pre-Release Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Synchronize Data & Compile Fallbacks
+        run: |
+          python3 scripts/sync_images.py || true
+          python3 -c "
+          import json, os
+          if os.path.exists('site/data/communities.json') and os.path.exists('site/data/memorial.json'):
+              with open('site/data/communities.json', encoding='utf-8') as f:
+                  comm = json.load(f)
+              with open('site/data/memorial.json', encoding='utf-8') as f:
+                  mem = json.load(f)
+              with open('site/data/communities-data.js', 'w', encoding='utf-8') as f:
+                  f.write('// Auto-generated fallback data for communities and memorial sisters\n')
+                  f.write('window.__INITIAL_COMMUNITIES__ = ' + json.dumps(comm) + ';\n')
+                  f.write('window.__INITIAL_MEMORIAL__ = ' + json.dumps(mem) + ';\n')
+              print('Fallback dataset updated successfully')
+          " || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Clean Sensitive Data & Backups
+        run: |
+          rm -rf site/data/backups
+          rm -f site/data/*.db
+
+      - name: Upload Static Site Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

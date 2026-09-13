@@ -1,0 +1,21 @@
+# Database & sensitive credentials
+*.db
+scripts/data/sscs.db
+scripts/data/.admin_hash
+scripts/data/backups/
+site/data/backups/
+site/data/*.db
+
+# SSL Certificates
+scripts/certs/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

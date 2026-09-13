@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Us — Satyaseva Catechist Sisters</title>
+  <meta name="description" content="Get in touch with the Satyaseva Catechist Sisters of the Families. We'd love to hear from you.">
+  <link rel="canonical" href="https://satyasevasisters.org/contact.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <style>
+    .contact-container {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 48px;
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+    .contact-container h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .contact-container p {
+      text-align: center;
+      color: var(--ink-soft);
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      border: 2px solid var(--ink);
+      background: var(--bg);
+      color: var(--ink);
+      transition: box-shadow 0.2s, outline 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--ink);
+      color: var(--card);
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    }
+    .submit-btn:hover {
+      background: var(--bg);
+      color: var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transform: translate(-2px, -2px);
+    }
+    .submit-btn:active {
+      transform: translate(0, 0);
+      box-shadow: 0 0 0 var(--ink);
+    }
+    #form-status {
+      margin-top: 24px;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+    .status-success {
+      background: #e6f4ea;
+      color: #1e4620;
+      border: 2px solid #1e4620;
+    }
+    .status-error {
+      background: #fce8e6;
+      color: #c5221f;
+      border: 2px solid #c5221f;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav id="nav" role="navigation">
+    <div class="nav-pill">
+      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+        <a href="contact.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="contact-container reveal visible">
+      <h1>Contact Us</h1>
+      <p>Whether you have a question, need assistance, or just want to connect, we are here for you.</p>
+
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">Your Name *</label>
+          <input type="text" id="name" name="name" required placeholder="e.g. Maria Joseph">
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email *</label>
+          <input type="email" id="email" name="email" required placeholder="maria@example.com">
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="What is this regarding?">
+        </div>
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" rows="6" required placeholder="How can we help you?"></textarea>
+        </div>
+        <!-- Anti-spam honeypot field -->
+        <input type="text" name="_gotcha" style="display:none">
+        
+        <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
+      </form>
+
+      <div id="form-status"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-glass">
+      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
+      <h3>Satyaseva Catechist Sisters of the Families</h3>
+      <p>Service to God's Truth since 1976.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Honeypot check
+      if (this._gotcha.value) return;
+
+      const btn = document.getElementById('submit-btn');
+      const statusDiv = document.getElementById('form-status');
+      
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      
+      const payload = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+      };
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        statusDiv.style.display = 'block';
+        if (data.success) {
+          statusDiv.className = 'status-success';
+          statusDiv.textContent = 'Your message has been sent successfully. Thank you for reaching out!';
+          this.reset();
+        } else {
+          statusDiv.className = 'status-error';
+          statusDiv.textContent = data.error || 'Something went wrong. Please try again later.';
+        }
+      })
+      .catch(err => {
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'status-error';
+        statusDiv.textContent = 'Network error. Please try again later.';
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+      });
+    });
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

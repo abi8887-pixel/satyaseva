@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+
+Sitemap: https://satyasevasisters.org/sitemap.xml

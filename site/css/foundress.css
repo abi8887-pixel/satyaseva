@@ -1,0 +1,73 @@
+/* ================================================================
+   Foundress Biography Styles
+   ================================================================ */
+
+.bio-container { max-width: 1100px; margin: 0 auto; padding: 60px 32px; }
+.hero-section { text-align: center; margin-bottom: 60px; border-bottom: 2px solid var(--ink); padding-bottom: 60px; }
+.hero-section h1 { font-size: clamp(32px, 5vw, 48px); margin: 16px 0; font-family: 'Playfair Display', serif; }
+.hero-section p.subtitle { font-size: 18px; color: var(--ink-soft); max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+.bio-content p { margin-bottom: 24px; font-size: 16px; color: var(--ink-soft); line-height: 1.8; }
+
+.bio-image { margin: 32px 0; border: 2px solid var(--ink); overflow: hidden; box-shadow: 6px 6px 0 var(--ink); }
+.bio-image img { width: 100%; height: auto; display: block; border-bottom: 2px solid var(--ink); }
+.bio-image-caption { font-size: 13px; color: var(--ink); text-align: center; margin-top: 12px; font-style: italic; margin-bottom: 16px; font-family: 'Playfair Display', serif; }
+
+.image-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; }
+.image-grid .bio-image { margin: 0; }
+
+.bio-content blockquote {
+  margin: 40px 0; padding: 32px;
+  background: var(--card); border: 2px solid var(--ink);
+  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; font-style: italic;
+  color: var(--ink); line-height: 1.6;
+  box-shadow: 6px 6px 0 var(--ink); text-align: center;
+}
+
+.milestones-card {
+  margin: 60px 0 20px; padding: 32px;
+  background: var(--card); border: 2px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.milestones-card h2 { font-size: 24px; margin-bottom: 24px; font-family: 'Playfair Display', serif; text-align: center; border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+.milestones-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin-top: 14px;
+}
+.milestone-chip {
+  padding: 16px;
+  background: var(--card); border: 2px solid var(--ink);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.milestone-chip:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--ink); background: var(--bg);
+}
+.m-year {
+  display: block; font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-bottom: 1px solid var(--ink); padding-bottom: 4px; margin-bottom: 8px;
+}
+.m-text {
+  display: block; font-size: 14px; color: var(--ink-soft);
+  line-height: 1.5; font-weight: 500;
+}
+
+.bio-footer {
+  margin-top: 60px; padding: 32px;
+  background: var(--card); border: 2px solid var(--ink);
+  text-align: center; box-shadow: 6px 6px 0 var(--ink);
+}
+.bio-footer p { font-size: 14px; color: var(--ink-soft); margin: 0 0 16px; font-weight: 500; }
+.bio-footer .cta-link { display: inline-block; }
+
+@media (min-width: 900px) {
+  .bio-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: start; }
+  .image-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .bio-container { padding: 32px 20px; }
+  .image-grid { grid-template-columns: 1fr; }
+}

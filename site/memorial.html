@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In Memoriam — Remembering Our Departed Sisters | Satyaseva Sisters</title>
+<meta name="description" content="In loving memory of the departed sisters of the Satyaseva Catechist Sisters of the Families. Honoring their lives of faith, prayer, and selfless service to families.">
+<meta property="og:title" content="In Memoriam — Satyaseva Sisters">
+<meta property="og:description" content="Remembering our departed sisters, their lives, ministries, and enduring spiritual legacy.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://satyasevasisters.org/memorial.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/memorial.css">
+</head>
+<body class="memorial-page">
+
+<!-- ── Navigation Header ── -->
+<header class="nav-header">
+  <div class="nav-header-inner">
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Satyaseva Sisters
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="map.html">Map</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="prayers.html">Prayers</a>
+      <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+      <a href="contact.html">Contact</a>
+      <a href="memorial.html" class="active-nav">In Memoriam</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── Hero Tribute Header ── -->
+<section class="memorial-hero">
+  <div class="memorial-hero-inner">
+    <div class="memorial-kicker">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="5" y1="8" x2="19" y2="8"></line></svg>
+      Communion of Saints &amp; Sacred Memory
+    </div>
+    <h1>In Loving Memory</h1>
+    <p class="memorial-subtitle">
+      Remembering the faithful sisters of the Satyaseva Catechist Sisters of the Families who walked before us in humility, gave their lives in prayer and catechesis, and now rest in the eternal peace of Christ.
+    </p>
+
+    <div class="memorial-scripture-box">
+      <p class="scripture-text">"Blessed are the dead who die in the Lord from now on... that they may rest from their labors, and their works follow them."</p>
+      <cite class="scripture-cite">Revelation 14:13</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ── Main Memorial Register ── -->
+<main class="memorial-container">
+  
+  <!-- Search & Stats Toolbar -->
+  <div class="memorial-toolbar">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="memorial-search" class="memorial-search-input" placeholder="Search by sister's name, ministry, or community..." aria-label="Search departed sisters">
+    </div>
+    <div class="memorial-count-tag" id="memorial-count-tag">
+      Showing all records
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="memorial-loading" id="memorial-loading">
+    <div class="spinner"></div>
+    <p>Opening the Register of Eternal Memory…</p>
+  </div>
+
+  <!-- Sisters Cards Grid -->
+  <div class="memorial-grid" id="memorial-grid" style="display:none"></div>
+
+  <!-- Empty Search Feedback -->
+  <div class="memorial-empty" id="memorial-empty" style="display:none">
+    <p>No sister records found matching your search.</p>
+    <button type="button" class="btn-clear-filter" id="btn-clear-search">View All Sisters</button>
+  </div>
+
+  <!-- ── Spiritual Communion & Prayer Card ── -->
+  <section class="remembrance-prayer-section">
+    <div class="prayer-card">
+      <div class="prayer-crest">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="5" y1="8" x2="19" y2="8"></line></svg>
+      </div>
+      <h3>Prayer for Our Departed Sisters</h3>
+      <p>
+        "Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May the souls of all our departed sisters, through the mercy of God, rest in peace. Amen."
+      </p>
+      <span class="prayer-note">The Satyaseva Sisters offer the Holy Sacrifice of the Mass and the daily Rosary for all departed members of our congregation, benefactors, and families.</span>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Memorial Tribute Modal ── -->
+<div class="memorial-modal" id="memorial-modal" role="dialog" aria-label="Sister Memorial Tribute" aria-hidden="true">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="memorial-modal-card">
+    <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close memorial view">&times;</button>
+    
+    <div class="modal-header-hero">
+      <div class="modal-photo-col" id="modal-photo-col"></div>
+      <div class="modal-hero-details">
+        <span class="modal-lifespan-tag" id="modal-lifespan"></span>
+        <h2 id="modal-sister-name"></h2>
+        <div class="modal-title-role" id="modal-sister-title"></div>
+        <div class="modal-dates-row" id="modal-dates-row"></div>
+      </div>
+    </div>
+
+    <div class="modal-body-content">
+      <!-- Quote Box -->
+      <div class="modal-quote-box" id="modal-quote-box">
+        <p id="modal-quote-text"></p>
+      </div>
+
+      <!-- Life Story & Biography -->
+      <div class="modal-section">
+        <h4>Life &amp; Selfless Service</h4>
+        <p class="modal-bio-text" id="modal-bio-text"></p>
+      </div>
+
+      <!-- Communities & Apostolates -->
+      <div class="modal-details-grid">
+        <div class="modal-detail-item">
+          <strong>Key Ministries &amp; Service:</strong>
+          <span id="modal-ministry-text"></span>
+        </div>
+        <div class="modal-detail-item">
+          <strong>Communities Blessed by Her Presence:</strong>
+          <div id="modal-communities-tags" class="communities-tags-wrap"></div>
+        </div>
+        <div class="modal-detail-item" id="modal-burial-item">
+          <strong>Place of Eternal Rest:</strong>
+          <span id="modal-burial-text"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer-bar">
+      <span class="pious-tag">Requiescat in Pace ✝</span>
+      <button type="button" class="btn-close-modal" id="btn-close-modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="footer-glass">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="memorial.html">In Memoriam</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+    <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  </div>
+</footer>
+
+<script src="js/memorial.js"></script>
+</body>
+</html>

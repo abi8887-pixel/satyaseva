@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Communities &amp; Geographic Reach — Satyaseva Sisters</title>
+<meta name="description" content="Explore the 32 communities of the Satyaseva Catechist Sisters serving across India, Germany, and Poland through catechesis, family visits, and social ministry.">
+<meta property="og:title" content="Communities — Satyaseva Sisters">
+<meta property="og:description" content="Discover our 32 communities across India, Germany, and Poland.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://satyasevasisters.org/communities.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/communities.css">
+</head>
+<body>
+
+<nav class="nav-header" id="nav">
+  <div class="nav-header-inner">
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Satyaseva Sisters
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="map.html">Map</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+      <a href="contact.html">Contact</a>
+      <a href="memorial.html">In Memoriam</a>
+      <button class="theme-toggle-btn" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">🌙</button>
+      <select id="lang-select" aria-label="Select language" style="appearance:none; border:2px solid var(--ink); border-radius:0; padding:8px 32px 8px 12px; font-size:13px; font-weight:700; cursor:pointer; background:var(--card); box-shadow:3px 3px 0 var(--ink);">
+        <option value="en" selected>English</option>
+        <option value="pl">Polski</option>
+      </select>
+    </div>
+    <button class="hamburger" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<main class="container">
+  <div class="hero-section">
+    <div class="eyebrow">Our Reach</div>
+    <h1>Communities</h1>
+    <p class="subtitle">Discover the 32 communities of the Satyaseva Sisters serving across India, Germany, and Poland.</p>
+  </div>
+  
+  <div class="comm-grid" id="comm-grid">
+    <div class="grid-loading">
+      <div class="spinner"></div>
+      <p>Loading communities…</p>
+    </div>
+  </div>
+</main>
+
+<footer id="contact">
+  <div class="footer-glass">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="memorial.html">In Memoriam</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+    <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  </div>
+</footer>
+
+<script src="data/communities-data.js?v=1"></script>
+<script src="js/communities-grid.js"></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>

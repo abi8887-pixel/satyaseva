@@ -1,0 +1,17 @@
+{
+  "name": "Satyaseva Sisters — Official Portal",
+  "short_name": "Satyaseva",
+  "description": "Official archive, news, vocations, communities, and prayer portal of the Congregation of the Sisters of Satyaseva.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0891b2",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

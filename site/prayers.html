@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prayer Requests — Satyaseva Catechist Sisters</title>
+  <meta name="description" content="Submit a prayer intention. The Satyaseva Catechist Sisters of the Families will include your request in our daily prayers.">
+  <link rel="canonical" href="https://satyasevasisters.org/prayers.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <style>
+    .prayer-header {
+      text-align: center;
+      padding: 80px 32px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prayer-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin-bottom: 24px;
+    }
+    .prayer-header p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .prayer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      max-width: 1080px;
+      margin: 0 auto 80px;
+      padding: 0 32px;
+    }
+    @media (max-width: 768px) {
+      .prayer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .prayer-form-card {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding: 40px;
+    }
+    .prayer-form-card h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .prayer-form-card p {
+      color: var(--ink-soft);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      border: 2px solid var(--ink);
+      background: var(--bg);
+      color: var(--ink);
+      transition: box-shadow 0.2s, outline 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--ink);
+      color: var(--card);
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    }
+    .submit-btn:hover {
+      background: var(--bg);
+      color: var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transform: translate(-2px, -2px);
+    }
+    #form-status {
+      margin-top: 24px;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+    .status-success {
+      background: #e6f4ea;
+      color: #1e4620;
+      border: 2px solid #1e4620;
+    }
+    .status-error {
+      background: #fce8e6;
+      color: #c5221f;
+      border: 2px solid #c5221f;
+    }
+    .prayer-wall {
+      background: var(--bg);
+      border: 2px solid var(--ink);
+      padding: 40px;
+      height: 100%;
+    }
+    .prayer-wall h2 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .prayer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .prayer-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .prayer-list::-webkit-scrollbar-thumb {
+      background: var(--ink-soft);
+    }
+    .prayer-item {
+      background: var(--card);
+      border: 1px solid var(--ink);
+      padding: 16px;
+      border-left: 4px solid var(--ink);
+    }
+    .prayer-item p {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .prayer-meta {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+      text-align: right;
+    }
+    .empty-wall {
+      font-size: 14px;
+      color: var(--ink-soft);
+      text-align: center;
+      padding: 40px 20px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav id="nav" role="navigation">
+    <div class="nav-pill">
+      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Prayers</a>
+        <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="prayer-header reveal visible">
+      <h1>Submit a Prayer Intention</h1>
+      <p>"Where two or three are gathered in my name, I am there among them." Our sisters lift up all submitted intentions during our daily Adoration and Community Prayers.</p>
+    </div>
+
+    <div class="prayer-container reveal visible">
+      <div class="prayer-form-card">
+        <h2>Your Intention</h2>
+        <p>Please share your prayer request below. You may remain anonymous.</p>
+        
+        <form id="prayer-form">
+          <div class="form-group">
+            <label for="name">Name (Optional)</label>
+            <input type="text" id="name" name="name" placeholder="Leave blank to remain anonymous">
+          </div>
+          <div class="form-group">
+            <label for="intention">Prayer Request *</label>
+            <textarea id="intention" name="intention" rows="6" required placeholder="Please pray for..."></textarea>
+          </div>
+          <!-- Anti-spam -->
+          <input type="text" name="_gotcha" style="display:none">
+          
+          <button type="submit" class="submit-btn" id="submit-btn">Submit Request</button>
+        </form>
+        <div id="form-status"></div>
+      </div>
+
+      <div class="prayer-wall">
+        <h2>🙏 Prayer Wall</h2>
+        <div class="prayer-list" id="prayer-list">
+          <div class="empty-wall">Loading intentions...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-glass">
+      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
+      <h3>Satyaseva Catechist Sisters of the Families</h3>
+      <p>Service to God's Truth since 1976.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Handle form submission
+    document.getElementById('prayer-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (this._gotcha.value) return;
+
+      const btn = document.getElementById('submit-btn');
+      const statusDiv = document.getElementById('form-status');
+      
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      
+      const payload = {
+        name: document.getElementById('name').value,
+        intention: document.getElementById('intention').value
+      };
+
+      fetch('/api/prayers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        statusDiv.style.display = 'block';
+        if (data.success) {
+          statusDiv.className = 'status-success';
+          statusDiv.textContent = 'Your intention has been submitted successfully and will be prayed for by our sisters.';
+          this.reset();
+        } else {
+          statusDiv.className = 'status-error';
+          statusDiv.textContent = data.error || 'Something went wrong. Please try again later.';
+        }
+      })
+      .catch(err => {
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'status-error';
+        statusDiv.textContent = 'Network error. Please try again later.';
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Submit Request';
+      });
+    });
+
+    // Load approved prayer requests for the wall
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/prayers?status=approved')
+        .then(r => r.json())
+        .then(prayers => {
+          const container = document.getElementById('prayer-list');
+          if (!Array.isArray(prayers) || prayers.length === 0) {
+            container.innerHTML = '<div class="empty-wall">No public intentions currently posted. Be the first to share one.</div>';
+            return;
+          }
+          let html = '';
+          prayers.forEach(p => {
+            const safeIntention = p.intention.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            const safeName = p.name ? p.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Anonymous';
+            html += `
+              <div class="prayer-item">
+                <p>"${safeIntention}"</p>
+                <div class="prayer-meta">— ${safeName}</div>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+        })
+        .catch(err => {
+          document.getElementById('prayer-list').innerHTML = '<div class="empty-wall">Unable to load prayer wall.</div>';
+        });
+    });
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

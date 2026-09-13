@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive Community Map — Satyaseva Catechist Sisters</title>
+  <meta name="description" content="Explore the global locations, convents, and mission stations of the Satyaseva Catechist Sisters across India, Germany, and Poland.">
+  <link rel="canonical" href="https://satyasevasisters.org/map.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <style>
+    .map-header {
+      padding: 100px 32px 36px;
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .map-header-text h1 {
+      font-size: clamp(28px, 4.2vw, 44px);
+      margin: 12px 0 8px;
+    }
+    .map-header-text p {
+      font-size: 15px;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0;
+      line-height: 1.6;
+    }
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-chip {
+      background: var(--card);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    }
+    .filter-chip:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .filter-chip.active {
+      background: var(--ink);
+      color: var(--card);
+    }
+
+    /* Map Layout */
+    .map-layout-wrap {
+      max-width: 1180px;
+      margin: 0 auto 70px;
+      padding: 0 32px;
+    }
+    .map-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px) {
+      .map-grid {
+        grid-template-columns: 1fr;
+      }
+      .map-layout-wrap {
+        padding: 0 16px;
+      }
+    }
+
+    /* Sidebar List */
+    .map-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .search-wrap {
+      position: relative;
+    }
+    .map-search-input {
+      width: 100%;
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      border: 2px solid var(--ink);
+      background: var(--card);
+      color: var(--ink);
+      box-sizing: border-box;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .map-search-input:focus {
+      outline: none;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .station-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 560px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .station-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .station-list::-webkit-scrollbar-thumb {
+      background: var(--ink-soft);
+    }
+    .station-card {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+    .station-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+      background: var(--gold-glow);
+    }
+    .station-card.active {
+      border-left: 6px solid var(--ink);
+      background: var(--gold-glow);
+    }
+    .station-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 15px;
+      margin: 0 0 4px;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .station-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--bg);
+      border: 1px solid var(--ink);
+      padding: 2px 6px;
+      white-space: nowrap;
+    }
+    .station-location {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    /* Leaflet Map Frame */
+    .map-frame {
+      border: 2px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      background: var(--card);
+      min-height: 600px;
+      position: relative;
+    }
+    #leaflet-map {
+      width: 100%;
+      height: 100%;
+      min-height: 600px;
+    }
+
+    /* Custom Leaflet popup override */
+    .leaflet-popup-content-wrapper {
+      background: var(--card) !important;
+      color: var(--ink) !important;
+      border: 2px solid var(--ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 5px 5px 0 var(--ink) !important;
+      font-family: 'Inter', sans-serif !important;
+      padding: 4px !important;
+    }
+    .leaflet-popup-tip {
+      background: var(--card) !important;
+      border: 2px solid var(--ink) !important;
+    }
+    .popup-inner strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .popup-inner span {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .popup-inner p {
+      font-size: 12px;
+      color: var(--ink);
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+    .popup-link {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--card);
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--ink);
+    }
+    .popup-link:hover {
+      background: var(--bg);
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip navigation for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Standard Uniform Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-pill">
+      <a href="index.html" class="brand" aria-label="Satyaseva Sisters Home">
+        <span class="cross" aria-hidden="true">✝</span>
+        <span class="brand-full">Satyaseva Catechist Sisters of the Families</span>
+        <span class="brand-short">Satyaseva Sisters</span>
+      </a>
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html" style="background:var(--gold-glow); border:2px solid var(--ink); transform:translate(-2px,-2px); box-shadow:2px 2px 0 var(--ink);">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html" style="color:#0891b2; font-weight:700;">Donate</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+        <select id="lang-select" aria-label="Select language">
+          <option value="en" selected>English</option>
+          <option value="pl">Polski</option>
+        </select>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <!-- Header -->
+    <header class="map-header reveal visible">
+      <div class="map-header-text">
+        <span class="eyebrow">🗺️ Global Mission Stations</span>
+        <h1>Interactive Community Map</h1>
+        <p>Explore our 31+ convents, formation houses, and pastoral centers across India, Germany, and Poland. Tap any station to view history and community ministries.</p>
+      </div>
+
+      <div class="filter-chips">
+        <button type="button" onclick="filterCountry('all')" class="filter-chip active" id="filter-all">All Stations</button>
+        <button type="button" onclick="filterCountry('India')" class="filter-chip" id="filter-india">India</button>
+        <button type="button" onclick="filterCountry('Germany')" class="filter-chip" id="filter-europe">Europe (DE &amp; PL)</button>
+      </div>
+    </header>
+
+    <!-- Map and Sidebar Layout -->
+    <section class="map-layout-wrap reveal visible">
+      <div class="map-grid">
+        <!-- Sidebar -->
+        <aside class="map-sidebar">
+          <div class="search-wrap">
+            <input type="text" id="map-search" placeholder="Search communities or cities..." class="map-search-input">
+          </div>
+          <div id="community-list" class="station-list">
+            <div style="padding:24px; text-align:center; color:var(--ink-soft); font-size:13px;">Loading mission locations...</div>
+          </div>
+        </aside>
+
+        <!-- Map -->
+        <div class="map-frame">
+          <div id="leaflet-map"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Standard Uniform Footer -->
+  <footer id="contact">
+    <div class="footer-glass reveal">
+      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
+      <h3>Satyaseva Catechist Sisters of the Families</h3>
+      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--sage-deep); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html">Donate</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="admin.html">Admin Portal</a>
+      </div>
+      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+    </div>
+  </footer>
+
+  <!-- Fallback dataset script for 100% resilient static hosting -->
+  <script src="data/communities-data.js?v=1"></script>
+  <script src="js/main.js" defer></script>
+  <script>
+    var map;
+    var markers = [];
+    var communitiesData = [];
+
+    // Coordinates lookup for known locations
+    var coordsMap = {
+      'mariyapura': [12.7820, 77.4920],
+      'amaljyothi': [12.2958, 76.6394],
+      'bareilly': [28.3670, 79.4304],
+      'generalate': [12.9920, 77.6180],
+      'shivamogga': [13.9299, 75.5681],
+      'belagavi': [15.8497, 74.4977],
+      'chikkamagaluru': [13.3161, 75.7720],
+      'kalaburagi': [17.3297, 76.8343],
+      'karwar': [14.8058, 74.1240],
+      'mangamarpally': [17.3850, 78.4867],
+      'portblair': [11.6234, 92.7265],
+      'juist': [53.6788, 6.9942],
+      'frankfurt': [50.1109, 8.6821],
+      'bydgosh-jp2': [53.1235, 18.0084],
+      'bydgosh-scs': [53.1310, 18.0120],
+      'khammam': [17.2473, 80.1514],
+      'hugrajuly': [26.8320, 92.4210],
+      'williamnagar': [25.5940, 90.6210],
+      'kolbe': [12.9716, 77.5946],
+      'staloysius': [12.9850, 77.6050],
+      'agra': [27.1767, 78.0081],
+      'infantjesus': [15.2500, 77.5800]
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      map = L.map('leaflet-map').setView([18.5204, 78.8718], 5);
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+      }).addTo(map);
+
+      // Resilient multi-tier data loading
+      function loadData() {
+        fetch('/api/communities')
+          .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(function(data) {
+            if (Array.isArray(data) && data.length) {
+              communitiesData = data;
+              renderMapAndList(data);
+              return;
+            }
+            throw new Error('Empty API data');
+          })
+          .catch(function() {
+            fetch('data/communities.json?t=' + Date.now())
+              .then(function(r) { return r.json(); })
+              .then(function(data) {
+                communitiesData = Array.isArray(data) ? data : [];
+                renderMapAndList(communitiesData);
+              })
+              .catch(function() {
+                if (window.__INITIAL_COMMUNITIES__ && Array.isArray(window.__INITIAL_COMMUNITIES__)) {
+                  communitiesData = window.__INITIAL_COMMUNITIES__;
+                  renderMapAndList(communitiesData);
+                }
+              });
+          });
+      }
+
+      loadData();
+
+      document.getElementById('map-search').addEventListener('input', function(e) {
+        var q = (e.target.value || '').toLowerCase();
+        var filtered = communitiesData.filter(function(c) {
+          return (c.name || '').toLowerCase().indexOf(q) !== -1 ||
+                 (c.location || '').toLowerCase().indexOf(q) !== -1;
+        });
+        renderMapAndList(filtered, false);
+      });
+    });
+
+    function getCoordsForCommunity(c) {
+      if (c.lat && c.lng) return [c.lat, c.lng];
+      if (coordsMap[c.id]) return coordsMap[c.id];
+      var baseLat = 13.0 + (c.name.length % 5) * 0.8;
+      var baseLng = 76.5 + (c.name.length % 7) * 0.6;
+      return [baseLat, baseLng];
+    }
+
+    function renderMapAndList(items, resetView) {
+      markers.forEach(function(m) { map.removeLayer(m); });
+      markers = [];
+
+      var listContainer = document.getElementById('community-list');
+      listContainer.innerHTML = '';
+
+      if (!items.length) {
+        listContainer.innerHTML = '<div style="padding:24px; text-align:center; color:var(--ink-soft); font-size:13px;">No communities match your search.</div>';
+        return;
+      }
+
+      items.forEach(function(c) {
+        var coords = getCoordsForCommunity(c);
+
+        var customIcon = L.divIcon({
+          className: 'custom-map-pin',
+          html: '<div style="background:var(--ink); color:var(--card); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:13px; border:2px solid var(--card); box-shadow:2px 2px 0 var(--ink);">⛪</div>',
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+
+        var marker = L.marker(coords, { icon: customIcon }).addTo(map);
+        marker.bindPopup(
+          '<div class="popup-inner">' +
+            '<strong>' + (c.name || c.id) + '</strong>' +
+            '<span>📍 ' + (c.location || 'India') + '</span>' +
+            '<p>' + ((c.description || '').substring(0, 95)) + '...</p>' +
+            '<a href="community.html?id=' + encodeURIComponent(c.id) + '" class="popup-link">View Community →</a>' +
+          '</div>'
+        );
+
+        markers.push(marker);
+
+        var card = document.createElement('div');
+        card.className = 'station-card';
+        card.innerHTML =
+          '<div class="station-title">' +
+            '<span>' + (c.name || c.id) + '</span>' +
+            (c.badge ? '<span class="station-badge">' + c.badge + '</span>' : '') +
+          '</div>' +
+          '<p class="station-location">📍 ' + (c.location || 'India') + (c.established ? ' • Est. ' + c.established : '') + '</p>';
+
+        card.addEventListener('click', function() {
+          document.querySelectorAll('.station-card').forEach(function(el) { el.classList.remove('active'); });
+          card.classList.add('active');
+          map.flyTo(coords, 10, { duration: 1.2 });
+          marker.openPopup();
+        });
+
+        listContainer.appendChild(card);
+      });
+    }
+
+    function filterCountry(country) {
+      document.querySelectorAll('.filter-chip').forEach(function(b) { b.classList.remove('active'); });
+      if (country === 'all') {
+        document.getElementById('filter-all').classList.add('active');
+        renderMapAndList(communitiesData);
+        map.setView([18.5204, 78.8718], 5);
+      } else if (country === 'India') {
+        document.getElementById('filter-india').classList.add('active');
+        var filtered = communitiesData.filter(function(c) {
+          return (c.country || 'India').toLowerCase() === 'india';
+        });
+        renderMapAndList(filtered);
+        map.setView([15.3173, 75.7139], 6);
+      } else {
+        document.getElementById('filter-europe').classList.add('active');
+        var filtered = communitiesData.filter(function(c) {
+          return (c.country || '').toLowerCase() !== 'india';
+        });
+        renderMapAndList(filtered.length ? filtered : communitiesData);
+        map.setView([52.0000, 14.0000], 5);
+      }
+    }
+  </script>
+</body>
+</html>

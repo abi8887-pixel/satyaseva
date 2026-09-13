@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Portal – Satyaseva Sisters</title>
+  <meta name="description" content="Graphical admin interface for managing Satyaseva Sisters communities.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css?v=2">
+</head>
+<body>
+
+  <!-- ── Password Gate ── -->
+  <div id="login-gate" class="login-gate">
+    <div class="login-card">
+      <div class="login-icon">🔒</div>
+      <h2>Admin Portal</h2>
+      <p>Enter the access code to continue</p>
+      <form id="login-form" autocomplete="off">
+        <input type="password" id="login-password" class="login-input" placeholder="Access code" autofocus>
+        <button type="submit" class="login-btn">Unlock</button>
+      </form>
+      <p id="login-error" class="login-error" hidden>Invalid access code. Please try again.</p>
+    </div>
+  </div>
+
+  <!-- ── Admin Interface (hidden until authenticated) ── -->
+  <div id="admin-app" class="admin-app" hidden>
+    <header class="nav-header">
+      <div class="nav-header-inner">
+        <a href="communities.html" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Satyaseva Sisters
+        </a>
+        <span class="nav-title">Admin Portal</span>
+        <div class="nav-actions">
+          <button id="save-btn" class="save-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save Changes
+          </button>
+          <button id="export-btn" class="export-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+          <button id="logout-btn" class="logout-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Exit
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="admin-tab-bar">
+      <div class="admin-tab-bar-inner">
+        <button type="button" class="admin-tab-btn active" id="tab-btn-communities">🏘️ Communities</button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-memorial">✝️ In Memoriam</button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-eventsnews">📅 Events &amp; News</button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-inbox">📥 Inbox &amp; Prayers</button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-database">🗄️ Database</button>
+      </div>
+    </nav>
+
+    <!-- ── Communities View ── -->
+    <main class="admin-container" id="communities-view">
+      <aside class="sidebar">
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <input type="text" id="search-input" placeholder="Search communities..." class="search-input" style="flex:1;">
+          <button type="button" id="btn-add-community" class="save-btn" style="padding:8px 12px;font-size:12px;white-space:nowrap;">+ Add</button>
+        </div>
+        <div id="country-filters" class="country-filters">
+          <button class="filter-btn active" data-country="all">All</button>
+          <button class="filter-btn" data-country="India">India</button>
+          <button class="filter-btn" data-country="Germany">Germany</button>
+          <button class="filter-btn" data-country="Poland">Poland</button>
+        </div>
+        <ul id="community-list" class="community-list"></ul>
+      </aside>
+
+      <section class="editor" id="editor">
+        <div class="editor-empty">
+          <h3>Select a community</h3>
+          <p>Choose a community from the sidebar to start editing</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Past Sisters (In Memoriam) View ── -->
+    <main class="admin-container" id="memorial-view" style="display:none;">
+      <aside class="sidebar">
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <input type="text" id="memorial-admin-search" placeholder="Search sisters..." class="search-input" style="flex:1;">
+          <button type="button" id="btn-add-sister-record" class="save-btn" style="padding:8px 12px;font-size:12px;white-space:nowrap;">+ Add</button>
+        </div>
+        <ul id="memorial-admin-list" class="community-list"></ul>
+      </aside>
+
+      <section class="editor" id="memorial-editor">
+        <div class="editor-empty">
+          <h3>Select a sister record</h3>
+          <p>Choose a sister from the sidebar to edit, or click "+ Add" to create a new memorial record.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Events & News View ── -->
+    <main class="admin-container" id="eventsnews-view" style="display:none;">
+      <aside class="sidebar" style="width:300px; overflow-y:auto; border-right:2px solid var(--ink); background:#fff;">
+        <div style="padding:16px; border-bottom:2px solid var(--ink);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="margin:0; font-size:16px;">📅 Events</h3>
+            <button type="button" id="btn-add-event" class="save-btn" style="padding:4px 8px; font-size:11px;">+ Add</button>
+          </div>
+          <ul id="admin-events-list" class="community-list" style="margin:0; padding:0; list-style:none;"></ul>
+        </div>
+        <div style="padding:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="margin:0; font-size:16px;">📰 News</h3>
+            <button type="button" id="btn-add-news" class="save-btn" style="padding:4px 8px; font-size:11px;">+ Add</button>
+          </div>
+          <ul id="admin-news-list" class="community-list" style="margin:0; padding:0; list-style:none;"></ul>
+        </div>
+      </aside>
+
+      <section class="editor" id="eventsnews-editor">
+        <div class="editor-empty">
+          <h3>Select an item</h3>
+          <p>Choose an Event or News item from the sidebar to edit.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Inbox & Prayers View ── -->
+    <main class="admin-container db-dashboard-view" id="inbox-view" style="display:none; padding:32px; overflow-y:auto;">
+      <div style="max-width:1080px; margin:0 auto;">
+        
+        <div style="margin-bottom:40px;">
+          <h2>📞 Contact Messages</h2>
+          <table class="db-table" style="width:100%; margin-top:16px;">
+            <thead>
+              <tr><th>Date</th><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="admin-contact-tbody"></tbody>
+          </table>
+        </div>
+
+        <div style="margin-bottom:40px;">
+          <h2>🙏 Prayer Requests</h2>
+          <table class="db-table" style="width:100%; margin-top:16px;">
+            <thead>
+              <tr><th>Date</th><th>Name</th><th>Intention</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="admin-prayers-tbody"></tbody>
+          </table>
+        </div>
+
+        <div style="margin-bottom:40px;">
+          <h2>📧 Newsletter Subscribers</h2>
+          <table class="db-table" style="width:100%; margin-top:16px; max-width:600px;">
+            <thead>
+              <tr><th>Date</th><th>Email Address</th></tr>
+            </thead>
+            <tbody id="admin-newsletter-tbody"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- ── Station Database & Uploads View ── -->
+    <main class="admin-container db-dashboard-view" id="database-view" style="display:none;">
+      <div class="db-dashboard-inner">
+        
+        <!-- Status Header -->
+        <div class="db-status-header">
+          <div class="db-status-main">
+            <div class="db-title-row">
+              <h2>Station Database &amp; Uploads</h2>
+              <span class="db-live-badge" id="db-status-badge">
+                <span class="pulse-dot"></span> SQLite Connected
+              </span>
+            </div>
+            <p class="db-subtitle">Portable, zero-config relational database (<code>sscs.db</code>) storing data uploaded by sisters from each station.</p>
+          </div>
+          <div class="db-quick-actions">
+            <a id="btn-download-db" href="/api/db/download" download="sscs.db" class="save-btn" title="Download portable SQLite file">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download .db File
+            </a>
+            <button type="button" id="btn-sync-static" class="export-btn" title="Sync SQLite data to static JSON & JS fallbacks">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Sync to Static
+            </button>
+            <button type="button" id="btn-open-station-upload" class="save-btn" style="background:#1b4332;border-color:#1b4332;color:#fff;">
+              + New Station Upload
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="db-metrics-grid">
+          <div class="db-metric-card">
+            <div class="metric-label">Stations / Communities</div>
+            <div class="metric-value" id="db-stat-stations">31</div>
+            <div class="metric-note">Relational station profiles</div>
+          </div>
+          <div class="db-metric-card">
+            <div class="metric-label">Station Submissions</div>
+            <div class="metric-value" id="db-stat-uploads">0</div>
+            <div class="metric-note">Chronicles &amp; reports</div>
+          </div>
+          <div class="db-metric-card">
+            <div class="metric-label">Archival Photos</div>
+            <div class="metric-value" id="db-stat-gallery">0</div>
+            <div class="metric-note">Indexed station imagery</div>
+          </div>
+          <div class="db-metric-card">
+            <div class="metric-label">Database File Size</div>
+            <div class="metric-value" id="db-stat-size">-- KB</div>
+            <div class="metric-note" id="db-stat-path">site/data/sscs.db</div>
+          </div>
+        </div>
+
+        <!-- Submissions & Uploads Panel -->
+        <div class="db-panel">
+          <div class="db-panel-header">
+            <div class="db-panel-title">
+              <h3>Data Uploaded by Sisters from Stations</h3>
+              <span class="db-count-badge" id="uploads-count-badge">0 records</span>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="db-filter-bar">
+              <select id="filter-upload-station" class="db-select">
+                <option value="all">All Stations / Communities</option>
+              </select>
+
+              <select id="filter-upload-type" class="db-select">
+                <option value="all">All Upload Types</option>
+                <option value="monthly_report">Monthly Report</option>
+                <option value="chronicle">Community Chronicle</option>
+                <option value="ministry_update">Ministry Update</option>
+                <option value="photo">Photo Upload</option>
+                <option value="event">Event / Feast</option>
+                <option value="prayer_request">Prayer Request</option>
+              </select>
+
+              <input type="text" id="filter-upload-search" class="search-input" placeholder="Search title or sisters..." style="max-width:220px;">
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="db-table-responsive">
+            <table class="db-table" id="uploads-table">
+              <thead>
+                <tr>
+                  <th>Station</th>
+                  <th>Sister Name</th>
+                  <th>Category</th>
+                  <th>Title &amp; Summary</th>
+                  <th>Upload Date</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="uploads-table-body">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── Modal: New Station Upload / Submission ── -->
+    <div id="station-upload-modal" class="admin-modal" hidden>
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <h3>New Station Data Upload</h3>
+          <button type="button" class="admin-modal-close" id="btn-close-upload-modal">&times;</button>
+        </div>
+        <form id="station-upload-form">
+          <div class="form-group">
+            <label for="form-upload-station">Station / Community *</label>
+            <select id="form-upload-station" required class="db-select" style="width:100%;">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label for="form-upload-sister">Sister Name *</label>
+              <input type="text" id="form-upload-sister" required class="login-input" style="text-align:left;" placeholder="e.g. Sr. Philomena SCS">
+            </div>
+            <div class="form-group">
+              <label for="form-upload-type">Upload Category *</label>
+              <select id="form-upload-type" required class="db-select" style="width:100%;">
+                <option value="monthly_report">Monthly Report</option>
+                <option value="chronicle">Community Chronicle / History</option>
+                <option value="ministry_update">Ministry Update</option>
+                <option value="event">Event / Feast Celebration</option>
+                <option value="prayer_request">Prayer Request</option>
+                <option value="general">General Update</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="form-upload-title">Title / Headline *</label>
+            <input type="text" id="form-upload-title" required class="login-input" style="text-align:left;" placeholder="e.g. Outreach to Slum Families & Remedial Classes">
+          </div>
+
+          <div class="form-group">
+            <label for="form-upload-content">Report / Chronicle Details</label>
+            <textarea id="form-upload-content" rows="5" class="login-input" style="text-align:left;height:auto;font-family:inherit;line-height:1.5;" placeholder="Describe the mission updates, family visits, statistics, sacramental preparations, or station activities..."></textarea>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+            <button type="button" class="export-btn" id="btn-cancel-upload-modal">Cancel</button>
+            <button type="submit" class="save-btn" id="btn-submit-station-upload">Save to Database</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── Modal: View Upload Details ── -->
+    <div id="view-upload-modal" class="admin-modal" hidden>
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <h3 id="view-modal-title">Upload Details</h3>
+          <button type="button" class="admin-modal-close" id="btn-close-view-modal">&times;</button>
+        </div>
+        <div id="view-modal-body" style="margin-top:16px;"></div>
+        <div style="display:flex;justify-content:flex-end;margin-top:24px;">
+          <button type="button" class="export-btn" id="btn-dismiss-view-modal">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container"></div>
+  </div>
+
+  <script src="data/communities-data.js?v=1"></script>
+  <script src="js/admin.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News & Updates — Satyaseva Catechist Sisters</title>
+  <meta name="description" content="Latest news, announcements, and blog updates from the Satyaseva Catechist Sisters of the Families.">
+  <link rel="canonical" href="https://satyasevasisters.org/news.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <style>
+    .news-grid {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .news-card {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .news-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .news-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 2px solid var(--ink);
+      background: var(--bg);
+    }
+    .news-content {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-date {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+    .news-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      line-height: 1.3;
+    }
+    .news-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 20px;
+      flex-grow: 1;
+    }
+    .news-author {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      border-top: 1px solid var(--ink);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px;
+      border: 2px dashed var(--ink-faint);
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav id="nav" role="navigation">
+    <div class="nav-pill">
+      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="events.html">Events</a>
+        <a href="news.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">News</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="nav-header">
+      <div class="nav-header-inner">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <h1 style="font-family:'Playfair Display',serif; font-size:20px; font-weight:700; margin:0;">News & Updates</h1>
+      </div>
+    </div>
+
+    <section class="news-grid" id="news-container">
+      <div class="empty-state">Loading news...</div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-glass">
+      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
+      <h3>Satyaseva Catechist Sisters of the Families</h3>
+      <p>Service to God's Truth since 1976.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/news')
+        .then(r => r.json())
+        .then(news => {
+          const container = document.getElementById('news-container');
+          if (!Array.isArray(news) || news.length === 0) {
+            container.innerHTML = '<div class="empty-state">No recent news or updates available.</div>';
+            return;
+          }
+          let html = '';
+          news.forEach(n => {
+            const d = new Date(n.date);
+            const dateStr = isNaN(d) ? n.date : d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+            const imageHtml = n.image_path ? `<img src="${n.image_path}" class="news-image" alt="News Image">` : `<div class="news-image" style="display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--ink-faint);">📰</div>`;
+            
+            // basic linebreaks to html for content
+            const safeContent = n.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+
+            html += `
+              <div class="news-card reveal visible">
+                ${imageHtml}
+                <div class="news-content">
+                  <div class="news-date">${dateStr}</div>
+                  <h3 class="news-title">${n.title}</h3>
+                  <p class="news-body">${safeContent}</p>
+                  <div class="news-author">By ${n.author || 'Admin'}</div>
+                </div>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+        })
+        .catch(err => {
+          document.getElementById('news-container').innerHTML = '<div class="empty-state">Unable to load news.</div>';
+          console.error(err);
+        });
+    });
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

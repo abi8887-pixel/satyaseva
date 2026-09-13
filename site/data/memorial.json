@@ -1,0 +1,105 @@
+[
+  {
+    "id": "sr-bernadette-kurian",
+    "name": "Sr. Bernadette Kurian SCS",
+    "title": "Mission Pioneer",
+    "birthDate": "1946-09-18",
+    "professionDate": "1981-10-15",
+    "departureDate": "2023-01-04",
+    "photo": "images/mother-002.jpg",
+    "communities": [
+      "St. Mary Convent Bareilly",
+      "St. Patrick Convent Agra"
+    ],
+    "ministry": "North India Mission Expansion, Women's Self-Help Groups & Adult Catechesis",
+    "biography": "A brave pioneer of the congregation's mission in Northern India, Sr. Bernadette learned local dialects and founded self-help skill centers for village women. Her joyful courage and deep trust in divine providence inspired everyone who worked beside her.",
+    "quote": "Prayer is the golden key that opens the morning and seals the peace of the night.",
+    "burialPlace": "St. Mary's Cemetery, Bareilly, Uttar Pradesh"
+  },
+  {
+    "id": "sr-agnes-mary-varkey",
+    "name": "Sr. Agnes Mary Varkey SCS",
+    "title": "Formation Directress & Educator",
+    "birthDate": "1944-01-22",
+    "professionDate": "1983-06-12",
+    "departureDate": "2021-04-17",
+    "photo": "images/mother-005.jpg",
+    "communities": [
+      "Sacred Heart Convent Maruthavu",
+      "St. Aloysius Kadampady"
+    ],
+    "ministry": "Novitiate Directress, Parish School Teaching & Youth Pastoral Ministry",
+    "biography": "Sr. Agnes Mary devoted over three decades to nurturing the spiritual formation of young candidates and novices. Her deep Marian spirituality and patient educational guidance molded dozens of sisters in the congregation. Even during her illness, she remained an apostle of intercessory prayer.",
+    "quote": "Joy in quiet perseverance, and unconditional love for the little ones.",
+    "burialPlace": "Kannur Catholic Cemetery, Kerala"
+  },
+  {
+    "id": "sr-clara-anthony",
+    "name": "Sr. Clara Anthony SCS",
+    "title": "Village Catechist & Family Pillar",
+    "birthDate": "1950-12-03",
+    "professionDate": "1987-05-24",
+    "departureDate": "2020-09-15",
+    "photo": "images/mother-007.jpg",
+    "communities": [
+      "St. Joseph Convent Prakashpalaya",
+      "Sacred Heart Thanjavur"
+    ],
+    "ministry": "Evening Schools for Poor Children, Tailoring Units & Rosary Circles",
+    "biography": "Sr. Clara spent her life among the poor rural farming communities of Karnataka and Tamil Nadu. She gathered children every evening under the village trees for remedial schooling and faith lessons, leaving a legacy of literacy and faith.",
+    "quote": "Let our footsteps bring Christ's peace to every doorstep we cross.",
+    "burialPlace": "Prakashpalaya Parish Cemetery, Karnataka"
+  },
+  {
+    "id": "sr-therese-dmello",
+    "name": "Sr. M. Therese D'Mello SCS",
+    "title": "Pioneer Catechist",
+    "birthDate": "1938-07-14",
+    "professionDate": "1978-05-31",
+    "departureDate": "2018-11-09",
+    "photo": "images/mother-004.jpg",
+    "communities": [
+      "Marianiketan Mariyapura",
+      "St. Joseph Convent Prakashpalaya"
+    ],
+    "ministry": "Village Evangelization, Family Home Visits & Sacramental Formation",
+    "biography": "Sr. Therese was among the first novices to answer Mother Regina's invitation. Known for her gentle humility and tireless energy, she walked countless miles through dusty rural footpaths, sitting with elderly widows, preparing generations of village children for Holy Communion, and reconciling families through prayer.",
+    "quote": "In every humble home, Christ is waiting for someone to listen with love.",
+    "burialPlace": "Mariyapura Motherhouse Cemetery"
+  },
+  {
+    "id": "sr-philomena-joseph",
+    "name": "Sr. Philomena Joseph SCS",
+    "title": "Healthcare & Social Apostolate",
+    "birthDate": "1941-10-05",
+    "professionDate": "1982-02-02",
+    "departureDate": "2017-08-28",
+    "photo": "images/mother-001.jpg",
+    "communities": [
+      "Generalate Mysore",
+      "Nirmal Hriday Varanasi"
+    ],
+    "ministry": "Rural Dispensary, First Aid, Leprosy & Destitute Outreach",
+    "biography": "Sr. Philomena was a compassionate healer who established mobile medical clinics across impoverished hamlets. Day and night, she dressed wounds, administered life-saving medications, and comforted the dying with gentle prayer and maternal solicitude.",
+    "quote": "To bandage a wound or hold the hand of the dying is to touch the living Body of Christ.",
+    "burialPlace": "Mysore Catholic Cemetery, Karnataka"
+  },
+  {
+    "id": "mother-regina-woroniecka",
+    "name": "Rev. Mother Regina Woroniecka SCS",
+    "title": "Foundress & Mother General",
+    "birthDate": "1920-03-24",
+    "professionDate": "1948-08-15",
+    "departureDate": "2002-12-18",
+    "photo": "images/Mother_Regina_Woroniecka_1.jpg",
+    "communities": [
+      "Marianiketan Mariyapura",
+      "Generalate Mysore",
+      "Bydgoszcz"
+    ],
+    "ministry": "Foundress, Spiritual Directress, Formation & General Leadership",
+    "biography": "Rev. Mother Regina Woroniecka, born in Poland and formed in the Ursuline missionary tradition, felt an irresistible calling to serve the poorest rural families of Southern India. In 1976, guided by Bishop Mathias Fernandes of Mysore, she established the Satyaseva Catechist Sisters of the Families in Mariyapura. Her life was a radiant beacon of sacrificial charity, contemplative prayer, and total obedience to God's providence.",
+    "quote": "Service to Truth — Satyaseva — is to bring Christ into the quiet domestic hearth of every suffering and seeking family.",
+    "burialPlace": "Mariyapura Motherhouse Cemetery, Karnataka, India"
+  }
+]
