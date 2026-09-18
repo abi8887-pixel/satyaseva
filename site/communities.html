@@ -30,11 +30,11 @@
       <a href="events.html">Events</a>
       <a href="news.html">News</a>
       <a href="vocations.html">Vocations</a>
-      <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+      <a href="donate.html">Donate</a>
       <a href="contact.html">Contact</a>
       <a href="memorial.html">In Memoriam</a>
       <button class="theme-toggle-btn" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">🌙</button>
-      <select id="lang-select" aria-label="Select language" style="appearance:none; border:2px solid var(--ink); border-radius:0; padding:8px 32px 8px 12px; font-size:13px; font-weight:700; cursor:pointer; background:var(--card); box-shadow:3px 3px 0 var(--ink);">
+      <select id="lang-select" aria-label="Select language" class="lang-select">
         <option value="en" selected>English</option>
         <option value="pl">Polski</option>
       </select>
@@ -47,9 +47,30 @@
 
 <main class="container">
   <div class="hero-section">
-    <div class="eyebrow">Our Reach</div>
-    <h1>Communities</h1>
-    <p class="subtitle">Discover the 32 communities of the Satyaseva Sisters serving across India, Germany, and Poland.</p>
+    <div class="mesh-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow reveal-up">Our Reach</div>
+      <h1 class="reveal-up delay-1">Communities</h1>
+      <p class="subtitle reveal-up delay-2">Discover the 32 communities of the Satyaseva Sisters serving across India, Germany, and Poland.</p>
+    </div>
+  </div>
+  
+  <div class="comm-filters">
+    <div class="filter-tabs" id="filter-tabs" role="tablist">
+      <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All (32)</button>
+      <button class="filter-tab" data-filter="India" role="tab" aria-selected="false">India 🇮🇳</button>
+      <button class="filter-tab" data-filter="Germany" role="tab" aria-selected="false">Germany 🇩🇪</button>
+      <button class="filter-tab" data-filter="Poland" role="tab" aria-selected="false">Poland 🇵🇱</button>
+    </div>
+    <div class="filter-search-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="button" aria-label="Focus search input"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="comm-search" class="filter-search" placeholder="Search by name, state, or ministry…" aria-label="Search communities" autocomplete="off">
+      <button type="button" id="comm-search-clear" class="search-clear-btn" aria-label="Clear search query" style="display:none;" title="Clear search">&times;</button>
+    </div>
   </div>
   
   <div class="comm-grid" id="comm-grid">
@@ -74,7 +95,7 @@
   </div>
 </footer>
 
-<script src="data/communities-data.js?v=1"></script>
+<script src="data/communities-data.js?v=3"></script>
 <script src="js/communities-grid.js"></script>
 <script src="js/main.js" defer></script>
 </body>

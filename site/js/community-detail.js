@@ -89,6 +89,20 @@
       if (e.key === 'ArrowLeft') prevPhoto();
     });
 
+    // Touch Swipe Support
+    var touchStartX = 0;
+    var touchEndX = 0;
+    
+    modal.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    modal.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) nextPhoto(); // Swipe left -> Next
+      if (touchEndX > touchStartX + 50) prevPhoto(); // Swipe right -> Prev
+    }, {passive: true});
+
     window._openLightbox = function(images, index) {
       if (!images || !images.length) return;
       currentLightboxList = images;
@@ -249,16 +263,19 @@
     });
     html += '    </select>';
 
+    var tbPrevSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+    var tbNextSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
     if (prevComm) {
-      html += '    <a href="community.html?id=' + encodeURIComponent(prevComm.id) + '" class="toolbar-nav-btn" title="Previous: ' + prevComm.name + '">←</a>';
+      html += '    <a href="community.html?id=' + encodeURIComponent(prevComm.id) + '" class="toolbar-nav-btn" title="Previous: ' + prevComm.name + '" aria-label="Previous community: ' + prevComm.name + '">' + tbPrevSvg + '</a>';
     } else {
-      html += '    <span class="toolbar-nav-btn disabled">←</span>';
+      html += '    <span class="toolbar-nav-btn disabled" aria-disabled="true" title="No previous community">' + tbPrevSvg + '</span>';
     }
 
     if (nextComm) {
-      html += '    <a href="community.html?id=' + encodeURIComponent(nextComm.id) + '" class="toolbar-nav-btn" title="Next: ' + nextComm.name + '">→</a>';
+      html += '    <a href="community.html?id=' + encodeURIComponent(nextComm.id) + '" class="toolbar-nav-btn" title="Next: ' + nextComm.name + '" aria-label="Next community: ' + nextComm.name + '">' + tbNextSvg + '</a>';
     } else {
-      html += '    <span class="toolbar-nav-btn disabled">→</span>';
+      html += '    <span class="toolbar-nav-btn disabled" aria-disabled="true" title="No next community">' + tbNextSvg + '</span>';
     }
     html += '  </div>';
     html += '</div>';
@@ -508,6 +525,24 @@
 
     contentSection.innerHTML = html;
 
+    /* Attach IntersectionObserver for scroll-reveal entrance animations */
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      var sections = contentSection.querySelectorAll('.detail-section');
+      sections.forEach(function(sec) {
+        sec.classList.add('reveal-on-scroll');
+        observer.observe(sec);
+      });
+    }
+
     /* Attach Lightbox events to thumbnails */
     var thumbs = contentSection.querySelectorAll('.gallery-thumb-card');
     thumbs.forEach(function(thumb) {
@@ -537,21 +572,34 @@
 
     var html = '';
 
+    var leftArrowSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+    var rightArrowSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
     if (prev) {
-      html += '<a href="community.html?id=' + encodeURIComponent(prev.id) + '" class="detail-nav-box prev">';
-      html += '  <span class="nav-direction-label">← Previous Community (Key: ←)</span>';
-      html += '  <strong class="nav-community-name">' + prev.name + '</strong>';
-      html += '  <span class="nav-community-meta">' + (flags[prev.country] || '') + ' ' + prev.location + ' • Est. ' + prev.established + '</span>';
+      html += '<a href="community.html?id=' + encodeURIComponent(prev.id) + '" class="detail-nav-box prev" aria-label="Previous community: ' + prev.name + '">';
+      html += '  <div class="nav-box-inner">';
+      html += '    <div class="nav-arrow-badge">' + leftArrowSvg + '</div>';
+      html += '    <div class="nav-box-content">';
+      html += '      <span class="nav-direction-label">Previous Community</span>';
+      html += '      <strong class="nav-community-name">' + prev.name + '</strong>';
+      html += '      <span class="nav-community-meta">' + (flags[prev.country] || '') + ' ' + prev.location + ' • Est. ' + prev.established + '</span>';
+      html += '    </div>';
+      html += '  </div>';
       html += '</a>';
     } else {
       html += '<div class="detail-nav-placeholder"></div>';
     }
 
     if (next) {
-      html += '<a href="community.html?id=' + encodeURIComponent(next.id) + '" class="detail-nav-box next">';
-      html += '  <span class="nav-direction-label">Next Community (Key: →) →</span>';
-      html += '  <strong class="nav-community-name">' + next.name + '</strong>';
-      html += '  <span class="nav-community-meta">' + (flags[next.country] || '') + ' ' + next.location + ' • Est. ' + next.established + '</span>';
+      html += '<a href="community.html?id=' + encodeURIComponent(next.id) + '" class="detail-nav-box next" aria-label="Next community: ' + next.name + '">';
+      html += '  <div class="nav-box-inner">';
+      html += '    <div class="nav-box-content">';
+      html += '      <span class="nav-direction-label">Next Community</span>';
+      html += '      <strong class="nav-community-name">' + next.name + '</strong>';
+      html += '      <span class="nav-community-meta">' + (flags[next.country] || '') + ' ' + next.location + ' • Est. ' + next.established + '</span>';
+      html += '    </div>';
+      html += '    <div class="nav-arrow-badge">' + rightArrowSvg + '</div>';
+      html += '  </div>';
       html += '</a>';
     } else {
       html += '<div class="detail-nav-placeholder"></div>';

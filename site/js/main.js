@@ -92,17 +92,39 @@
       'Communities': 'Wspólnoty',
       'Connect With Us': 'Skontaktuj się',
       'Home': 'Strona Główna',
-      'Our Foundress': 'Nasza Założycielka'
+      'Our Foundress': 'Nasza Założycielka',
+      'Map': 'Mapa',
+      'Events': 'Wydarzenia',
+      'News': 'Aktualności',
+      'Vocations': 'Powołania',
+      'Donate': 'Wesprzyj',
+      'Contact': 'Kontakt',
+      'In Memoriam': 'In Memoriam',
+      'Privacy Policy': 'Polityka Prywatności',
+      'Impressum': 'Impressum',
+      'Accept All': 'Akceptuj Wszystko',
+      'Essential Only': 'Tylko Niezbędne'
     }
   };
 
   function applyTranslations(lang) {
     if (lang === 'en' || !translations[lang]) return;
     var dict = translations[lang];
-    // Translate nav links and footer links
-    document.querySelectorAll('.nav-links a, .footer-links a, .nav-cta').forEach(function(el){
+    // Translate nav links, footer links, and common buttons
+    document.querySelectorAll('.nav-links a, .footer-links a, .nav-cta, .nav-donate, .btn').forEach(function(el){
       var text = el.textContent.trim();
-      if (dict[text]) el.textContent = dict[text];
+      if (dict[text]) {
+        if (el.children.length === 0) {
+          el.textContent = dict[text];
+        } else {
+          // If the element has children (like an SVG icon inside a button), only replace text nodes
+          Array.from(el.childNodes).forEach(function(node) {
+            if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() === text) {
+              node.nodeValue = dict[text];
+            }
+          });
+        }
+      }
     });
   }
 
@@ -118,16 +140,66 @@
     revealTargets.forEach(function(t){ t.classList.add('visible'); });
   }
 
-  /* ── Service Worker Registration (PWA) ───────────────────────── */
+  /* ── Service Worker Registration + Update Notification (PWA) ── */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('/sw.js').then(function(reg) {
         console.log('Satyaseva PWA Service Worker registered:', reg.scope);
+
+        // Check for updates periodically
+        reg.addEventListener('updatefound', function() {
+          var newWorker = reg.installing;
+          if (!newWorker) return;
+
+          newWorker.addEventListener('statechange', function() {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // New version available — show update toast
+              showUpdateToast(reg);
+            }
+          });
+        });
       }).catch(function(err) {
         console.warn('Satyaseva PWA Service Worker registration failed:', err);
       });
     });
   }
+
+  function showUpdateToast(reg) {
+    if (document.getElementById('sscs-update-toast')) return;
+    var toast = document.createElement('div');
+    toast.id = 'sscs-update-toast';
+    toast.style.cssText = [
+      'position:fixed', 'bottom:20px', 'left:50%', 'transform:translateX(-50%) translateY(80px)',
+      'z-index:9999', 'background:var(--ink,#1e293b)', 'color:var(--card,#fff)',
+      'padding:12px 24px', 'font-size:13px', 'font-weight:600',
+      'font-family:var(--font-sans,sans-serif)',
+      'border-radius:999px', 'box-shadow:0 8px 32px rgba(0,0,0,0.3)',
+      'display:flex', 'align-items:center', 'gap:12px',
+      'transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)',
+      'max-width:90vw'
+    ].join(';');
+    toast.innerHTML = '<span>✨ New content available</span>' +
+      '<button id="sscs-update-btn" style="background:var(--gold,#d97706);color:#fff;border:none;padding:6px 16px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">Refresh</button>' +
+      '<button id="sscs-update-dismiss" style="background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font-size:16px;padding:0 4px;" aria-label="Dismiss">✕</button>';
+
+    document.body.appendChild(toast);
+    // Animate in
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+      });
+    });
+
+    document.getElementById('sscs-update-btn').addEventListener('click', function() {
+      if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+      window.location.reload();
+    });
+    document.getElementById('sscs-update-dismiss').addEventListener('click', function() {
+      toast.style.transform = 'translateX(-50%) translateY(80px)';
+      setTimeout(function() { toast.remove(); }, 400);
+    });
+  }
+
 
   /* ── GDPR Cookie Consent Banner ──────────────────────────────── */
   function initCookieConsent() {
@@ -253,8 +325,10 @@
 
   /* ── Right-click & Inspection Deterrents ─────────────────────── */
   function initInspectProtection() {
-    // Disable right-click context menu
+    // Disable right-click context menu, except on inputs
     document.addEventListener('contextmenu', function(e) {
+      var tag = e.target.tagName.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
       e.preventDefault();
     });
 
@@ -289,6 +363,28 @@
     });
   }
 
+  /* ── Back to Top Floating Arrow Button ───────────────────────────── */
+  function initBackToTop() {
+    var btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    function toggleBtn() {
+      if (window.scrollY > 280) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', toggleBtn, { passive: true });
+    toggleBtn();
+
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // Initialize on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
@@ -296,12 +392,14 @@
       initCookieConsent();
       initTheme();
       initCounters();
+      initBackToTop();
     });
   } else {
     initInspectProtection();
     initCookieConsent();
     initTheme();
     initCounters();
+    initBackToTop();
   }
 })();
 

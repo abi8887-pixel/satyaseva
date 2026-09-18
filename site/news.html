@@ -3,47 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>News & Updates — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Latest news, announcements, and blog updates from the Satyaseva Catechist Sisters of the Families.">
+  <title>News &amp; Updates — Satyaseva Catechist Sisters</title>
+  <meta name="description" content="Latest news, announcements, and updates from the Satyaseva Catechist Sisters of the Families.">
   <link rel="canonical" href="https://satyasevasisters.org/news.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
   <style>
+    /* ── News Header ───────────────────────────────────────── */
+    .news-header {
+      text-align: center;
+      padding: 100px 32px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .news-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin: 16px 0 12px;
+      line-height: 1.15;
+    }
+    .news-header p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── News Grid ─────────────────────────────────────────── */
     .news-grid {
       max-width: 1080px;
-      margin: 0 auto;
-      padding: 40px 32px;
+      margin: 24px auto 0;
+      padding: 0 32px 40px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
     }
+
+    /* ── News Card ─────────────────────────────────────────── */
     .news-card {
       background: var(--card);
-      border: 2px solid var(--ink);
-      box-shadow: 6px 6px 0 var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: var(--elev-2);
       display: flex;
       flex-direction: column;
-      transition: transform 0.1s, box-shadow 0.1s;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      animation: newsSlideIn 0.4s ease both;
+      overflow: hidden;
     }
     .news-card:hover {
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0 var(--ink);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--elev-3);
+    }
+    @keyframes newsSlideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Image section */
+    .news-image-wrap {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 2px solid var(--ink);
+      background: var(--surface-alt);
     }
     .news-image {
       width: 100%;
-      height: 200px;
+      height: 100%;
       object-fit: cover;
-      border-bottom: 2px solid var(--ink);
-      background: var(--bg);
+      transition: transform 0.3s ease;
     }
+    .news-card:hover .news-image {
+      transform: scale(1.03);
+    }
+    .news-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      opacity: 0.25;
+      background: var(--surface-alt);
+    }
+
+    /* Content section */
     .news-content {
       padding: 24px;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
+    }
+    .news-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
     }
     .news-date {
       font-size: 11px;
@@ -51,75 +110,177 @@
       text-transform: uppercase;
       letter-spacing: 0.15em;
       color: var(--ink-soft);
-      margin-bottom: 12px;
+    }
+    .news-badge-new {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--gold-tint);
+      color: var(--gold-deep);
+      border: 1px solid var(--gold-border);
+      padding: 2px 8px;
+      border-radius: var(--r-pill);
     }
     .news-title {
       font-family: 'Playfair Display', serif;
       font-size: 22px;
       font-weight: 700;
-      margin: 0 0 16px;
+      margin: 0 0 14px;
       line-height: 1.3;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .news-title:hover {
+      color: var(--sage-deep);
     }
     .news-body {
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--ink-soft);
-      margin: 0 0 20px;
+      margin: 0 0 16px;
       flex-grow: 1;
+    }
+    .news-body.collapsed {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .news-read-more {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sage-deep);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font-sans);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .news-read-more:hover {
+      color: var(--sage);
     }
     .news-author {
       font-size: 12px;
       font-weight: 600;
       color: var(--ink);
-      border-top: 1px solid var(--ink);
+      border-top: 1px solid var(--line);
       padding-top: 12px;
       margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+
+    /* Load More */
+    .load-more-wrap {
+      text-align: center;
+      padding: 16px 32px 80px;
+    }
+    .load-more-btn {
+      padding: 14px 36px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      background: var(--card);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      box-shadow: var(--elev-1);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .load-more-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--elev-2);
+    }
+    .load-more-btn:active {
+      transform: translate(0, 0);
+      box-shadow: none;
+    }
+
+    /* Empty state */
     .empty-state {
       grid-column: 1 / -1;
       text-align: center;
-      padding: 60px;
-      border: 2px dashed var(--ink-faint);
+      padding: 80px 32px;
+      border: 2px dashed var(--line);
       color: var(--ink-soft);
       font-weight: 500;
+      background: var(--surface-alt);
+    }
+    .empty-state .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .empty-state p {
+      font-size: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .news-grid { padding: 0 16px 24px; gap: 20px; grid-template-columns: 1fr; }
+      .news-header { padding: 80px 16px 16px; }
+      .load-more-wrap { padding: 16px 16px 60px; }
     }
   </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <nav id="nav" role="navigation">
+  <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
         <a href="events.html">Events</a>
-        <a href="news.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">News</a>
+        <a href="news.html" aria-current="page" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">News</a>
         <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+        <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+        <select id="lang-select" aria-label="Select language">
+          <option value="en" selected>English</option>
+          <option value="pl">Polski</option>
+        </select>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
 
   <main id="main-content">
-    <div class="nav-header">
-      <div class="nav-header-inner">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        <h1 style="font-family:'Playfair Display',serif; font-size:20px; font-weight:700; margin:0;">News & Updates</h1>
-      </div>
-    </div>
+    <header class="news-header">
+      <div class="eyebrow">From Our Communities</div>
+      <h1>News &amp; Updates</h1>
+      <p>Announcements, reflections, and stories from the Satyaseva Sisters across India, Germany, and Poland.</p>
+    </header>
 
     <section class="news-grid" id="news-container">
-      <div class="empty-state">Loading news...</div>
+      <div class="empty-state">
+        <div class="empty-icon">📰</div>
+        <p>Loading news...</p>
+      </div>
     </section>
+
+    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+      <button type="button" class="load-more-btn" id="load-more-btn">Load More Articles</button>
+    </div>
   </main>
 
   <footer>
@@ -129,50 +290,156 @@
       <p>Service to God's Truth since 1976.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="impressum.html">Impressum</a>
       </div>
+      <div class="footer-fine">&copy; <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS).</div>
     </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('/api/news')
-        .then(r => r.json())
-        .then(news => {
-          const container = document.getElementById('news-container');
-          if (!Array.isArray(news) || news.length === 0) {
-            container.innerHTML = '<div class="empty-state">No recent news or updates available.</div>';
-            return;
-          }
-          let html = '';
-          news.forEach(n => {
-            const d = new Date(n.date);
-            const dateStr = isNaN(d) ? n.date : d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-            const imageHtml = n.image_path ? `<img src="${n.image_path}" class="news-image" alt="News Image">` : `<div class="news-image" style="display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--ink-faint);">📰</div>`;
-            
-            // basic linebreaks to html for content
-            const safeContent = n.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+  (function() {
+    'use strict';
 
-            html += `
-              <div class="news-card reveal visible">
-                ${imageHtml}
-                <div class="news-content">
-                  <div class="news-date">${dateStr}</div>
-                  <h3 class="news-title">${n.title}</h3>
-                  <p class="news-body">${safeContent}</p>
-                  <div class="news-author">By ${n.author || 'Admin'}</div>
-                </div>
-              </div>
-            `;
-          });
-          container.innerHTML = html;
-        })
-        .catch(err => {
-          document.getElementById('news-container').innerHTML = '<div class="empty-state">Unable to load news.</div>';
-          console.error(err);
+    var PAGE_SIZE = 6;
+    var allNews = [];
+    var visibleCount = PAGE_SIZE;
+
+    /* ── Helpers ────────────────────────────────────────────── */
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function isNew(dateStr) {
+      var d = new Date(dateStr);
+      if (isNaN(d)) return false;
+      var diff = Date.now() - d.getTime();
+      return diff < 7 * 24 * 60 * 60 * 1000; // within 7 days
+    }
+
+    function relativeTime(dateStr) {
+      var d = new Date(dateStr);
+      if (isNaN(d)) return dateStr;
+      var diff = Date.now() - d.getTime();
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      if (days === 0) return 'Today';
+      if (days === 1) return 'Yesterday';
+      if (days < 7) return days + ' days ago';
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    /* ── Render ─────────────────────────────────────────────── */
+    function renderNews() {
+      var container = document.getElementById('news-container');
+      var loadMoreWrap = document.getElementById('load-more-wrap');
+
+      if (!allNews.length) {
+        container.innerHTML = '<div class="empty-state"><div class="empty-icon">📰</div><p>No news or updates available yet. Please check back later.</p></div>';
+        loadMoreWrap.style.display = 'none';
+        return;
+      }
+
+      var toShow = allNews.slice(0, visibleCount);
+      var html = '';
+
+      toShow.forEach(function(n, i) {
+        var dateStr = relativeTime(n.date);
+        var newBadge = isNew(n.date) ? '<span class="news-badge-new">New</span>' : '';
+
+        var imageHtml;
+        if (n.image_path) {
+          imageHtml = '<div class="news-image-wrap"><img src="' + n.image_path + '" class="news-image" alt="' + escapeHtml(n.title) + '" loading="lazy"></div>';
+        } else {
+          imageHtml = '<div class="news-image-wrap"><div class="news-image-placeholder">✝</div></div>';
+        }
+
+        var safeContent = escapeHtml(n.content).replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+        var needsExpand = n.content && n.content.length > 200;
+
+        html += '<div class="news-card" style="animation-delay:' + (i * 0.05) + 's;">' +
+          imageHtml +
+          '<div class="news-content">' +
+            '<div class="news-meta">' +
+              '<span class="news-date">' + dateStr + '</span>' +
+              newBadge +
+            '</div>' +
+            '<h3 class="news-title" data-news-id="' + (n.id || i) + '">' + escapeHtml(n.title) + '</h3>' +
+            '<div class="news-body' + (needsExpand ? ' collapsed' : '') + '" id="news-body-' + (n.id || i) + '">' + safeContent + '</div>' +
+            (needsExpand ? '<button type="button" class="news-read-more" data-target="news-body-' + (n.id || i) + '">Read more →</button>' : '') +
+            '<div class="news-author">✍ By ' + escapeHtml(n.author || 'Admin') + '</div>' +
+          '</div>' +
+        '</div>';
+      });
+
+      container.innerHTML = html;
+
+      // Show/hide load more
+      if (visibleCount < allNews.length) {
+        loadMoreWrap.style.display = '';
+        document.getElementById('load-more-btn').textContent = 'Load More (' + (allNews.length - visibleCount) + ' remaining)';
+      } else {
+        loadMoreWrap.style.display = 'none';
+      }
+
+      // Wire expand/collapse
+      container.querySelectorAll('.news-read-more').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var target = document.getElementById(btn.getAttribute('data-target'));
+          if (!target) return;
+          var isCollapsed = target.classList.contains('collapsed');
+          target.classList.toggle('collapsed');
+          btn.textContent = isCollapsed ? '← Show less' : 'Read more →';
         });
+      });
+
+      // Title click also toggles
+      container.querySelectorAll('.news-title').forEach(function(title) {
+        title.addEventListener('click', function() {
+          var card = title.closest('.news-card');
+          var btn = card ? card.querySelector('.news-read-more') : null;
+          if (btn) btn.click();
+        });
+      });
+    }
+
+    /* ── Load More ─────────────────────────────────────────── */
+    document.getElementById('load-more-btn').addEventListener('click', function() {
+      visibleCount += PAGE_SIZE;
+      renderNews();
+      // Smooth scroll to the first new card
+      var cards = document.querySelectorAll('.news-card');
+      var newCard = cards[visibleCount - PAGE_SIZE];
+      if (newCard) {
+        newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
+
+    /* ── Init ──────────────────────────────────────────────── */
+    function loadNews() {
+      fetch('/api/news')
+        .then(function(r) { return r.json(); })
+        .then(function(news) {
+          if (!Array.isArray(news)) news = [];
+          allNews = news;
+          renderNews();
+        })
+        .catch(function() {
+          allNews = [];
+          renderNews();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadNews);
+    } else {
+      loadNews();
+    }
+  })();
   </script>
   <script src="js/main.js" defer></script>
 </body>

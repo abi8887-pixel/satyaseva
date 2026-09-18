@@ -9,7 +9,7 @@
 
 .bio-content p { margin-bottom: 24px; font-size: 16px; color: var(--ink-soft); line-height: 1.8; }
 
-.bio-image { margin: 32px 0; border: 2px solid var(--ink); overflow: hidden; box-shadow: 6px 6px 0 var(--ink); }
+.bio-image { margin: 32px 0; border: 1px solid var(--line); overflow: hidden; box-shadow: var(--elev-2); }
 .bio-image img { width: 100%; height: auto; display: block; border-bottom: 2px solid var(--ink); }
 .bio-image-caption { font-size: 13px; color: var(--ink); text-align: center; margin-top: 12px; font-style: italic; margin-bottom: 16px; font-family: 'Playfair Display', serif; }
 
@@ -18,15 +18,15 @@
 
 .bio-content blockquote {
   margin: 40px 0; padding: 32px;
-  background: var(--card); border: 2px solid var(--ink);
+  background: var(--card); border: 1px solid var(--line);
   font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; font-style: italic;
   color: var(--ink); line-height: 1.6;
-  box-shadow: 6px 6px 0 var(--ink); text-align: center;
+  box-shadow: var(--elev-2); text-align: center;
 }
 
 .milestones-card {
   margin: 60px 0 20px; padding: 32px;
-  background: var(--card); border: 2px solid var(--ink);
+  background: var(--card); border: 1px solid var(--line);
   box-shadow: 8px 8px 0 var(--ink);
 }
 .milestones-card h2 { font-size: 24px; margin-bottom: 24px; font-family: 'Playfair Display', serif; text-align: center; border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
@@ -36,13 +36,13 @@
 }
 .milestone-chip {
   padding: 16px;
-  background: var(--card); border: 2px solid var(--ink);
+  background: var(--card); border: 1px solid var(--line);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: var(--elev-1);
 }
 .milestone-chip:hover {
   transform: translate(2px, 2px);
-  box-shadow: 0 0 0 var(--ink); background: var(--bg);
+  box-shadow: none; background: var(--bg);
 }
 .m-year {
   display: block; font-family: 'Inter', sans-serif;
@@ -57,8 +57,8 @@
 
 .bio-footer {
   margin-top: 60px; padding: 32px;
-  background: var(--card); border: 2px solid var(--ink);
-  text-align: center; box-shadow: 6px 6px 0 var(--ink);
+  background: var(--card); border: 1px solid var(--line);
+  text-align: center; box-shadow: var(--elev-2);
 }
 .bio-footer p { font-size: 14px; color: var(--ink-soft); margin: 0 0 16px; font-weight: 500; }
 .bio-footer .cta-link { display: inline-block; }

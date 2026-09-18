@@ -851,6 +851,67 @@ def update_prayer_request_status(req_id, status):
     return True
 
 
+# ── Event Updates ──
+def update_event(event_id, data):
+    """Update an existing event by ID."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE events SET title = ?, date = ?, time = ?, location = ?, description = ?
+            WHERE id = ?
+        """, (data.get('title'), data.get('date'), data.get('time', ''),
+              data.get('location', ''), data.get('description', ''), event_id))
+        conn.commit()
+    return event_id
+
+# ── News Updates ──
+def update_news(news_id, data):
+    """Update an existing news article by ID."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE news SET title = ?, author = ?, date = ?, content = ?, image_path = ?
+            WHERE id = ?
+        """, (data.get('title'), data.get('author', 'Admin'), data.get('date'),
+              data.get('content'), data.get('image_path', ''), news_id))
+        conn.commit()
+    return news_id
+
+# ── Newsletter Unsubscribe ──
+def delete_newsletter_subscriber(email):
+    """Remove a subscriber by email. Returns True if deleted, False if not found."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM newsletter_subscribers WHERE email = ?", (email,))
+        conn.commit()
+        return cursor.rowcount > 0
+
+# ── Public Stats (for homepage impact counters) ──
+def get_public_stats():
+    """Returns aggregate counts safe for public display."""
+    init_db()
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM stations")
+        total_stations = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM events")
+        total_events = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM news")
+        total_news = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM prayer_requests WHERE status = 'prayed'")
+        prayers_prayed = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM prayer_requests")
+        total_prayers = cursor.fetchone()[0]
+    return {
+        'communities': total_stations,
+        'events': total_events,
+        'newsArticles': total_news,
+        'prayersPrayed': prayers_prayed,
+        'totalPrayers': total_prayers,
+        'yearsFounded': 1976
+    }
+
+
 # ── Stats & Diagnostics ──
 def get_db_stats():
     """Returns statistics about the SQLite database."""
