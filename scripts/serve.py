@@ -180,6 +180,8 @@ class SistersHTTPRequestHandler(SimpleHTTPRequestHandler):
             self.send_json_response(200, db.get_newsletter_subscribers())
         elif path == '/api/prayers':
             self.send_json_response(200, db.get_prayer_requests(query.get('status', [None])[0]))
+        elif path == '/api/stats':
+            self.send_json_response(200, db.get_public_stats())
         else:
             # Block direct access to the database file or backup directory even if lingering in site/
             if path.endswith('.db') or '/backups/' in path:
@@ -258,6 +260,14 @@ class SistersHTTPRequestHandler(SimpleHTTPRequestHandler):
             self.handle_update_contact_status()
         elif path == '/api/newsletter':
             self.handle_post_newsletter()
+        elif path == '/api/newsletter/delete':
+            self.handle_delete_newsletter()
+        elif path == '/api/events/update':
+            if not self.is_authorized(): return self.send_error(401, "Unauthorized")
+            self.handle_update_event()
+        elif path == '/api/news/update':
+            if not self.is_authorized(): return self.send_error(401, "Unauthorized")
+            self.handle_update_news()
         elif path == '/api/prayers':
             self.handle_post_prayer()
         elif path == '/api/prayers/status':
@@ -773,6 +783,43 @@ class SistersHTTPRequestHandler(SimpleHTTPRequestHandler):
                 return self.send_json_response(400, {"error": "Missing intention"})
             req_id = db.add_prayer_request(data)
             self.send_json_response(200, {"success": True, "id": req_id})
+        except Exception as e:
+            self.send_json_response(500, {"error": self._safe_error(e)})
+
+    def handle_update_event(self):
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            data = json.loads(self.rfile.read(content_length).decode('utf-8')) if content_length > 0 else {}
+            if not data.get('id') or not data.get('title') or not data.get('date'):
+                return self.send_json_response(400, {"error": "Missing id, title or date"})
+            db.update_event(data['id'], data)
+            self.send_json_response(200, {"success": True, "id": data['id']})
+        except Exception as e:
+            self.send_json_response(500, {"error": self._safe_error(e)})
+
+    def handle_update_news(self):
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            data = json.loads(self.rfile.read(content_length).decode('utf-8')) if content_length > 0 else {}
+            if not data.get('id') or not data.get('title') or not data.get('content'):
+                return self.send_json_response(400, {"error": "Missing id, title or content"})
+            db.update_news(data['id'], data)
+            self.send_json_response(200, {"success": True, "id": data['id']})
+        except Exception as e:
+            self.send_json_response(500, {"error": self._safe_error(e)})
+
+    def handle_delete_newsletter(self):
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            data = json.loads(self.rfile.read(content_length).decode('utf-8')) if content_length > 0 else {}
+            email = data.get('email', '').strip()
+            if not email or '@' not in email:
+                return self.send_json_response(400, {"error": "Missing or invalid email"})
+            deleted = db.delete_newsletter_subscriber(email)
+            if deleted:
+                self.send_json_response(200, {"success": True, "message": "Unsubscribed successfully"})
+            else:
+                self.send_json_response(404, {"error": "Email not found"})
         except Exception as e:
             self.send_json_response(500, {"error": self._safe_error(e)})
 

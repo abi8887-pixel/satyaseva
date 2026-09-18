@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -47,19 +47,19 @@
     .filter-chip {
       background: var(--card);
       color: var(--ink);
-      border: 2px solid var(--ink);
+      border: 1px solid var(--line);
       padding: 8px 16px;
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       cursor: pointer;
-      box-shadow: 3px 3px 0 var(--ink);
+      box-shadow: var(--elev-1);
       transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
     }
     .filter-chip:hover {
       transform: translate(-1px, -1px);
-      box-shadow: 4px 4px 0 var(--ink);
+      box-shadow: var(--elev-1);
     }
     .filter-chip.active {
       background: var(--ink);
@@ -101,11 +101,11 @@
       padding: 12px 16px;
       font-family: 'Inter', sans-serif;
       font-size: 13.5px;
-      border: 2px solid var(--ink);
+      border: 1px solid var(--line);
       background: var(--card);
       color: var(--ink);
       box-sizing: border-box;
-      box-shadow: 3px 3px 0 var(--ink);
+      box-shadow: var(--elev-1);
     }
     .map-search-input:focus {
       outline: none;
@@ -127,15 +127,15 @@
     }
     .station-card {
       background: var(--card);
-      border: 2px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: var(--elev-1);
       padding: 14px 16px;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
     }
     .station-card:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--ink);
+      box-shadow: var(--elev-2);
       background: var(--gold-glow);
     }
     .station-card.active {
@@ -172,7 +172,7 @@
 
     /* Leaflet Map Frame */
     .map-frame {
-      border: 2px solid var(--ink);
+      border: 1px solid var(--line);
       box-shadow: 8px 8px 0 var(--ink);
       background: var(--card);
       min-height: 600px;
@@ -188,7 +188,7 @@
     .leaflet-popup-content-wrapper {
       background: var(--card) !important;
       color: var(--ink) !important;
-      border: 2px solid var(--ink) !important;
+      border: 1px solid var(--line) !important;
       border-radius: 0 !important;
       box-shadow: 5px 5px 0 var(--ink) !important;
       font-family: 'Inter', sans-serif !important;
@@ -196,7 +196,7 @@
     }
     .leaflet-popup-tip {
       background: var(--card) !important;
-      border: 2px solid var(--ink) !important;
+      border: 1px solid var(--line) !important;
     }
     .popup-inner strong {
       font-family: 'Playfair Display', serif;
@@ -256,7 +256,7 @@
         <a href="vocations.html">Vocations</a>
         <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html" style="color:#0891b2; font-weight:700;">Donate</a>
+        <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
@@ -337,7 +337,7 @@
   </footer>
 
   <!-- Fallback dataset script for 100% resilient static hosting -->
-  <script src="data/communities-data.js?v=1"></script>
+  <script src="data/communities-data.js?v=3"></script>
   <script src="js/main.js" defer></script>
   <script>
     var map;

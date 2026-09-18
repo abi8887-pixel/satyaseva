@@ -69,6 +69,10 @@
 
   function renderGrid(communities, imagesManifest) {
     grid.innerHTML = '';
+    if (communities.length === 0) {
+      grid.innerHTML = '<div class="grid-empty">No communities found matching your criteria.</div>';
+      return;
+    }
     communities.forEach(function(c) {
       grid.appendChild(renderCard(c, imagesManifest));
     });
@@ -90,7 +94,194 @@
   .then(function(results) {
     var communities = results[0];
     var imagesManifest = results[1] || {};
-    renderGrid(communities, imagesManifest);
+    
+    var allCommunities = communities;
+    var currentCountry = 'all';
+    var searchQuery = '';
+
+    // Initial render
+    renderGrid(allCommunities, imagesManifest);
+
+    // Setup IntersectionObserver for scroll reveal
+    var observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    var cardObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry, index) {
+        if (entry.isIntersecting) {
+          // Staggered reveal based on index in this batch
+          setTimeout(function() {
+            entry.target.classList.remove('is-hidden');
+          }, index * 75);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    function observeCards() {
+      var cards = document.querySelectorAll('.comm-card');
+      cards.forEach(function(card) {
+        card.classList.add('is-hidden');
+        cardObserver.observe(card);
+      });
+    }
+    
+    // Initial observe
+    observeCards();
+
+    // Sliding Pill Logic
+    var tabsContainer = document.getElementById('filter-tabs');
+    var tabs = document.querySelectorAll('.filter-tab');
+    
+    function updatePill(tab) {
+      if (!tabsContainer || !tab) return;
+      // Get the relative offset within the container
+      var containerRect = tabsContainer.getBoundingClientRect();
+      var tabRect = tab.getBoundingClientRect();
+      var offsetLeft = tabRect.left - containerRect.left - 4; // 4px padding in container
+      
+      tabsContainer.style.setProperty('--pill-width', tabRect.width + 'px');
+      tabsContainer.style.setProperty('--pill-offset', offsetLeft + 'px');
+    }
+
+    // Set initial pill position
+    var activeTab = document.querySelector('.filter-tab.active');
+    if (activeTab) {
+      // Need a slight delay to ensure fonts/layout are loaded for correct width
+      setTimeout(function() { updatePill(activeTab); }, 50);
+      window.addEventListener('resize', function() { updatePill(document.querySelector('.filter-tab.active')); });
+    }
+
+    // Setup filtering with FLIP animation
+    function applyFilters() {
+      var filtered = allCommunities;
+
+      if (currentCountry !== 'all') {
+        filtered = filtered.filter(function(c) { return c.country === currentCountry; });
+      }
+
+      if (searchQuery) {
+        var lowerQuery = searchQuery.toLowerCase();
+        filtered = filtered.filter(function(c) {
+          var nameStr = String(c.name || '');
+          var locStr = String(c.location || '');
+          var descStr = String(c.description || '');
+          var minStr = Array.isArray(c.ministries) ? c.ministries.join(' ') : String(c.ministries || '');
+          var searchable = (nameStr + ' ' + locStr + ' ' + descStr + ' ' + minStr).toLowerCase();
+          return searchable.indexOf(lowerQuery) !== -1;
+        });
+      }
+
+      // FLIP First: Record current positions
+      var oldCards = Array.from(grid.querySelectorAll('.comm-card'));
+      var firstRects = {};
+      oldCards.forEach(function(card) {
+        if (card && card.id) {
+          firstRects[card.id] = card.getBoundingClientRect();
+        }
+      });
+
+      // Update DOM
+      renderGrid(filtered, imagesManifest);
+
+      // FLIP Last & Invert
+      var newCards = Array.from(grid.querySelectorAll('.comm-card'));
+      newCards.forEach(function(card) {
+        var firstRect = firstRects[card.id];
+        if (firstRect) {
+          // Card existed before, calculate delta
+          var lastRect = card.getBoundingClientRect();
+          var deltaX = firstRect.left - lastRect.left;
+          var deltaY = firstRect.top - lastRect.top;
+          
+          if (deltaX !== 0 || deltaY !== 0) {
+            // Invert
+            card.style.transform = 'translate(' + deltaX + 'px, ' + deltaY + 'px)';
+            card.style.transition = 'none';
+            
+            // Play
+            requestAnimationFrame(function() {
+              if (card) {
+                card.style.transform = '';
+                card.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+              }
+            });
+          }
+        } else {
+          // New card appearing
+          card.classList.add('is-hidden');
+          cardObserver.observe(card);
+        }
+      });
+      
+      // Update "All" tab count dynamically
+      var allTab = document.querySelector('.filter-tab[data-filter="all"]');
+      if (allTab) {
+        allTab.textContent = 'All (' + (searchQuery ? filtered.length : allCommunities.length) + ')';
+        // If "all" is active, update pill width since text changed
+        if (currentCountry === 'all') updatePill(allTab);
+      }
+    }
+
+    // Tab Listeners
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { 
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        
+        updatePill(tab);
+        
+        currentCountry = tab.getAttribute('data-filter');
+        applyFilters();
+      });
+    });
+
+    // Search Listener & Controls
+    var searchInput = document.getElementById('comm-search');
+    var clearBtn = document.getElementById('comm-search-clear');
+    var searchTimeout = null;
+
+    if (searchInput) {
+      function handleSearchInput() {
+        searchQuery = searchInput.value.trim();
+        if (clearBtn) {
+          clearBtn.style.display = searchQuery ? 'inline-flex' : 'none';
+        }
+        if (searchTimeout) clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(function() {
+          applyFilters();
+        }, 150);
+      }
+
+      searchInput.addEventListener('input', handleSearchInput);
+
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+        } else if (e.key === 'Escape') {
+          searchInput.value = '';
+          handleSearchInput();
+        }
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          searchInput.focus();
+          handleSearchInput();
+        });
+      }
+
+      var searchIcon = document.querySelector('.search-icon');
+      if (searchIcon) {
+        searchIcon.addEventListener('click', function() {
+          searchInput.focus();
+        });
+      }
+    }
+
   })
   .catch(function(err) {
     if (window.__INITIAL_COMMUNITIES__ && Array.isArray(window.__INITIAL_COMMUNITIES__)) {

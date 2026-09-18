@@ -77,6 +77,25 @@
     "gallery": []
   },
   {
+    "id": "community-1789678767560",
+    "name": "Christ the King Convent",
+    "established": 1987,
+    "location": "Jaggeri",
+    "country": "India",
+    "badge": "",
+    "description": "",
+    "contact": {
+      "address": "",
+      "phone": "",
+      "email": ""
+    },
+    "ministries": [],
+    "members": [],
+    "stories": [],
+    "heroImage": "",
+    "gallery": []
+  },
+  {
     "id": "generalate",
     "name": "Generalate",
     "established": 1987,

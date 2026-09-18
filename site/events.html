@@ -3,108 +3,309 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Events & Calendar — Satyaseva Catechist Sisters</title>
+  <title>Events &amp; Calendar — Satyaseva Catechist Sisters</title>
   <meta name="description" content="Upcoming events, feasts, and community gatherings of the Satyaseva Catechist Sisters of the Families.">
   <link rel="canonical" href="https://satyasevasisters.org/events.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
   <style>
+    /* ── Events Header ─────────────────────────────────────── */
+    .events-header {
+      text-align: center;
+      padding: 100px 32px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .events-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin: 16px 0 12px;
+      line-height: 1.15;
+    }
+    .events-header p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Toggle Tabs ───────────────────────────────────────── */
+    .events-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      max-width: 420px;
+      margin: 28px auto 8px;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--r-pill);
+      padding: 4px;
+    }
+    .events-toggle button {
+      flex: 1;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: none;
+      border: none;
+      color: var(--ink-soft);
+      cursor: pointer;
+      border-radius: var(--r-pill);
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+    .events-toggle button.active {
+      background: var(--ink);
+      color: var(--card);
+      box-shadow: var(--elev-1);
+    }
+    .events-toggle button:not(.active):hover {
+      color: var(--ink);
+      background: var(--card);
+    }
+    .events-count {
+      font-size: 11px;
+      background: var(--gold);
+      color: #fff;
+      border-radius: var(--r-pill);
+      padding: 1px 7px;
+      margin-left: 6px;
+      font-weight: 700;
+    }
+    .events-toggle button.active .events-count {
+      background: var(--gold);
+    }
+
+    /* ── Events List ───────────────────────────────────────── */
     .events-list {
       max-width: 800px;
       margin: 0 auto;
-      padding: 40px 32px;
+      padding: 16px 32px 80px;
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
+
+    /* ── Event Card ────────────────────────────────────────── */
     .event-card {
       background: var(--card);
-      border: 2px solid var(--ink);
-      box-shadow: 6px 6px 0 var(--ink);
-      padding: 24px;
-      transition: transform 0.1s, box-shadow 0.1s;
+      border: 1px solid var(--line);
+      box-shadow: var(--elev-2);
+      padding: 28px;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      animation: eventSlideIn 0.35s ease both;
     }
     .event-card:hover {
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0 var(--ink);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--elev-3);
+    }
+    @keyframes eventSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .event-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
     }
     .event-date {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--ink);
       border-bottom: 2px solid var(--ink);
-      padding-bottom: 8px;
-      margin-bottom: 16px;
+      padding-bottom: 6px;
       display: inline-block;
     }
+
+    /* Badges */
+    .event-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: var(--r-pill);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .event-badge.happening-now {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+      animation: badgePulse 2s ease infinite;
+    }
+    [data-theme="dark"] .event-badge.happening-now {
+      background: #064e3b;
+      color: #6ee7b7;
+      border-color: #047857;
+    }
+    .event-badge.coming-soon {
+      background: var(--gold-tint);
+      color: var(--gold-deep);
+      border: 1px solid var(--gold-border);
+    }
+    .event-badge.past {
+      background: var(--surface-alt);
+      color: var(--ink-faint);
+      border: 1px solid var(--line);
+    }
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    }
+
     .event-title {
       font-family: 'Playfair Display', serif;
       font-size: 24px;
       font-weight: 700;
       margin: 0 0 12px;
+      line-height: 1.3;
     }
     .event-details {
       font-size: 13px;
       color: var(--ink-soft);
       display: flex;
+      flex-wrap: wrap;
       gap: 16px;
       margin-bottom: 12px;
       font-weight: 600;
     }
+    .event-details span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
     .event-desc {
       font-size: 15px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--ink-soft);
       margin: 0;
     }
+
+    /* Countdown bar */
+    .event-countdown {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .countdown-unit {
+      text-align: center;
+    }
+    .countdown-num {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      line-height: 1;
+    }
+    .countdown-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      margin-top: 2px;
+    }
+
+    /* Empty state */
     .empty-state {
       text-align: center;
-      padding: 60px;
-      border: 2px dashed var(--ink-faint);
+      padding: 80px 32px;
+      border: 2px dashed var(--line);
       color: var(--ink-soft);
       font-weight: 500;
+      background: var(--surface-alt);
+    }
+    .empty-state .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .empty-state p {
+      font-size: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .events-list { padding: 16px 16px 60px; gap: 16px; }
+      .event-card { padding: 20px; }
+      .event-card-top { flex-direction: column; gap: 8px; }
+      .event-title { font-size: 20px; }
+      .events-header { padding: 80px 16px 16px; }
+      .event-countdown { gap: 8px; }
+      .countdown-num { font-size: 18px; }
     }
   </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <nav id="nav" role="navigation">
+  <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
-        <a href="events.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Events</a>
+        <a href="events.html" aria-current="page" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Events</a>
         <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html" style="color:#0891b2; font-weight:600;">Donate</a>
+        <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+        <select id="lang-select" aria-label="Select language">
+          <option value="en" selected>English</option>
+          <option value="pl">Polski</option>
+        </select>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
 
   <main id="main-content">
-    <div class="nav-header">
-      <div class="nav-header-inner">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        <h1 style="font-family:'Playfair Display',serif; font-size:20px; font-weight:700; margin:0;">Events & Calendar</h1>
-      </div>
+    <header class="events-header">
+      <div class="eyebrow">Calendar & Gatherings</div>
+      <h1>Events</h1>
+      <p>Feasts, retreats, community gatherings, and celebrations from our missions across India, Germany, and Poland.</p>
+    </header>
+
+    <div class="events-toggle" id="events-toggle" role="tablist">
+      <button type="button" class="active" data-view="upcoming" role="tab" aria-selected="true" id="tab-upcoming">
+        Upcoming <span class="events-count" id="count-upcoming">0</span>
+      </button>
+      <button type="button" data-view="past" role="tab" aria-selected="false" id="tab-past">
+        Past <span class="events-count" id="count-past">0</span>
+      </button>
+      <button type="button" data-view="all" role="tab" aria-selected="false" id="tab-all">
+        All
+      </button>
     </div>
 
-    <section class="events-list" id="events-container">
-      <div class="empty-state">Loading events...</div>
+    <section class="events-list" id="events-container" role="tabpanel">
+      <div class="empty-state">
+        <div class="empty-icon">📅</div>
+        <p>Loading events...</p>
+      </div>
     </section>
   </main>
 
@@ -115,45 +316,177 @@
       <p>Service to God's Truth since 1976.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="impressum.html">Impressum</a>
       </div>
+      <div class="footer-fine">&copy; <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS).</div>
     </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+  (function() {
+    'use strict';
+
+    var allEvents = [];
+    var currentView = 'upcoming';
+
+    /* ── Fetch events from API ─────────────────────────────── */
+    function loadEvents() {
       fetch('/api/events')
-        .then(r => r.json())
-        .then(events => {
-          const container = document.getElementById('events-container');
-          if (!Array.isArray(events) || events.length === 0) {
-            container.innerHTML = '<div class="empty-state">No upcoming events scheduled at this time. Please check back later.</div>';
-            return;
-          }
-          let html = '';
-          events.forEach(e => {
-            const d = new Date(e.date);
-            const dateStr = isNaN(d) ? e.date : d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            html += `
-              <div class="event-card reveal visible">
-                <div class="event-date">${dateStr}</div>
-                <h3 class="event-title">${e.title}</h3>
-                <div class="event-details">
-                  ${e.time ? `<span>⏱ ${e.time}</span>` : ''}
-                  ${e.location ? `<span>📍 ${e.location}</span>` : ''}
-                </div>
-                <p class="event-desc">${e.description || ''}</p>
-              </div>
-            `;
-          });
-          container.innerHTML = html;
+        .then(function(r) { return r.json(); })
+        .then(function(events) {
+          if (!Array.isArray(events)) events = [];
+          allEvents = events;
+          updateCounts();
+          renderEvents();
         })
-        .catch(err => {
-          document.getElementById('events-container').innerHTML = '<div class="empty-state">Unable to load events.</div>';
-          console.error(err);
+        .catch(function() {
+          allEvents = [];
+          renderEvents();
         });
-    });
+    }
+
+    /* ── Classify events ───────────────────────────────────── */
+    function classifyEvent(event) {
+      var now = new Date();
+      var eventDate = new Date(event.date);
+      if (isNaN(eventDate)) return 'upcoming'; // unknown → show as upcoming
+
+      var diffMs = eventDate.getTime() - now.getTime();
+      var diffHours = diffMs / (1000 * 60 * 60);
+
+      if (diffHours >= -24 && diffHours <= 24) return 'happening';
+      if (diffMs > 0) return 'upcoming';
+      return 'past';
+    }
+
+    function getFilteredEvents() {
+      if (currentView === 'all') return allEvents.slice();
+      return allEvents.filter(function(e) {
+        var cls = classifyEvent(e);
+        if (currentView === 'upcoming') return cls === 'upcoming' || cls === 'happening';
+        return cls === 'past';
+      });
+    }
+
+    /* ── Count badges ──────────────────────────────────────── */
+    function updateCounts() {
+      var upcoming = 0, past = 0;
+      allEvents.forEach(function(e) {
+        var cls = classifyEvent(e);
+        if (cls === 'past') past++;
+        else upcoming++;
+      });
+      document.getElementById('count-upcoming').textContent = upcoming;
+      document.getElementById('count-past').textContent = past;
+    }
+
+    /* ── Countdown helper ──────────────────────────────────── */
+    function getCountdown(dateStr) {
+      var now = new Date();
+      var target = new Date(dateStr);
+      var diff = target.getTime() - now.getTime();
+      if (diff <= 0) return null;
+
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      return { days: days, hours: hours, mins: mins };
+    }
+
+    /* ── Render ─────────────────────────────────────────────── */
+    function renderEvents() {
+      var container = document.getElementById('events-container');
+      var events = getFilteredEvents();
+
+      if (events.length === 0) {
+        var msg = currentView === 'upcoming'
+          ? 'No upcoming events scheduled at this time. Please check back later.'
+          : currentView === 'past'
+            ? 'No past events recorded yet.'
+            : 'No events found.';
+        container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><p>' + msg + '</p></div>';
+        return;
+      }
+
+      var html = '';
+      events.forEach(function(e, i) {
+        var d = new Date(e.date);
+        var dateStr = isNaN(d) ? e.date : d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        var cls = classifyEvent(e);
+
+        // Badge
+        var badge = '';
+        if (cls === 'happening') {
+          badge = '<span class="event-badge happening-now">● Happening Now</span>';
+        } else if (cls === 'upcoming') {
+          var cd = getCountdown(e.date);
+          if (cd && cd.days <= 7) {
+            badge = '<span class="event-badge coming-soon">In ' + (cd.days > 0 ? cd.days + 'd ' : '') + cd.hours + 'h</span>';
+          }
+        } else {
+          badge = '<span class="event-badge past">Past Event</span>';
+        }
+
+        // Countdown for upcoming events within 30 days
+        var countdownHtml = '';
+        if (cls === 'upcoming' || cls === 'happening') {
+          var cd = getCountdown(e.date);
+          if (cd && cd.days <= 30) {
+            countdownHtml = '<div class="event-countdown">' +
+              '<div class="countdown-unit"><div class="countdown-num">' + cd.days + '</div><div class="countdown-label">Days</div></div>' +
+              '<div class="countdown-unit"><div class="countdown-num">' + cd.hours + '</div><div class="countdown-label">Hours</div></div>' +
+              '<div class="countdown-unit"><div class="countdown-num">' + cd.mins + '</div><div class="countdown-label">Min</div></div>' +
+            '</div>';
+          }
+        }
+
+        html += '<div class="event-card" style="animation-delay:' + (i * 0.06) + 's;">' +
+          '<div class="event-card-top">' +
+            '<div class="event-date">' + dateStr + '</div>' +
+            badge +
+          '</div>' +
+          '<h3 class="event-title">' + (e.title || '') + '</h3>' +
+          '<div class="event-details">' +
+            (e.time ? '<span>⏱ ' + e.time + '</span>' : '') +
+            (e.location ? '<span>📍 ' + e.location + '</span>' : '') +
+          '</div>' +
+          (e.description ? '<p class="event-desc">' + e.description + '</p>' : '') +
+          countdownHtml +
+        '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    /* ── Tab switching ─────────────────────────────────────── */
+    var toggleContainer = document.getElementById('events-toggle');
+    if (toggleContainer) {
+      toggleContainer.addEventListener('click', function(ev) {
+        var btn = ev.target.closest('button[data-view]');
+        if (!btn) return;
+        currentView = btn.getAttribute('data-view');
+        toggleContainer.querySelectorAll('button').forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        renderEvents();
+      });
+    }
+
+    /* ── Init ──────────────────────────────────────────────── */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadEvents);
+    } else {
+      loadEvents();
+    }
+  })();
   </script>
   <script src="js/main.js" defer></script>
 </body>
