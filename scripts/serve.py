@@ -78,18 +78,27 @@ def set_admin_password(plaintext):
     print(f"Admin password hash saved to {ADMIN_HASH_FILE}")
 
 def _verify_admin_password(plaintext):
-    """Verify a plaintext password against the stored salted hash."""
-    if not os.path.exists(ADMIN_HASH_FILE):
-        # Fallback: accept the legacy hardcoded hash for migration
-        h = hashlib.sha256(plaintext.encode()).hexdigest()
-        return h == '3da9d3db181afc4921f55f9c0e6fb27172af8514621131a549bb6e89362b85f9'
-    with open(ADMIN_HASH_FILE, 'r') as f:
-        stored = f.read().strip()
-    if ':' not in stored:
-        return False
-    salt, stored_hash = stored.split(':', 1)
-    h = hashlib.sha256((salt + plaintext).encode()).hexdigest()
-    return secrets.compare_digest(h, stored_hash)
+    """Verify a plaintext password against environment variable or stored salted hash."""
+    # 1. Check environment variable (recommended for production/CI)
+    env_password = os.environ.get('ADMIN_PASSWORD')
+    if env_password:
+        return secrets.compare_digest(plaintext, env_password)
+
+    # 2. Check stored salted hash on disk (generated via set_admin_password)
+    if os.path.exists(ADMIN_HASH_FILE):
+        try:
+            with open(ADMIN_HASH_FILE, 'r') as f:
+                stored = f.read().strip()
+            if ':' in stored:
+                salt, stored_hash = stored.split(':', 1)
+                h = hashlib.sha256((salt + plaintext).encode()).hexdigest()
+                return secrets.compare_digest(h, stored_hash)
+        except Exception:
+            return False
+
+    # If neither is configured, reject authentication for security
+    print("[SECURITY WARNING] Admin password not configured. Set ADMIN_PASSWORD env var or run serve.set_admin_password('<password>').")
+    return False
 
 def _create_session():
     """Create a new session token."""

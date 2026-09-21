@@ -1,5 +1,7 @@
 # Database & sensitive credentials
 *.db
+.env
+.env.*
 scripts/data/sscs.db
 scripts/data/.admin_hash
 scripts/data/backups/

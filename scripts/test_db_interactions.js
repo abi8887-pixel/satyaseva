@@ -84,10 +84,11 @@ async function run() {
     await sleep(2000);
 
     // Login properly through login form
-    console.log('Entering access code s2024 and submitting...');
+    const adminPass = process.env.ADMIN_PASSWORD || '';
+    console.log('Entering configured access code and submitting...');
     await cdp.eval(`(() => {
       const pwd = document.getElementById('login-password');
-      if (pwd) pwd.value = 's2024';
+      if (pwd) pwd.value = ${JSON.stringify(adminPass)};
       const form = document.getElementById('login-form');
       if (form) form.dispatchEvent(new Event('submit', { cancelable: true }));
     })()`);

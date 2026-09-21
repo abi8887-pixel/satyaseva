@@ -117,9 +117,10 @@ async function testUrl(targetUrl, label) {
     console.log('Login gate visible:', gateVisible);
 
     if (gateVisible) {
-      console.log('Entering access code s2024...');
+      const adminPass = process.env.ADMIN_PASSWORD || '';
+      console.log('Entering configured access code...');
       await cdp.eval(`
-        document.getElementById('login-password').value = 's2024';
+        document.getElementById('login-password').value = ${JSON.stringify(adminPass)};
         document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true }));
       `);
       await sleep(2000);

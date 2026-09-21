@@ -79,8 +79,9 @@ async function run() {
     await sleep(2000);
 
     // Login
+    const adminPass = process.env.ADMIN_PASSWORD || '';
     await cdp.eval(`
-      document.getElementById('login-password').value = 's2024';
+      document.getElementById('login-password').value = ${JSON.stringify(adminPass)};
       document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true }));
     `);
     await sleep(1500);
