@@ -4,87 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Events &amp; Calendar — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Upcoming events, feasts, and community gatherings of the Satyaseva Catechist Sisters of the Families.">
+  <meta name="description" content="Upcoming events, feasts, and community gatherings of the Satyaseva Catechist Sisters of the Families across India, Germany, and Poland.">
   <link rel="canonical" href="https://satyasevasisters.org/events.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <style>
     /* ── Events Header ─────────────────────────────────────── */
     .events-header {
       text-align: center;
-      padding: 100px 32px 24px;
-      max-width: 800px;
+      padding: 120px 24px 30px;
+      max-width: 820px;
       margin: 0 auto;
+      position: relative;
     }
     .events-header h1 {
       font-size: clamp(32px, 5vw, 48px);
-      margin: 16px 0 12px;
+      margin: 16px 0 14px;
       line-height: 1.15;
     }
     .events-header p {
-      font-size: 16px;
+      font-size: clamp(15px, 1.8vw, 18px);
       color: var(--ink-soft);
-      line-height: 1.6;
-      margin: 0;
+      line-height: 1.65;
+      margin: 0 auto;
+      max-width: 640px;
     }
 
     /* ── Toggle Tabs ───────────────────────────────────────── */
     .events-toggle {
       display: flex;
       justify-content: center;
-      gap: 4px;
-      max-width: 420px;
-      margin: 28px auto 8px;
-      background: var(--surface-alt);
+      gap: 6px;
+      max-width: 440px;
+      margin: 32px auto 28px;
+      background: color-mix(in srgb, var(--card) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--line);
       border-radius: var(--r-pill);
-      padding: 4px;
+      padding: 5px;
+      box-shadow: var(--elev-1);
     }
     .events-toggle button {
       flex: 1;
-      padding: 10px 20px;
+      padding: 10px 18px;
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       background: none;
       border: none;
       color: var(--ink-soft);
       cursor: pointer;
       border-radius: var(--r-pill);
-      transition: all 0.2s ease;
+      transition: all var(--dur-fast) var(--ease);
       font-family: var(--font-sans);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .events-toggle button.active {
-      background: var(--ink);
-      color: var(--card);
+      background: linear-gradient(135deg, var(--sage-deep), var(--blue-deep));
+      color: #ffffff;
       box-shadow: var(--elev-1);
     }
     .events-toggle button:not(.active):hover {
       color: var(--ink);
-      background: var(--card);
+      background: var(--sage-tint);
     }
     .events-count {
       font-size: 11px;
       background: var(--gold);
-      color: #fff;
+      color: #ffffff;
       border-radius: var(--r-pill);
       padding: 1px 7px;
       margin-left: 6px;
       font-weight: 700;
     }
     .events-toggle button.active .events-count {
-      background: var(--gold);
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
     }
 
     /* ── Events List ───────────────────────────────────────── */
     .events-list {
-      max-width: 800px;
+      max-width: 840px;
       margin: 0 auto;
-      padding: 16px 32px 80px;
+      padding: 16px 24px 80px;
       display: flex;
       flex-direction: column;
       gap: 24px;
@@ -92,17 +101,17 @@
 
     /* ── Event Card ────────────────────────────────────────── */
     .event-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--elev-2);
-      padding: 28px;
+      padding: 32px;
       position: relative;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      animation: eventSlideIn 0.35s ease both;
+      transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
+      animation: eventSlideIn 0.4s var(--ease) both;
+      border-left: 4px solid var(--gold);
     }
     .event-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--elev-3);
+      border-color: var(--gold-border);
+      border-left-color: var(--gold-deep);
     }
     @keyframes eventSlideIn {
       from { opacity: 0; transform: translateY(16px); }
@@ -120,11 +129,16 @@
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink);
-      border-bottom: 2px solid var(--ink);
-      padding-bottom: 6px;
+      letter-spacing: 0.08em;
+      color: var(--sage-deep);
+      background: var(--sage-tint);
+      border: 1px solid var(--sage-border);
+      padding: 4px 12px;
+      border-radius: var(--r-pill);
       display: inline-block;
+    }
+    [data-theme="dark"] .event-date {
+      color: var(--sage);
     }
 
     /* Badges */
@@ -164,28 +178,29 @@
     }
 
     .event-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-serif);
       font-size: 24px;
       font-weight: 700;
       margin: 0 0 12px;
       line-height: 1.3;
+      color: var(--ink);
     }
     .event-details {
-      font-size: 13px;
+      font-size: 13.5px;
       color: var(--ink-soft);
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       font-weight: 600;
     }
     .event-details span {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
     .event-desc {
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.65;
       color: var(--ink-soft);
       margin: 0;
@@ -195,63 +210,76 @@
     .event-countdown {
       display: flex;
       gap: 12px;
-      margin-top: 16px;
-      padding-top: 14px;
+      margin-top: 18px;
+      padding-top: 16px;
       border-top: 1px solid var(--line);
     }
     .countdown-unit {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 8px 14px;
       text-align: center;
+      min-width: 60px;
     }
     .countdown-num {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       font-family: var(--font-sans);
-      color: var(--ink);
+      color: var(--gold-deep);
       line-height: 1;
     }
     .countdown-label {
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 9.5px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--ink-faint);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     /* Empty state */
     .empty-state {
       text-align: center;
-      padding: 80px 32px;
-      border: 2px dashed var(--line);
+      padding: 70px 32px;
+      border: 1px dashed var(--line);
+      border-radius: var(--r-lg);
       color: var(--ink-soft);
       font-weight: 500;
       background: var(--surface-alt);
     }
     .empty-state .empty-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-      opacity: 0.5;
+      font-size: 44px;
+      margin-bottom: 14px;
+      opacity: 0.6;
     }
     .empty-state p {
       font-size: 15px;
-      max-width: 400px;
+      max-width: 420px;
       margin: 0 auto;
       line-height: 1.6;
     }
 
     @media (max-width: 640px) {
-      .events-list { padding: 16px 16px 60px; gap: 16px; }
-      .event-card { padding: 20px; }
-      .event-card-top { flex-direction: column; gap: 8px; }
+      .events-header { padding: 90px 16px 20px; }
+      .events-list { padding: 16px 16px 60px; gap: 18px; }
+      .event-card { padding: 22px; }
+      .event-card-top { flex-direction: column; gap: 10px; }
       .event-title { font-size: 20px; }
-      .events-header { padding: 80px 16px 16px; }
-      .event-countdown { gap: 8px; }
-      .countdown-num { font-size: 18px; }
+      .countdown-unit { padding: 6px 10px; min-width: 50px; }
+      .countdown-num { font-size: 17px; }
     }
   </style>
 </head>
-<body>
+<body class="ambient-mesh-wrap">
+  <!-- Skip navigation for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Ambient background mesh blobs -->
+  <div class="ambient-blob blob-sage" style="top: 100px; left: -100px;"></div>
+  <div class="ambient-blob blob-gold" style="top: 260px; right: -80px;"></div>
+  <div class="ambient-blob blob-blue" style="bottom: 120px; left: 15%;"></div>
+
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
@@ -261,7 +289,7 @@
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
-        <a href="events.html" aria-current="page" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Events</a>
+        <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
         <a href="media.html">Media</a>
@@ -283,13 +311,13 @@
   </nav>
 
   <main id="main-content">
-    <header class="events-header">
-      <div class="eyebrow">Calendar & Gatherings</div>
-      <h1>Events</h1>
-      <p>Feasts, retreats, community gatherings, and celebrations from our missions across India, Germany, and Poland.</p>
+    <header class="events-header reveal">
+      <span class="badge-gold">Calendar & Gatherings</span>
+      <h1>Congregation Events</h1>
+      <p>Feasts, spiritual retreats, jubilee celebrations, and mission gatherings from across India, Germany, and Poland.</p>
     </header>
 
-    <div class="events-toggle" id="events-toggle" role="tablist">
+    <div class="events-toggle reveal reveal-d1" id="events-toggle" role="tablist">
       <button type="button" class="active" data-view="upcoming" role="tab" aria-selected="true" id="tab-upcoming">
         Upcoming <span class="events-count" id="count-upcoming">0</span>
       </button>
@@ -354,7 +382,7 @@
     function classifyEvent(event) {
       var now = new Date();
       var eventDate = new Date(event.date);
-      if (isNaN(eventDate)) return 'upcoming'; // unknown → show as upcoming
+      if (isNaN(eventDate)) return 'upcoming';
 
       var diffMs = eventDate.getTime() - now.getTime();
       var diffHours = diffMs / (1000 * 60 * 60);
@@ -445,7 +473,7 @@
           }
         }
 
-        html += '<div class="event-card" style="animation-delay:' + (i * 0.06) + 's;">' +
+        html += '<div class="event-card glass-card" style="animation-delay:' + (i * 0.06) + 's;">' +
           '<div class="event-card-top">' +
             '<div class="event-date">' + dateStr + '</div>' +
             badge +

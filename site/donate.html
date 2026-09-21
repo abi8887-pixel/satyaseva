@@ -11,22 +11,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=4">
 
   <style>
     .donate-hero {
       text-align: center;
-      padding: 100px 32px 40px;
+      padding: 120px 24px 36px;
       max-width: 860px;
       margin: 0 auto;
+      position: relative;
     }
     .donate-hero h1 {
-      font-size: clamp(30px, 4.5vw, 50px);
-      line-height: 1.18;
-      margin: 16px 0 18px;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.15;
+      margin: 16px 0 14px;
     }
     .donate-hero p {
-      font-size: clamp(16px, 1.8vw, 18px);
+      font-size: clamp(15px, 1.8vw, 18px);
       color: var(--ink-soft);
       line-height: 1.65;
       margin-bottom: 32px;
@@ -34,13 +35,11 @@
 
     /* Campaign Meter Card */
     .campaign-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--elev-2);
-      padding: 24px 28px;
-      max-width: 600px;
+      padding: 26px 30px;
+      max-width: 640px;
       margin: 0 auto 10px;
       text-align: left;
+      border-radius: var(--r-lg);
     }
     .campaign-header {
       display: flex;
@@ -48,65 +47,70 @@
       align-items: center;
       font-size: 13.5px;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .campaign-header span:first-child {
       color: var(--ink);
     }
     .campaign-badge {
       font-size: 11px;
-      background: var(--gold-glow);
-      border: 1px solid var(--ink);
-      padding: 2px 8px;
+      background: var(--gold-tint);
+      color: var(--gold-deep);
+      border: 1px solid var(--gold-border);
+      padding: 3px 10px;
+      border-radius: var(--r-pill);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      font-weight: 700;
     }
     .progress-bar-bg {
       width: 100%;
       height: 14px;
-      background: var(--bg);
+      background: var(--surface-alt);
       border: 1px solid var(--line);
+      border-radius: var(--r-pill);
       overflow: hidden;
       position: relative;
     }
     .progress-bar-fill {
       height: 100%;
-      background: var(--ink);
-      transition: width 0.8s ease;
+      background: linear-gradient(90deg, var(--sage), var(--gold));
+      border-radius: var(--r-pill);
+      transition: width 1s var(--ease);
+      box-shadow: 0 0 10px rgba(217, 119, 6, 0.4);
     }
     .campaign-stats {
       display: flex;
       justify-content: space-between;
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--ink-soft);
-      margin-top: 8px;
-      font-family: monospace;
+      margin-top: 10px;
       font-weight: 600;
     }
 
     /* Giving Grid */
     .giving-layout {
       max-width: 1120px;
-      margin: 40px auto 80px;
-      padding: 0 32px;
+      margin: 30px auto 70px;
+      padding: 0 24px;
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 36px;
+      gap: 32px;
       align-items: start;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .giving-layout {
         grid-template-columns: 1fr;
-        padding: 0 16px;
+      }
+      .donate-hero {
+        padding-top: 90px;
       }
     }
 
     .donate-panel {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--elev-2);
-      padding: 36px;
-      margin-bottom: 32px;
+      padding: clamp(28px, 4vw, 38px);
+      margin-bottom: 30px;
+      border-radius: var(--r-lg);
     }
     .donate-panel:last-child {
       margin-bottom: 0;
@@ -123,21 +127,22 @@
     .ministry-option {
       display: block;
       border: 1px solid var(--line);
-      background: var(--bg);
+      background: var(--card);
       padding: 14px 18px;
       margin-bottom: 12px;
+      border-radius: var(--r-md);
       cursor: pointer;
       box-shadow: var(--elev-1);
-      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+      transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
     }
     .ministry-option:hover {
-      transform: translate(-1px, -1px);
-      box-shadow: var(--elev-1);
-      background: var(--gold-glow);
+      transform: translateY(-2px);
+      border-color: var(--gold-border);
+      background: var(--gold-tint);
     }
     .ministry-option input[type="radio"] {
       margin-right: 10px;
-      accent-color: var(--ink);
+      accent-color: var(--gold);
     }
     .ministry-option strong {
       display: inline-block;
@@ -146,10 +151,10 @@
     }
     .ministry-option span {
       display: block;
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--ink-soft);
       margin-top: 4px;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     /* Preset Buttons */
@@ -160,55 +165,32 @@
       margin: 16px 0;
     }
     .preset-btn {
-      padding: 12px 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      padding: 11px 6px;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
       font-weight: 700;
-      background: var(--bg);
+      background: var(--card);
       color: var(--ink);
       border: 1px solid var(--line);
+      border-radius: var(--r-md);
       box-shadow: var(--elev-1);
       cursor: pointer;
       text-align: center;
-      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+      transition: all var(--dur-fast) var(--ease);
     }
     .preset-btn:hover {
-      transform: translate(-1px, -1px);
-      box-shadow: var(--elev-1);
+      border-color: var(--gold);
+      background: var(--gold-tint);
+      color: var(--gold-deep);
     }
     .preset-btn.active {
-      background: var(--ink);
-      color: var(--card);
+      background: linear-gradient(135deg, var(--gold-deep), var(--sage-deep));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: var(--elev-2);
     }
 
     /* Form Fields */
-    .form-group {
-      margin-bottom: 18px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-      color: var(--ink);
-    }
-    .form-group input {
-      width: 100%;
-      padding: 11px 14px;
-      font-family: 'Inter', sans-serif;
-      font-size: 13.5px;
-      border: 1px solid var(--line);
-      background: var(--bg);
-      color: var(--ink);
-      box-sizing: border-box;
-      transition: box-shadow 0.2s;
-    }
-    .form-group input:focus {
-      outline: none;
-      box-shadow: var(--elev-1);
-    }
     .form-row-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -220,66 +202,48 @@
         gap: 0;
       }
     }
-    .donate-submit-btn {
-      width: 100%;
-      padding: 14px;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: var(--ink);
-      color: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--elev-1);
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .donate-submit-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--elev-2);
-    }
     #receipt-msg {
       margin-top: 14px;
-      padding: 12px;
-      font-size: 13px;
+      padding: 12px 16px;
+      font-size: 13.5px;
       font-weight: 600;
-      text-align: center;
+      border-radius: var(--r-md);
       display: none;
     }
 
     /* Payment Cards */
     .bank-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--elev-2);
       padding: 28px;
       margin-bottom: 24px;
+      border-radius: var(--r-lg);
     }
     .bank-badge {
       display: inline-block;
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      background: var(--gold-glow);
-      border: 1px solid var(--ink);
-      padding: 3px 8px;
+      background: var(--gold-tint);
+      color: var(--gold-deep);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--r-pill);
+      padding: 3px 10px;
       margin-bottom: 12px;
     }
     .data-table {
       width: 100%;
-      font-size: 12.5px;
+      font-size: 13px;
       border-collapse: collapse;
       margin-top: 10px;
     }
     .data-table tr {
-      border-bottom: 1px dashed var(--ink-soft);
+      border-bottom: 1px dashed var(--line);
     }
     .data-table tr:last-child {
       border-bottom: none;
     }
     .data-table td {
-      padding: 8px 4px;
+      padding: 9px 4px;
     }
     .data-table td:first-child {
       color: var(--ink-soft);
@@ -294,42 +258,47 @@
 
     /* QR Box */
     .qr-container {
-      background: var(--bg);
+      background: var(--card);
       border: 1px solid var(--line);
+      border-radius: var(--r-md);
       padding: 16px;
       text-align: center;
-      margin: 14px 0;
+      margin-top: 14px;
     }
     .qr-svg {
-      width: 150px;
-      height: 150px;
-      margin: 0 auto 10px;
-      background: white;
-      border: 1px solid var(--ink);
-      padding: 6px;
+      width: 130px;
+      height: 130px;
+      display: block;
+      margin: 0 auto 12px;
+      border-radius: var(--r-sm);
     }
     .copy-pill {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      background: var(--card);
-      border: 1px solid var(--ink);
-      padding: 6px 10px;
-      font-family: monospace;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .copy-btn {
-      background: var(--ink);
-      color: var(--card);
-      border: none;
-      padding: 4px 8px;
-      font-size: 11px;
-      cursor: pointer;
+      gap: 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--r-pill);
+      padding: 6px 14px;
+      font-size: 13px;
       font-weight: 600;
     }
+    .copy-btn {
+      background: var(--sage);
+      color: #fff;
+      border: none;
+      border-radius: var(--r-pill);
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--dur-fast) var(--ease);
+    }
+    .copy-btn:hover {
+      background: var(--gold-deep);
+    }
 
-    /* Benefactor Wall */
+    /* Wall of Benefactors */
     .wall-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -337,56 +306,63 @@
       margin-top: 36px;
     }
     .wall-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: 5px 5px 0 var(--ink);
-      padding: 24px;
+      padding: 28px;
+      border-radius: var(--r-lg);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
     .wall-card strong {
-      font-family: 'Playfair Display', serif;
+      display: block;
       font-size: 16px;
-      display: block;
       color: var(--ink);
+      margin-bottom: 2px;
     }
-    .wall-card .wall-loc {
+    .wall-loc {
       font-size: 12px;
-      color: var(--ink-soft);
-      margin-bottom: 12px;
+      color: var(--sage-deep);
+      font-weight: 600;
       display: block;
+      margin-bottom: 12px;
+    }
+    [data-theme="dark"] .wall-loc {
+      color: var(--sage);
     }
     .wall-card p {
       font-size: 13.5px;
       font-style: italic;
-      color: var(--ink);
-      line-height: 1.55;
-      margin: 0 0 14px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0 0 16px;
     }
     .wall-tag {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      background: var(--bg);
-      border: 1px solid var(--ink);
-      padding: 3px 8px;
+      color: var(--gold-deep);
+      background: var(--gold-tint);
+      border: 1px solid var(--gold-border);
+      padding: 3px 10px;
+      border-radius: var(--r-pill);
       align-self: flex-start;
     }
   </style>
 </head>
-<body>
+<body class="ambient-mesh-wrap">
   <!-- Skip navigation for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Ambient background mesh blobs -->
+  <div class="ambient-blob blob-gold" style="top: 80px; right: -80px;"></div>
+  <div class="ambient-blob blob-sage" style="top: 320px; left: -100px;"></div>
+  <div class="ambient-blob blob-blue" style="bottom: 160px; right: 20%;"></div>
 
   <!-- Standard Uniform Navigation -->
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
-      <a href="index.html" class="brand" aria-label="Satyaseva Sisters Home">
-        <span class="cross" aria-hidden="true">✝</span>
-        <span class="brand-full">Satyaseva Catechist Sisters of the Families</span>
-        <span class="brand-short">Satyaseva Sisters</span>
+      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
       </a>
       <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
@@ -397,7 +373,7 @@
         <a href="vocations.html">Vocations</a>
         <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html" style="background:var(--gold-glow); border:2px solid var(--ink); transform:translate(-2px,-2px); box-shadow:2px 2px 0 var(--ink); color:#0891b2; font-weight:700;">Donate</a>
+        <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
@@ -415,13 +391,13 @@
 
   <main id="main-content">
     <!-- Hero Header -->
-    <header class="donate-hero reveal visible">
-      <span class="eyebrow">❤️ Generosity &amp; Mission Support</span>
+    <header class="donate-hero reveal">
+      <span class="badge-gold">❤️ Generosity &amp; Mission Support</span>
       <h1>Support Our Mission of Loving Service</h1>
       <p>Your prayers and contributions enable our Sisters to care for orphans, comfort the sick, educate rural children, and bring Christ into the quiet domestic hearth of suffering families.</p>
 
       <!-- Campaign Meter Card -->
-      <div class="campaign-card">
+      <div class="campaign-card glass-card">
         <div class="campaign-header">
           <span>2026 Annual Mission &amp; Healthcare Fund</span>
           <span class="campaign-badge">75% Raised</span>
@@ -431,16 +407,16 @@
         </div>
         <div class="campaign-stats">
           <span>Raised: ₹37,50,000 / $45,000</span>
-          <span>Goal: ₹50,000,000 / $60,000</span>
+          <span>Goal: ₹50,00,000 / $60,000</span>
         </div>
       </div>
     </header>
 
     <!-- Main Giving Layout -->
-    <section class="giving-layout reveal visible">
-      <!-- Left Column -->
+    <section class="giving-layout reveal reveal-d1">
+      <!-- Left Column: Options & Receipt -->
       <div>
-        <div class="donate-panel">
+        <div class="donate-panel glass-card">
           <h2><span>🎁</span> Select Ministry Purpose</h2>
 
           <label class="ministry-option">
@@ -468,7 +444,7 @@
           </label>
 
           <div style="margin-top: 24px;">
-            <label style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; color:var(--ink);">Choose Contribution Amount</label>
+            <label style="display:block; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; color:var(--ink);">Choose Contribution Amount</label>
             <div class="preset-grid">
               <button type="button" class="preset-btn" onclick="selectAmount(500)">₹500</button>
               <button type="button" class="preset-btn active" onclick="selectAmount(2000)">₹2,000</button>
@@ -477,48 +453,48 @@
               <button type="button" class="preset-btn" onclick="selectAmount(100)">$100</button>
               <button type="button" class="preset-btn" onclick="selectAmount(250)">$250</button>
             </div>
-            <div class="form-group" style="margin-top:12px;">
-              <label for="custom-amount">Custom Amount</label>
-              <input type="number" id="custom-amount" value="2000" placeholder="Enter custom amount">
+            <div class="form-group" style="margin-top:14px;">
+              <label for="custom-amount" style="display:block; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Custom Amount</label>
+              <input type="number" id="custom-amount" class="modern-input" value="2000" placeholder="Enter custom amount">
             </div>
           </div>
         </div>
 
         <!-- Receipt Request Form -->
-        <div class="donate-panel">
+        <div class="donate-panel glass-card">
           <h3><span>📜</span> Request Donation Receipt (80G / Confirmation)</h3>
           <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 20px;">After making a bank transfer or UPI payment, submit your transaction reference below to receive an official receipt.</p>
 
           <form id="receipt-form">
             <div class="form-row-2">
-              <div class="form-group">
-                <label for="receipt-name">Donor Name *</label>
-                <input type="text" id="receipt-name" required placeholder="Full Name">
+              <div class="form-group" style="margin-bottom:18px;">
+                <label for="receipt-name" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Donor Name *</label>
+                <input type="text" id="receipt-name" class="modern-input" required placeholder="Full Name">
               </div>
-              <div class="form-group">
-                <label for="receipt-email">Email Address *</label>
-                <input type="email" id="receipt-email" required placeholder="name@example.com">
+              <div class="form-group" style="margin-bottom:18px;">
+                <label for="receipt-email" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Email Address *</label>
+                <input type="email" id="receipt-email" class="modern-input" required placeholder="name@example.com">
               </div>
             </div>
 
             <div class="form-row-2">
-              <div class="form-group">
-                <label for="receipt-utr">Transaction Ref / UTR *</label>
-                <input type="text" id="receipt-utr" required placeholder="e.g. UTR 429104829102">
+              <div class="form-group" style="margin-bottom:18px;">
+                <label for="receipt-utr" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Transaction Ref / UTR *</label>
+                <input type="text" id="receipt-utr" class="modern-input" required placeholder="e.g. UTR 429104829102">
               </div>
-              <div class="form-group">
-                <label for="receipt-amount">Amount Paid *</label>
-                <input type="text" id="receipt-amount" required placeholder="e.g. ₹2,000 or $100">
+              <div class="form-group" style="margin-bottom:18px;">
+                <label for="receipt-amount" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Amount Paid *</label>
+                <input type="text" id="receipt-amount" class="modern-input" required placeholder="e.g. ₹2,000 or $100">
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="receipt-pan">PAN / Tax ID (Optional for 80G Tax Exemption)</label>
-              <input type="text" id="receipt-pan" placeholder="e.g. ABCDE1234F">
+            <div class="form-group" style="margin-bottom:20px;">
+              <label for="receipt-pan" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">PAN / Tax ID (Optional for 80G Tax Exemption)</label>
+              <input type="text" id="receipt-pan" class="modern-input" placeholder="e.g. ABCDE1234F">
             </div>
 
-            <button type="submit" class="donate-submit-btn">Submit Receipt Request</button>
-            <div id="receipt-msg"></div>
+            <button type="submit" class="modern-btn-primary" style="width: 100%;">Submit Receipt Request</button>
+            <div id="receipt-msg" role="alert" aria-live="polite"></div>
           </form>
         </div>
       </div>
@@ -526,7 +502,7 @@
       <!-- Right Column: Official Payment Methods -->
       <div>
         <!-- UPI Card -->
-        <div class="bank-card">
+        <div class="bank-card glass-card">
           <span class="bank-badge">⚡ Instant UPI Payment (India)</span>
           <h3 style="font-size:18px; margin:0 0 6px;">Direct UPI &amp; QR Code</h3>
           <p style="font-size:13px; color:var(--ink-soft); margin:0;">Scan with Google Pay, PhonePe, Paytm, or BHIM.</p>
@@ -560,7 +536,7 @@
         </div>
 
         <!-- Indian Bank Details -->
-        <div class="bank-card">
+        <div class="bank-card glass-card">
           <span class="bank-badge">🏦 Domestic Bank Transfer (NEFT / RTGS)</span>
           <h3 style="font-size:18px; margin:0 0 8px;">State Bank of India</h3>
           <table class="data-table">
@@ -588,7 +564,7 @@
         </div>
 
         <!-- International FCRA SWIFT -->
-        <div class="bank-card">
+        <div class="bank-card glass-card">
           <span class="bank-badge">🌐 International &amp; Foreign Transfer (SWIFT)</span>
           <h3 style="font-size:18px; margin:0 0 8px;">FCRA Designated Account</h3>
           <table class="data-table">
@@ -614,16 +590,16 @@
     </section>
 
     <!-- Wall of Benefactors -->
-    <section style="padding: 70px 0; background: var(--bg);">
+    <section style="padding: 70px 0; border-top: 1px solid var(--line);">
       <div class="container">
-        <div style="text-align:center; max-width:680px; margin:0 auto;" class="reveal visible">
-          <span class="eyebrow">With Deep Gratitude</span>
+        <div style="text-align:center; max-width:680px; margin:0 auto;" class="reveal">
+          <span class="badge-gold">With Deep Gratitude</span>
           <h2 style="font-size:clamp(26px, 4vw, 36px); margin:12px 0;">Wall of Thanksgiving &amp; Benefactors</h2>
           <p style="color:var(--ink-soft); font-size:15px;">We remember all our benefactors, patrons, and well-wishers in our daily Eucharistic Adoration and community prayers.</p>
         </div>
 
-        <div class="wall-grid reveal visible">
-          <div class="wall-card">
+        <div class="wall-grid reveal reveal-d1">
+          <div class="wall-card glass-card">
             <div>
               <span style="font-size:24px; display:block; margin-bottom:8px;">🕊️</span>
               <strong>The D'Souza Family</strong>
@@ -633,7 +609,7 @@
             <span class="wall-tag">Foster Care Benefactor</span>
           </div>
 
-          <div class="wall-card">
+          <div class="wall-card glass-card">
             <div>
               <span style="font-size:24px; display:block; margin-bottom:8px;">✝️</span>
               <strong>St. Elisabeth Parish Guild</strong>
@@ -643,7 +619,7 @@
             <span class="wall-tag">Mission Partner</span>
           </div>
 
-          <div class="wall-card">
+          <div class="wall-card glass-card">
             <div>
               <span style="font-size:24px; display:block; margin-bottom:8px;">🌸</span>
               <strong>Friends of Mother Regina</strong>
@@ -703,9 +679,9 @@
       e.preventDefault();
       var msg = document.getElementById('receipt-msg');
       msg.style.display = 'block';
-      msg.style.background = '#e6f4ea';
-      msg.style.color = '#1e4620';
-      msg.style.border = '2px solid #1e4620';
+      msg.style.background = 'var(--sage-tint)';
+      msg.style.color = 'var(--sage-deep)';
+      msg.style.border = '1px solid var(--sage-border)';
       msg.textContent = 'Submitting receipt request...';
 
       var payload = {
@@ -729,9 +705,9 @@
           msg.textContent = '✅ Receipt request submitted! Our treasurer sister will email your official certificate shortly.';
           document.getElementById('receipt-form').reset();
         } else {
-          msg.style.background = '#fce8e6';
-          msg.style.color = '#c5221f';
-          msg.style.border = '2px solid #c5221f';
+          msg.style.background = 'var(--danger-tint)';
+          msg.style.color = 'var(--danger)';
+          msg.style.border = '1px solid var(--danger)';
           msg.textContent = '❌ Submission failed: ' + (res.error || 'Please try again');
         }
       })

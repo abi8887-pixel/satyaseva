@@ -4,140 +4,112 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prayer Requests — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Submit a prayer intention. The Satyaseva Catechist Sisters of the Families will include your request in our daily prayers.">
+  <meta name="description" content="Submit a prayer intention. The Satyaseva Catechist Sisters of the Families will include your request in our daily community prayers and Eucharistic Adoration.">
   <link rel="canonical" href="https://satyasevasisters.org/prayers.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <style>
-    .prayer-header {
+    .prayer-hero {
       text-align: center;
-      padding: 80px 32px 40px;
-      max-width: 800px;
+      padding: 120px 24px 40px;
+      max-width: 820px;
       margin: 0 auto;
+      position: relative;
     }
-    .prayer-header h1 {
+    .prayer-hero h1 {
       font-size: clamp(32px, 5vw, 48px);
-      margin-bottom: 24px;
+      margin: 16px 0 14px;
+      line-height: 1.15;
     }
-    .prayer-header p {
-      font-size: 18px;
+    .prayer-hero p {
+      font-size: clamp(15px, 1.8vw, 18px);
       color: var(--ink-soft);
-      line-height: 1.6;
+      line-height: 1.65;
+      margin: 0 auto;
+      max-width: 660px;
     }
+
     .prayer-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      max-width: 1080px;
-      margin: 0 auto 80px;
-      padding: 0 32px;
+      gap: 36px;
+      max-width: 1100px;
+      margin: 20px auto 80px;
+      padding: 0 24px;
+      align-items: start;
     }
-    @media (max-width: 768px) {
-      .prayer-container {
-        grid-template-columns: 1fr;
-      }
-    }
+
     .prayer-form-card {
-      background: var(--card);
-      border: 2px solid var(--ink);
-      box-shadow: 8px 8px 0 var(--ink);
-      padding: 40px;
+      padding: clamp(28px, 4vw, 40px);
+      border-radius: var(--r-lg);
     }
     .prayer-form-card h2 {
       font-size: 24px;
       margin-bottom: 8px;
     }
-    .prayer-form-card p {
+    .prayer-form-card .form-sub {
       color: var(--ink-soft);
       font-size: 14px;
       margin-bottom: 24px;
     }
+
     .form-group {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
     .form-group label {
       display: block;
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       margin-bottom: 8px;
       color: var(--ink);
     }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      border: 2px solid var(--ink);
-      background: var(--bg);
-      color: var(--ink);
-      transition: box-shadow 0.2s, outline 0.2s;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      box-shadow: 4px 4px 0 var(--ink);
-    }
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: var(--ink);
-      color: var(--card);
-      border: 2px solid var(--ink);
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
-    }
-    .submit-btn:hover {
-      background: var(--bg);
-      color: var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      transform: translate(-2px, -2px);
-    }
+
     #form-status {
-      margin-top: 24px;
-      padding: 16px;
+      margin-top: 20px;
+      padding: 14px 18px;
       font-size: 14px;
       font-weight: 600;
-      text-align: center;
+      border-radius: var(--r-md);
       display: none;
     }
     .status-success {
-      background: #e6f4ea;
-      color: #1e4620;
-      border: 2px solid #1e4620;
+      background: var(--sage-tint);
+      color: var(--sage-deep);
+      border: 1px solid var(--sage-border);
     }
     .status-error {
-      background: #fce8e6;
-      color: #c5221f;
-      border: 2px solid #c5221f;
+      background: var(--danger-tint);
+      color: var(--danger);
+      border: 1px solid var(--danger);
     }
-    .prayer-wall {
-      background: var(--bg);
-      border: 2px solid var(--ink);
-      padding: 40px;
-      height: 100%;
+
+    .prayer-wall-card {
+      padding: clamp(28px, 4vw, 40px);
+      border-radius: var(--r-lg);
     }
-    .prayer-wall h2 {
+    .prayer-wall-card h2 {
       font-size: 24px;
-      margin-bottom: 24px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
+    .prayer-wall-sub {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+    }
+
     .prayer-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      max-height: 500px;
+      max-height: 520px;
       overflow-y: auto;
       padding-right: 8px;
     }
@@ -145,91 +117,138 @@
       width: 6px;
     }
     .prayer-list::-webkit-scrollbar-thumb {
-      background: var(--ink-soft);
+      background: var(--line-strong);
+      border-radius: var(--r-pill);
     }
+
     .prayer-item {
-      background: var(--card);
-      border: 1px solid var(--ink);
-      padding: 16px;
-      border-left: 4px solid var(--ink);
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--r-md);
+      padding: 18px 20px;
+      transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+    }
+    .prayer-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--elev-1);
     }
     .prayer-item p {
-      margin: 0 0 8px;
-      font-size: 14px;
-      line-height: 1.5;
+      margin: 0 0 10px;
+      font-size: 14.5px;
+      line-height: 1.6;
       font-style: italic;
+      color: var(--ink);
     }
     .prayer-meta {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink-soft);
+      letter-spacing: 0.08em;
+      color: var(--sage-deep);
       text-align: right;
     }
+    [data-theme="dark"] .prayer-meta {
+      color: var(--sage);
+    }
+
     .empty-wall {
       font-size: 14px;
       color: var(--ink-soft);
       text-align: center;
-      padding: 40px 20px;
+      padding: 48px 20px;
       font-style: italic;
+      background: var(--surface-alt);
+      border-radius: var(--r-md);
+      border: 1px dashed var(--line);
+    }
+
+    @media (max-width: 800px) {
+      .prayer-container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .prayer-hero {
+        padding-top: 90px;
+      }
     }
   </style>
 </head>
-<body>
+<body class="ambient-mesh-wrap">
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <nav id="nav" role="navigation">
+
+  <!-- Ambient background mesh blobs -->
+  <div class="ambient-blob blob-sage" style="top: 80px; right: -80px;"></div>
+  <div class="ambient-blob blob-gold" style="top: 300px; left: -100px;"></div>
+  <div class="ambient-blob blob-blue" style="bottom: 80px; right: 15%;"></div>
+
+  <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
-        <a href="prayers.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Prayers</a>
+        <a href="media.html">Media</a>
+        <a href="prayers.html">Prayers</a>
         <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+        <select id="lang-select" aria-label="Select language">
+          <option value="en" selected>English</option>
+          <option value="pl">Polski</option>
+        </select>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
 
   <main id="main-content">
-    <div class="prayer-header reveal visible">
+    <header class="prayer-hero reveal">
+      <span class="badge-gold">🕊️ Spiritual Solidarity</span>
       <h1>Submit a Prayer Intention</h1>
-      <p>"Where two or three are gathered in my name, I am there among them." Our sisters lift up all submitted intentions during our daily Adoration and Community Prayers.</p>
-    </div>
+      <p>"Where two or three are gathered in my name, I am there among them." Our sisters lift up every intention during our daily Eucharistic Adoration and community prayers.</p>
+    </header>
 
-    <div class="prayer-container reveal visible">
-      <div class="prayer-form-card">
+    <div class="prayer-container">
+      <!-- Submission Form -->
+      <div class="prayer-form-card glass-card reveal reveal-d1">
         <h2>Your Intention</h2>
-        <p>Please share your prayer request below. You may remain anonymous.</p>
+        <p class="form-sub">Please share your prayer request below. You may remain anonymous.</p>
         
         <form id="prayer-form">
           <div class="form-group">
             <label for="name">Name (Optional)</label>
-            <input type="text" id="name" name="name" placeholder="Leave blank to remain anonymous">
+            <input type="text" id="name" name="name" class="modern-input" placeholder="Leave blank to remain anonymous">
           </div>
           <div class="form-group">
             <label for="intention">Prayer Request *</label>
-            <textarea id="intention" name="intention" rows="6" required placeholder="Please pray for..."></textarea>
+            <textarea id="intention" name="intention" class="modern-textarea" rows="6" required placeholder="Please pray for our family, health, healing, or special grace..."></textarea>
           </div>
-          <!-- Anti-spam -->
-          <input type="text" name="_gotcha" style="display:none">
+          <!-- Anti-spam honeypot -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
           
-          <button type="submit" class="submit-btn" id="submit-btn">Submit Request</button>
+          <button type="submit" class="modern-btn-primary" id="submit-btn" style="width: 100%;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg>
+            Submit Prayer Request
+          </button>
         </form>
-        <div id="form-status"></div>
+        <div id="form-status" role="alert" aria-live="polite"></div>
       </div>
 
-      <div class="prayer-wall">
-        <h2>🙏 Prayer Wall</h2>
+      <!-- Community Prayer Wall -->
+      <div class="prayer-wall-card glass-card reveal reveal-d2">
+        <h2>🙏 Community Prayer Wall</h2>
+        <p class="prayer-wall-sub">Join us in lifting up these intentions from our global community.</p>
         <div class="prayer-list" id="prayer-list">
           <div class="empty-wall">Loading intentions...</div>
         </div>
@@ -261,7 +280,7 @@
       const statusDiv = document.getElementById('form-status');
       
       btn.disabled = true;
-      btn.textContent = 'Submitting...';
+      btn.innerHTML = 'Submitting...';
       
       const payload = {
         name: document.getElementById('name').value,
@@ -292,7 +311,7 @@
       })
       .finally(() => {
         btn.disabled = false;
-        btn.textContent = 'Submit Request';
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg> Submit Prayer Request';
       });
     });
 
@@ -320,7 +339,7 @@
           container.innerHTML = html;
         })
         .catch(err => {
-          document.getElementById('prayer-list').innerHTML = '<div class="empty-wall">Unable to load prayer wall.</div>';
+          document.getElementById('prayer-list').innerHTML = '<div class="empty-wall">Daily intentions held in prayer by the Sisters.</div>';
         });
     });
   </script>

@@ -130,14 +130,52 @@
 
 
   /* ── Reveal on scroll (content) ───────────────────────────────── */
-  var revealTargets = document.querySelectorAll('.reveal:not(.visible)');
-  if ('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, {threshold:0.15});
-    revealTargets.forEach(function(t){ io.observe(t); });
-  } else {
-    revealTargets.forEach(function(t){ t.classList.add('visible'); });
+  function initScrollReveal() {
+    if (reduced) {
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        el.classList.add('visible');
+      });
+      return;
+    }
+    var revealTargets = document.querySelectorAll('.reveal:not(.visible)');
+    if (!revealTargets.length) return;
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      revealTargets.forEach(function(t) { io.observe(t); });
+    } else {
+      revealTargets.forEach(function(t) { t.classList.add('visible'); });
+    }
+  }
+
+  /* ── Active Nav Link Highlighter ────────────────────────────── */
+  function initActiveNav() {
+    var rawPath = window.location.pathname.split('/').pop() || 'index.html';
+    var currentPath = rawPath.split('?')[0].split('#')[0] || 'index.html';
+    if (currentPath === '' || currentPath === '/') currentPath = 'index.html';
+
+    var navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(function(link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      var linkPath = href.split('/').pop().split('?')[0].split('#')[0];
+      var isCurrent = (linkPath === currentPath) ||
+                      (currentPath === 'index.html' && (linkPath === '' || href === '#main-content' || linkPath === 'index.html'));
+
+      if (isCurrent) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.classList.remove('active');
+        link.removeAttribute('aria-current');
+      }
+    });
   }
 
   /* ── Service Worker Registration + Update Notification (PWA) ── */
@@ -366,7 +404,16 @@
   /* ── Back to Top Floating Arrow Button ───────────────────────────── */
   function initBackToTop() {
     var btn = document.getElementById('back-to-top');
-    if (!btn) return;
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.id = 'back-to-top';
+      btn.className = 'back-to-top-btn';
+      btn.setAttribute('type', 'button');
+      btn.setAttribute('aria-label', 'Back to top of page');
+      btn.setAttribute('title', 'Back to top');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>';
+      document.body.appendChild(btn);
+    }
 
     function toggleBtn() {
       if (window.scrollY > 280) {
@@ -385,21 +432,21 @@
     });
   }
 
-  // Initialize on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      initInspectProtection();
-      initCookieConsent();
-      initTheme();
-      initCounters();
-      initBackToTop();
-    });
-  } else {
+  function initApp() {
     initInspectProtection();
     initCookieConsent();
     initTheme();
+    initActiveNav();
+    initScrollReveal();
     initCounters();
     initBackToTop();
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
   }
 })();
 

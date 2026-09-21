@@ -4,26 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Media Library &amp; Archives — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Explore videos, photo galleries, sacred hymns, and downloadable spiritual resources from the Satyaseva Catechist Sisters.">
+  <meta name="description" content="Explore videos, photo galleries, sacred hymns, and downloadable spiritual resources from the Satyaseva Catechist Sisters across India, Germany, and Poland.">
   <link rel="canonical" href="https://satyasevasisters.org/media.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <style>
     /* ── Media Header ──────────────────────────────────────── */
     .media-hero {
       text-align: center;
-      padding: 120px 32px 40px;
+      padding: 120px 24px 36px;
       max-width: 860px;
       margin: 0 auto;
+      position: relative;
     }
     .media-hero h1 {
-      font-size: clamp(32px, 5vw, 52px);
+      font-size: clamp(32px, 5vw, 48px);
       line-height: 1.15;
-      margin: 16px 0 16px;
+      margin: 16px 0 14px;
     }
     .media-hero p {
       font-size: clamp(15px, 1.8vw, 18px);
@@ -36,41 +37,61 @@
     .media-tabs {
       display: flex;
       justify-content: center;
-      gap: 4px;
-      max-width: 560px;
-      margin: 0 auto 40px;
-      background: var(--surface-alt);
+      gap: 6px;
+      max-width: 540px;
+      margin: 0 auto 36px;
+      background: color-mix(in srgb, var(--card) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--line);
       border-radius: var(--r-pill);
-      padding: 4px;
+      padding: 5px;
+      box-shadow: var(--elev-1);
     }
     .media-tabs button {
       flex: 1;
       padding: 10px 16px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       background: none;
       border: none;
       color: var(--ink-soft);
       cursor: pointer;
       border-radius: var(--r-pill);
-      transition: all 0.2s ease;
+      transition: all var(--dur-fast) var(--ease);
       font-family: var(--font-sans);
       white-space: nowrap;
     }
     .media-tabs button.active {
-      background: var(--ink);
-      color: var(--card);
+      background: linear-gradient(135deg, var(--sage-deep), var(--blue-deep));
+      color: #ffffff;
       box-shadow: var(--elev-1);
     }
     .media-tabs button:not(.active):hover {
       color: var(--ink);
-      background: var(--card);
+      background: var(--sage-tint);
     }
 
     .media-section { display: none; }
     .media-section.active { display: block; }
+
+    /* ── Section Headers ───────────────────────────────────── */
+    .media-section-head {
+      max-width: 1100px;
+      margin: 0 auto 28px;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .media-section-head h2 {
+      margin: 12px 0 8px;
+      font-size: 26px;
+    }
+    .media-section-head p {
+      color: var(--ink-soft);
+      font-size: 14.5px;
+      margin: 0;
+    }
 
     /* ── Photo Gallery Grid ────────────────────────────────── */
     .photo-grid {
@@ -79,7 +100,7 @@
       padding: 0 24px 60px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
+      gap: 16px;
     }
     .photo-thumb {
       aspect-ratio: 1;
@@ -87,12 +108,15 @@
       cursor: pointer;
       position: relative;
       border: 1px solid var(--line);
+      border-radius: var(--r-md);
       background: var(--surface-alt);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: var(--elev-1);
+      transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
     }
     .photo-thumb:hover {
-      transform: scale(1.02);
-      box-shadow: var(--elev-2);
+      transform: translateY(-3px);
+      box-shadow: var(--elev-3);
+      border-color: var(--gold-border);
       z-index: 1;
     }
     .photo-thumb img {
@@ -100,7 +124,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s var(--ease);
     }
     .photo-thumb:hover img {
       transform: scale(1.06);
@@ -108,32 +132,37 @@
     .photo-thumb .photo-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(transparent 60%, rgba(0,0,0,0.5));
+      background: linear-gradient(transparent 50%, rgba(15, 23, 42, 0.75));
       opacity: 0;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.25s var(--ease);
       display: flex;
       align-items: flex-end;
       padding: 12px;
     }
     .photo-thumb:hover .photo-overlay { opacity: 1; }
     .photo-overlay span {
-      color: #fff;
+      color: #ffffff;
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 8px;
+      border-radius: var(--r-pill);
     }
 
     /* Community filter */
     .photo-filters {
       max-width: 1100px;
-      margin: 0 auto 20px;
+      margin: 0 auto 24px;
       padding: 0 24px;
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 8px;
     }
     .photo-filter-btn {
-      padding: 6px 14px;
+      padding: 7px 16px;
       font-size: 12px;
       font-weight: 600;
       border: 1px solid var(--line);
@@ -141,21 +170,24 @@
       color: var(--ink-soft);
       cursor: pointer;
       border-radius: var(--r-pill);
-      transition: all 0.15s ease;
+      box-shadow: var(--elev-1);
+      transition: all var(--dur-fast) var(--ease);
       font-family: var(--font-sans);
     }
     .photo-filter-btn.active {
-      background: var(--ink);
-      color: var(--card);
-      border-color: var(--ink);
+      background: var(--sage-deep);
+      color: #ffffff;
+      border-color: var(--sage-deep);
+      box-shadow: var(--elev-2);
     }
     .photo-filter-btn:not(.active):hover {
-      border-color: var(--ink);
-      color: var(--ink);
+      border-color: var(--gold-border);
+      color: var(--gold-deep);
+      background: var(--gold-tint);
     }
     .photo-count {
       font-size: 10px;
-      opacity: 0.7;
+      opacity: 0.8;
       margin-left: 4px;
     }
 
@@ -167,26 +199,21 @@
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 28px;
     }
     .video-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--elev-2);
+      border-radius: var(--r-lg);
       overflow: hidden;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .video-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--elev-3);
+      display: flex;
+      flex-direction: column;
     }
     .video-frame {
       position: relative;
       padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
-      background: #000;
+      background: #0f172a;
     }
     .video-frame iframe {
       position: absolute;
@@ -195,18 +222,22 @@
       border: none;
     }
     .video-meta {
-      padding: 20px;
+      padding: 22px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
     .video-meta h3 {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
       margin: 8px 0;
-      line-height: 1.3;
+      line-height: 1.35;
+      color: var(--ink);
     }
     .video-meta p {
-      font-size: 13px;
+      font-size: 13.5px;
       color: var(--ink-soft);
-      line-height: 1.5;
+      line-height: 1.55;
       margin: 0;
     }
 
@@ -220,20 +251,14 @@
       gap: 24px;
     }
     .audio-card {
-      border: 2px solid var(--ink);
-      padding: 24px;
-      background: var(--card);
-      box-shadow: 4px 4px 0 var(--ink);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      padding: 26px;
+      border-radius: var(--r-lg);
+      border-left: 4px solid var(--gold);
     }
-    .audio-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--ink);
-    }
-    .audio-icon { font-size: 28px; margin-bottom: 8px; }
-    .audio-card h3 { font-size: 16px; margin: 0 0 4px; font-weight: 700; }
-    .audio-card .audio-sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 16px; }
-    .audio-card audio { width: 100%; }
+    .audio-icon { font-size: 30px; margin-bottom: 10px; }
+    .audio-card h3 { font-size: 17px; margin: 0 0 4px; font-weight: 700; }
+    .audio-card .audio-sub { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 16px; }
+    .audio-card audio { width: 100%; border-radius: var(--r-pill); }
 
     /* ── Download Cards ────────────────────────────────────── */
     .downloads-grid {
@@ -241,78 +266,51 @@
       margin: 0 auto;
       padding: 0 24px 60px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 20px;
     }
     .download-card {
-      background: var(--card);
-      border: 2px solid var(--ink);
-      padding: 20px;
-      box-shadow: 4px 4px 0 var(--ink);
+      padding: 22px 24px;
+      border-radius: var(--r-lg);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .download-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--ink);
-    }
-    .download-card strong { display: block; font-size: 15px; }
-    .download-card .dl-sub { font-size: 12px; color: var(--ink-soft); }
-    .download-btn {
-      padding: 8px 16px;
-      background: var(--ink);
-      color: var(--card);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
-      border: 2px solid var(--ink);
-      white-space: nowrap;
-      transition: transform 0.1s ease;
-    }
-    .download-btn:hover { transform: translate(-1px, -1px); }
-
-    /* ── Section Headers ───────────────────────────────────── */
-    .media-section-head {
-      max-width: 1100px;
-      margin: 0 auto 28px;
-      padding: 0 24px;
-    }
-    .media-section-head h2 {
-      margin: 12px 0 8px;
-    }
-    .media-section-head p {
-      color: var(--ink-soft);
-      font-size: 15px;
-      margin: 0;
-    }
+    .download-card strong { display: block; font-size: 15px; color: var(--ink); }
+    .download-card .dl-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
 
     /* ── Empty / Loading ───────────────────────────────────── */
     .empty-state {
       text-align: center;
       padding: 60px 32px;
-      border: 2px dashed var(--line);
+      border: 1px dashed var(--line);
+      border-radius: var(--r-lg);
       color: var(--ink-soft);
       font-weight: 500;
       background: var(--surface-alt);
       max-width: 600px;
       margin: 0 auto 60px;
     }
-    .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+    .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
 
     @media (max-width: 640px) {
-      .media-hero { padding: 80px 16px 24px; }
-      .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; padding: 0 12px 40px; }
+      .media-hero { padding: 90px 16px 24px; }
+      .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 0 16px 40px; }
       .video-grid { grid-template-columns: 1fr; }
-      .media-tabs { flex-wrap: wrap; max-width: 100%; margin: 0 16px 32px; }
-      .media-tabs button { font-size: 11px; padding: 8px 10px; }
+      .media-tabs { flex-wrap: wrap; margin: 0 16px 28px; }
+      .media-tabs button { font-size: 12px; padding: 8px 12px; }
     }
   </style>
 </head>
-<body>
+<body class="ambient-mesh-wrap">
+  <!-- Skip navigation for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Ambient background mesh blobs -->
+  <div class="ambient-blob blob-sage" style="top: 80px; left: -80px;"></div>
+  <div class="ambient-blob blob-gold" style="top: 300px; right: -80px;"></div>
+  <div class="ambient-blob blob-blue" style="bottom: 100px; left: 15%;"></div>
 
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
@@ -326,7 +324,7 @@
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
-        <a href="media.html" aria-current="page" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Media</a>
+        <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
         <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
@@ -347,14 +345,14 @@
   <main id="main-content">
 
     <!-- Hero Header -->
-    <header class="media-hero">
-      <div class="eyebrow">Multimedia &amp; Archives</div>
+    <header class="media-hero reveal">
+      <span class="badge-gold">Multimedia &amp; Archives</span>
       <h1>Media Library</h1>
-      <p>Watch documentaries on our mission, browse community photo galleries, listen to sacred hymns, and download catechism resources.</p>
+      <p>Watch mission documentaries, explore community photo galleries, listen to sacred hymns, and download spiritual catechetical resources.</p>
     </header>
 
     <!-- Section Tabs -->
-    <div class="media-tabs" id="media-tabs" role="tablist">
+    <div class="media-tabs reveal reveal-d1" id="media-tabs" role="tablist">
       <button type="button" class="active" data-section="photos" role="tab" aria-selected="true">📷 Photos</button>
       <button type="button" data-section="videos" role="tab" aria-selected="false">🎬 Videos</button>
       <button type="button" data-section="audio" role="tab" aria-selected="false">🎵 Hymns</button>
@@ -364,9 +362,9 @@
     <!-- ════ PHOTOS SECTION ════ -->
     <section class="media-section active" id="section-photos" role="tabpanel">
       <div class="media-section-head">
-        <div class="eyebrow">Community Archives</div>
+        <span class="badge-sage">Community Archives</span>
         <h2>Photo Gallery</h2>
-        <p>Photographs from our communities, celebrations, and mission work across India, Germany, and Poland.</p>
+        <p>Photographs from our communities, liturgical celebrations, and family apostolate across India, Germany, and Poland.</p>
       </div>
 
       <div class="photo-filters" id="photo-filters">
@@ -386,42 +384,42 @@
     <section class="media-section" id="section-videos" role="tabpanel">
       <div class="video-section-inner">
         <div class="media-section-head" style="padding:0; margin-bottom:28px;">
-          <div class="eyebrow">Video Archives</div>
+          <span class="badge-gold">Video Archives</span>
           <h2>Documentaries &amp; Mission Stories</h2>
           <p>Short films, feast celebrations, and missionary chronicles from India and Europe.</p>
         </div>
 
         <div class="video-grid">
-          <div class="video-card">
+          <div class="video-card glass-card">
             <div class="video-frame">
               <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="The Life of Mother Regina Woroniecka" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="video-meta">
-              <span class="eyebrow" style="font-size: 9px; padding: 2px 6px; margin-bottom: 8px;">Foundress History</span>
+              <span class="badge-gold" style="align-self:flex-start; margin-bottom:8px;">Foundress History</span>
               <h3>Mother Regina — Missionary of the Poor</h3>
               <p>A retrospective on the life of Mother Regina Woroniecka (1921–2012), from her roots in Poland to the founding of Satyaseva in Mariyapura, India.</p>
             </div>
           </div>
 
-          <div class="video-card">
+          <div class="video-card glass-card">
             <div class="video-frame">
               <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Golden Jubilee Celebrations" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="video-meta">
-              <span class="eyebrow" style="font-size: 9px; padding: 2px 6px; margin-bottom: 8px;">Celebrations</span>
+              <span class="badge-sage" style="align-self:flex-start; margin-bottom:8px;">Celebrations</span>
               <h3>Jubilee of the Satyaseva Congregation</h3>
               <p>Highlights of the thanksgiving Holy Mass and celebration gathering sisters from all 32 stations across India, Germany, and Poland.</p>
             </div>
           </div>
 
-          <div class="video-card">
+          <div class="video-card glass-card">
             <div class="video-frame">
               <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Mission in Rural Villages" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="video-meta">
-              <span class="eyebrow" style="font-size: 9px; padding: 2px 6px; margin-bottom: 8px;">Village Apostolate</span>
-              <h3>Walking With Rural Families</h3>
-              <p>Follow a day in the life of our sisters in rural Karnataka and Uttar Pradesh visiting family homes, teaching evening study, and offering medical assistance.</p>
+              <span class="badge-blue" style="align-self:flex-start; margin-bottom:8px;">Village Ministry</span>
+              <h3>Presence in the Villages</h3>
+              <p>Following our catechist sisters as they walk between rural homes, visit the sick, and teach catechism under village banyan trees.</p>
             </div>
           </div>
         </div>
@@ -431,38 +429,38 @@
     <!-- ════ AUDIO SECTION ════ -->
     <section class="media-section" id="section-audio" role="tabpanel">
       <div class="media-section-head">
-        <div class="eyebrow">Sacred Chants &amp; Hymns</div>
-        <h2>Prayers in Song</h2>
-        <p>Listen to choral prayers and hymns recorded by the Sisters during Eucharistic Adoration.</p>
+        <span class="badge-blue">Sacred Music</span>
+        <h2>Hymns &amp; Liturgical Chants</h2>
+        <p>Kannada, Hindi, English, and Polish devotional hymns sung during daily chapel adoration and festive celebrations.</p>
       </div>
 
       <div class="audio-grid">
-        <div class="audio-card">
-          <div class="audio-icon">🎵</div>
-          <h3>Satyaseva Hymn — Service to Truth</h3>
-          <div class="audio-sub">Sung by the Novices and Sisters of Marianiketan</div>
+        <div class="audio-card glass-card">
+          <div class="audio-icon">🕊️</div>
+          <h3>Satyaseva Congregation Anthem</h3>
+          <div class="audio-sub">Sung by SCS Novices at Marianiketan</div>
           <audio controls preload="none">
-            <source src="" type="audio/mpeg">
+            <source src="assets/audio/anthem.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
         </div>
 
-        <div class="audio-card">
-          <div class="audio-icon">🕯️</div>
-          <h3>Tantum Ergo &amp; Adoration Chants</h3>
-          <div class="audio-sub">Latin &amp; Kannada Eucharistic Benediction</div>
-          <audio controls preload="none">
-            <source src="" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div class="audio-card">
+        <div class="audio-card glass-card">
           <div class="audio-icon">🌹</div>
-          <h3>Magnificat — Hymn to Mary</h3>
-          <div class="audio-sub">Vesper Chants for the Feast of the Annunciation</div>
+          <h3>Magnificat — Song of Mary</h3>
+          <div class="audio-sub">Evening Vespers recording</div>
           <audio controls preload="none">
-            <source src="" type="audio/mpeg">
+            <source src="assets/audio/magnificat.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+
+        <div class="audio-card glass-card">
+          <div class="audio-icon">✝️</div>
+          <h3>St. Joseph, Guardian of Families</h3>
+          <div class="audio-sub">Feast day hymn</div>
+          <audio controls preload="none">
+            <source src="assets/audio/st-joseph.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
         </div>
@@ -472,34 +470,42 @@
     <!-- ════ DOWNLOADS SECTION ════ -->
     <section class="media-section" id="section-downloads" role="tabpanel">
       <div class="media-section-head">
-        <div class="eyebrow">Publications &amp; Resources</div>
-        <h2>Downloadable Archive Materials</h2>
-        <p>Spiritual reading, prayer aids, and congregation history brochures.</p>
+        <span class="badge-gold">Resources</span>
+        <h2>Catechetical &amp; Spiritual Downloads</h2>
+        <p>Free PDF resources for family prayer, catechism teachers, and vocation seekers.</p>
       </div>
 
       <div class="downloads-grid">
-        <div class="download-card">
+        <div class="download-card glass-card">
           <div>
-            <strong>Mother Regina Woroniecka Biography</strong>
-            <span class="dl-sub">Biography &amp; Spiritual Legacy • PDF • 1.4 MB</span>
+            <strong>Family Prayer Booklet (PDF)</strong>
+            <span class="dl-sub">Daily prayers and scripture for Catholic homes</span>
           </div>
-          <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download class="download-btn">📥 PDF</a>
+          <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download</a>
         </div>
 
-        <div class="download-card">
+        <div class="download-card glass-card">
           <div>
-            <strong>Satyaseva Prayer of Intercession</strong>
-            <span class="dl-sub">Official Prayer Card • Coming Soon</span>
+            <strong>Rule of Life &amp; Constitutions Summary</strong>
+            <span class="dl-sub">Introduction to SCS spiritual charism</span>
           </div>
-          <span class="download-btn" style="opacity:0.5; cursor:default;">Coming Soon</span>
+          <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download</a>
         </div>
 
-        <div class="download-card">
+        <div class="download-card glass-card">
           <div>
-            <strong>Catechism Family Visit Guide</strong>
+            <strong>Novena to Mother Regina Woroniecka</strong>
+            <span class="dl-sub">9-day prayer for special family graces</span>
+          </div>
+          <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download</a>
+        </div>
+
+        <div class="download-card glass-card">
+          <div>
+            <strong>Catechist Teaching Handbook</strong>
             <span class="dl-sub">Parish Pastoral Guidelines • Coming Soon</span>
           </div>
-          <span class="download-btn" style="opacity:0.5; cursor:default;">Coming Soon</span>
+          <span class="badge-sage">Coming Soon</span>
         </div>
       </div>
     </section>
@@ -555,15 +561,13 @@
     }
 
     /* ── Photo Gallery: load from community images JSON ────── */
-    var allPhotos = []; // { src, community, label }
+    var allPhotos = [];
     var currentFilter = 'all';
 
     function loadPhotos() {
-      // Load community images manifest
       fetch('data/community-images.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          // data is an object { communityId: [filenames] }
           var photos = [];
           Object.keys(data).forEach(function(communityId) {
             var images = data[communityId];
@@ -581,7 +585,6 @@
           renderPhotos();
         })
         .catch(function() {
-          // Fallback: empty state
           allPhotos = [];
           renderPhotos();
         });
@@ -591,7 +594,6 @@
       var filtersEl = document.getElementById('photo-filters');
       if (!filtersEl) return;
 
-      // Get unique communities
       var communities = {};
       allPhotos.forEach(function(p) {
         if (!communities[p.community]) communities[p.community] = 0;
@@ -601,7 +603,6 @@
       var html = '<button class="photo-filter-btn active" data-filter="all">All<span class="photo-count">(' + allPhotos.length + ')</span></button>';
       Object.keys(communities).sort().forEach(function(c) {
         var label = c.replace(/-/g, ' ').replace(/_/g, ' ');
-        // Title-case
         label = label.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
         html += '<button class="photo-filter-btn" data-filter="' + c + '">' + label + '<span class="photo-count">(' + communities[c] + ')</span></button>';
       });
@@ -666,6 +667,6 @@
     }
   })();
   </script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>

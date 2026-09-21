@@ -61,7 +61,7 @@
   width: 45vw; height: 45vw;
   background: var(--blue-tint);
   animation-delay: -10s;
-}
+
   width: 30vw; height: 30vw;
   background: rgba(185, 137, 31, 0.05); /* very faint gold */
   animation-delay: -10s;

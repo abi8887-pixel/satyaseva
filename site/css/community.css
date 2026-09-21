@@ -945,67 +945,65 @@ body.community-detail-page :focus-visible {
 
 /* ── 15. Prev / Next Navigation ───────────────────────────────── */
 .detail-nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-4);
-  padding-top: var(--sp-5);
-  margin-top: var(--sp-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-5);
   border-top: 1px solid var(--line);
 }
 
+.detail-nav-placeholder {
+  flex: 1 1 0;
+}
+
 .detail-nav-box {
-  display: block;
-  padding: 12px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
   background: var(--surface);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1px solid var(--line);
-  border-radius: var(--r-md);
+  border-radius: var(--r-pill);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   text-decoration: none;
   color: var(--ink);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
+  max-width: 45%;
   overflow: hidden;
 }
-
-.detail-nav-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--gold);
-  opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease);
-}
-.detail-nav-box.prev::before { left: 0; }
-.detail-nav-box.next::before { right: 0; }
 
 .detail-nav-box:hover {
   background: var(--card);
   border-color: var(--gold-border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transform: translateY(-1.5px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
 }
-.detail-nav-box:hover::before { opacity: 1; }
+
+.detail-nav-box.next {
+  margin-left: auto;
+}
 
 .nav-box-inner {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  min-width: 0;
 }
 
 .detail-nav-box.next .nav-box-inner {
-  justify-content: flex-end;
+  flex-direction: row-reverse;
 }
 
 .nav-arrow-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
   border-radius: 50%;
   background: var(--sage-tint);
@@ -1018,20 +1016,12 @@ body.community-detail-page :focus-visible {
   background: var(--sage-deep);
   color: #fff;
   border-color: var(--sage-deep);
-  box-shadow: 0 2px 8px rgba(46, 86, 65, 0.25);
-}
-
-.detail-nav-box.prev:hover .nav-arrow-badge {
-  transform: translateX(-2px);
-}
-.detail-nav-box.next:hover .nav-arrow-badge {
-  transform: translateX(2px);
 }
 
 .nav-box-content {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
 }
 .detail-nav-box.next .nav-box-content {
@@ -1039,7 +1029,7 @@ body.community-detail-page :focus-visible {
 }
 
 .nav-direction-label {
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -1048,10 +1038,10 @@ body.community-detail-page :focus-visible {
 
 .nav-community-name {
   font-family: inherit;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--sage-deep);
-  line-height: 1.3;
+  line-height: 1.2;
   transition: color var(--dur-fast) var(--ease);
   white-space: nowrap;
   overflow: hidden;
@@ -1062,12 +1052,7 @@ body.community-detail-page :focus-visible {
 }
 
 .nav-community-meta {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: none; /* Hide meta on the compact buttons */
 }
 
 .detail-nav-placeholder { min-height: 1px; }
@@ -1133,6 +1118,65 @@ body.community-detail-page :focus-visible {
 }
 .lightbox-modal.active { display: flex; opacity: 1; }
 
+.lightbox-toolbar {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.lightbox-zoom-group {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: var(--r-pill);
+  padding: 3px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  gap: 2px;
+}
+
+.lightbox-zoom-btn {
+  position: static;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.lightbox-zoom-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, .2);
+  color: var(--gold);
+}
+.lightbox-zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.lightbox-zoom-level {
+  width: auto;
+  min-width: 48px;
+  padding: 0 8px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+}
+.lightbox-zoom-level:hover {
+  background: rgba(255, 255, 255, .15);
+}
+
 .lightbox-content {
   position: relative;
   max-width: 92vw;
@@ -1142,12 +1186,43 @@ body.community-detail-page :focus-visible {
   align-items: center;
 }
 
+.lightbox-viewport {
+  position: relative;
+  max-width: 90vw;
+  max-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .lightbox-img {
   max-width: 100%;
   max-height: 78vh;
   object-fit: contain;
   border-radius: var(--r-md);
   box-shadow: var(--elev-modal);
+  transform-origin: center center;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: zoom-in;
+  will-change: transform;
+}
+
+.lightbox-viewport.is-zoomed {
+  cursor: grab;
+}
+.lightbox-viewport.is-zoomed.is-panning {
+  cursor: grabbing;
+}
+.lightbox-viewport.is-zoomed .lightbox-img {
+  cursor: grab;
+}
+.lightbox-viewport.is-zoomed.is-panning .lightbox-img {
+  cursor: grabbing;
+  transition: none !important;
 }
 
 .lightbox-caption {
@@ -1161,12 +1236,9 @@ body.community-detail-page :focus-visible {
 }
 
 .lightbox-btn {
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
   background: rgba(255, 255, 255, .12);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, .25);
@@ -1184,9 +1256,28 @@ body.community-detail-page :focus-visible {
   transform: scale(1.08);
 }
 
-.lightbox-close { top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right)); }
-.lightbox-prev { left: max(16px, env(safe-area-inset-left)); top: 50%; translate: 0 -50%; }
-.lightbox-next { right: max(16px, env(safe-area-inset-right)); top: 50%; translate: 0 -50%; }
+.lightbox-close {
+  position: static;
+  width: 42px;
+  height: 42px;
+}
+
+.lightbox-prev {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  left: max(16px, env(safe-area-inset-left));
+  top: 50%;
+  translate: 0 -50%;
+}
+.lightbox-next {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  right: max(16px, env(safe-area-inset-right));
+  top: 50%;
+  translate: 0 -50%;
+}
 
 /* ── 18. Sister Upload Modal ──────────────────────────────────── */
 .upload-modal {
@@ -1391,8 +1482,9 @@ body.community-detail-page :focus-visible {
 
   .apostolate-num { min-width: 48px; padding: var(--sp-3); }
 
-  .detail-nav { grid-template-columns: 1fr; }
-  .detail-nav-box.next { text-align: left; }
+  .detail-nav { flex-direction: column; align-items: stretch; gap: var(--sp-2); }
+  .detail-nav-box { max-width: 100%; }
+  .detail-nav-box.next { margin-left: 0; }
 
   .hero-showcase-caption { flex-direction: column; align-items: stretch; }
   .hero-expand-btn { width: 100%; }
@@ -1400,9 +1492,14 @@ body.community-detail-page :focus-visible {
   .gallery-empty-banner { flex-direction: column; align-items: stretch; }
   .empty-banner-content { align-items: flex-start; }
 
+  .lightbox-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .lightbox-zoom-btn { width: 32px; height: 32px; }
+  .lightbox-zoom-level { min-width: 40px; font-size: 11px; padding: 0 4px; }
+  .lightbox-close { width: 36px; height: 36px; }
+
   .lightbox-prev { left: 8px; }
   .lightbox-next { right: 8px; }
-  .lightbox-btn { width: 42px; height: 42px; }
+  .lightbox-btn.lightbox-prev, .lightbox-btn.lightbox-next { width: 42px; height: 42px; }
 
   .upload-modal { align-items: flex-end; padding: 0; }
   .upload-modal-card {

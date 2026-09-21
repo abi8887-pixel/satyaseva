@@ -4,157 +4,251 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact Us — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Get in touch with the Satyaseva Catechist Sisters of the Families. We'd love to hear from you.">
+  <meta name="description" content="Get in touch with the Satyaseva Catechist Sisters of the Families. Connect with our Generalate in Bengaluru, India or local mission convents.">
   <link rel="canonical" href="https://satyasevasisters.org/contact.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <style>
-    .contact-container {
-      max-width: 800px;
-      margin: 80px auto;
-      padding: 48px;
-      background: var(--card);
-      border: 2px solid var(--ink);
-      box-shadow: 8px 8px 0 var(--ink);
-    }
-    .contact-container h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
+    .contact-hero {
+      position: relative;
+      padding: 120px 24px 40px;
       text-align: center;
+      max-width: 840px;
+      margin: 0 auto;
     }
-    .contact-container p {
-      text-align: center;
+    .contact-hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin: 16px 0 14px;
+      line-height: 1.15;
+    }
+    .contact-hero p {
+      font-size: clamp(15px, 1.8vw, 18px);
       color: var(--ink-soft);
-      margin-bottom: 40px;
-      font-size: 16px;
+      line-height: 1.65;
+      margin: 0 auto 36px;
+      max-width: 620px;
     }
+
+    .contact-grid {
+      max-width: 1080px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .contact-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-card {
+      padding: 24px;
+      border-radius: var(--r-lg);
+    }
+    .info-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+    }
+    .info-card p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .info-card a {
+      color: var(--sage-deep);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .info-card a:hover {
+      color: var(--gold-deep);
+    }
+
+    .contact-form-card {
+      padding: clamp(28px, 4vw, 44px);
+      border-radius: var(--r-lg);
+    }
+
+    .contact-form-card h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .contact-form-card .form-desc {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-bottom: 28px;
+    }
+
     .form-group {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
     .form-group label {
       display: block;
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       margin-bottom: 8px;
       color: var(--ink);
     }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      border: 2px solid var(--ink);
-      background: var(--bg);
-      color: var(--ink);
-      transition: box-shadow 0.2s, outline 0.2s;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      box-shadow: 4px 4px 0 var(--ink);
-    }
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: var(--ink);
-      color: var(--card);
-      border: 2px solid var(--ink);
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
-    }
-    .submit-btn:hover {
-      background: var(--bg);
-      color: var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      transform: translate(-2px, -2px);
-    }
-    .submit-btn:active {
-      transform: translate(0, 0);
-      box-shadow: 0 0 0 var(--ink);
-    }
+
     #form-status {
-      margin-top: 24px;
-      padding: 16px;
+      margin-top: 20px;
+      padding: 14px 18px;
       font-size: 14px;
       font-weight: 600;
-      text-align: center;
+      border-radius: var(--r-md);
       display: none;
     }
     .status-success {
-      background: #e6f4ea;
-      color: #1e4620;
-      border: 2px solid #1e4620;
+      background: var(--sage-tint);
+      color: var(--sage-deep);
+      border: 1px solid var(--sage-border);
     }
     .status-error {
-      background: #fce8e6;
-      color: #c5221f;
-      border: 2px solid #c5221f;
+      background: var(--danger-tint);
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    @media (max-width: 860px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .contact-hero {
+        padding-top: 90px;
+      }
     }
   </style>
 </head>
-<body>
+<body class="ambient-mesh-wrap">
+  <!-- Skip navigation for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <nav id="nav" role="navigation">
+
+  <!-- Ambient background mesh blobs -->
+  <div class="ambient-blob blob-sage" style="top: 80px; left: -100px;"></div>
+  <div class="ambient-blob blob-gold" style="top: 240px; right: -120px;"></div>
+  <div class="ambient-blob blob-blue" style="bottom: 120px; left: 20%;"></div>
+
+  <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters</span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
+        <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
         <a href="donate.html">Donate</a>
-        <a href="contact.html" style="background:var(--gold-glow);border:2px solid var(--ink);transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--ink);">Contact</a>
+        <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+        <select id="lang-select" aria-label="Select language">
+          <option value="en" selected>English</option>
+          <option value="pl">Polski</option>
+        </select>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
 
   <main id="main-content">
-    <div class="contact-container reveal visible">
-      <h1>Contact Us</h1>
-      <p>Whether you have a question, need assistance, or just want to connect, we are here for you.</p>
+    <header class="contact-hero reveal">
+      <span class="badge-gold">Get in Touch</span>
+      <h1>We Are Here For You</h1>
+      <p>Whether you have a question about our ministries, need prayerful counsel, or wish to connect with a Sister, we welcome your message with open hearts.</p>
+    </header>
 
-      <form id="contact-form">
-        <div class="form-group">
-          <label for="name">Your Name *</label>
-          <input type="text" id="name" name="name" required placeholder="e.g. Maria Joseph">
+    <div class="contact-grid">
+      <!-- Contact Information Sidebar -->
+      <aside class="contact-info-panel reveal reveal-d1">
+        <div class="info-card glass-card">
+          <h3>📍 Generalate & Headquarters</h3>
+          <p>
+            <strong>Satyaseva Catechist Sisters</strong><br>
+            No. 1/2, Cookson Road, Richard's Town<br>
+            Bengaluru 560 005, Karnataka, India
+          </p>
         </div>
-        <div class="form-group">
-          <label for="email">Your Email *</label>
-          <input type="email" id="email" name="email" required placeholder="maria@example.com">
-        </div>
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <input type="text" id="subject" name="subject" placeholder="What is this regarding?">
-        </div>
-        <div class="form-group">
-          <label for="message">Message *</label>
-          <textarea id="message" name="message" rows="6" required placeholder="How can we help you?"></textarea>
-        </div>
-        <!-- Anti-spam honeypot field -->
-        <input type="text" name="_gotcha" style="display:none">
-        
-        <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
-      </form>
 
-      <div id="form-status"></div>
+        <div class="info-card glass-card">
+          <h3>📞 Telephone & Enquiries</h3>
+          <p>
+            Direct: <a href="tel:+918025496604">+91 80 2549 6604</a><br>
+            Office Hours: Mon – Sat, 9:00 AM – 5:00 PM IST
+          </p>
+        </div>
+
+        <div class="info-card glass-card">
+          <h3>✉️ Email Correspondence</h3>
+          <p>
+            General: <a href="mailto:scs.satyaseva@gmail.com">scs.satyaseva@gmail.com</a><br>
+            Vocations: <a href="mailto:vocations@satyasevasisters.org">vocations@satyasevasisters.org</a>
+          </p>
+        </div>
+
+        <div class="info-card glass-card" style="border-left: 3px solid var(--gold);">
+          <h3>🕊️ Need Urgent Prayers?</h3>
+          <p>
+            You can also submit dedicated prayer intentions to our sisters' daily prayer wall on our <a href="prayers.html">Prayers Page</a>.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Contact Message Form -->
+      <div class="contact-form-card glass-card reveal reveal-d2">
+        <h2>Send a Message</h2>
+        <p class="form-desc">Fill in the details below and we will respond as soon as possible.</p>
+
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" class="modern-input" required placeholder="e.g. Maria Joseph">
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email *</label>
+            <input type="email" id="email" name="email" class="modern-input" required placeholder="maria@example.com">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" class="modern-input" placeholder="What is this regarding?">
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" class="modern-textarea" rows="5" required placeholder="How can we help or pray for you?"></textarea>
+          </div>
+          <!-- Anti-spam honeypot field -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          
+          <button type="submit" class="modern-btn-primary" id="submit-btn" style="width: 100%;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            Send Message
+          </button>
+        </form>
+
+        <div id="form-status" role="alert" aria-live="polite"></div>
+      </div>
     </div>
   </main>
 
@@ -182,7 +276,7 @@
       const statusDiv = document.getElementById('form-status');
       
       btn.disabled = true;
-      btn.textContent = 'Sending...';
+      btn.innerHTML = 'Sending...';
       
       const payload = {
         name: document.getElementById('name').value,
@@ -215,7 +309,7 @@
       })
       .finally(() => {
         btn.disabled = false;
-        btn.textContent = 'Send Message';
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> Send Message';
       });
     });
   </script>

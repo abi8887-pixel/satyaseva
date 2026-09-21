@@ -134,13 +134,13 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
     }
     .station-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-2px);
       box-shadow: var(--elev-2);
-      background: var(--gold-glow);
+      background: var(--gold-tint);
     }
     .station-card.active {
-      border-left: 6px solid var(--ink);
-      background: var(--gold-glow);
+      border-left: 5px solid var(--gold);
+      background: var(--gold-tint);
     }
     .station-title {
       font-family: 'Playfair Display', serif;
@@ -173,7 +173,9 @@
     /* Leaflet Map Frame */
     .map-frame {
       border: 1px solid var(--line);
-      box-shadow: 8px 8px 0 var(--ink);
+      border-radius: var(--r-lg);
+      box-shadow: var(--elev-2);
+      overflow: hidden;
       background: var(--card);
       min-height: 600px;
       position: relative;
@@ -250,7 +252,7 @@
       <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="map.html" style="background:var(--gold-glow); border:2px solid var(--ink); transform:translate(-2px,-2px); box-shadow:2px 2px 0 var(--ink);">Map</a>
+        <a href="map.html">Map</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
