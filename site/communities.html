@@ -26,6 +26,7 @@
     </a>
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
+      <a href="communities.html" class="active" aria-current="page">Communities</a>
       <a href="map.html">Map</a>
       <a href="events.html">Events</a>
       <a href="news.html">News</a>
@@ -33,15 +34,17 @@
       <a href="donate.html">Donate</a>
       <a href="contact.html">Contact</a>
       <a href="memorial.html">In Memoriam</a>
-      <button class="theme-toggle-btn" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">🌙</button>
-      <select id="lang-select" aria-label="Select language" class="lang-select">
+    </div>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      <select id="lang-select" aria-label="Select language">
         <option value="en" selected>English</option>
         <option value="pl">Polski</option>
       </select>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button class="hamburger" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 
@@ -66,10 +69,16 @@
       <button class="filter-tab" data-filter="Germany" role="tab" aria-selected="false">Germany 🇩🇪</button>
       <button class="filter-tab" data-filter="Poland" role="tab" aria-selected="false">Poland 🇵🇱</button>
     </div>
-    <div class="filter-search-wrapper">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="button" aria-label="Focus search input"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <input type="text" id="comm-search" class="filter-search" placeholder="Search by name, state, or ministry…" aria-label="Search communities" autocomplete="off">
-      <button type="button" id="comm-search-clear" class="search-clear-btn" aria-label="Clear search query" style="display:none;" title="Clear search">&times;</button>
+    <div class="filter-actions-right">
+      <div class="filter-search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="button" aria-label="Focus search input"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="comm-search" class="filter-search" placeholder="Search by name, state, or ministry…" aria-label="Search communities" autocomplete="off">
+        <button type="button" id="comm-search-clear" class="search-clear-btn" aria-label="Clear search query" style="display:none;" title="Clear search">&times;</button>
+      </div>
+      <button type="button" class="btn-print-directory" id="btn-print-directory" onclick="window.print()" title="Print archival station directory sheet">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Print Directory
+      </button>
     </div>
   </div>
   

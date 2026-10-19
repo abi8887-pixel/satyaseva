@@ -362,10 +362,13 @@
     var allEvents = [];
     var currentView = 'upcoming';
 
-    /* ── Fetch events from API ─────────────────────────────── */
+    /* ── Fetch events from API with static fallback ────────────── */
     function loadEvents() {
       fetch('/api/events')
-        .then(function(r) { return r.json(); })
+        .then(function(r) {
+          if (!r.ok) throw new Error('API unavailable');
+          return r.json();
+        })
         .then(function(events) {
           if (!Array.isArray(events)) events = [];
           allEvents = events;
@@ -373,8 +376,22 @@
           renderEvents();
         })
         .catch(function() {
-          allEvents = [];
-          renderEvents();
+          fetch('data/events.json')
+            .then(function(r) {
+              if (!r.ok) throw new Error('JSON unavailable');
+              return r.json();
+            })
+            .then(function(events) {
+              if (!Array.isArray(events)) events = [];
+              allEvents = events;
+              updateCounts();
+              renderEvents();
+            })
+            .catch(function() {
+              allEvents = window.__INITIAL_EVENTS__ || [];
+              updateCounts();
+              renderEvents();
+            });
         });
     }
 
@@ -516,6 +533,7 @@
     }
   })();
   </script>
+  <script src="data/communities-data.js?v=4"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

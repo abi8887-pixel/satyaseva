@@ -23,10 +23,13 @@ SITE_DIR = os.path.join(REPO_ROOT, 'site')
 SITE_DATA_DIR = os.path.join(SITE_DIR, 'data')
 # Database lives OUTSIDE the publicly-served site/ directory for security
 DB_DATA_DIR = os.path.join(SCRIPT_DIR, 'data')
+DATA_DIR = DB_DATA_DIR
 DB_PATH = os.path.join(DB_DATA_DIR, 'sscs.db')
 COMMUNITIES_JSON = os.path.join(SITE_DATA_DIR, 'communities.json')
 COMMUNITIES_DATA_JS = os.path.join(SITE_DATA_DIR, 'communities-data.js')
 MEMORIAL_JSON = os.path.join(SITE_DATA_DIR, 'memorial.json')
+EVENTS_JSON = os.path.join(SITE_DATA_DIR, 'events.json')
+NEWS_JSON = os.path.join(SITE_DATA_DIR, 'news.json')
 
 def get_connection():
     """Returns a SQLite connection with row factory configured."""
@@ -210,6 +213,26 @@ def init_db():
         );
         """)
 
+        # 14. Response Log — tracks every change made by sisters for admin review
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS response_log (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            action_type TEXT NOT NULL,      -- 'community_update', 'community_add', 'photo_upload', 'photo_delete', 'event_add', 'event_update', 'event_delete', 'news_add', 'news_update', 'news_delete', 'memorial_update', 'memorial_add', 'memorial_delete'
+            entity_type TEXT NOT NULL,       -- 'community', 'photo', 'event', 'news', 'memorial'
+            entity_id TEXT DEFAULT '',       -- the ID of the affected record
+            entity_name TEXT DEFAULT '',     -- human-readable name/title for display
+            sister_name TEXT DEFAULT '',     -- who made the change
+            summary TEXT DEFAULT '',         -- brief description of what changed
+            snapshot_before TEXT DEFAULT '{}', -- JSON snapshot of data BEFORE the change (for revert)
+            snapshot_after TEXT DEFAULT '{}',  -- JSON snapshot of data AFTER the change
+            status TEXT DEFAULT 'pending',  -- 'pending', 'reviewed', 'flagged', 'reverted'
+            reviewed_by TEXT DEFAULT '',     -- admin who reviewed
+            reviewed_at TIMESTAMP,
+            admin_notes TEXT DEFAULT '',     -- notes from admin review
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+
         # Indexes for fast querying
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_ministries_station ON station_ministries(station_id);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_members_station ON station_members(station_id);")
@@ -221,6 +244,9 @@ def init_db():
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_news_date ON news(date);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_contact_status ON contact_messages(status);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_prayers_status ON prayer_requests(status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_response_log_status ON response_log(status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_response_log_entity ON response_log(entity_type, entity_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_response_log_created ON response_log(created_at);")
 
         conn.commit()
 
@@ -517,6 +543,7 @@ def save_station(data):
             cursor.execute("DELETE FROM station_stories WHERE station_id = ?", (sid,))
             for idx, st in enumerate(data['stories']):
                 if isinstance(st, dict):
+                    story_content = st.get('content') or st.get('body') or ''
                     cursor.execute("""
                         INSERT INTO station_stories (station_id, year, title, content, sort_order)
                         VALUES (?, ?, ?, ?, ?)
@@ -524,15 +551,78 @@ def save_station(data):
                         sid,
                         str(st.get('year', '')),
                         st.get('title', ''),
-                        st.get('content', ''),
+                        story_content,
                         idx
                     ))
+
+        # Update gallery if provided
+        if 'gallery' in data and isinstance(data['gallery'], list):
+            cursor.execute("DELETE FROM station_gallery WHERE station_id = ? AND is_hero = 0", (sid,))
+            for img in data['gallery']:
+                if img and isinstance(img, str):
+                    cursor.execute("""
+                        INSERT INTO station_gallery (station_id, image_path, is_hero)
+                        VALUES (?, ?, 0)
+                    """, (sid, img.strip()))
 
         conn.commit()
 
     # Sync back to JSON and JS
     sync_to_json()
     return sid
+
+def add_station_gallery_photo(station_id, image_path, is_hero=False):
+    """Record a photo in SQLite station_gallery table."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM station_gallery WHERE station_id = ? AND image_path = ?", (station_id, image_path))
+        if not cursor.fetchone():
+            cursor.execute("""
+                INSERT INTO station_gallery (station_id, image_path, is_hero)
+                VALUES (?, ?, ?)
+            """, (station_id, image_path, 1 if is_hero else 0))
+        if is_hero:
+            cursor.execute("UPDATE stations SET hero_image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?", (image_path, station_id))
+        conn.commit()
+
+def remove_station_gallery_photo(station_id, image_path):
+    """Remove a photo from SQLite station_gallery table."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM station_gallery WHERE station_id = ? AND image_path = ?", (station_id, image_path))
+        conn.commit()
+
+def sync_gallery_from_disk():
+    """Synchronize SQLite station_gallery with physical files in site/images/communities."""
+    comm_images_dir = os.path.join(SITE_DIR, 'images', 'communities')
+    if not os.path.exists(comm_images_dir):
+        return
+    image_exts = {'.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif', '.svg'}
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        for entry in sorted(os.listdir(comm_images_dir)):
+            folder = os.path.join(comm_images_dir, entry)
+            if not os.path.isdir(folder):
+                continue
+            cid = entry
+            cursor.execute("SELECT id FROM stations WHERE id = ?", (cid,))
+            if not cursor.fetchone():
+                continue
+            for f in sorted(os.listdir(folder)):
+                ext = os.path.splitext(f.lower())[1]
+                if ext not in image_exts:
+                    continue
+                rel_path = f"images/communities/{cid}/{f}"
+                is_hero = os.path.splitext(f.lower())[0] in ('hero', 'cover', 'banner', 'main', 'header')
+                cursor.execute("SELECT id FROM station_gallery WHERE station_id = ? AND image_path = ?", (cid, rel_path))
+                if not cursor.fetchone():
+                    cursor.execute("""
+                        INSERT INTO station_gallery (station_id, image_path, is_hero)
+                        VALUES (?, ?, ?)
+                    """, (cid, rel_path, 1 if is_hero else 0))
+                if is_hero:
+                    cursor.execute("UPDATE stations SET hero_image = ? WHERE id = ? AND (hero_image IS NULL OR hero_image = '')", (rel_path, cid))
+        conn.commit()
 
 def delete_station(station_id):
     """Deletes a station and cascading records."""
@@ -708,10 +798,12 @@ def delete_memorial_sister(sister_id):
 
 # ── Synchronization to Static Files ──
 def sync_to_json():
-    """Exports SQLite tables to communities.json, memorial.json, and communities-data.js."""
+    """Exports SQLite tables to communities.json, memorial.json, events.json, news.json, and communities-data.js."""
     try:
         stations = get_all_stations()
         memorials = get_memorial_sisters()
+        events = get_events()
+        news = get_news()
 
         # 1. Update communities.json
         with open(COMMUNITIES_JSON, 'w', encoding='utf-8') as f:
@@ -721,11 +813,21 @@ def sync_to_json():
         with open(MEMORIAL_JSON, 'w', encoding='utf-8') as f:
             json.dump(memorials, f, indent=2, ensure_ascii=False)
 
-        # 3. Update communities-data.js (embedded fallback for static offline site)
+        # 3. Update events.json
+        with open(EVENTS_JSON, 'w', encoding='utf-8') as f:
+            json.dump(events, f, indent=2, ensure_ascii=False)
+
+        # 4. Update news.json
+        with open(NEWS_JSON, 'w', encoding='utf-8') as f:
+            json.dump(news, f, indent=2, ensure_ascii=False)
+
+        # 5. Update communities-data.js (embedded fallback for static offline site)
         with open(COMMUNITIES_DATA_JS, 'w', encoding='utf-8') as f:
-            f.write("// Embedded fallback data for communities and memorial sisters\n")
+            f.write("// Embedded fallback data for communities, memorial sisters, events, and news\n")
             f.write(f"window.__INITIAL_COMMUNITIES__ = {json.dumps(stations, ensure_ascii=False)};\n")
             f.write(f"window.__INITIAL_MEMORIAL__ = {json.dumps(memorials, ensure_ascii=False)};\n")
+            f.write(f"window.__INITIAL_EVENTS__ = {json.dumps(events, ensure_ascii=False)};\n")
+            f.write(f"window.__INITIAL_NEWS__ = {json.dumps(news, ensure_ascii=False)};\n")
 
         return True
     except Exception as e:
@@ -749,13 +851,16 @@ def add_event(data):
             VALUES (?, ?, ?, ?, ?)
         """, (data.get('title'), data.get('date'), data.get('time', ''), data.get('location', ''), data.get('description', '')))
         conn.commit()
-        return cursor.lastrowid
+        row_id = cursor.lastrowid
+    sync_to_json()
+    return row_id
 
 def delete_event(event_id):
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("DELETE FROM events WHERE id = ?", (event_id,))
         conn.commit()
+    sync_to_json()
     return True
 
 # News
@@ -773,13 +878,16 @@ def add_news(data):
             VALUES (?, ?, ?, ?, ?)
         """, (data.get('title'), data.get('author', 'Admin'), data.get('date'), data.get('content'), data.get('image_path', '')))
         conn.commit()
-        return cursor.lastrowid
+        row_id = cursor.lastrowid
+    sync_to_json()
+    return row_id
 
 def delete_news(news_id):
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("DELETE FROM news WHERE id = ?", (news_id,))
         conn.commit()
+    sync_to_json()
     return True
 
 # Contact Messages
@@ -862,6 +970,7 @@ def update_event(event_id, data):
         """, (data.get('title'), data.get('date'), data.get('time', ''),
               data.get('location', ''), data.get('description', ''), event_id))
         conn.commit()
+    sync_to_json()
     return event_id
 
 # ── News Updates ──
@@ -875,6 +984,7 @@ def update_news(news_id, data):
         """, (data.get('title'), data.get('author', 'Admin'), data.get('date'),
               data.get('content'), data.get('image_path', ''), news_id))
         conn.commit()
+    sync_to_json()
     return news_id
 
 # ── Newsletter Unsubscribe ──
@@ -912,6 +1022,182 @@ def get_public_stats():
     }
 
 
+# ── Response Log ──
+def add_response_log(action_type, entity_type, entity_id='', entity_name='',
+                     sister_name='', summary='', snapshot_before=None, snapshot_after=None):
+    """Records a change made by a sister to the response log for admin review."""
+    before_json = json.dumps(snapshot_before or {}, ensure_ascii=False)
+    after_json = json.dumps(snapshot_after or {}, ensure_ascii=False)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO response_log (
+                action_type, entity_type, entity_id, entity_name,
+                sister_name, summary, snapshot_before, snapshot_after,
+                status, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', CURRENT_TIMESTAMP)
+        """, (
+            action_type, entity_type, entity_id, entity_name,
+            sister_name, summary, before_json, after_json
+        ))
+        log_id = cursor.lastrowid
+        conn.commit()
+    return log_id
+
+def get_response_logs(status=None, entity_type=None, limit=200):
+    """Retrieves response log entries with optional filtering."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        query = "SELECT * FROM response_log WHERE 1=1"
+        params = []
+        if status and status != 'all':
+            query += " AND status = ?"
+            params.append(status)
+        if entity_type and entity_type != 'all':
+            query += " AND entity_type = ?"
+            params.append(entity_type)
+        query += " ORDER BY created_at DESC, id DESC LIMIT ?"
+        params.append(limit)
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        results = []
+        for r in rows:
+            before = {}
+            after = {}
+            try:
+                before = json.loads(r['snapshot_before']) if r['snapshot_before'] else {}
+            except Exception:
+                pass
+            try:
+                after = json.loads(r['snapshot_after']) if r['snapshot_after'] else {}
+            except Exception:
+                pass
+            results.append({
+                'id': r['id'],
+                'actionType': r['action_type'],
+                'entityType': r['entity_type'],
+                'entityId': r['entity_id'] or '',
+                'entityName': r['entity_name'] or '',
+                'sisterName': r['sister_name'] or '',
+                'summary': r['summary'] or '',
+                'snapshotBefore': before,
+                'snapshotAfter': after,
+                'status': r['status'],
+                'reviewedBy': r['reviewed_by'] or '',
+                'reviewedAt': r['reviewed_at'] or '',
+                'adminNotes': r['admin_notes'] or '',
+                'createdAt': r['created_at']
+            })
+        return results
+
+def get_response_log_by_id(log_id):
+    """Retrieves a single response log entry."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM response_log WHERE id = ?", (log_id,))
+        r = cursor.fetchone()
+        if not r:
+            return None
+        before = {}
+        after = {}
+        try:
+            before = json.loads(r['snapshot_before']) if r['snapshot_before'] else {}
+        except Exception:
+            pass
+        try:
+            after = json.loads(r['snapshot_after']) if r['snapshot_after'] else {}
+        except Exception:
+            pass
+        return {
+            'id': r['id'],
+            'actionType': r['action_type'],
+            'entityType': r['entity_type'],
+            'entityId': r['entity_id'] or '',
+            'entityName': r['entity_name'] or '',
+            'sisterName': r['sister_name'] or '',
+            'summary': r['summary'] or '',
+            'snapshotBefore': before,
+            'snapshotAfter': after,
+            'status': r['status'],
+            'reviewedBy': r['reviewed_by'] or '',
+            'reviewedAt': r['reviewed_at'] or '',
+            'adminNotes': r['admin_notes'] or '',
+            'createdAt': r['created_at']
+        }
+
+def update_response_log_status(log_id, status, reviewed_by='Admin', admin_notes=''):
+    """Updates the review status of a response log entry."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE response_log 
+            SET status = ?, reviewed_by = ?, reviewed_at = CURRENT_TIMESTAMP, admin_notes = ?
+            WHERE id = ?
+        """, (status, reviewed_by, admin_notes, log_id))
+        conn.commit()
+    return True
+
+def revert_response_log(log_id):
+    """Reverts a change using the stored snapshot_before data.
+    Returns the before-snapshot so the caller (serve.py) can apply the revert."""
+    entry = get_response_log_by_id(log_id)
+    if not entry:
+        return None
+    if not entry['snapshotBefore']:
+        return None
+    
+    entity_type = entry['entityType']
+    entity_id = entry['entityId']
+    before_data = entry['snapshotBefore']
+    
+    # Apply revert based on entity type
+    if entity_type == 'community' and before_data and entity_id:
+        save_station(before_data)
+    elif entity_type == 'event' and before_data and entity_id:
+        try:
+            eid = int(entity_id)
+            update_event(eid, before_data)
+        except (ValueError, TypeError):
+            pass
+    elif entity_type == 'news' and before_data and entity_id:
+        try:
+            nid = int(entity_id)
+            update_news(nid, before_data)
+        except (ValueError, TypeError):
+            pass
+    elif entity_type == 'memorial' and before_data and entity_id:
+        save_memorial_sister(before_data)
+    
+    # Mark as reverted
+    update_response_log_status(log_id, 'reverted', 'Admin', 'Change reverted to previous state')
+    return before_data
+
+def get_response_log_stats():
+    """Returns aggregate counts of response log entries by status."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT status, COUNT(*) as count FROM response_log GROUP BY status")
+        rows = cursor.fetchall()
+        stats = {'pending': 0, 'reviewed': 0, 'flagged': 0, 'reverted': 0, 'total': 0}
+        for r in rows:
+            stats[r['status']] = r['count']
+            stats['total'] += r['count']
+        return stats
+
+def export_response_logs_for_drive(status=None, entity_type=None):
+    """Exports response logs as a structured JSON suitable for Google Drive backup.
+    Includes full snapshots and metadata."""
+    logs = get_response_logs(status=status, entity_type=entity_type, limit=10000)
+    export = {
+        'exportDate': datetime.datetime.now().isoformat(),
+        'source': 'Satyaseva Catechist Sisters — Response Log',
+        'totalEntries': len(logs),
+        'stats': get_response_log_stats(),
+        'entries': logs
+    }
+    return export
+
+
 # ── Stats & Diagnostics ──
 def get_db_stats():
     """Returns statistics about the SQLite database."""
@@ -945,6 +1231,12 @@ def get_db_stats():
         cursor.execute("SELECT COUNT(*) FROM prayer_requests")
         total_prayers = cursor.fetchone()[0]
 
+        cursor.execute("SELECT COUNT(*) FROM response_log")
+        total_response_logs = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM response_log WHERE status = 'pending'")
+        pending_response_logs = cursor.fetchone()[0]
+
     db_size_bytes = os.path.getsize(DB_PATH) if os.path.exists(DB_PATH) else 0
     size_kb = round(db_size_bytes / 1024, 2)
 
@@ -963,6 +1255,8 @@ def get_db_stats():
         'totalContacts': total_contacts,
         'totalSubscribers': total_subscribers,
         'totalPrayers': total_prayers,
+        'totalResponseLogs': total_response_logs,
+        'pendingResponseLogs': pending_response_logs,
         'status': 'connected'
     }
 

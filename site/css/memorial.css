@@ -711,3 +711,218 @@ body.memorial-page {
     padding: 20px;
   }
 }
+
+/* ── Print Commemorative Booklet Styles ─────────────────────── */
+.memorial-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-print-memorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--mem-card);
+  color: var(--mem-sage-deep);
+  border: 2px solid var(--mem-line-strong);
+  box-shadow: 2px 2px 0 var(--mem-line-strong);
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-print-memorial:hover {
+  background: var(--mem-gold-light);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--mem-line-strong);
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+
+  body.memorial-page {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+
+  /* Hide screen-only interactive elements */
+  nav,
+  .nav-header,
+  .nav-toggle,
+  .floating-contact,
+  .cookie-banner-overlay,
+  .memorial-toolbar,
+  .btn-print-memorial,
+  .memorial-loading,
+  .memorial-empty,
+  .memorial-modal,
+  footer {
+    display: none !important;
+  }
+
+  /* Dignified Booklet Header */
+  .memorial-hero {
+    background: #fff !important;
+    border-bottom: 2pt solid #000 !important;
+    padding: 0 0 16pt 0 !important;
+    margin-bottom: 18pt !important;
+    text-align: center;
+  }
+
+  .memorial-kicker {
+    color: #333 !important;
+    font-size: 9pt !important;
+    letter-spacing: 0.1em;
+  }
+
+  .memorial-hero h1 {
+    font-size: 24pt !important;
+    color: #000 !important;
+    margin: 6pt 0 !important;
+  }
+
+  .memorial-subtitle {
+    font-size: 9.5pt !important;
+    color: #333 !important;
+    max-width: 90% !important;
+    margin: 0 auto 10pt auto !important;
+  }
+
+  .memorial-scripture-box {
+    background: #fdfdfd !important;
+    border: 1pt solid #444 !important;
+    padding: 8pt !important;
+    margin: 8pt auto 0 auto !important;
+  }
+
+  .scripture-text {
+    font-size: 9.5pt !important;
+    color: #000 !important;
+  }
+
+  .scripture-cite {
+    font-size: 8pt !important;
+    color: #555 !important;
+  }
+
+  /* Container */
+  .memorial-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Grid: 2 columns on paper, avoiding breaks inside cards */
+  .memorial-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 14pt !important;
+    page-break-after: auto;
+  }
+
+  .sister-card {
+    border: 1.5pt solid #000 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 12pt;
+    padding: 0 !important;
+  }
+
+  .card-photo-wrap {
+    height: 160px !important;
+    border-bottom: 1.5pt solid #000 !important;
+  }
+
+  .card-photo {
+    filter: grayscale(100%);
+  }
+
+  .card-body {
+    padding: 10pt !important;
+  }
+
+  .sister-name {
+    font-size: 13pt !important;
+    color: #000 !important;
+    margin-bottom: 3pt !important;
+  }
+
+  .lifespan-pill {
+    background: #f0f0f0 !important;
+    color: #000 !important;
+    border: 1pt solid #666 !important;
+    font-size: 8pt !important;
+  }
+
+  .sister-ministry-summary {
+    font-size: 8.5pt !important;
+    color: #333 !important;
+    line-height: 1.35 !important;
+  }
+
+  .card-footer {
+    border-top: 1pt solid #ccc !important;
+    padding-top: 6pt !important;
+    font-size: 8pt !important;
+    color: #444 !important;
+  }
+
+  .card-click-cue {
+    display: none !important;
+  }
+
+  /* Concluding Prayer section */
+  .remembrance-prayer-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-top: 20pt !important;
+    border: 2pt solid #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    padding: 14pt !important;
+    text-align: center;
+  }
+
+  .prayer-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .prayer-crest {
+    border: 1.5pt solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .prayer-card h3 {
+    font-size: 14pt !important;
+    color: #000 !important;
+  }
+
+  .prayer-card p {
+    font-size: 10.5pt !important;
+    color: #111 !important;
+    line-height: 1.5 !important;
+  }
+
+  .prayer-note {
+    font-size: 8pt !important;
+    color: #555 !important;
+  }
+}
+

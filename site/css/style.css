@@ -1117,10 +1117,10 @@ footer p { color: var(--ink-soft); font-size: 15px; margin: 0 0 var(--sp-6); fon
   gap: var(--sp-3);
   font-size: 13px;
   line-height: 1.55;
-  color: var(--ink-soft);
+  color: #f4f1ea;
 }
 .cookie-text span { font-size: 20px; line-height: 1; }
-.cookie-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+.cookie-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
 
 .cookie-actions { display: flex; gap: var(--sp-2); justify-content: flex-end; flex-wrap: wrap; }
 
@@ -1548,4 +1548,3 @@ footer p { color: var(--ink-soft); font-size: 15px; margin: 0 0 var(--sp-6); fon
     display: none !important;
   }
 }
->>>>>>> 77566a4 (Add zoom in/out to gallery and refine community navigation buttons)

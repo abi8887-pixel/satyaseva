@@ -26,24 +26,31 @@
   window.fetch = function(url, options) {
     const token = sessionStorage.getItem(SESSION_KEY);
     if (token) {
-      // Only attach Authorization header to same-origin or relative API requests
-      let isSameOrigin = false;
+      let shouldAttach = false;
       if (typeof url === 'string') {
-        if (url.startsWith('/') || url.startsWith('./')) {
-          isSameOrigin = true;
+        if (url.startsWith('/') || url.startsWith('./') || url.startsWith('api/')) {
+          shouldAttach = true;
         } else {
           try {
-            const parsed = new URL(url);
-            isSameOrigin = parsed.origin === window.location.origin;
+            const parsed = new URL(url, window.location.href);
+            shouldAttach = parsed.origin === window.location.origin ||
+                           (activeApiBase && parsed.origin === new URL(activeApiBase, window.location.href).origin) ||
+                           parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1';
           } catch(e) {
-            isSameOrigin = false;
+            shouldAttach = false;
           }
         }
       }
-      if (isSameOrigin) {
+      if (shouldAttach) {
         options = options || {};
-        options.headers = options.headers || {};
-        options.headers['Authorization'] = 'Bearer ' + token;
+        if (options.headers && typeof options.headers.set === 'function') {
+          if (!options.headers.has('Authorization')) {
+            options.headers.set('Authorization', 'Bearer ' + token);
+          }
+        } else {
+          options.headers = options.headers || {};
+          options.headers['Authorization'] = 'Bearer ' + token;
+        }
       }
     }
     return originalFetch(url, options);
@@ -199,11 +206,188 @@
             err.hidden = false;
             err.style.display = 'block';
           }
-          const card = document.querySelector('.login-card');
+          const card = $('#login-card-main') || document.querySelector('.login-card');
           if (card) {
             card.classList.remove('shake');
             void card.offsetWidth; // force reflow
             card.classList.add('shake');
+          }
+        }
+      });
+    }
+
+    // ── Forgot & Reset Password Flow ──
+    const mainCard = $('#login-card-main');
+    const resetCard = $('#reset-card');
+    const btnForgot = $('#btn-forgot-password');
+    const cancelBtns = $$('.btn-cancel-reset');
+    const step1 = $('#reset-step-1');
+    const step2 = $('#reset-step-2');
+    const resetReqForm = $('#reset-request-form');
+    const resetConfirmForm = $('#reset-confirm-form');
+    const resetErr = $('#reset-error');
+    const resetSucc = $('#reset-success');
+    const btnResend = $('#btn-resend-code');
+
+    let resetEmailPending = '';
+
+    function showResetError(msg) {
+      if (!resetErr) return;
+      resetErr.textContent = msg;
+      resetErr.hidden = false;
+      resetErr.style.display = 'block';
+      if (resetSucc) resetSucc.style.display = 'none';
+      if (resetCard) {
+        resetCard.classList.remove('shake');
+        void resetCard.offsetWidth;
+        resetCard.classList.add('shake');
+      }
+    }
+
+    function showResetSuccess(msg) {
+      if (!resetSucc) return;
+      resetSucc.textContent = msg;
+      resetSucc.style.display = 'block';
+      if (resetErr) {
+        resetErr.hidden = true;
+        resetErr.style.display = 'none';
+      }
+    }
+
+    function clearResetAlerts() {
+      if (resetErr) { resetErr.hidden = true; resetErr.style.display = 'none'; }
+      if (resetSucc) { resetSucc.style.display = 'none'; }
+    }
+
+    if (btnForgot && mainCard && resetCard) {
+      btnForgot.addEventListener('click', () => {
+        mainCard.style.display = 'none';
+        resetCard.style.display = 'block';
+        if (step1) step1.style.display = 'block';
+        if (step2) step2.style.display = 'none';
+        clearResetAlerts();
+        const emailInput = $('#reset-email');
+        if (emailInput) emailInput.focus();
+      });
+    }
+
+    cancelBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (resetCard) resetCard.style.display = 'none';
+        if (mainCard) mainCard.style.display = 'block';
+        clearResetAlerts();
+      });
+    });
+
+    if (btnResend) {
+      btnResend.addEventListener('click', () => {
+        if (step2) step2.style.display = 'none';
+        if (step1) step1.style.display = 'block';
+        clearResetAlerts();
+        const emailInput = $('#reset-email');
+        if (emailInput) emailInput.focus();
+      });
+    }
+
+    if (resetReqForm) {
+      resetReqForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        clearResetAlerts();
+        const email = ($('#reset-email').value || '').trim();
+        if (!email) {
+          showResetError('Please enter your administrator email.');
+          return;
+        }
+
+        const submitBtn = $('#btn-send-reset-code');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+        }
+
+        try {
+          const res = await fetch('/api/auth/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            resetEmailPending = email;
+            if (step1) step1.style.display = 'none';
+            if (step2) step2.style.display = 'block';
+            showResetSuccess(data.message || 'Verification code sent! Please check your email or server console.');
+            const codeInput = $('#reset-code');
+            if (codeInput) codeInput.focus();
+          } else {
+            showResetError(data.error || 'Failed to request reset code. Please try again.');
+          }
+        } catch (err) {
+          showResetError('Network error connecting to server.');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Reset Code';
+          }
+        }
+      });
+    }
+
+    if (resetConfirmForm) {
+      resetConfirmForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        clearResetAlerts();
+        const code = ($('#reset-code').value || '').trim();
+        const newPassword = ($('#reset-new-password').value || '').trim();
+        const confirmPassword = ($('#reset-confirm-password').value || '').trim();
+
+        if (!code) {
+          showResetError('Please enter the 6-digit verification code.');
+          return;
+        }
+        if (newPassword.length < 6) {
+          showResetError('New access code must be at least 6 characters.');
+          return;
+        }
+        if (newPassword !== confirmPassword) {
+          showResetError('Access codes do not match.');
+          return;
+        }
+
+        const confirmBtn = $('#btn-confirm-reset');
+        if (confirmBtn) {
+          confirmBtn.disabled = true;
+          confirmBtn.textContent = 'Updating...';
+        }
+
+        try {
+          const res = await fetch('/api/auth/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: resetEmailPending || ($('#reset-email').value || '').trim(),
+              code,
+              newPassword
+            })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            if (data.token) {
+              sessionStorage.setItem(SESSION_KEY, data.token);
+            }
+            toast(data.message || 'Access code reset successfully! Unlocking...', 'success');
+            setTimeout(() => {
+              showApp();
+            }, 600);
+          } else {
+            showResetError(data.error || 'Failed to reset access code.');
+          }
+        } catch (err) {
+          showResetError('Network error connecting to server.');
+        } finally {
+          if (confirmBtn) {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = 'Update & Log In';
           }
         }
       });
@@ -223,18 +407,20 @@
     const tabMemBtn = $('#tab-btn-memorial');
     const tabEvNewsBtn = $('#tab-btn-eventsnews');
     const tabInboxBtn = $('#tab-btn-inbox');
+    const tabRLogBtn = $('#tab-btn-responselog');
     const tabDbBtn = $('#tab-btn-database');
     
     const commView = $('#communities-view');
     const memView = $('#memorial-view');
     const evNewsView = $('#eventsnews-view');
     const inboxView = $('#inbox-view');
+    const rlogView = $('#responselog-view');
     const dbView = $('#database-view');
 
     function switchTab(tab) {
       activeTab = tab;
-      const allTabs = [tabCommBtn, tabMemBtn, tabEvNewsBtn, tabInboxBtn, tabDbBtn];
-      const allViews = [commView, memView, evNewsView, inboxView, dbView];
+      const allTabs = [tabCommBtn, tabMemBtn, tabEvNewsBtn, tabInboxBtn, tabRLogBtn, tabDbBtn];
+      const allViews = [commView, memView, evNewsView, inboxView, rlogView, dbView];
       
       allTabs.forEach(t => t && t.classList.remove('active'));
       allViews.forEach(v => v && (v.style.display = 'none'));
@@ -257,6 +443,11 @@
         if (tabInboxBtn) tabInboxBtn.classList.add('active');
         if (inboxView) inboxView.style.display = 'block';
         fetchInboxAdmin();
+      } else if (tab === 'responselog') {
+        if (tabRLogBtn) tabRLogBtn.classList.add('active');
+        if (rlogView) rlogView.style.display = 'block';
+        fetchResponseLogs();
+        fetchResponseLogStats();
       } else if (tab === 'database') {
         if (tabDbBtn) tabDbBtn.classList.add('active');
         if (dbView) dbView.style.display = 'flex';
@@ -274,6 +465,8 @@
       switchTab('eventsnews');
     } else if (tabParam === 'inbox') {
       switchTab('inbox');
+    } else if (tabParam === 'responselog') {
+      switchTab('responselog');
     } else {
       switchTab('communities');
     }
@@ -282,6 +475,7 @@
     if (tabMemBtn) tabMemBtn.addEventListener('click', () => switchTab('memorial'));
     if (tabEvNewsBtn) tabEvNewsBtn.addEventListener('click', () => switchTab('eventsnews'));
     if (tabInboxBtn) tabInboxBtn.addEventListener('click', () => switchTab('inbox'));
+    if (tabRLogBtn) tabRLogBtn.addEventListener('click', () => switchTab('responselog'));
     if (tabDbBtn) tabDbBtn.addEventListener('click', () => switchTab('database'));
 
     const addCommBtn = $('#btn-add-community');
@@ -307,7 +501,17 @@
     if (memSearch) memSearch.addEventListener('input', e => filterMemorialList(e.target.value));
 
     const memEditor = $('#memorial-editor');
-    if (memEditor) memEditor.addEventListener('click', handleMemorialEditorClick);
+    if (memEditor) {
+      memEditor.addEventListener('click', handleMemorialEditorClick);
+      memEditor.addEventListener('change', handleMemorialEditorChange);
+    }
+
+    // Events & News listeners
+    const addEventBtn = $('#btn-add-event');
+    if (addEventBtn) addEventBtn.addEventListener('click', addNewEvent);
+
+    const addNewsBtn = $('#btn-add-news');
+    if (addNewsBtn) addNewsBtn.addEventListener('click', addNewNews);
 
     // Database listeners
     const btnOpenUpload = $('#btn-open-station-upload');
@@ -324,6 +528,9 @@
 
     const btnSyncStatic = $('#btn-sync-static');
     if (btnSyncStatic) btnSyncStatic.addEventListener('click', handleSyncStatic);
+
+    const btnTestEmail = $('#btn-test-email');
+    if (btnTestEmail) btnTestEmail.addEventListener('click', handleTestEmail);
 
     const filterStation = $('#filter-upload-station');
     if (filterStation) filterStation.addEventListener('change', renderStationUploads);
@@ -355,6 +562,9 @@
 
     const btnDismissView = $('#btn-dismiss-view-modal');
     if (btnDismissView) btnDismissView.addEventListener('click', closeViewModal);
+
+    // Response Log listeners
+    initResponseLogListeners();
   }
 
   function fetchCommunities(targetId) {
@@ -852,16 +1062,38 @@
       return;
     }
 
+    if (activeTab === 'eventsnews') {
+      if (currentEvent) {
+        saveEventRecord();
+      } else if (currentNews) {
+        saveNewsRecord();
+      } else {
+        toast('Please select an event or news article to save', 'info');
+      }
+      return;
+    }
+
+    if (activeTab === 'stationuploads') {
+      openStationUploadModal();
+      return;
+    }
+
+    if (activeTab === 'database') {
+      syncDatabaseWithStatic();
+      return;
+    }
+
+    // Default: Communities tab
     const payload = gatherFormData();
-    if (!payload) { toast('No community selected', 'error'); return; }
-    toast('Saving...', 'info', 2000);
+    if (!payload) { toast('No community selected to save', 'error'); return; }
+    toast('Saving community...', 'info', 2000);
     fetch((activeApiBase || '') + '/api/communities', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-      .then(r => r.json())
-      .then(res => {
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
         if (res.success) {
           toast('Community saved successfully!', 'success');
           refreshCurrentCommunity();
@@ -869,7 +1101,7 @@
           toast('Save error: ' + (res.error || 'unknown'), 'error');
         }
       })
-      .catch(err => toast('Save failed: ' + err, 'error'));
+      .catch(function(err) { toast('Save failed: ' + err, 'error'); });
   }
 
   function exportJSON() {
@@ -1070,7 +1302,16 @@
 
         <div class="input-group">
           <label>Photograph Path or URL</label>
-          <input type="text" id="mem-field-photo" value="${esc(s.photo)}" placeholder="e.g. images/mother-004.jpg">
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="text" id="mem-field-photo" value="${esc(s.photo)}" placeholder="e.g. images/communities/mariyapura/sister.jpg" style="flex:1;">
+            <label class="action-btn" style="cursor:pointer;padding:8px 14px;font-size:12px;display:inline-flex;align-items:center;gap:6px;margin:0;white-space:nowrap;">
+              📷 Upload Photo
+              <input type="file" id="mem-photo-upload" accept="image/*" style="display:none;">
+            </label>
+          </div>
+          <div id="mem-photo-preview-wrap" style="margin-top:8px;">
+            ${s.photo ? `<img src="${esc(s.photo)}" style="max-height:100px;border-radius:4px;border:1px solid var(--border);" alt="Sister Photo">` : ''}
+          </div>
         </div>
 
         <div style="margin-top:24px;display:flex;gap:14px;">
@@ -1078,6 +1319,35 @@
         </div>
       </section>
     `;
+  }
+
+  function handleMemorialEditorChange(e) {
+    if (e.target && e.target.id === 'mem-photo-upload' && e.target.files && e.target.files.length) {
+      uploadSisterPhoto(e.target.files[0]);
+    }
+  }
+
+  function uploadSisterPhoto(file) {
+    var form = new FormData();
+    form.append('communityId', 'mariyapura');
+    form.append('file', file);
+    toast('Uploading sister photo...', 'info');
+    fetch((activeApiBase || '') + '/api/upload', { method: 'POST', body: form })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success && res.path) {
+          var photoInput = $('#mem-field-photo');
+          if (photoInput) photoInput.value = res.path;
+          var previewWrap = $('#mem-photo-preview-wrap');
+          if (previewWrap) {
+            previewWrap.innerHTML = '<img src="' + esc(res.path) + '" style="max-height:100px;border-radius:4px;border:1px solid var(--border);" alt="Sister Photo">';
+          }
+          toast('Photo uploaded successfully!', 'success');
+        } else {
+          toast('Upload failed: ' + (res.error || 'unknown error'), 'error');
+        }
+      })
+      .catch(function(err) { toast('Upload error: ' + err, 'error'); });
   }
 
   function handleMemorialEditorClick(e) {
@@ -1470,6 +1740,25 @@
       .catch(err => toast('Sync failed: ' + err, 'error'));
   }
 
+  function handleTestEmail() {
+    toast('Testing Gmail / SMTP connection...', 'info', 3000);
+    fetch((activeApiBase || '') + '/api/admin/test-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success) {
+          toast('✓ Test email dispatched to ' + (res.targetEmail || 'admin') + '! Check inbox.', 'success', 6000);
+        } else {
+          toast('SMTP Notice: ' + (res.message || res.error || 'Check server logs for details'), 'error', 7000);
+        }
+      })
+      .catch(function(err) {
+        toast('Connection failed: ' + err, 'error', 4000);
+      });
+  }
+
   // ─── Keyboard shortcut: Enter in ministry input adds the tag ───
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && e.target.id === 'new-ministry') {
@@ -1478,56 +1767,573 @@
     }
   });
 
-  // ─── Events & News Handlers ───
+  // ─── Events & News State & Handlers ───
+  let adminEvents = [];
+  let adminNews = [];
+  let currentEditType = null; // 'event' or 'news'
+  let currentEvent = null;
+  let currentNews = null;
+
   function fetchEventsAdmin() {
     fetch('/api/events')
       .then(r => r.json())
       .then(data => {
-        const list = $('#admin-events-list');
-        if (!list) return;
-        list.innerHTML = '';
-        (data || []).forEach(e => {
-          const li = document.createElement('li');
-          li.textContent = `${e.date}: ${e.title}`;
-          li.style.padding = '8px';
-          li.style.borderBottom = '1px solid #ccc';
-          list.appendChild(li);
-        });
+        adminEvents = Array.isArray(data) ? data : [];
+        renderEventsList();
       })
-      .catch(console.error);
+      .catch(err => {
+        console.error('Failed to load events:', err);
+        toast('Failed to load events', 'error');
+      });
   }
 
   function fetchNewsAdmin() {
     fetch('/api/news')
       .then(r => r.json())
       .then(data => {
-        const list = $('#admin-news-list');
-        if (!list) return;
-        list.innerHTML = '';
-        (data || []).forEach(n => {
-          const li = document.createElement('li');
-          li.textContent = `${n.date}: ${n.title}`;
-          li.style.padding = '8px';
-          li.style.borderBottom = '1px solid #ccc';
-          list.appendChild(li);
-        });
+        adminNews = Array.isArray(data) ? data : [];
+        renderNewsList();
       })
-      .catch(console.error);
+      .catch(err => {
+        console.error('Failed to load news:', err);
+        toast('Failed to load news', 'error');
+      });
+  }
+
+  function renderEventsList() {
+    const list = $('#admin-events-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    if (!adminEvents.length) {
+      const emptyLi = document.createElement('li');
+      emptyLi.textContent = 'No events found';
+      emptyLi.style.cssText = 'padding:12px 16px;color:var(--ink-faint);font-size:13px;font-style:italic;';
+      list.appendChild(emptyLi);
+      return;
+    }
+
+    adminEvents.forEach(e => {
+      const li = document.createElement('li');
+      const isSelected = currentEditType === 'event' && currentEvent && currentEvent.id === e.id;
+      if (isSelected) li.classList.add('active');
+
+      li.innerHTML = `
+        <div style="font-size:11px;font-weight:700;color:var(--gold-deep);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;">${esc(e.date || '')}</div>
+        <div style="font-weight:600;font-size:13px;line-height:1.3;color:var(--ink);">${esc(e.title || 'Untitled Event')}</div>
+        ${e.location ? `<div style="font-size:11px;color:var(--ink-faint);margin-top:2px;">📍 ${esc(e.location)}</div>` : ''}
+      `;
+      li.style.cursor = 'pointer';
+      li.style.padding = '10px 14px';
+      li.style.borderBottom = '1px solid var(--line)';
+
+      li.addEventListener('click', () => selectEvent(e.id));
+      list.appendChild(li);
+    });
+  }
+
+  function renderNewsList() {
+    const list = $('#admin-news-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    if (!adminNews.length) {
+      const emptyLi = document.createElement('li');
+      emptyLi.textContent = 'No news articles found';
+      emptyLi.style.cssText = 'padding:12px 16px;color:var(--ink-faint);font-size:13px;font-style:italic;';
+      list.appendChild(emptyLi);
+      return;
+    }
+
+    adminNews.forEach(n => {
+      const li = document.createElement('li');
+      const isSelected = currentEditType === 'news' && currentNews && currentNews.id === n.id;
+      if (isSelected) li.classList.add('active');
+
+      li.innerHTML = `
+        <div style="font-size:11px;font-weight:700;color:var(--sage);margin-bottom:2px;">${esc(n.date || '')} · By ${esc(n.author || 'Admin')}</div>
+        <div style="font-weight:600;font-size:13px;line-height:1.3;color:var(--ink);">${esc(n.title || 'Untitled Article')}</div>
+      `;
+      li.style.cursor = 'pointer';
+      li.style.padding = '10px 14px';
+      li.style.borderBottom = '1px solid var(--line)';
+
+      li.addEventListener('click', () => selectNews(n.id));
+      list.appendChild(li);
+    });
+  }
+
+  function selectEvent(id) {
+    currentEditType = 'event';
+    currentNews = null;
+    currentEvent = adminEvents.find(e => e.id === id) || null;
+    renderEventsList();
+    renderNewsList();
+    renderEventEditor();
+  }
+
+  function selectNews(id) {
+    currentEditType = 'news';
+    currentEvent = null;
+    currentNews = adminNews.find(n => n.id === id) || null;
+    renderEventsList();
+    renderNewsList();
+    renderNewsEditor();
+  }
+
+  function addNewEvent() {
+    currentEditType = 'event';
+    currentNews = null;
+    currentEvent = {
+      id: null,
+      title: '',
+      date: new Date().toISOString().slice(0, 10),
+      time: '10:00 AM',
+      location: '',
+      description: ''
+    };
+    renderEventsList();
+    renderNewsList();
+    renderEventEditor();
+    toast('Creating new event. Fill in details and click Save.', 'info');
+  }
+
+  function addNewNews() {
+    currentEditType = 'news';
+    currentEvent = null;
+    currentNews = {
+      id: null,
+      title: '',
+      author: 'Generalate Council',
+      date: new Date().toISOString().slice(0, 10),
+      image_path: '',
+      content: ''
+    };
+    renderEventsList();
+    renderNewsList();
+    renderNewsEditor();
+    toast('Creating new article. Fill in details and click Save.', 'info');
+  }
+
+  function renderEventEditor() {
+    const editor = $('#eventsnews-editor');
+    if (!editor) return;
+
+    if (!currentEvent) {
+      editor.innerHTML = `<div class="editor-empty"><div class="empty-icon">📅</div><h3>Select an event</h3><p>Choose an event from the sidebar or click "+ Add" above.</p></div>`;
+      return;
+    }
+
+    const e = currentEvent;
+    const isNew = !e.id;
+
+    editor.innerHTML = `
+      <section class="editor-section" data-event-id="${e.id || 'new'}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:2px solid var(--ink);padding-bottom:12px;">
+          <h2>📅 ${isNew ? 'New Calendar Event' : 'Edit Event'}</h2>
+          ${!isNew ? `<button type="button" id="btn-delete-event" style="background:#000;color:#fff;border:2px solid #000;padding:8px 16px;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer;">Delete Event</button>` : ''}
+        </div>
+
+        <div class="input-group">
+          <label>Event Title *</label>
+          <input type="text" id="ev-field-title" value="${esc(e.title || '')}" placeholder="e.g. 50th Golden Jubilee Solemn Celebration">
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label>Event Date (YYYY-MM-DD) *</label>
+            <input type="date" id="ev-field-date" value="${esc(e.date || '')}">
+          </div>
+          <div class="input-group">
+            <label>Time / Schedule</label>
+            <input type="text" id="ev-field-time" value="${esc(e.time || '')}" placeholder="e.g. 09:30 AM or Full Day">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Location / Venue</label>
+          <input type="text" id="ev-field-location" value="${esc(e.location || '')}" placeholder="e.g. Generalate Chapel, Mysore">
+        </div>
+
+        <div class="input-group">
+          <label>Event Description / Program Details</label>
+          <textarea id="ev-field-desc" rows="5" placeholder="Details about Holy Mass, celebrants, community participation, or special intentions...">${esc(e.description || '')}</textarea>
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:14px;">
+          <button type="button" id="btn-save-event" class="save-btn" style="padding:10px 24px;">Save Event</button>
+        </div>
+      </section>
+    `;
+
+    const saveBtn = $('#btn-save-event');
+    if (saveBtn) saveBtn.addEventListener('click', saveEventRecord);
+
+    const delBtn = $('#btn-delete-event');
+    if (delBtn) delBtn.addEventListener('click', deleteEventRecord);
+  }
+
+  function saveEventRecord() {
+    if (!currentEvent) return;
+
+    const title = $('#ev-field-title').value.trim();
+    const date = $('#ev-field-date').value.trim();
+    const time = $('#ev-field-time').value.trim();
+    const location = $('#ev-field-location').value.trim();
+    const description = $('#ev-field-desc').value.trim();
+
+    if (!title || !date) {
+      toast('Title and Date are required fields', 'error');
+      return;
+    }
+
+    const payload = {
+      title,
+      date,
+      time,
+      location,
+      description
+    };
+
+    const isUpdate = !!currentEvent.id;
+    const url = isUpdate ? '/api/events/update' : '/api/events';
+    if (isUpdate) payload.id = currentEvent.id;
+
+    toast('Saving event...', 'info', 1500);
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          toast(isUpdate ? 'Event updated successfully!' : 'Event created successfully!', 'success');
+          const savedId = isUpdate ? currentEvent.id : res.id;
+          fetch('/api/events')
+            .then(r => r.json())
+            .then(data => {
+              adminEvents = Array.isArray(data) ? data : [];
+              selectEvent(savedId);
+            });
+        } else {
+          toast('Save error: ' + (res.error || 'unknown'), 'error');
+        }
+      })
+      .catch(err => toast('Save failed: ' + err, 'error'));
+  }
+
+  function deleteEventRecord() {
+    if (!currentEvent || !currentEvent.id) return;
+    if (!confirm(`Are you sure you want to delete the event "${currentEvent.title}"?`)) return;
+
+    toast('Deleting event...', 'info', 1500);
+
+    fetch('/api/events/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentEvent.id })
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          toast('Event deleted successfully', 'success');
+          currentEvent = null;
+          fetch('/api/events')
+            .then(r => r.json())
+            .then(data => {
+              adminEvents = Array.isArray(data) ? data : [];
+              renderEventsList();
+              const editor = $('#eventsnews-editor');
+              if (editor) {
+                editor.innerHTML = `<div class="editor-empty"><div class="empty-icon">📅</div><h3>Event Deleted</h3><p>Choose an item from the sidebar or click "+ Add" above.</p></div>`;
+              }
+            });
+        } else {
+          toast('Delete failed: ' + (res.error || 'unknown'), 'error');
+        }
+      })
+      .catch(err => toast('Delete failed: ' + err, 'error'));
+  }
+
+  function renderNewsEditor() {
+    const editor = $('#eventsnews-editor');
+    if (!editor) return;
+
+    if (!currentNews) {
+      editor.innerHTML = `<div class="editor-empty"><div class="empty-icon">📰</div><h3>Select a news article</h3><p>Choose an article from the sidebar or click "+ Add" above.</p></div>`;
+      return;
+    }
+
+    const n = currentNews;
+    const isNew = !n.id;
+
+    editor.innerHTML = `
+      <section class="editor-section" data-news-id="${n.id || 'new'}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:2px solid var(--ink);padding-bottom:12px;">
+          <h2>📰 ${isNew ? 'New News Article' : 'Edit News Article'}</h2>
+          ${!isNew ? `<button type="button" id="btn-delete-news" style="background:#000;color:#fff;border:2px solid #000;padding:8px 16px;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer;">Delete Article</button>` : ''}
+        </div>
+
+        <div class="input-group">
+          <label>Article Title / Headline *</label>
+          <input type="text" id="news-field-title" value="${esc(n.title || '')}" placeholder="e.g. Golden Jubilee Countdown: Fifty Years of Family Service">
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label>Author / Source</label>
+            <input type="text" id="news-field-author" value="${esc(n.author || '')}" placeholder="e.g. Generalate Council or Sr. Name">
+          </div>
+          <div class="input-group">
+            <label>Publication Date (YYYY-MM-DD) *</label>
+            <input type="date" id="news-field-date" value="${esc(n.date || '')}">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Header Image Path or URL</label>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="text" id="news-field-image" value="${esc(n.image_path || '')}" placeholder="e.g. images/communities/generalate/hero.jpg" style="flex:1;">
+            <label class="action-btn" style="cursor:pointer;padding:8px 14px;font-size:12px;display:inline-flex;align-items:center;gap:6px;margin:0;white-space:nowrap;">
+              📷 Upload Image
+              <input type="file" id="news-image-upload" accept="image/*" style="display:none;">
+            </label>
+          </div>
+          <div id="news-preview-wrap" style="margin-top:8px;">
+            ${n.image_path ? `<img src="${esc(n.image_path)}" style="max-height:120px;border:2px solid var(--ink);border-radius:var(--radius-sm);" alt="Article Preview">` : ''}
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Article Content *</label>
+          <textarea id="news-field-content" rows="8" placeholder="Full chronicle or news report text...">${esc(n.content || '')}</textarea>
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:14px;">
+          <button type="button" id="btn-save-news" class="save-btn" style="padding:10px 24px;">Save News Article</button>
+        </div>
+      </section>
+    `;
+
+    const saveBtn = $('#btn-save-news');
+    if (saveBtn) saveBtn.addEventListener('click', saveNewsRecord);
+
+    const delBtn = $('#btn-delete-news');
+    if (delBtn) delBtn.addEventListener('click', deleteNewsRecord);
+
+    const imgUpload = $('#news-image-upload');
+    if (imgUpload) {
+      imgUpload.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files.length) {
+          uploadNewsImage(e.target.files[0]);
+        }
+      });
+    }
+  }
+
+  function uploadNewsImage(file) {
+    var form = new FormData();
+    form.append('communityId', 'generalate');
+    form.append('file', file);
+    toast('Uploading news image...', 'info');
+    fetch((activeApiBase || '') + '/api/upload', { method: 'POST', body: form })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success && res.path) {
+          var imgInput = $('#news-field-image');
+          if (imgInput) imgInput.value = res.path;
+          var previewWrap = $('#news-preview-wrap');
+          if (previewWrap) {
+            previewWrap.innerHTML = '<img src="' + esc(res.path) + '" style="max-height:120px;border:2px solid var(--ink);border-radius:var(--radius-sm);" alt="Article Preview">';
+          }
+          toast('Image uploaded successfully!', 'success');
+        } else {
+          toast('Upload failed: ' + (res.error || 'unknown error'), 'error');
+        }
+      })
+      .catch(function(err) { toast('Upload error: ' + err, 'error'); });
+  }
+
+  function saveNewsRecord() {
+    if (!currentNews) return;
+
+    const title = $('#news-field-title').value.trim();
+    const author = $('#news-field-author').value.trim() || 'Admin';
+    const date = $('#news-field-date').value.trim();
+    const image_path = $('#news-field-image').value.trim();
+    const content = $('#news-field-content').value.trim();
+
+    if (!title || !date || !content) {
+      toast('Title, Date, and Content are required fields', 'error');
+      return;
+    }
+
+    const payload = {
+      title,
+      author,
+      date,
+      image_path,
+      content
+    };
+
+    const isUpdate = !!currentNews.id;
+    const url = isUpdate ? '/api/news/update' : '/api/news';
+    if (isUpdate) payload.id = currentNews.id;
+
+    toast('Saving news article...', 'info', 1500);
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          toast(isUpdate ? 'Article updated successfully!' : 'Article published successfully!', 'success');
+          const savedId = isUpdate ? currentNews.id : res.id;
+          fetch('/api/news')
+            .then(r => r.json())
+            .then(data => {
+              adminNews = Array.isArray(data) ? data : [];
+              selectNews(savedId);
+            });
+        } else {
+          toast('Save error: ' + (res.error || 'unknown'), 'error');
+        }
+      })
+      .catch(err => toast('Save failed: ' + err, 'error'));
+  }
+
+  function deleteNewsRecord() {
+    if (!currentNews || !currentNews.id) return;
+    if (!confirm(`Are you sure you want to delete the news article "${currentNews.title}"?`)) return;
+
+    toast('Deleting article...', 'info', 1500);
+
+    fetch('/api/news/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentNews.id })
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          toast('Article deleted successfully', 'success');
+          currentNews = null;
+          fetch('/api/news')
+            .then(r => r.json())
+            .then(data => {
+              adminNews = Array.isArray(data) ? data : [];
+              renderNewsList();
+              const editor = $('#eventsnews-editor');
+              if (editor) {
+                editor.innerHTML = `<div class="editor-empty"><div class="empty-icon">📰</div><h3>Article Deleted</h3><p>Choose an item from the sidebar or click "+ Add" above.</p></div>`;
+              }
+            });
+        } else {
+          toast('Delete failed: ' + (res.error || 'unknown'), 'error');
+        }
+      })
+      .catch(err => toast('Delete failed: ' + err, 'error'));
+  }
+
+  // ─── CSV Exporter Helper ───
+  function exportToCSV(filename, rows) {
+    if (!rows || !rows.length) {
+      alert('No data available to export.');
+      return;
+    }
+    const processRow = function (row) {
+      return row.map(val => {
+        var result = val === null || val === undefined ? '' : String(val);
+        result = result.replace(/"/g, '""');
+        if (result.search(/("|,|\n)/g) >= 0) {
+          result = '"' + result + '"';
+        }
+        return result;
+      }).join(',');
+    };
+
+    const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + rows.map(processRow).join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  window.handleReplyContact = function(id, email, subject) {
+    // Mark message as read via API
+    fetch('/api/contact/status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, status: 'read' })
+    }).then(() => fetchInboxAdmin()).catch(console.error);
+
+    // Open mailto link
+    const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=Re: ${encodeURIComponent(subject || 'Inquiry to Satyaseva Sisters')}`;
+    window.location.href = mailtoUrl;
+  };
+
+  window.handlePrayerStatus = function(id, status) {
+    fetch('/api/prayers/status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, status: status })
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (res.success) fetchInboxAdmin();
+      else alert(res.error || 'Failed to update prayer status.');
+    })
+    .catch(console.error);
+  };
+
+  let lastFetchedContacts = [];
+  let lastFetchedNewsletter = [];
+
+  function updateUnreadBadge(unreadCount) {
+    const badge = $('#inbox-unread-badge');
+    if (!badge) return;
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
   }
 
   // ─── Inbox Handlers ───
   function fetchInboxAdmin() {
+    let unreadCount = 0;
+
     // Contacts
     fetch('/api/contact')
       .then(r => r.json())
       .then(data => {
+        lastFetchedContacts = data || [];
         const tbody = $('#admin-contact-tbody');
         if (!tbody) return;
         let html = '';
-        (data || []).forEach(m => {
-          html += `<tr><td>${esc(new Date(m.created_at).toLocaleDateString())}</td><td>${esc(m.name)}</td><td>${esc(m.email)}</td><td>${esc(m.subject || '-')}</td><td>${esc(m.status || 'new')}</td><td><button class="export-btn" style="padding:4px;" onclick="alert('View/Reply to be implemented')">View</button></td></tr>`;
+        lastFetchedContacts.forEach(m => {
+          if (m.status === 'unread' || m.status === 'new') unreadCount++;
+          const dateStr = m.created_at ? new Date(m.created_at).toLocaleDateString() : '';
+          html += `<tr>
+            <td>${esc(dateStr)}</td>
+            <td>${esc(m.name)}</td>
+            <td><a href="mailto:${esc(m.email)}" style="color:var(--sage-deep);">${esc(m.email)}</a></td>
+            <td>${esc(m.subject || '-')}</td>
+            <td><span class="badge ${m.status === 'read' ? 'badge-sage' : 'badge-gold'}" style="padding:2px 8px; font-size:11px; border-radius:12px;">${esc(m.status || 'unread')}</span></td>
+            <td><button class="save-btn" style="padding:4px 8px; font-size:11px;" onclick="handleReplyContact(${m.id}, '${esc(m.email)}', '${esc(m.subject || '')}')">Reply ✉️</button></td>
+          </tr>`;
         });
         tbody.innerHTML = html || '<tr><td colspan="6">No messages</td></tr>';
+        updateUnreadBadge(unreadCount);
       }).catch(console.error);
 
     // Prayers
@@ -1538,7 +2344,18 @@
         if (!tbody) return;
         let html = '';
         (data || []).forEach(p => {
-          html += `<tr><td>${esc(new Date(p.created_at).toLocaleDateString())}</td><td>${esc(p.name || 'Anonymous')}</td><td>${esc(p.intention)}</td><td>${esc(p.status || 'pending')}</td><td><button class="save-btn" style="padding:4px;" onclick="alert('Approve to be implemented')">Approve</button></td></tr>`;
+          const dateStr = p.created_at ? new Date(p.created_at).toLocaleDateString() : '';
+          const isApproved = p.status === 'approved';
+          const nextStatus = isApproved ? 'pending' : 'approved';
+          const btnText = isApproved ? 'Unapprove' : 'Approve ✓';
+          const btnClass = isApproved ? 'export-btn' : 'save-btn';
+          html += `<tr>
+            <td>${esc(dateStr)}</td>
+            <td>${esc(p.name || 'Anonymous')}</td>
+            <td>${esc(p.intention)}</td>
+            <td><span class="badge ${isApproved ? 'badge-sage' : 'badge-gold'}" style="padding:2px 8px; font-size:11px; border-radius:12px;">${esc(p.status || 'pending')}</span></td>
+            <td><button class="${btnClass}" style="padding:4px 8px; font-size:11px;" onclick="handlePrayerStatus(${p.id}, '${nextStatus}')">${btnText}</button></td>
+          </tr>`;
         });
         tbody.innerHTML = html || '<tr><td colspan="5">No prayer requests</td></tr>';
       }).catch(console.error);
@@ -1547,15 +2364,462 @@
     fetch('/api/newsletter')
       .then(r => r.json())
       .then(data => {
+        lastFetchedNewsletter = data || [];
         const tbody = $('#admin-newsletter-tbody');
         if (!tbody) return;
         let html = '';
-        (data || []).forEach(sub => {
-          html += `<tr><td>${esc(new Date(sub.subscribed_at).toLocaleDateString())}</td><td>${esc(sub.email)}</td></tr>`;
+        lastFetchedNewsletter.forEach(sub => {
+          const dateStr = sub.subscribed_at ? new Date(sub.subscribed_at).toLocaleDateString() : '';
+          html += `<tr><td>${esc(dateStr)}</td><td><a href="mailto:${esc(sub.email)}" style="color:var(--sage-deep);">${esc(sub.email)}</a></td></tr>`;
         });
         tbody.innerHTML = html || '<tr><td colspan="2">No subscribers</td></tr>';
       }).catch(console.error);
   }
+
+  // ─── Response Log Module ───
+  let responseLogEntries = [];
+  let currentRLogEntry = null;
+
+  function initResponseLogListeners() {
+    const filterStatus = $('#rlog-filter-status');
+    if (filterStatus) filterStatus.addEventListener('change', fetchResponseLogs);
+
+    const filterType = $('#rlog-filter-type');
+    if (filterType) filterType.addEventListener('change', fetchResponseLogs);
+
+    const filterSearch = $('#rlog-filter-search');
+    if (filterSearch) filterSearch.addEventListener('input', renderResponseLogs);
+
+    const btnCloseRLog = $('#btn-close-rlog-modal');
+    if (btnCloseRLog) btnCloseRLog.addEventListener('click', closeRLogModal);
+
+    const btnDismissRLog = $('#btn-rlog-dismiss');
+    if (btnDismissRLog) btnDismissRLog.addEventListener('click', closeRLogModal);
+
+    const btnMarkReviewed = $('#btn-rlog-mark-reviewed');
+    if (btnMarkReviewed) btnMarkReviewed.addEventListener('click', () => reviewResponseLog('reviewed'));
+
+    const btnFlag = $('#btn-rlog-flag');
+    if (btnFlag) btnFlag.addEventListener('click', () => reviewResponseLog('flagged'));
+
+    const btnRevert = $('#btn-rlog-revert');
+    if (btnRevert) btnRevert.addEventListener('click', revertResponseLog);
+
+    // Delegated table click
+    const tbody = $('#rlog-table-body');
+    if (tbody) tbody.addEventListener('click', handleRLogTableClick);
+
+    // Export button: attach auth token
+    const btnExport = $('#btn-export-responselog');
+    if (btnExport) {
+      btnExport.addEventListener('click', function(e) {
+        e.preventDefault();
+        const token = sessionStorage.getItem(SESSION_KEY);
+        const filterStatusEl = $('#rlog-filter-status');
+        const filterTypeEl = $('#rlog-filter-type');
+        const status = (filterStatusEl && filterStatusEl.value) || 'all';
+        const type = (filterTypeEl && filterTypeEl.value) || 'all';
+        let url = `/api/response-log/export?status=${status}&type=${type}`;
+        // Use fetch with auth and download as blob
+        fetch(url, { cache: 'no-cache' })
+          .then(res => {
+            if (!res.ok) throw new Error('Export failed');
+            const disposition = res.headers.get('Content-Disposition') || '';
+            const match = disposition.match(/filename="(.+?)"/);
+            const filename = match ? match[1] : 'response_log_backup.json';
+            return res.blob().then(blob => ({ blob, filename }));
+          })
+          .then(({ blob, filename }) => {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            toast('Response log exported for Google Drive backup', 'success');
+          })
+          .catch(err => {
+            toast('Export failed: ' + err.message, 'error');
+          });
+      });
+    }
+  }
+
+  function fetchResponseLogs() {
+    const filterStatusEl = $('#rlog-filter-status');
+    const filterTypeEl = $('#rlog-filter-type');
+    const status = (filterStatusEl && filterStatusEl.value) || 'all';
+    const type = (filterTypeEl && filterTypeEl.value) || 'all';
+    let url = `/api/response-log?status=${status}&type=${type}`;
+    fetch(url, { cache: 'no-cache' })
+      .then(r => r.json())
+      .then(data => {
+        responseLogEntries = data || [];
+        renderResponseLogs();
+      })
+      .catch(err => {
+        console.error('Failed to fetch response logs:', err);
+        toast('Failed to load response log', 'error');
+      });
+  }
+
+  function fetchResponseLogStats() {
+    fetch('/api/response-log/stats', { cache: 'no-cache' })
+      .then(r => r.json())
+      .then(stats => {
+        const elPending = $('#rlog-stat-pending');
+        const elReviewed = $('#rlog-stat-reviewed');
+        const elFlagged = $('#rlog-stat-flagged');
+        const elReverted = $('#rlog-stat-reverted');
+        if (elPending) elPending.textContent = stats.pending || 0;
+        if (elReviewed) elReviewed.textContent = stats.reviewed || 0;
+        if (elFlagged) elFlagged.textContent = stats.flagged || 0;
+        if (elReverted) elReverted.textContent = stats.reverted || 0;
+
+        // Update badge on tab
+        const badge = $('#responselog-badge');
+        if (badge) {
+          const pending = stats.pending || 0;
+          if (pending > 0) {
+            badge.style.display = 'inline';
+            badge.textContent = pending;
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+      })
+      .catch(console.error);
+  }
+
+  function renderResponseLogs() {
+    const tbody = $('#rlog-table-body');
+    if (!tbody) return;
+
+    const searchEl = $('#rlog-filter-search');
+    const searchTerm = ((searchEl && searchEl.value) || '').toLowerCase();
+    const filtered = responseLogEntries.filter(entry => {
+      if (!searchTerm) return true;
+      return (entry.entityName || '').toLowerCase().includes(searchTerm) ||
+             (entry.summary || '').toLowerCase().includes(searchTerm) ||
+             (entry.sisterName || '').toLowerCase().includes(searchTerm);
+    });
+
+    const countBadge = $('#rlog-count-badge');
+    if (countBadge) countBadge.textContent = `${filtered.length} entries`;
+
+    if (!filtered.length) {
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:32px; color:#888;">No response log entries found</td></tr>';
+      return;
+    }
+
+    const typeIcons = {
+      community: '🏘️',
+      photo: '📸',
+      event: '📅',
+      news: '📰',
+      memorial: '✝️'
+    };
+
+    const statusColors = {
+      pending: '#e74c3c',
+      reviewed: '#27ae60',
+      flagged: '#f39c12',
+      reverted: '#95a5a6'
+    };
+
+    const actionLabels = {
+      community_add: 'Added',
+      community_update: 'Updated',
+      community_delete: 'Deleted',
+      photo_upload: 'Uploaded',
+      photo_delete: 'Deleted',
+      event_add: 'Added',
+      event_update: 'Updated',
+      event_delete: 'Deleted',
+      news_add: 'Published',
+      news_update: 'Updated',
+      news_delete: 'Deleted',
+      memorial_add: 'Added',
+      memorial_update: 'Updated',
+      memorial_delete: 'Deleted'
+    };
+
+    let html = '';
+    filtered.forEach(entry => {
+      const dateStr = entry.createdAt ? new Date(entry.createdAt).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+      const icon = typeIcons[entry.entityType] || '📝';
+      const statusColor = statusColors[entry.status] || '#888';
+      const actionLabel = actionLabels[entry.actionType] || entry.actionType;
+      const hasSnapshot = entry.snapshotBefore && Object.keys(entry.snapshotBefore).length > 0;
+
+      html += `<tr style="border-left: 3px solid ${statusColor};">
+        <td style="font-size:11px; color:#888;">#${entry.id}</td>
+        <td style="font-size:12px; white-space:nowrap;">${esc(dateStr)}</td>
+        <td>${icon} ${esc(entry.entityType)}</td>
+        <td><span style="display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; background:${statusColor}15; color:${statusColor};">${esc(actionLabel)}</span></td>
+        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${esc(entry.entityName)}">${esc(entry.entityName || entry.entityId)}</td>
+        <td style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; color:#555;" title="${esc(entry.summary)}">${esc(entry.summary)}</td>
+        <td style="font-size:12px;">${esc(entry.sisterName || 'Admin')}</td>
+        <td><span style="display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; background:${statusColor}; color:#fff;">${esc(entry.status)}</span></td>
+        <td style="text-align:right; white-space:nowrap;">
+          <button class="btn-view-rlog" data-id="${entry.id}" style="padding:4px 10px; font-size:11px; cursor:pointer; border:1px solid #ccc; border-radius:4px; background:#fff;" title="View details">🔍 View</button>
+          ${entry.status === 'pending' ? `<button class="btn-quick-review" data-id="${entry.id}" style="padding:4px 10px; font-size:11px; cursor:pointer; border:1px solid #27ae60; border-radius:4px; background:#27ae6020; color:#27ae60; font-weight:600;" title="Quick approve">✓</button>` : ''}
+          ${hasSnapshot ? `<button class="btn-quick-revert" data-id="${entry.id}" style="padding:4px 10px; font-size:11px; cursor:pointer; border:1px solid #e74c3c; border-radius:4px; background:#e74c3c15; color:#e74c3c; font-weight:600;" title="Revert change">↩</button>` : ''}
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML = html;
+  }
+
+  function handleRLogTableClick(e) {
+    const viewBtn = e.target.closest('.btn-view-rlog');
+    if (viewBtn) {
+      openRLogDetail(parseInt(viewBtn.dataset.id));
+      return;
+    }
+    const quickReview = e.target.closest('.btn-quick-review');
+    if (quickReview) {
+      quickReviewRLog(parseInt(quickReview.dataset.id));
+      return;
+    }
+    const quickRevert = e.target.closest('.btn-quick-revert');
+    if (quickRevert) {
+      if (confirm('Are you sure you want to revert this change? The data will be restored to its previous state.')) {
+        quickRevertRLog(parseInt(quickRevert.dataset.id));
+      }
+      return;
+    }
+  }
+
+  function openRLogDetail(logId) {
+    const entry = responseLogEntries.find(e => e.id === logId);
+    if (!entry) return;
+    currentRLogEntry = entry;
+
+    const modal = $('#rlog-detail-modal');
+    const title = $('#rlog-modal-title');
+    const body = $('#rlog-modal-body');
+    const notesField = $('#rlog-admin-notes');
+
+    if (title) title.textContent = `Change #${entry.id}: ${entry.entityName || entry.entityId}`;
+    if (notesField) notesField.value = entry.adminNotes || '';
+
+    // Build detail view
+    let html = `
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+        <div style="background:#f8f9fa; padding:12px; border-radius:8px;">
+          <div style="font-size:11px; color:#888; text-transform:uppercase; margin-bottom:4px;">Action</div>
+          <div style="font-weight:600;">${esc(entry.actionType)}</div>
+        </div>
+        <div style="background:#f8f9fa; padding:12px; border-radius:8px;">
+          <div style="font-size:11px; color:#888; text-transform:uppercase; margin-bottom:4px;">Type</div>
+          <div style="font-weight:600;">${esc(entry.entityType)}</div>
+        </div>
+        <div style="background:#f8f9fa; padding:12px; border-radius:8px;">
+          <div style="font-size:11px; color:#888; text-transform:uppercase; margin-bottom:4px;">Changed By</div>
+          <div style="font-weight:600;">${esc(entry.sisterName || 'Admin')}</div>
+        </div>
+        <div style="background:#f8f9fa; padding:12px; border-radius:8px;">
+          <div style="font-size:11px; color:#888; text-transform:uppercase; margin-bottom:4px;">Date</div>
+          <div style="font-weight:600;">${entry.createdAt ? new Date(entry.createdAt).toLocaleString() : ''}</div>
+        </div>
+      </div>
+      <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <div style="font-size:11px; color:#888; text-transform:uppercase; margin-bottom:4px;">Summary</div>
+        <div>${esc(entry.summary)}</div>
+      </div>
+    `;
+
+    // Snapshot Diff
+    const hasBefore = entry.snapshotBefore && Object.keys(entry.snapshotBefore).length > 0;
+    const hasAfter = entry.snapshotAfter && Object.keys(entry.snapshotAfter).length > 0;
+
+    if (hasBefore || hasAfter) {
+      html += '<div style="margin-top:16px;">';
+      html += '<h4 style="font-size:14px; margin-bottom:8px; color:#333;">📊 Data Comparison</h4>';
+      html += '<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">';
+
+      // Before
+      html += '<div style="border:2px solid #e74c3c30; border-radius:8px; padding:12px; background:#fff5f5;">';
+      html += '<div style="font-size:12px; font-weight:700; color:#e74c3c; margin-bottom:8px;">⬅ Before</div>';
+      if (hasBefore) {
+        html += renderSnapshotTable(entry.snapshotBefore);
+      } else {
+        html += '<div style="color:#888; font-style:italic;">No previous data (new entry)</div>';
+      }
+      html += '</div>';
+
+      // After
+      html += '<div style="border:2px solid #27ae6030; border-radius:8px; padding:12px; background:#f0fff4;">';
+      html += '<div style="font-size:12px; font-weight:700; color:#27ae60; margin-bottom:8px;">➡ After</div>';
+      if (hasAfter) {
+        html += renderSnapshotTable(entry.snapshotAfter);
+      } else {
+        html += '<div style="color:#888; font-style:italic;">Deleted</div>';
+      }
+      html += '</div>';
+
+      html += '</div></div>';
+    }
+
+    // Review info
+    if (entry.reviewedBy) {
+      html += `<div style="margin-top:16px; padding:12px; background:#e8f5e9; border-radius:8px; font-size:13px;">
+        <strong>Reviewed by:</strong> ${esc(entry.reviewedBy)} 
+        ${entry.reviewedAt ? `on ${new Date(entry.reviewedAt).toLocaleString()}` : ''}
+        ${entry.adminNotes ? `<br><strong>Notes:</strong> ${esc(entry.adminNotes)}` : ''}
+      </div>`;
+    }
+
+    if (body) body.innerHTML = html;
+
+    // Show/hide revert button based on data availability
+    const revertBtn = $('#btn-rlog-revert');
+    if (revertBtn) revertBtn.style.display = hasBefore ? 'inline-flex' : 'none';
+
+    if (modal) modal.hidden = false;
+  }
+
+  function renderSnapshotTable(data) {
+    if (!data || typeof data !== 'object') return '<em>No data</em>';
+    let html = '<table style="width:100%; font-size:12px; border-collapse:collapse;">';
+    for (const [key, val] of Object.entries(data)) {
+      if (key === 'stories' || key === 'gallery') continue; // Skip large nested arrays
+      let displayVal = val;
+      if (Array.isArray(val)) {
+        displayVal = val.length > 3 ? `[${val.length} items]` : JSON.stringify(val);
+      } else if (typeof val === 'object' && val !== null) {
+        displayVal = JSON.stringify(val);
+      }
+      const strVal = String(displayVal || '');
+      const truncated = strVal.length > 120 ? strVal.substring(0, 120) + '…' : strVal;
+      html += `<tr style="border-bottom:1px solid #eee;">
+        <td style="padding:4px 8px; font-weight:600; color:#555; vertical-align:top; white-space:nowrap;">${esc(key)}</td>
+        <td style="padding:4px 8px; word-break:break-word;" title="${esc(strVal)}">${esc(truncated)}</td>
+      </tr>`;
+    }
+    html += '</table>';
+    return html;
+  }
+
+  function closeRLogModal() {
+    const modal = $('#rlog-detail-modal');
+    if (modal) modal.hidden = true;
+    currentRLogEntry = null;
+  }
+
+  function reviewResponseLog(status) {
+    if (!currentRLogEntry) return;
+    const notesEl = $('#rlog-admin-notes');
+    const adminNotes = (notesEl && notesEl.value) || '';
+    fetch('/api/response-log/review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentRLogEntry.id, status, adminNotes })
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          toast(`Entry #${currentRLogEntry.id} marked as ${status}`, 'success');
+          closeRLogModal();
+          fetchResponseLogs();
+          fetchResponseLogStats();
+        } else {
+          toast(data.error || 'Failed to update status', 'error');
+        }
+      })
+      .catch(err => toast('Error: ' + err.message, 'error'));
+  }
+
+  function revertResponseLog() {
+    if (!currentRLogEntry) return;
+    if (!confirm('Are you sure you want to revert this change? The data will be restored to its previous state.')) return;
+    fetch('/api/response-log/revert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentRLogEntry.id })
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          toast('Change reverted successfully', 'success');
+          closeRLogModal();
+          fetchResponseLogs();
+          fetchResponseLogStats();
+          // Refresh communities if relevant
+          if (currentRLogEntry.entityType === 'community') {
+            fetchCommunities();
+          }
+        } else {
+          toast(data.error || 'Failed to revert', 'error');
+        }
+      })
+      .catch(err => toast('Error: ' + err.message, 'error'));
+  }
+
+  function quickReviewRLog(logId) {
+    fetch('/api/response-log/review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: logId, status: 'reviewed', adminNotes: '' })
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          toast(`Entry #${logId} reviewed ✓`, 'success');
+          fetchResponseLogs();
+          fetchResponseLogStats();
+        } else {
+          toast(data.error || 'Review failed', 'error');
+        }
+      })
+      .catch(err => toast('Error: ' + err.message, 'error'));
+  }
+
+  function quickRevertRLog(logId) {
+    fetch('/api/response-log/revert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: logId })
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          toast('Change reverted successfully', 'success');
+          fetchResponseLogs();
+          fetchResponseLogStats();
+        } else {
+          toast(data.error || 'Revert failed', 'error');
+        }
+      })
+      .catch(err => toast('Error: ' + err.message, 'error'));
+  }
+
+  // Bind CSV Export Buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnExpContacts = $('#btn-export-contacts');
+    if (btnExpContacts) {
+      btnExpContacts.addEventListener('click', function() {
+        const rows = [['Date', 'Name', 'Email', 'Subject', 'Message', 'Status']];
+        lastFetchedContacts.forEach(m => {
+          rows.push([m.created_at || '', m.name || '', m.email || '', m.subject || '', m.message || '', m.status || '']);
+        });
+        exportToCSV('satyaseva_contact_messages.csv', rows);
+      });
+    }
+
+    const btnExpNews = $('#btn-export-newsletter');
+    if (btnExpNews) {
+      btnExpNews.addEventListener('click', function() {
+        const rows = [['Subscribed Date', 'Email Address']];
+        lastFetchedNewsletter.forEach(sub => {
+          rows.push([sub.subscribed_at || '', sub.email || '']);
+        });
+        exportToCSV('satyaseva_newsletter_subscribers.csv', rows);
+      });
+    }
+  });
 
   // ─── Boot ───
   document.addEventListener('DOMContentLoaded', setupLoginGate);

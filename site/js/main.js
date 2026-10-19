@@ -103,27 +103,49 @@
       'Privacy Policy': 'Polityka Prywatności',
       'Impressum': 'Impressum',
       'Accept All': 'Akceptuj Wszystko',
-      'Essential Only': 'Tylko Niezbędne'
+      'Essential Only': 'Tylko Niezbędne',
+      'Years of Mission': 'Lata Misji',
+      'Global Communities': 'Wspólnoty na Świecie',
+      'Families Served': 'Rodziny Wsparcia',
+      'Children Supported': 'Dzieci pod Opieką',
+      'Subscribe': 'Subskrybuj',
+      'Send Message': 'Wyślij Wiadomość',
+      'Submit Prayer Request': 'Prześlij Intencję',
+      'Stay Connected': 'Bądźmy w Kontakcie',
+      'How we serve': 'Jak Służymy',
+      'Pray with us': 'Módl się z Nami',
+      'Why This Matters Now': 'Dlaczego to Ma Znaczenie',
+      'Faith carried home': 'Wiara Przyniesiona do Domu',
+      'Read Mother Regina\'s Biography': 'Przeczytaj Biografię Matki Reginy',
+      'Chat with Us': 'Napisz do Nas'
     }
   };
 
   function applyTranslations(lang) {
-    if (lang === 'en' || !translations[lang]) return;
-    var dict = translations[lang];
-    // Translate nav links, footer links, and common buttons
-    document.querySelectorAll('.nav-links a, .footer-links a, .nav-cta, .nav-donate, .btn').forEach(function(el){
-      var text = el.textContent.trim();
-      if (dict[text]) {
-        if (el.children.length === 0) {
-          el.textContent = dict[text];
-        } else {
-          // If the element has children (like an SVG icon inside a button), only replace text nodes
-          Array.from(el.childNodes).forEach(function(node) {
-            if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() === text) {
-              node.nodeValue = dict[text];
-            }
-          });
-        }
+    var isEn = (lang === 'en');
+    if (!isEn && !translations[lang]) return;
+    var dict = isEn ? null : translations[lang];
+
+    // Translate nav links, footer links, buttons, eyebrows, and i18n data elements
+    var selectors = '.nav-links a, .footer-links a, .nav-cta, .nav-donate, .btn, .eyebrow, .impact-label, button[type="submit"], [data-i18n]';
+    document.querySelectorAll(selectors).forEach(function(el){
+      var origText = el.getAttribute('data-orig-text');
+      if (!origText) {
+        origText = el.getAttribute('data-i18n') || el.textContent.trim();
+        el.setAttribute('data-orig-text', origText);
+      }
+
+      var targetText = isEn ? origText : (dict[origText] || origText);
+
+      if (el.children.length === 0) {
+        el.textContent = targetText;
+      } else {
+        // If the element has children (like an SVG icon inside a button), replace matching text node
+        Array.from(el.childNodes).forEach(function(node) {
+          if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+            node.nodeValue = targetText;
+          }
+        });
       }
     });
   }
@@ -166,7 +188,8 @@
       if (!href) return;
       var linkPath = href.split('/').pop().split('?')[0].split('#')[0];
       var isCurrent = (linkPath === currentPath) ||
-                      (currentPath === 'index.html' && (linkPath === '' || href === '#main-content' || linkPath === 'index.html'));
+                      (currentPath === 'index.html' && (linkPath === '' || href === '#main-content' || linkPath === 'index.html')) ||
+                      (currentPath === 'community.html' && linkPath === 'communities.html');
 
       if (isCurrent) {
         link.classList.add('active');
@@ -361,46 +384,6 @@
     }
   }
 
-  /* ── Right-click & Inspection Deterrents ─────────────────────── */
-  function initInspectProtection() {
-    // Disable right-click context menu, except on inputs
-    document.addEventListener('contextmenu', function(e) {
-      var tag = e.target.tagName.toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
-      e.preventDefault();
-    });
-
-    // Disable common DevTools / View-Source shortcuts
-    document.addEventListener('keydown', function(e) {
-      var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      var cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
-
-      // F12 key
-      if (e.key === 'F12' || e.keyCode === 123) {
-        e.preventDefault();
-        return false;
-      }
-
-      // Ctrl/Cmd + Shift + I/J/C (Inspect / Console / Element Picker)
-      if (cmdOrCtrl && e.shiftKey && (['I', 'i', 'J', 'j', 'C', 'c'].indexOf(e.key) !== -1 || [73, 74, 67].indexOf(e.keyCode) !== -1)) {
-        e.preventDefault();
-        return false;
-      }
-
-      // Ctrl/Cmd + U (View Source)
-      if (cmdOrCtrl && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
-        e.preventDefault();
-        return false;
-      }
-
-      // Ctrl/Cmd + S (Save Page)
-      if (cmdOrCtrl && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
-        e.preventDefault();
-        return false;
-      }
-    });
-  }
-
   /* ── Back to Top Floating Arrow Button ───────────────────────────── */
   function initBackToTop() {
     var btn = document.getElementById('back-to-top');
@@ -433,7 +416,6 @@
   }
 
   function initApp() {
-    initInspectProtection();
     initCookieConsent();
     initTheme();
     initActiveNav();

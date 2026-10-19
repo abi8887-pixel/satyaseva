@@ -231,6 +231,9 @@
   /* ── Filter / Search Logic ── */
   function filterSisters() {
     var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    if (clearSearchBtn) {
+      clearSearchBtn.style.display = query ? 'inline-flex' : 'none';
+    }
     if (!query) {
       renderGrid(sistersData);
       return;
@@ -257,7 +260,11 @@
 
   if (clearSearchBtn) {
     clearSearchBtn.onclick = function() {
-      if (searchInput) searchInput.value = '';
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+      }
+      clearSearchBtn.style.display = 'none';
       renderGrid(sistersData);
     };
   }

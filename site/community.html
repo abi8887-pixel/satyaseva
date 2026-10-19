@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/community.css">
 </head>
+<body class="community-detail-page">
 <!-- Ambient Mesh Background -->
 <div class="ambient-mesh" aria-hidden="true">
   <div class="ambient-blob blob-1"></div>
@@ -22,13 +23,13 @@
   <div class="ambient-blob blob-3"></div>
 </div>
 
-<header class="nav-header">
+<header class="nav-header" id="nav">
   <div class="nav-header-inner">
     <a href="communities.html" class="back-link">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       <span>Back to Communities</span>
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="communities.html" class="active">Communities</a>
       <a href="map.html">Map</a>
@@ -37,6 +38,16 @@
       <a href="vocations.html">Vocations</a>
       <a href="donate.html">Donate</a>
       <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      <select id="lang-select" aria-label="Select language">
+        <option value="en" selected>English</option>
+        <option value="pl">Polski</option>
+      </select>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -146,5 +157,6 @@
 
 <script src="data/communities-data.js?v=3"></script>
 <script src="js/community-detail.js"></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>

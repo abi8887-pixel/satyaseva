@@ -668,7 +668,6 @@
     html += '    </div>';
     html += '    <div class="portal-actions">';
     html += '      <button type="button" class="upload-trigger-btn trigger-upload-modal">' + uploadIcon + ' Add Photos Now</button>';
-    html += '      <a href="admin.html" class="portal-link-btn">Sister Login / Admin →</a>';
     html += '    </div>';
     html += '  </div>';
     html += '</section>';
@@ -757,8 +756,9 @@
 
     navSection.innerHTML = html;
 
-    /* Global Keyboard Arrows for Community Switching */
+    /* Keyboard Shortcut (Alt + ArrowLeft/Right) for Community Switching */
     window.addEventListener('keydown', function(e) {
+      if (!e.altKey) return;
       if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'TEXTAREA')) {
         return;
       }
@@ -770,8 +770,10 @@
       }
 
       if (e.key === 'ArrowLeft' && prev) {
+        e.preventDefault();
         window.location.href = 'community.html?id=' + encodeURIComponent(prev.id);
       } else if (e.key === 'ArrowRight' && next) {
+        e.preventDefault();
         window.location.href = 'community.html?id=' + encodeURIComponent(next.id);
       }
     });
@@ -813,12 +815,6 @@
     }
 
     var community = communities[idx];
-
-    var adminLink = document.getElementById('nav-admin-link');
-    if (adminLink) {
-      adminLink.href = 'admin.html?id=' + encodeURIComponent(community.id);
-      adminLink.title = 'Edit ' + community.name + ' in Admin Portal';
-    }
 
     /* Merge folder images manifest */
     var folderData = imagesManifest[community.id] || null;

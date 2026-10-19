@@ -422,3 +422,149 @@
   .comm-filters { flex-direction: column; align-items: stretch; }
   .filter-search-wrapper { max-width: none; }
 }
+
+/* ── Print Directory Styles ─────────────────────────────────── */
+.filter-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.btn-print-directory {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--elev-1);
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+
+.btn-print-directory:hover {
+  background: var(--surface-alt);
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+
+  /* Hide screen-only interactive elements */
+  nav,
+  .nav-header,
+  .hamburger,
+  .mesh-bg,
+  .comm-filters,
+  .filter-tabs,
+  .filter-actions-right,
+  .btn-print-directory,
+  .floating-contact,
+  .cookie-banner-overlay,
+  .grid-loading,
+  .card-cta,
+  footer {
+    display: none !important;
+  }
+
+  /* Dignified Directory Header */
+  .hero-section {
+    background: #fff !important;
+    border-bottom: 2pt solid #000 !important;
+    padding: 0 0 16pt 0 !important;
+    margin-bottom: 20pt !important;
+    text-align: center;
+  }
+
+  .eyebrow {
+    color: #444 !important;
+    font-size: 9pt !important;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-section h1 {
+    font-size: 24pt !important;
+    color: #000 !important;
+    margin: 6pt 0 !important;
+  }
+
+  .hero-section p.subtitle {
+    font-size: 10pt !important;
+    color: #333 !important;
+  }
+
+  /* Grid: 2 columns on paper, avoiding breaks inside cards */
+  .comm-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 14pt !important;
+  }
+
+  .comm-card {
+    border: 1.5pt solid #000 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 12pt;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .comm-card-image-wrap {
+    height: 120px !important;
+    border-bottom: 1pt solid #000 !important;
+  }
+
+  .comm-card-image {
+    filter: grayscale(100%);
+  }
+
+  .comm-card-body {
+    padding: 10pt !important;
+  }
+
+  .card-header h2 {
+    font-size: 13pt !important;
+    color: #000 !important;
+    margin-bottom: 4pt !important;
+  }
+
+  .badge-tag, .country-tag {
+    background: #f0f0f0 !important;
+    color: #000 !important;
+    border: 1pt solid #666 !important;
+    font-size: 7.5pt !important;
+  }
+
+  .location-pill {
+    color: #333 !important;
+    font-size: 8.5pt !important;
+  }
+
+  .desc {
+    font-size: 8.5pt !important;
+    color: #222 !important;
+    line-height: 1.35 !important;
+  }
+}
+

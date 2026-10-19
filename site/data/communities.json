@@ -688,7 +688,7 @@
     ],
     "members": [],
     "stories": [],
-    "heroImage": "",
+    "heroImage": "images/communities/frankfurt/hero.png",
     "gallery": []
   },
   {
@@ -783,9 +783,9 @@
     "location": "Unkel, Germany",
     "country": "Germany",
     "badge": "",
-    "description": "Serving Tsunami victims, running crèches for slum dwellers, and actively involved in parish activities and prayer groups.",
+    "description": "",
     "contact": {
-      "address": "",
+      "address": "unkel",
       "phone": "",
       "email": ""
     },

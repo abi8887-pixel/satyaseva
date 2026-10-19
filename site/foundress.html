@@ -27,6 +27,7 @@
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="communities.html">Communities</a>
+      <a href="foundress.html" class="active" aria-current="page">Our Foundress</a>
       <a href="map.html">Map</a>
       <a href="events.html">Events</a>
       <a href="news.html">News</a>
@@ -34,15 +35,17 @@
       <a href="prayers.html">Prayers</a>
       <a href="donate.html">Donate</a>
       <a href="contact.html">Contact</a>
-      <button class="theme-toggle-btn" aria-label="Switch to Dark Mode" title="Switch to Dark Mode">🌙</button>
-      <select id="lang-select" aria-label="Select language" class="lang-select">
+    </div>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      <select id="lang-select" aria-label="Select language">
         <option value="en" selected>English</option>
         <option value="pl">Polski</option>
       </select>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button class="hamburger" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 

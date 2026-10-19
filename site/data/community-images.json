@@ -38,10 +38,12 @@
     "totalImages": 0
   },
   "frankfurt": {
-    "hero": "",
+    "hero": "images/communities/frankfurt/hero.png",
     "gallery": [],
-    "allImages": [],
-    "totalImages": 0
+    "allImages": [
+      "images/communities/frankfurt/hero.png"
+    ],
+    "totalImages": 1
   },
   "generalate": {
     "hero": "images/communities/generalate/hero.jpg",

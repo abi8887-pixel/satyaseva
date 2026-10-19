@@ -420,15 +420,30 @@
     /* ── Init ──────────────────────────────────────────────── */
     function loadNews() {
       fetch('/api/news')
-        .then(function(r) { return r.json(); })
+        .then(function(r) {
+          if (!r.ok) throw new Error('API unavailable');
+          return r.json();
+        })
         .then(function(news) {
           if (!Array.isArray(news)) news = [];
           allNews = news;
           renderNews();
         })
         .catch(function() {
-          allNews = [];
-          renderNews();
+          fetch('data/news.json')
+            .then(function(r) {
+              if (!r.ok) throw new Error('JSON unavailable');
+              return r.json();
+            })
+            .then(function(news) {
+              if (!Array.isArray(news)) news = [];
+              allNews = news;
+              renderNews();
+            })
+            .catch(function() {
+              allNews = window.__INITIAL_NEWS__ || [];
+              renderNews();
+            });
         });
     }
 
@@ -439,6 +454,7 @@
     }
   })();
   </script>
+  <script src="data/communities-data.js?v=4"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

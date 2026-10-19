@@ -5,7 +5,7 @@
    - Update notification when new version is available
    - media.html added to pre-cache list
 */
-const CACHE_NAME = 'satyaseva-v4';
+const CACHE_NAME = 'satyaseva-v5';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -33,6 +33,11 @@ const ASSETS_TO_CACHE = [
   '/js/gallery.js',
   '/js/communities-grid.js',
   '/js/community-detail.js',
+  '/data/communities.json',
+  '/data/memorial.json',
+  '/data/events.json',
+  '/data/news.json',
+  '/data/communities-data.js',
   '/favicon.svg',
   '/manifest.json'
   // NOTE: admin.html and admin.js deliberately excluded from cache

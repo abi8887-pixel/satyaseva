@@ -15,7 +15,8 @@
 
   <!-- ── Password Gate ── -->
   <div id="login-gate" class="login-gate">
-    <div class="login-card">
+    <!-- Main Login Card -->
+    <div class="login-card" id="login-card-main">
       <div class="login-icon">🔒</div>
       <h2>Admin Portal</h2>
       <p>Enter the access code to continue</p>
@@ -23,7 +24,46 @@
         <input type="password" id="login-password" class="login-input" placeholder="Access code" autofocus>
         <button type="submit" class="login-btn">Unlock</button>
       </form>
+      <div style="margin-top:16px;">
+        <button type="button" id="btn-forgot-password" style="background:none; border:none; color:var(--ink-soft); font-size:13px; text-decoration:underline; cursor:pointer; font-family:inherit;">Forgot Access Code?</button>
+      </div>
       <p id="login-error" class="login-error" hidden>Invalid access code. Please try again.</p>
+    </div>
+
+    <!-- Password Reset Card -->
+    <div class="login-card" id="reset-card" style="display:none;">
+      <div class="login-icon" style="background:var(--sage-tint, #e8f3ed); color:var(--sage, #2e5641); border-color:var(--sage-border, #b8d8c8);">🔑</div>
+      <h2>Reset Access Code</h2>
+
+      <!-- Step 1: Request Code -->
+      <div id="reset-step-1">
+        <p style="font-size:13px; color:var(--ink-soft); margin-bottom:20px; line-height:1.5;">Enter the administrator recovery email to receive a 6-digit verification code.</p>
+        <form id="reset-request-form" autocomplete="off">
+          <input type="email" id="reset-email" class="login-input" placeholder="admin email address" required style="letter-spacing:normal; text-align:center; margin-bottom:12px;">
+          <button type="submit" id="btn-send-reset-code" class="login-btn">Send Reset Code</button>
+        </form>
+        <div style="margin-top:16px;">
+          <button type="button" class="btn-cancel-reset" style="background:none; border:none; color:var(--ink-soft); font-size:13px; text-decoration:underline; cursor:pointer; font-family:inherit;">← Back to Login</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Verify Code & Set New Password -->
+      <div id="reset-step-2" style="display:none;">
+        <p style="font-size:13px; color:var(--ink-soft); margin-bottom:16px; line-height:1.5;">Enter the 6-digit verification code and choose your new access code.</p>
+        <form id="reset-confirm-form" autocomplete="off">
+          <input type="text" id="reset-code" class="login-input" placeholder="6-digit code" maxlength="8" required style="letter-spacing:.25em; text-align:center; font-weight:700; margin-bottom:12px;">
+          <input type="password" id="reset-new-password" class="login-input" placeholder="New access code (min 6 chars)" minlength="6" required style="margin-bottom:12px; letter-spacing:normal;">
+          <input type="password" id="reset-confirm-password" class="login-input" placeholder="Confirm new access code" minlength="6" required style="letter-spacing:normal;">
+          <button type="submit" id="btn-confirm-reset" class="login-btn">Update &amp; Log In</button>
+        </form>
+        <div style="margin-top:16px; display:flex; justify-content:space-between; font-size:13px;">
+          <button type="button" id="btn-resend-code" style="background:none; border:none; color:var(--sage); text-decoration:underline; cursor:pointer; font-family:inherit;">Resend Code</button>
+          <button type="button" class="btn-cancel-reset" style="background:none; border:none; color:var(--ink-soft); text-decoration:underline; cursor:pointer; font-family:inherit;">Cancel</button>
+        </div>
+      </div>
+
+      <p id="reset-error" class="login-error" hidden></p>
+      <p id="reset-success" style="display:none; color:#1e7e34; background:#d4edda; border:1px solid #c3e6cb; border-radius:var(--radius-sm); font-size:12px; font-weight:600; margin-top:16px; padding:10px 14px; text-transform:none; line-height:1.4;"></p>
     </div>
   </div>
 
@@ -58,7 +98,8 @@
         <button type="button" class="admin-tab-btn active" id="tab-btn-communities">🏘️ Communities</button>
         <button type="button" class="admin-tab-btn" id="tab-btn-memorial">✝️ In Memoriam</button>
         <button type="button" class="admin-tab-btn" id="tab-btn-eventsnews">📅 Events &amp; News</button>
-        <button type="button" class="admin-tab-btn" id="tab-btn-inbox">📥 Inbox &amp; Prayers</button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-inbox">📥 Inbox &amp; Prayers <span id="inbox-unread-badge" style="display:none; margin-left:6px; background:var(--gold-deep, #c59b27); color:#fff; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;">0</span></button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-responselog">📋 Response Log <span id="responselog-badge" style="display:none; margin-left:6px; background:#e74c3c; color:#fff; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;">0</span></button>
         <button type="button" class="admin-tab-btn" id="tab-btn-database">🗄️ Database</button>
       </div>
     </nav>
@@ -137,8 +178,11 @@
       <div style="max-width:1080px; margin:0 auto;">
         
         <div style="margin-bottom:40px;">
-          <h2>📞 Contact Messages</h2>
-          <table class="db-table" style="width:100%; margin-top:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h2 style="margin:0;">📞 Contact Messages</h2>
+            <button type="button" id="btn-export-contacts" class="export-btn" style="padding:6px 12px; font-size:12px;">📥 Export CSV</button>
+          </div>
+          <table class="db-table" style="width:100%; margin-top:8px;">
             <thead>
               <tr><th>Date</th><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Actions</th></tr>
             </thead>
@@ -157,8 +201,11 @@
         </div>
 
         <div style="margin-bottom:40px;">
-          <h2>📧 Newsletter Subscribers</h2>
-          <table class="db-table" style="width:100%; margin-top:16px; max-width:600px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h2 style="margin:0;">📧 Newsletter Subscribers</h2>
+            <button type="button" id="btn-export-newsletter" class="export-btn" style="padding:6px 12px; font-size:12px;">📥 Export CSV</button>
+          </div>
+          <table class="db-table" style="width:100%; margin-top:8px; max-width:600px;">
             <thead>
               <tr><th>Date</th><th>Email Address</th></tr>
             </thead>
@@ -168,6 +215,127 @@
 
       </div>
     </main>
+
+    <!-- ── Response Log View ── -->
+    <main class="admin-container db-dashboard-view" id="responselog-view" style="display:none; padding:32px; overflow-y:auto;">
+      <div style="max-width:1200px; margin:0 auto;">
+
+        <!-- Header -->
+        <div class="db-status-header" style="margin-bottom:24px;">
+          <div class="db-status-main">
+            <div class="db-title-row">
+              <h2>📋 Response Log</h2>
+              <span class="db-live-badge" id="rlog-status-badge">
+                <span class="pulse-dot"></span> Live Tracking
+              </span>
+            </div>
+            <p class="db-subtitle">Every change made by sisters to communities, images, events, and news is logged here for admin review. Revert any change or export for Google Drive backup.</p>
+          </div>
+          <div class="db-quick-actions">
+            <a id="btn-export-responselog" href="/api/response-log/export" download class="save-btn" title="Download response log as JSON for Google Drive backup" style="text-decoration:none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              📥 Export for Drive
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="db-metrics-grid" style="margin-bottom:24px;">
+          <div class="db-metric-card">
+            <div class="metric-label">Pending Review</div>
+            <div class="metric-value" id="rlog-stat-pending" style="color:#e74c3c;">0</div>
+            <div class="metric-note">Awaiting admin review</div>
+          </div>
+          <div class="db-metric-card">
+            <div class="metric-label">Reviewed</div>
+            <div class="metric-value" id="rlog-stat-reviewed" style="color:#27ae60;">0</div>
+            <div class="metric-note">Verified by admin</div>
+          </div>
+          <div class="db-metric-card">
+            <div class="metric-label">Flagged</div>
+            <div class="metric-value" id="rlog-stat-flagged" style="color:#f39c12;">0</div>
+            <div class="metric-note">Needs attention</div>
+          </div>
+          <div class="db-metric-card">
+            <div class="metric-label">Reverted</div>
+            <div class="metric-value" id="rlog-stat-reverted" style="color:#95a5a6;">0</div>
+            <div class="metric-note">Changes rolled back</div>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="db-panel">
+          <div class="db-panel-header">
+            <div class="db-panel-title">
+              <h3>Change History</h3>
+              <span class="db-count-badge" id="rlog-count-badge">0 entries</span>
+            </div>
+            <div class="db-filter-bar">
+              <select id="rlog-filter-status" class="db-select">
+                <option value="all">All Statuses</option>
+                <option value="pending" selected>Pending</option>
+                <option value="reviewed">Reviewed</option>
+                <option value="flagged">Flagged</option>
+                <option value="reverted">Reverted</option>
+              </select>
+              <select id="rlog-filter-type" class="db-select">
+                <option value="all">All Types</option>
+                <option value="community">Communities</option>
+                <option value="photo">Photos</option>
+                <option value="event">Events</option>
+                <option value="news">News</option>
+                <option value="memorial">Memorial</option>
+              </select>
+              <input type="text" id="rlog-filter-search" class="search-input" placeholder="Search changes..." style="max-width:220px;">
+            </div>
+          </div>
+
+          <!-- Response Log Table -->
+          <div class="db-table-responsive">
+            <table class="db-table" id="rlog-table">
+              <thead>
+                <tr>
+                  <th style="width:40px;">ID</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Action</th>
+                  <th>Entity</th>
+                  <th>Summary</th>
+                  <th>By</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="rlog-table-body">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- ── Modal: Response Log Detail / Diff Viewer ── -->
+    <div id="rlog-detail-modal" class="admin-modal" hidden>
+      <div class="admin-modal-card" style="max-width:800px;">
+        <div class="admin-modal-header">
+          <h3 id="rlog-modal-title">Change Details</h3>
+          <button type="button" class="admin-modal-close" id="btn-close-rlog-modal">&times;</button>
+        </div>
+        <div id="rlog-modal-body" style="margin-top:16px; max-height:60vh; overflow-y:auto;"></div>
+        <div style="margin-top:20px;">
+          <label for="rlog-admin-notes" style="font-weight:600; font-size:13px; display:block; margin-bottom:4px;">Admin Notes</label>
+          <textarea id="rlog-admin-notes" rows="2" class="login-input" style="text-align:left; height:auto; font-family:inherit; line-height:1.5; width:100%;" placeholder="Add review notes..."></textarea>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+          <button type="button" class="export-btn" id="btn-rlog-dismiss">Close</button>
+          <button type="button" class="save-btn" id="btn-rlog-mark-reviewed" style="background:#27ae60; border-color:#27ae60;">✓ Mark Reviewed</button>
+          <button type="button" class="save-btn" id="btn-rlog-flag" style="background:#f39c12; border-color:#f39c12;">⚑ Flag</button>
+          <button type="button" class="save-btn" id="btn-rlog-revert" style="background:#e74c3c; border-color:#e74c3c;">↩ Revert Change</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ── Station Database & Uploads View ── -->
     <main class="admin-container db-dashboard-view" id="database-view" style="display:none;">
@@ -192,6 +360,10 @@
             <button type="button" id="btn-sync-static" class="export-btn" title="Sync SQLite data to static JSON & JS fallbacks">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
               Sync to Static
+            </button>
+            <button type="button" id="btn-test-email" class="export-btn" title="Send a test email to verify Gmail / SMTP integration">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Test Gmail / Email
             </button>
             <button type="button" id="btn-open-station-upload" class="save-btn" style="background:#1b4332;border-color:#1b4332;color:#fff;">
               + New Station Upload
