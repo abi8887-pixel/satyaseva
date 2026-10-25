@@ -1,6 +1,9 @@
 # Database & sensitive credentials
 *.db
 !memory.db
+*.sqlite
+*.sqlite3
+*.bak
 .env
 .env.*
 scripts/data/sscs.db
@@ -8,6 +11,8 @@ scripts/data/.admin_hash
 scripts/data/backups/
 site/data/backups/
 site/data/*.db
+site/data/*.sqlite
+site/data/*.sqlite3
 
 # SSL Certificates
 scripts/certs/

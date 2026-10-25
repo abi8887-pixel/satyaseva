@@ -11,10 +11,7 @@
   <link rel="canonical" href="https://satyasevasisters.org/news.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=4">
   <style>
     /* ── News Header ───────────────────────────────────────── */
     .news-header {
@@ -240,14 +237,22 @@
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
-      <div class="nav-links" id="navLinks">
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="vocations.html">Vocations</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html" class="active" aria-current="page">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
         <a href="prayers.html">Prayers</a>
         <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
@@ -258,6 +263,9 @@
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -284,21 +292,29 @@
     </div>
   </main>
 
-  <footer>
-    <div class="footer-glass">
-      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
+  <footer id="contact">
+    <div class="footer-glass reveal">
+      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
       <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Service to God's Truth since 1976.</p>
+      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="impressum.html">Impressum</a>
       </div>
-      <div class="footer-fine">&copy; <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS).</div>
+      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
     </div>
   </footer>
 

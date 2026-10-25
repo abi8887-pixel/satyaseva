@@ -1676,6 +1676,7 @@ def run(port=PORT, use_ssl=False):
         import ssl
         httpd = HTTPServer(('0.0.0.0', port), SistersHTTPRequestHandler)
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.minimum_version = ssl.TLSVersion.TLSv1_2
         context.load_cert_chain(certfile=cert_path, keyfile=key_path)
         httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
         servers.append((httpd, f"https://0.0.0.0:{port}"))
@@ -1699,6 +1700,7 @@ def run(port=PORT, use_ssl=False):
         try:
             https_server = HTTPServer(('0.0.0.0', 8443), SistersHTTPRequestHandler)
             context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+            context.minimum_version = ssl.TLSVersion.TLSv1_2
             context.load_cert_chain(certfile=cert_path, keyfile=key_path)
             https_server.socket = context.wrap_socket(https_server.socket, server_side=True)
             servers.append((https_server, "https://0.0.0.0:8443"))

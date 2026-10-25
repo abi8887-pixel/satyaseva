@@ -3,13 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function() {
+      var h = window.location.hostname;
+      if (h !== '127.0.0.1' && h !== 'localhost' && h !== '[::1]') {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.innerHTML = `
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:32px; text-align:center; font-family:system-ui, sans-serif; background:#f2f6f9; color:#0f2433;">
+              <div style="max-width:540px; background:#fff; border-radius:16px; padding:40px 32px; box-shadow:0 8px 30px rgba(0,0,0,0.08); border:1px solid #b5d4e7;">
+                <div style="font-size:48px; margin-bottom:16px;">🔒</div>
+                <h1 style="font-size:24px; margin:0 0 12px; color:#0d4b6b;">Localhost Admin Only</h1>
+                <p style="font-size:15px; color:#475c6b; line-height:1.6; margin:0 0 24px;">
+                  For security and privacy, the administration portal is restricted to local execution on <strong>127.0.0.1</strong> via <code>python3 scripts/serve.py</code>. It is disabled on public static deployments.
+                </p>
+                <a href="index.html" style="display:inline-block; padding:12px 24px; background:#0d4b6b; color:#fff; text-decoration:none; border-radius:8px; font-weight:600; font-size:15px;">← Return to Public Website</a>
+              </div>
+            </div>
+          `;
+        });
+        throw new Error('Admin portal disabled on public hosts.');
+      }
+    })();
+  </script>
   <title>Admin Portal – Satyaseva Sisters</title>
   <meta name="description" content="Graphical admin interface for managing Satyaseva Sisters communities.">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=3">
+<link rel="stylesheet" href="css/admin.css?v=3">
 </head>
 <body>
 

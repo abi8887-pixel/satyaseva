@@ -4,6 +4,62 @@
    Ocean Blue & Amber palette · Young Serif + Hanken Grotesk
    ================================================================== */
 
+/* ── 0. Self-Hosted Fonts (GDPR Compliant, No External CDN) ──────── */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/hanken-grotesk-latin-300.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/hanken-grotesk-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/hanken-grotesk-latin-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/hanken-grotesk-latin-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/hanken-grotesk-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Young Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/young-serif-latin-regular.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
 /* ── 1. Tokens ──────────────────────────────────────────────────── */
 :root {
   /* Light palette */
@@ -371,29 +427,44 @@ nav.scrolled .bar { min-height: 56px; }
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
-  font-family: var(--font-serif);
-  font-size: clamp(14px, 1.05vw, 17px);
-  font-weight: 400;
+  gap: 10px;
   color: var(--ink);
   white-space: nowrap;
   flex-shrink: 0;
   text-decoration: none;
-  max-width: 15rem;
+  line-height: 1.15;
 }
-.brand svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+.brand svg { width: 22px; height: 22px; color: var(--accent); flex-shrink: 0; }
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+.brand-line-1 {
+  font-family: var(--font-serif);
+  font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.brand-line-2 {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
 
-/* Nav links container */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2px;
-  font-size: 12px;
+  gap: clamp(1px, 0.4vw, 6px);
+  font-size: 11.5px;
   font-weight: 600;
   font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: .04em;
-  flex-shrink: 1;
+  letter-spacing: .03em;
+  flex-shrink: 0;
   margin-left: auto;
 }
 
@@ -405,8 +476,8 @@ nav.main ul { display: flex; gap: 1.1rem; list-style: none; margin: 0; padding: 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0 12px;
+  min-height: 38px;
+  padding: 0 clamp(6px, 0.7vw, 11px);
   border-radius: var(--r-pill);
   text-decoration: none;
   color: var(--ink-soft);
@@ -674,6 +745,68 @@ button.modern-btn-secondary:hover {
   gap: var(--sp-2);
   margin-left: auto;
   flex-shrink: 0;
+}
+
+/* Nav collapse toggle button ('^' / 'v') */
+.nav-collapse-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  padding: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  box-shadow: var(--elev-1);
+  transition: all var(--dur-fast) var(--ease);
+}
+.nav-collapse-btn:hover {
+  background: var(--brand-tint);
+  border-color: var(--brand-border);
+  color: var(--brand);
+  transform: translateY(-1px);
+  box-shadow: var(--elev-2);
+}
+.nav-collapse-btn .collapse-icon {
+  width: 17px;
+  height: 17px;
+  transition: transform 0.3s var(--ease);
+  transform: rotate(180deg); /* Points UP by default (click to collapse up) */
+}
+body > nav.nav-collapsed .nav-collapse-btn .collapse-icon {
+  transform: rotate(0deg); /* Points DOWN when collapsed (click to expand down) */
+}
+
+/* Collapsed nav state */
+body > nav:not(.detail-nav) {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .3s ease;
+}
+body > nav.nav-collapsed {
+  transform: translateY(calc(-100% + 46px));
+  box-shadow: var(--elev-2);
+}
+body > nav.nav-collapsed .nav-pill {
+  min-height: 46px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+body > nav.nav-collapsed .nav-links {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s;
+}
+body > nav.nav-collapsed .brand {
+  opacity: 0.95;
+}
+body > nav:not(.nav-collapsed) .nav-links {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
 }
 
 /* Mobile hamburger */
@@ -1972,7 +2105,8 @@ button.modern-btn-accent:active {
 }
 
 /* ── 31. Responsive — Nav ───────────────────────────────────────── */
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
+  .brand-full { display: none; }
   .nav-pill { justify-content: space-between; gap: var(--sp-3); }
   .nav-toggle { display: flex; }
   .menu-btn { display: inline-block; margin-left: auto; }
@@ -1985,20 +2119,24 @@ button.modern-btn-accent:active {
     inset: 0;
     background: var(--bg);
     align-items: center;
-    justify-content: center;
-    gap: var(--sp-3);
-    font-size: 16px;
+    justify-content: flex-start;
+    gap: var(--sp-2);
+    font-size: 15px;
     z-index: 105;
     overflow-y: auto;
-    padding: 80px 20px 40px;
+    padding: calc(var(--nav-h) + 24px) 24px 48px;
     margin-left: 0;
+    box-shadow: var(--elev-3);
   }
   .nav-links.open { display: flex; }
 
   .nav-links a {
-    padding: 12px 28px;
-    font-size: 16px;
-    font-weight: 700;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    padding: 11px 24px;
+    font-size: 15px;
+    font-weight: 600;
     border-radius: var(--r-pill);
   }
   .nav-links a:hover { background: var(--brand-tint); }
@@ -2044,19 +2182,22 @@ button.modern-btn-accent:active {
 
 @media (max-width: 640px) {
   :root { --nav-h: 60px; }
-  .brand-full { display: none; }
+  .brand-line-1 { font-size: 13.5px; }
+  .brand-line-2 { font-size: 9.5px; }
   .nav-pill { padding: 8px 12px; gap: var(--sp-2); }
-  .brand { font-size: 13.5px; gap: 6px; }
-  .nav-actions { gap: var(--sp-2); margin-left: auto; }
-  .theme-toggle-btn { padding: 6px 9px; font-size: 13px; }
+  .brand { gap: 6px; }
+  .brand svg { width: 18px; height: 18px; }
+  .nav-actions { gap: 6px; margin-left: auto; }
+  .theme-toggle-btn { padding: 0; min-height: 34px; min-width: 34px; font-size: 13px; }
+  .nav-collapse-btn { min-height: 34px; min-width: 34px; width: 34px; height: 34px; }
   #lang-select {
-    padding: 0 24px 0 8px;
+    padding: 0 20px 0 6px;
     font-size: 11px;
     min-height: 34px;
-    background-position: right 6px center;
-    max-width: 88px;
+    background-position: right 4px center;
+    max-width: 78px;
   }
-  .nav-toggle { width: 40px; height: 40px; flex-shrink: 0; }
+  .nav-toggle { width: 36px; height: 36px; flex-shrink: 0; padding: 6px; }
   .team { grid-template-columns: 1fr; }
   .service-grid { grid-template-columns: 1fr; }
   .grid-gallery { grid-template-columns: 1fr; }
@@ -2065,9 +2206,11 @@ button.modern-btn-accent:active {
 }
 
 @media (max-width: 400px) {
-  .brand { font-size: 12px; gap: 4px; }
+  .brand-line-1 { font-size: 12px; }
+  .brand-line-2 { font-size: 9px; }
+  .brand { gap: 4px; }
   .nav-actions { gap: 4px; }
-  #lang-select { max-width: 76px; font-size: 10.5px; }
+  #lang-select { max-width: 70px; font-size: 10px; padding: 0 16px 0 4px; }
 }
 
 /* ── 34. Floating widgets mobile ────────────────────────────────── */

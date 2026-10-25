@@ -11,10 +11,7 @@
   <link rel="canonical" href="https://satyasevasisters.org/media.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=4">
   <style>
     /* ── Media Header ──────────────────────────────────────── */
     .media-hero {
@@ -318,14 +315,22 @@
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
-      <div class="nav-links" id="navLinks">
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="vocations.html">Vocations</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
+        <a href="media.html" class="active" aria-current="page">Media</a>
+        <a href="vocations.html">Vocations</a>
         <a href="prayers.html">Prayers</a>
         <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
@@ -336,6 +341,9 @@
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -355,10 +363,41 @@
     <!-- Section Tabs -->
     <div class="media-tabs reveal reveal-d1" id="media-tabs" role="tablist">
       <button type="button" class="active" data-section="photos" role="tab" aria-selected="true">📷 Photos</button>
+      <button type="button" data-section="album" role="tab" aria-selected="false">📖 Archival Album</button>
       <button type="button" data-section="videos" role="tab" aria-selected="false">🎬 Videos</button>
       <button type="button" data-section="audio" role="tab" aria-selected="false">🎵 Hymns</button>
       <button type="button" data-section="downloads" role="tab" aria-selected="false">📥 Resources</button>
     </div>
+
+    <!-- ════ CANVA ARCHIVAL ALBUM SECTION ════ -->
+    <section class="media-section" id="section-album" role="tabpanel">
+      <div class="media-section-head">
+        <span class="badge-gold">Interactive Presentation</span>
+        <h2>Archival Photo Album — B00K 1</h2>
+        <p>Browse through the historic archival presentation and photographic heritage of the Satyaseva Sisters.</p>
+      </div>
+
+      <div class="gallery-canva-wrap reveal" style="max-width: 820px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px);">
+        <div style="position: relative; width: 100%; height: 0; padding-top: 141.5560%;
+ padding-bottom: 0; box-shadow: var(--elev-3, 0 4px 16px rgba(0,0,0,0.12)); margin-top: 1.2em; margin-bottom: 1.5em; overflow: hidden;
+ border-radius: var(--r-lg, 8px); will-change: transform; background: var(--card, #ffffff); border: 1px solid var(--line, #d3dee6);">
+          <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
+            src="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen" title="Satyaseva Sisters Presentation — B00K 1">
+          </iframe>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 40px;">
+          <a href="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?utm_content=DAHUdPUwuwQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" class="modern-btn-secondary" style="font-size: 13px;">
+            ↗ Open in Canva Fullscreen
+          </a>
+          <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Satyaseva_History.pdf" class="modern-btn-primary" style="font-size: 13px; gap: 8px;">
+            📥 Download Archival Biography (PDF)
+          </a>
+          <button type="button" onclick="window.print()" class="modern-btn-secondary" style="font-size: 13px; gap: 8px;">
+            🖨️ Print / Save as PDF
+          </button>
+        </div>
+      </div>
+    </section>
 
     <!-- ════ PHOTOS SECTION ════ -->
     <section class="media-section active" id="section-photos" role="tabpanel">
@@ -479,6 +518,14 @@
       <div class="downloads-grid">
         <div class="download-card glass-card">
           <div>
+            <strong>Mother Regina Woroniecka — Biography &amp; Spiritual Legacy (PDF)</strong>
+            <span class="dl-sub">Full historical biography by Sr. Iwona Naglik OSU &amp; Sr. Małgorzata Kloza OSU • 1.4 MB</span>
+          </div>
+          <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Biography.pdf" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download PDF</a>
+        </div>
+
+        <div class="download-card glass-card">
+          <div>
             <strong>Family Prayer Booklet (PDF)</strong>
             <span class="dl-sub">Daily prayers and scripture for Catholic homes</span>
           </div>
@@ -513,22 +560,29 @@
 
   </main>
 
-  <footer>
-    <div class="footer-glass">
-      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
+  <footer id="contact">
+    <div class="footer-glass reveal">
+      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
       <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Service to God's Truth since 1976.</p>
+      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="impressum.html">Impressum</a>
       </div>
-      <p class="copyright">&copy; <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families. All rights reserved.</p>
+      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
     </div>
   </footer>
 
@@ -571,11 +625,20 @@
         .then(function(data) {
           var photos = [];
           Object.keys(data).forEach(function(communityId) {
-            var images = data[communityId];
-            if (!Array.isArray(images)) return;
-            images.forEach(function(filename) {
+            var val = data[communityId];
+            var imgList = [];
+            if (Array.isArray(val)) {
+              imgList = val;
+            } else if (val && Array.isArray(val.allImages)) {
+              imgList = val.allImages;
+            } else if (val && Array.isArray(val.gallery)) {
+              imgList = val.gallery;
+            }
+            imgList.forEach(function(imgPath) {
+              if (!imgPath) return;
+              var fullSrc = imgPath.indexOf('/') === 0 || imgPath.indexOf('images/') === 0 ? imgPath : ('images/communities/' + communityId + '/' + imgPath);
               photos.push({
-                src: 'images/communities/' + communityId + '/' + filename,
+                src: fullSrc,
                 community: communityId,
                 label: communityId.replace(/-/g, ' ').replace(/_/g, ' ')
               });

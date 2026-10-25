@@ -11,10 +11,7 @@
   <link rel="canonical" href="https://satyasevasisters.org/donate.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=4">
 
   <style>
     .donate-hero {
@@ -365,18 +362,24 @@
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
       <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
-        <a href="vocations.html">Vocations</a>
         <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
+        <a href="donate.html" class="active" aria-current="page" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
@@ -385,6 +388,9 @@
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -463,42 +469,27 @@
           </div>
         </div>
 
-        <!-- Receipt Request Form -->
+        <!-- Receipt Request Panel -->
         <div class="donate-panel glass-card">
           <h3><span>📜</span> Request Donation Receipt (80G / Confirmation)</h3>
-          <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 20px;">After making a bank transfer or UPI payment, submit your transaction reference below to receive an official receipt.</p>
+          <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 16px;">After making a bank transfer or UPI payment, send an email or WhatsApp to our treasurer sister with your transaction reference to receive an official receipt.</p>
 
-          <form id="receipt-form">
-            <div class="form-row-2">
-              <div class="form-group" style="margin-bottom:18px;">
-                <label for="receipt-name" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Donor Name *</label>
-                <input type="text" id="receipt-name" class="modern-input" required placeholder="Full Name">
-              </div>
-              <div class="form-group" style="margin-bottom:18px;">
-                <label for="receipt-email" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Email Address *</label>
-                <input type="email" id="receipt-email" class="modern-input" required placeholder="name@example.com">
-              </div>
-            </div>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+            <a href="mailto:scs.satyaseva@gmail.com?subject=Donation%20Receipt%20Request&body=Dear%20Treasurer%20Sister,%0A%0AI%20have%20made%20a%20donation%20to%20Satyaseva%20Sisters.%20Here%20are%20my%20details:%0A%0ADonor%20Name:%20%0AAmount:%20%0ATransaction%20UTR/Ref:%20%0APAN%20(optional%20for%2080G):%20%0A" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; padding:12px 18px; font-size:15px; width:100%;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Email Receipt Request to Treasurer
+            </a>
 
-            <div class="form-row-2">
-              <div class="form-group" style="margin-bottom:18px;">
-                <label for="receipt-utr" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Transaction Ref / UTR *</label>
-                <input type="text" id="receipt-utr" class="modern-input" required placeholder="e.g. UTR 429104829102">
-              </div>
-              <div class="form-group" style="margin-bottom:18px;">
-                <label for="receipt-amount" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">Amount Paid *</label>
-                <input type="text" id="receipt-amount" class="modern-input" required placeholder="e.g. ₹2,000 or $100">
-              </div>
-            </div>
-
-            <div class="form-group" style="margin-bottom:20px;">
-              <label for="receipt-pan" style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; color:var(--ink);">PAN / Tax ID (Optional for 80G Tax Exemption)</label>
-              <input type="text" id="receipt-pan" class="modern-input" placeholder="e.g. ABCDE1234F">
-            </div>
-
-            <button type="submit" class="modern-btn-primary" style="width: 100%;">Submit Receipt Request</button>
-            <div id="receipt-msg" role="alert" aria-live="polite"></div>
-          </form>
+            <a href="https://wa.me/919740146329?text=Hello%20Sister,%20I%20have%20made%20a%20donation%20and%20would%20like%20to%20request%20a%20receipt.%20UTR:" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; padding:12px 18px; font-size:15px; width:100%; background:#25D366; border-color:#25D366; color:#ffffff;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.077-1.745-.371-.883-.357-1.472-1.229-1.517-1.29-.044-.061-.363-.483-.363-.92 0-.437.23-.652.312-.741.082-.089.179-.112.239-.112.06 0 .12 0 .172.005.055.006.128-.021.201.155.074.177.255.621.277.666.023.045.038.098.008.158-.03.06-.045.098-.09.15-.045.053-.095.118-.135.158-.046.046-.094.096-.04.188.053.092.237.391.509.633.35.312.645.409.737.455.092.045.145.038.2-.023.053-.061.226-.264.286-.355.06-.091.121-.076.202-.045.082.03 1.205.568 1.413.673.208.106.347.158.398.245.051.086.051.5-.093.905z"/>
+              </svg>
+              Send UTR on WhatsApp (+91 9740146329)
+            </a>
+          </div>
         </div>
       </div>
 
@@ -642,19 +633,20 @@
       <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
       <h3>Satyaseva Catechist Sisters of the Families</h3>
       <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--sage-deep); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
         <a href="map.html">Map</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="media.html">Media</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
         <a href="foundress.html">Our Foundress</a>
         <a href="memorial.html">In Memoriam</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="impressum.html">Impressum</a>
       </div>
@@ -677,47 +669,6 @@
       setTimeout(function() { btn.innerHTML = orig; }, 2000);
     }
 
-    document.getElementById('receipt-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var msg = document.getElementById('receipt-msg');
-      msg.style.display = 'block';
-      msg.style.background = 'var(--sage-tint)';
-      msg.style.color = 'var(--sage-deep)';
-      msg.style.border = '1px solid var(--sage-border)';
-      msg.textContent = 'Submitting receipt request...';
-
-      var payload = {
-        name: document.getElementById('receipt-name').value,
-        email: document.getElementById('receipt-email').value,
-        subject: 'Donation Receipt Request',
-        message: 'Donation Receipt Request Details:\n' +
-                 'Amount: ' + document.getElementById('receipt-amount').value + '\n' +
-                 'UTR/Ref: ' + document.getElementById('receipt-utr').value + '\n' +
-                 'PAN: ' + document.getElementById('receipt-pan').value
-      };
-
-      fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(res) {
-        if (res.success) {
-          msg.textContent = '✅ Receipt request submitted! Our treasurer sister will email your official certificate shortly.';
-          document.getElementById('receipt-form').reset();
-        } else {
-          msg.style.background = 'var(--danger-tint)';
-          msg.style.color = 'var(--danger)';
-          msg.style.border = '1px solid var(--danger)';
-          msg.textContent = '❌ Submission failed: ' + (res.error || 'Please try again');
-        }
-      })
-      .catch(function() {
-        msg.textContent = '✅ Thank you! Receipt request noted. You may also notify us directly at scs.satyaseva@gmail.com.';
-        document.getElementById('receipt-form').reset();
-      });
-    });
   </script>
 </body>
 </html>

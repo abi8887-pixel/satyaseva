@@ -51,6 +51,26 @@
     });
   }
 
+  /* ── Navbar collapse/expand toggle ('^' / 'v') ─────────────────── */
+  var navCollapse = document.getElementById('navCollapse');
+  if (nav && navCollapse) {
+    navCollapse.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isCollapsed = nav.classList.toggle('nav-collapsed');
+      navCollapse.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      navCollapse.setAttribute('title', isCollapsed ? 'Expand navigation' : 'Collapse navigation');
+      try { sessionStorage.setItem('sscs-nav-collapsed', isCollapsed ? '1' : '0'); } catch(err){}
+    });
+    // Restore collapsed preference in session if desired
+    try {
+      if (sessionStorage.getItem('sscs-nav-collapsed') === '1') {
+        nav.classList.add('nav-collapsed');
+        navCollapse.setAttribute('aria-expanded', 'false');
+        navCollapse.setAttribute('title', 'Expand navigation');
+      }
+    } catch(err){}
+  }
+
   /* ── Language switching ───────────────────────────────────────── */
   var langSelect = document.getElementById('lang-select');
   if (langSelect) {

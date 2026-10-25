@@ -75,25 +75,7 @@ git push -u origin main
 
 ---
 
-## 🌐 Method 2: Cloudflare Pages (Fastest Global Edge CDN)
-
-Cloudflare Pages provides world-class speed, automatic SSL, and native support for the security headers defined in [`site/_headers`](sscs/site/_headers).
-
-1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select **Workers & Pages**.
-2. Click **Create Application** ➔ **Pages** ➔ **Connect to Git**.
-3. Select your GitHub repository.
-4. Configure the build settings:
-   - **Framework preset**: `None`
-   - **Build command**: *(leave blank)*
-   - **Build output directory**: `site`
-5. Click **Save and Deploy**. Your site will be live on a fast global edge URL like:
-   ```
-   https://sscs-preview.pages.dev
-   ```
-
----
-
-## ⚡ Method 3: Netlify (Instant Drag-and-Drop or Git)
+## ⚡ Method 2: Netlify (Instant Drag-and-Drop or Git)
 
 If you prefer testing without connecting Git credentials:
 1. Log in to [Netlify.com](https://app.netlify.com/).
@@ -121,25 +103,18 @@ Share the pre-release link with sisters, council members, and beta testers on ac
 
 ---
 
-## 📧 Handling Static Form Submissions in Real-World Testing
+## 📧 Static Form Inquiries (Zero Server, Zero Third-Party SaaS)
 
-On Git static hosts, the local Python backend (`/api/`) is absent. For testing form submissions on live websites without running a dedicated server:
+The public website uses direct `mailto:` links with pre-filled subjects and contact details for:
+- Contact inquiries (`contact.html`)
+- Prayer intentions (`prayers.html`)
+- Vocation discernment (`vocations.html`)
+- Donation receipt requests (`donate.html`)
 
-- **Option A: Formspree (Zero Code)**
-  In `contact.html`, `prayers.html`, and `donate.html`, replace:
-  ```javascript
-  fetch('/api/contact', { ... })
-  ```
-  with your free [Formspree](https://formspree.io/) or [Web3Forms](https://web3forms.com/) endpoint:
-  ```javascript
-  fetch('https://formspree.io/f/YOUR_FORM_ID', { ... })
-  ```
-  Inquiries will immediately forward to the congregation's real inbox.
-
-- **Option B: Full-Stack Cloud Host (Render / Railway / Fly.io)**
-  If you wish to test the live SQLite admin dashboard in the cloud:
-  - Deploy `scripts/serve.py` as a Python web service on [Render.com](https://render.com) (free tier).
-  - Update `activeApiBase` in `site/js/admin.js` to point to your cloud server URL.
+This ensures:
+- 100% privacy with zero third-party form processors.
+- Reliable delivery straight to the Generalate's email (`scs.satyaseva@gmail.com`) and WhatsApp.
+- Complete resilience on static hosts with zero server dependencies.
 
 ---
 

@@ -14,10 +14,7 @@
   <meta property="og:type" content="article">
   <meta property="og:title" content="Mother Regina Woroniecka, Our Foundress">
   <meta property="og:description" content="From a Polish orphan to a missionary among the poor of India.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=5">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Regina Woroniecka","alternateName":"Sister Jolanta","birthDate":"1921-09-12","birthPlace":"Bydgoszcz, Poland","deathDate":"2012-09-23","deathPlace":"Poznan-Pokrzywno, Poland","description":"Founder of the Satyaseva Catechist Sisters of the Families"}
   </script>
@@ -208,26 +205,36 @@
 
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
-      <a href="index.html" class="brand" aria-label="Satyaseva Catechist Sisters - Home">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 1v18M3 6h14"/></svg>
-        <span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
-      <div class="nav-links" id="navLinks">
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="vocations.html">Vocations</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html" class="active" aria-current="page">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
         <a href="prayers.html">Prayers</a>
         <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">&#127769;</button>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
         <select id="lang-select" aria-label="Select language">
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -372,6 +379,7 @@
         <p class="fnd-body">Her spiritual daughters carry on her mission. Today the Satyaseva Sisters serve in dioceses across India &mdash; including Bangalore, Delhi, Agra, Mysore, Varanasi, Bareilly and Assam &mdash; and in Germany and Poland, the homeland of their foundress.</p>
         <div class="row">
           <a class="btn solid" href="communities.html">See where we serve</a>
+          <a class="btn line" href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Biography.pdf">📥 Download Biography (PDF)</a>
           <a class="btn line" href="memorial.html">In memoriam</a>
           <a class="btn line" href="vocations.html">Join us</a>
         </div>
@@ -383,33 +391,29 @@
 
   <div class="border" aria-hidden="true"></div>
 
-  <footer class="site">
-    <div class="wrap">
-      <div class="fgrid">
-        <div>
-          <p><strong>Satyaseva Catechist Sisters of the Families</strong><br>
-          Generalate: No. 1/2, Cookson Road, Richard&rsquo;s Town, Bengaluru 560 005, Karnataka, India<br>
-          Tel: +91 80-25496604 &middot; Mobile: +91 9740146329<br>
-          <a href="mailto:scs.satyaseva@gmail.com">scs.satyaseva@gmail.com</a></p>
-          <p>We are committed to the protection of children and vulnerable people. <a href="privacy.html">Privacy &amp; safeguarding</a></p>
-        </div>
-        <ul aria-label="Site pages">
-          <li><a href="communities.html">Communities</a></li>
-          <li><a href="map.html">Map</a></li>
-          <li><a href="vocations.html">Vocations</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="media.html">Media</a></li>
-          <li><a href="prayers.html">Prayers</a></li>
-          <li><a href="donate.html">Donate</a></li>
-          <li><a href="foundress.html">Our Foundress</a></li>
-          <li><a href="memorial.html">In Memoriam</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="impressum.html">Impressum</a></li>
-        </ul>
+  <footer id="contact">
+    <div class="footer-glass reveal">
+      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
+      <h3>Satyaseva Catechist Sisters of the Families</h3>
+      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
+        <a href="prayers.html">Prayers</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
       </div>
-      <small>&copy; <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</small>
+      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
     </div>
   </footer>
 

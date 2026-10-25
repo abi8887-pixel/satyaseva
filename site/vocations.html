@@ -11,10 +11,7 @@
   <link rel="canonical" href="https://satyasevasisters.org/vocations.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=4">
   <style>
     .voc-hero {
       text-align: center;
@@ -237,14 +234,22 @@
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
       <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="vocations.html" class="active" aria-current="page">Vocations</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html" class="active" aria-current="page">Vocations</a>
         <a href="prayers.html">Prayers</a>
         <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
@@ -255,6 +260,9 @@
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -378,117 +386,28 @@
           <h2>Begin Your Discernment</h2>
           <p class="lead-text">All inquiries are kept strictly confidential. Our Vocation Directress will reach out to you with warm sisterly guidance and prayer.</p>
 
-          <form id="voc-form">
-            <div class="form-row">
-              <div class="voc-form-group">
-                <label for="voc-name">Full Name *</label>
-                <input type="text" id="voc-name" class="modern-input" required placeholder="e.g. Maria Teresa">
-              </div>
-              <div class="voc-form-group">
-                <label for="voc-email">Email Address *</label>
-                <input type="email" id="voc-email" class="modern-input" required placeholder="name@example.com">
-              </div>
-            </div>
+        <div style="display:flex; flex-direction:column; gap:16px; margin:28px 0 20px;">
+          <a href="mailto:scs.satyaseva@gmail.com?subject=Vocations%20Inquiry%20(Confidential)" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Email Vocation Directress (Confidential)
+          </a>
 
-            <div class="form-row-3">
-              <div class="voc-form-group">
-                <label for="voc-age">Age *</label>
-                <input type="number" id="voc-age" class="modern-input" required min="15" max="50" placeholder="e.g. 22">
-              </div>
-              <div class="voc-form-group">
-                <label for="voc-location">City / Country *</label>
-                <input type="text" id="voc-location" class="modern-input" required placeholder="e.g. Bangalore, India">
-              </div>
-              <div class="voc-form-group">
-                <label for="voc-edu">Highest Education</label>
-                <input type="text" id="voc-edu" class="modern-input" placeholder="e.g. Graduate, B.A.">
-              </div>
-            </div>
-
-            <div class="voc-form-group">
-              <label for="voc-message">Share a little about your faith journey &amp; questions *</label>
-              <textarea id="voc-message" class="modern-textarea" rows="5" required placeholder="Tell us how you feel drawn to religious life and serving families..."></textarea>
-            </div>
-
-            <button type="submit" class="modern-btn-primary" style="width: 100%;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-              Send Confidential Inquiry
-            </button>
-            <div id="voc-msg" role="alert" aria-live="polite"></div>
-          </form>
+          <a href="https://wa.me/919740146329?text=Hello%20Sister,%20I%20would%20like%20to%20know%20more%20about%20joining%20Satyaseva%20Sisters" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px; background:#25D366; border-color:#25D366; color:#ffffff;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.077-1.745-.371-.883-.357-1.472-1.229-1.517-1.29-.044-.061-.363-.483-.363-.92 0-.437.23-.652.312-.741.082-.089.179-.112.239-.112.06 0 .12 0 .172.005.055.006.128-.021.201.155.074.177.255.621.277.666.023.045.038.098.008.158-.03.06-.045.098-.09.15-.045.053-.095.118-.135.158-.046.046-.094.096-.04.188.053.092.237.391.509.633.35.312.645.409.737.455.092.045.145.038.2-.023.053-.061.226-.264.286-.355.06-.091.121-.076.202-.045.082.03 1.205.568 1.413.673.208.106.347.158.398.245.051.086.051.5-.093.905z"/>
+            </svg>
+            Connect via WhatsApp (+91 9740146329)
+          </a>
         </div>
+        <p style="margin-top:16px; font-size:14px; color:var(--ink-soft); text-align:center;">
+          Our directress answers all inquiries personally with warm guidance and discretion.
+        </p>
       </div>
-    </section>
-  </main>
-
-  <!-- Standard Uniform Footer -->
-  <footer id="contact">
-    <div class="footer-glass reveal">
-      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="media.html">Media</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
     </div>
-  </footer>
-
-  <script src="js/main.js" defer></script>
-  <script>
-    document.getElementById('voc-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var msg = document.getElementById('voc-msg');
-      msg.style.display = 'block';
-      msg.className = '';
-      msg.textContent = 'Sending your inquiry to our Vocation Directress...';
-
-      var payload = {
-        name: document.getElementById('voc-name').value,
-        email: document.getElementById('voc-email').value,
-        subject: 'Vocation Inquiry',
-        message: 'Vocation Inquiry Details:\nAge: ' + document.getElementById('voc-age').value +
-                 '\nLocation: ' + document.getElementById('voc-location').value +
-                 '\nEducation: ' + document.getElementById('voc-edu').value +
-                 '\n\nSpiritual Message:\n' + document.getElementById('voc-message').value
-      };
-
-      fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(res) {
-        if (res.success) {
-          msg.className = 'msg-success';
-          msg.textContent = '✅ Thank you! Your vocation inquiry has been received. Our Sister Vocation Directress will respond personally soon.';
-          document.getElementById('voc-form').reset();
-        } else {
-          msg.className = 'msg-error';
-          msg.textContent = '❌ Submission error: ' + (res.error || 'Please try again');
-        }
-      })
-      .catch(function() {
-        // Graceful fallback for static hosting
-        msg.className = 'msg-success';
-        msg.textContent = '✅ Thank you! Your vocation inquiry has been noted. Please also feel free to reach out directly at scs.satyaseva@gmail.com.';
-        document.getElementById('voc-form').reset();
-      });
-    });
-  </script>
+  </section>
+</main>
 </body>
 </html>

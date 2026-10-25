@@ -10,10 +10,7 @@
   <meta name="description" content="Submit a prayer intention. The Satyaseva Catechist Sisters of the Families will include your request in our daily community prayers and Eucharistic Adoration.">
   <link rel="canonical" href="https://satyasevasisters.org/prayers.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=4">
   <style>
     .prayer-hero {
       text-align: center;
@@ -188,14 +185,22 @@
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
-      <div class="nav-links" id="navLinks">
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="vocations.html">Vocations</a>
+        <a href="map.html">Map</a>
+        <a href="foundress.html">Our Foundress</a>
+        <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
+        <a href="media.html">Media</a>
+        <a href="vocations.html">Vocations</a>
         <a href="prayers.html" class="active" aria-current="page">Prayers</a>
         <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
@@ -206,6 +211,9 @@
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -221,130 +229,51 @@
     </header>
 
     <div class="prayer-container">
-      <!-- Submission Form -->
+      <!-- Submission Card -->
       <div class="prayer-form-card glass-card reveal reveal-d1">
-        <h2>Your Intention</h2>
-        <p class="form-sub">Please share your prayer request below. You may remain anonymous.</p>
-        
-        <form id="prayer-form">
-          <div class="form-group">
-            <label for="name">Name (Optional)</label>
-            <input type="text" id="name" name="name" class="modern-input" placeholder="Leave blank to remain anonymous">
-          </div>
-          <div class="form-group">
-            <label for="intention">Prayer Request *</label>
-            <textarea id="intention" name="intention" class="modern-textarea" rows="6" required placeholder="Please pray for our family, health, healing, or special grace..."></textarea>
-          </div>
-          <!-- Anti-spam honeypot -->
-          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-          
-          <button type="submit" class="modern-btn-primary" id="submit-btn" style="width: 100%;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg>
-            Submit Prayer Request
-          </button>
-        </form>
-        <div id="form-status" role="alert" aria-live="polite"></div>
+        <h2>Submit Your Prayer Intention</h2>
+        <p class="form-sub">Our sisters hold every prayer request in solemn remembrance during our daily Holy Mass, Rosary, and Adoration.</p>
+
+        <div style="display:flex; flex-direction:column; gap:16px; margin:28px 0 20px;">
+          <a href="mailto:scs.satyaseva@gmail.com?subject=Prayer%20Request" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg>
+            Email Your Prayer Request
+          </a>
+
+          <a href="https://wa.me/919740146329?text=Dear%20Sisters,%20please%20pray%20for%20my%20intention:" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px; background:#25D366; border-color:#25D366; color:#ffffff;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.077-1.745-.371-.883-.357-1.472-1.229-1.517-1.29-.044-.061-.363-.483-.363-.92 0-.437.23-.652.312-.741.082-.089.179-.112.239-.112.06 0 .12 0 .172.005.055.006.128-.021.201.155.074.177.255.621.277.666.023.045.038.098.008.158-.03.06-.045.098-.09.15-.045.053-.095.118-.135.158-.046.046-.094.096-.04.188.053.092.237.391.509.633.35.312.645.409.737.455.092.045.145.038.2-.023.053-.061.226-.264.286-.355.06-.091.121-.076.202-.045.082.03 1.205.568 1.413.673.208.106.347.158.398.245.051.086.051.5-.093.905z"/>
+            </svg>
+            Send Prayer Request via WhatsApp
+          </a>
+        </div>
+
+        <p style="margin-top:16px; font-size:14px; color:var(--ink-soft); text-align:center;">
+          Intentions are treated with strict pastoral confidentiality.
+        </p>
       </div>
 
       <!-- Community Prayer Wall -->
       <div class="prayer-wall-card glass-card reveal reveal-d2">
-        <h2>🙏 Community Prayer Wall</h2>
-        <p class="prayer-wall-sub">Join us in lifting up these intentions from our global community.</p>
-        <div class="prayer-list" id="prayer-list">
-          <div class="empty-wall">Loading intentions...</div>
+        <h2>🙏 Community In Prayer</h2>
+        <p class="prayer-wall-sub">Across our 32 convent stations in India, Germany, and Poland, the Satyaseva Catechist Sisters unite every evening to pray for:</p>
+        <div style="display:flex; flex-direction:column; gap:14px; margin-top:20px;">
+          <div class="prayer-item">
+            <p>"For all families undergoing spiritual trials, sickness, or separation — that Christ may heal their hearts and restore peace."</p>
+            <div class="prayer-meta">— Generalate Community Prayer</div>
+          </div>
+          <div class="prayer-item">
+            <p>"For children, youth, and catechists receiving the Holy Sacraments in rural parish missions."</p>
+            <div class="prayer-meta">— Mission Convents Intention</div>
+          </div>
+          <div class="prayer-item">
+            <p>"For vocations to the religious life and generous hearts willing to serve God's truth."</p>
+            <div class="prayer-meta">— Novitiate House, Bengaluru</div>
+          </div>
         </div>
       </div>
     </div>
   </main>
-
-  <footer>
-    <div class="footer-glass">
-      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Service to God's Truth since 1976.</p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Handle form submission
-    document.getElementById('prayer-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      if (this._gotcha.value) return;
-
-      const btn = document.getElementById('submit-btn');
-      const statusDiv = document.getElementById('form-status');
-      
-      btn.disabled = true;
-      btn.innerHTML = 'Submitting...';
-      
-      const payload = {
-        name: document.getElementById('name').value,
-        intention: document.getElementById('intention').value
-      };
-
-      fetch('/api/prayers', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(data => {
-        statusDiv.style.display = 'block';
-        if (data.success) {
-          statusDiv.className = 'status-success';
-          statusDiv.textContent = 'Your intention has been submitted successfully and will be prayed for by our sisters.';
-          this.reset();
-        } else {
-          statusDiv.className = 'status-error';
-          statusDiv.textContent = data.error || 'Something went wrong. Please try again later.';
-        }
-      })
-      .catch(err => {
-        statusDiv.style.display = 'block';
-        statusDiv.className = 'status-success';
-        statusDiv.innerHTML = 'Thank you! Your prayer intention has been received and will be remembered in our daily community prayers. You may also email intentions to <a href="mailto:scs.satyaseva@gmail.com" style="text-decoration:underline;font-weight:700;color:inherit;">scs.satyaseva@gmail.com</a>.';
-        this.reset();
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg> Submit Prayer Request';
-      });
-    });
-
-    // Load approved prayer requests for the wall
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('/api/prayers?status=approved')
-        .then(r => r.json())
-        .then(prayers => {
-          const container = document.getElementById('prayer-list');
-          if (!Array.isArray(prayers) || prayers.length === 0) {
-            container.innerHTML = '<div class="empty-wall">No public intentions currently posted. Be the first to share one.</div>';
-            return;
-          }
-          let html = '';
-          prayers.forEach(p => {
-            const safeIntention = p.intention.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            const safeName = p.name ? p.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Anonymous';
-            html += `
-              <div class="prayer-item">
-                <p>"${safeIntention}"</p>
-                <div class="prayer-meta">— ${safeName}</div>
-              </div>
-            `;
-          });
-          container.innerHTML = html;
-        })
-        .catch(err => {
-          document.getElementById('prayer-list').innerHTML = '<div class="empty-wall">Daily intentions held in prayer by the Sisters.</div>';
-        });
-    });
-  </script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

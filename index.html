@@ -61,25 +61,35 @@
   <nav id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-pill">
       <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
+        <span class="brand-text">
+          <span class="brand-line-1">Satyaseva Sisters</span>
+          <span class="brand-line-2">SCS &bull; Est. 1976</span>
+        </span>
       </a>
-      <div class="nav-links" id="navLinks">
-        <a href="#main-content" aria-current="page" class="active">Home</a>
+      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
+        <a href="index.html" class="active" aria-current="page">Home</a>
         <a href="site/communities.html">Communities</a>
-        <a href="site/vocations.html">Vocations</a>
+        <a href="site/map.html">Map</a>
+        <a href="site/foundress.html">Our Foundress</a>
+        <a href="site/memorial.html">In Memoriam</a>
         <a href="site/events.html">Events</a>
         <a href="site/news.html">News</a>
+        <a href="site/media.html">Media</a>
+        <a href="site/vocations.html">Vocations</a>
         <a href="site/prayers.html">Prayers</a>
         <a href="site/donate.html" class="nav-donate">Donate</a>
         <a href="site/contact.html">Contact</a>
       </div>
-      <!-- Right actions: theme toggle, language selector & hamburger toggle -->
       <div class="nav-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
         <select id="lang-select" aria-label="Select language">
           <option value="en" selected>English</option>
           <option value="pl">Polski</option>
         </select>
+        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -209,8 +219,16 @@
           src="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen" title="Satyaseva Sisters Presentation — B00K 1">
         </iframe>
       </div>
-      <div style="text-align: center; margin-top: 12px; font-size: 14px; color: var(--ink-soft);">
-        <a href="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?utm_content=DAHUdPUwuwQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="color: var(--brand-ink); font-weight: 600; text-decoration: underline;">B00K 1</a> by satyasevasisters
+      <div style="display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; font-size: 14px;">
+        <a href="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?utm_content=DAHUdPUwuwQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" class="modern-btn-secondary" style="font-size: 13px; text-decoration: none;">
+          ↗ Open in Canva Fullscreen
+        </a>
+        <a href="site/images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Archival_History.pdf" class="modern-btn-primary" style="font-size: 13px; gap: 6px; text-decoration: none;">
+          📥 Download Archival Album (PDF)
+        </a>
+        <button type="button" onclick="window.print()" class="modern-btn-secondary" style="font-size: 13px; cursor: pointer;">
+          🖨️ Print / Save as PDF
+        </button>
       </div>
     </div>
   </section>
@@ -225,7 +243,7 @@
       </div>
       <div class="reveal reveal-d1">
         <div class="eyebrow">Leadership</div>
-        <h3 style="font-family:var(--font-sans); font-size:20px; font-weight:700; margin-bottom:4px; color:var(--brand);">Sr. Theyamma Kochuplathottam, SCS</h3>
+        <h3 style="font-family:var(--font-sans); font-size:20px; font-weight:700; margin-bottom:4px; color:var(--brand);">Sr. Ruth SCS</h3>
         <p style="color:var(--ink-faint); font-size:13px; margin-bottom:20px;">Superior General · Generalate, Bengaluru</p>
         <div class="values">
           <div class="value"><h3>✝ Catechesis</h3><p>Family-centred faith formation through home visits and biblical prayer.</p></div>
@@ -362,17 +380,18 @@
       <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
       Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
       <div class="footer-links">
-        <a href="#story">Our Story</a>
-        <a href="#mission">Vision &amp; Mission</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#ministries">Ministries</a>
-        <a href="#prayers">Prayers</a>
+        <a href="index.html">Home</a>
         <a href="site/communities.html">Communities</a>
-        <a href="site/events.html">Events</a>
-        <a href="site/news.html">News</a>
-        <a href="site/contact.html">Contact</a>
+        <a href="site/map.html">Map</a>
         <a href="site/foundress.html">Our Foundress</a>
         <a href="site/memorial.html">In Memoriam</a>
+        <a href="site/events.html">Events</a>
+        <a href="site/news.html">News</a>
+        <a href="site/media.html">Media</a>
+        <a href="site/vocations.html">Vocations</a>
+        <a href="site/prayers.html">Prayers</a>
+        <a href="site/donate.html">Donate</a>
+        <a href="site/contact.html">Contact</a>
         <a href="site/privacy.html">Privacy Policy</a>
         <a href="site/impressum.html">Impressum</a>
       </div>

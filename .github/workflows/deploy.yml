@@ -27,11 +27,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -40,6 +35,9 @@ jobs:
       - name: Synchronize Data & Compile Fallbacks
         run: |
           python3 scripts/sync_images.py || true
+          if [ -f scripts/stamp.py ]; then
+            python3 scripts/stamp.py || true
+          fi
           python3 -c "
           import json, os
           if os.path.exists('site/data/communities.json') and os.path.exists('site/data/memorial.json'):
@@ -65,6 +63,18 @@ jobs:
           rm -rf scripts/data/backups
           rm -f scripts/data/*.db
           rm -f scripts/data/.admin_hash
+
+      - name: Block sensitive files from deploy
+        run: |
+          FOUND=$(find site/ -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' \
+                             -o -name '.admin_hash' -o -name '*.bak' \
+                             -o -path '*/backups/*' | head -20)
+          if [ -n "$FOUND" ]; then
+            echo "❌ DEPLOY BLOCKED — sensitive files found in site/:"
+            echo "$FOUND"
+            exit 1
+          fi
+          echo "✅ No sensitive files found in deploy payload"
 
       - name: Upload Static Site Artifact
         uses: actions/upload-pages-artifact@v3
