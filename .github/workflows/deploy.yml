@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - v1
   workflow_dispatch:
 
 permissions:
@@ -25,6 +26,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -55,11 +61,15 @@ jobs:
         run: |
           rm -rf site/data/backups
           rm -f site/data/*.db
+          rm -f *.db
+          rm -rf scripts/data/backups
+          rm -f scripts/data/*.db
+          rm -f scripts/data/.admin_hash
 
       - name: Upload Static Site Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'site'
+          path: '.'
 
       - name: Deploy to GitHub Pages
         id: deployment

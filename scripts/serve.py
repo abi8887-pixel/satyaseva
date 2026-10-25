@@ -380,6 +380,24 @@ class SistersHTTPRequestHandler(SimpleHTTPRequestHandler):
             if path.endswith('.db') or '/backups/' in path:
                 self.send_error(403, 'Forbidden')
                 return
+
+            # Serve root index.html when requesting / or /index.html
+            if path in ('/', '/index.html'):
+                root_index = os.path.join(os.path.dirname(site_dir), 'index.html')
+                if os.path.exists(root_index):
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html; charset=utf-8')
+                    with open(root_index, 'rb') as f:
+                        content = f.read()
+                    self.send_header('Content-Length', str(len(content)))
+                    self.end_headers()
+                    self.wfile.write(content)
+                    return
+
+            # Strip /site prefix so SimpleHTTPRequestHandler serves seamlessly from site_dir
+            if self.path.startswith('/site/'):
+                self.path = self.path[5:]
+
             super().do_GET()
 
     def do_POST(self):
