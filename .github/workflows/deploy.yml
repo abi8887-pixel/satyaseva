@@ -61,11 +61,15 @@ jobs:
         run: |
           rm -rf site/data/backups
           rm -f site/data/*.db
+          rm -f *.db
+          rm -rf scripts/data/backups
+          rm -f scripts/data/*.db
+          rm -f scripts/data/.admin_hash
 
       - name: Upload Static Site Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'site'
+          path: '.'
 
       - name: Deploy to GitHub Pages
         id: deployment
