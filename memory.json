@@ -1,0 +1,1251 @@
+{
+  "meta": {
+    "project_name": {
+      "value": "Satyaseva Catechist Sisters of the Families (SSCS) Web & Archive Portal",
+      "description": "Official repository title"
+    },
+    "version": {
+      "value": "3.8.0-production-ready",
+      "description": "Current architecture state"
+    },
+    "congregation_founded": {
+      "value": "1976",
+      "description": "Diocese of Mysore, Karnataka, India by Mother Regina Woroniecka"
+    },
+    "nature": {
+      "value": "Independent research archive, community directory, & administrative portal",
+      "description": "Domain scope"
+    },
+    "generated_at": {
+      "value": "2026-10-25T05:01:15.700997",
+      "description": "Database compile timestamp"
+    },
+    "architecture_pattern": {
+      "value": "JAMstack GitOps Static Edge + Optional Python Cloud Run Backend Container",
+      "description": "Core architecture"
+    },
+    "data_paradigm": {
+      "value": "Triple-Redundant Cascade (API -> Static JSON -> Inline JS Fallback)",
+      "description": "Client data fetching model"
+    }
+  },
+  "design_system": [
+    {
+      "token_id": "color_brand",
+      "category": "color",
+      "name": "--brand",
+      "light_value": "#0d4b6b (Ocean Blue)",
+      "dark_value": "#1f7aa5 (Vibrant Ocean)",
+      "usage": "Primary brand identity, headers, main badges, active icons"
+    },
+    {
+      "token_id": "color_brand_deep",
+      "category": "color",
+      "name": "--brand-deep",
+      "light_value": "#083649 (Deep Navy)",
+      "dark_value": "#0d4b6b (Ocean)",
+      "usage": "Header hover states, footer branding, deep accents"
+    },
+    {
+      "token_id": "color_brand_tint",
+      "category": "color",
+      "name": "--brand-tint",
+      "light_value": "#e1eef6 (Pale Ocean Tint)",
+      "dark_value": "#0d2535 (Dark Ocean Tint)",
+      "usage": "Active chip backgrounds, light callout boxes"
+    },
+    {
+      "token_id": "color_accent",
+      "category": "color",
+      "name": "--accent",
+      "light_value": "#e8833a (Warm Amber)",
+      "dark_value": "#f09a5c (Bright Amber)",
+      "usage": "Call-to-action buttons, jubilee tags, warm focal highlights"
+    },
+    {
+      "token_id": "color_accent_deep",
+      "category": "color",
+      "name": "--accent-deep",
+      "light_value": "#c96820 (Rust Amber)",
+      "dark_value": "#e8833a (Amber)",
+      "usage": "Hover state for buttons, active tabs"
+    },
+    {
+      "token_id": "color_bg",
+      "category": "color",
+      "name": "--bg",
+      "light_value": "#f2f6f9 (Cool Slate White)",
+      "dark_value": "#0b1822 (Deep Midnight)",
+      "usage": "Base page body background"
+    },
+    {
+      "token_id": "color_surface",
+      "category": "color",
+      "name": "--surface",
+      "light_value": "#ffffff (Pure White)",
+      "dark_value": "#122431 (Slate Charcoal)",
+      "usage": "Card surfaces, dropdowns, navigation pills"
+    },
+    {
+      "token_id": "color_surface_alt",
+      "category": "color",
+      "name": "--surface-alt",
+      "light_value": "#eaf1f7 (Soft Gray-Blue)",
+      "dark_value": "#1a2f3e (Medium Slate)",
+      "usage": "Section dividers, newsletter background, table headers"
+    },
+    {
+      "token_id": "color_ink",
+      "category": "color",
+      "name": "--ink",
+      "light_value": "#0f2433 (Dark Ocean Ink)",
+      "dark_value": "#e8f1f7 (Soft Ice White)",
+      "usage": "Primary readable text, headings"
+    },
+    {
+      "token_id": "color_ink_soft",
+      "category": "color",
+      "name": "--ink-soft",
+      "light_value": "#475c6b (Muted Slate)",
+      "dark_value": "#a3b8c6 (Muted Ice)",
+      "usage": "Secondary body text, descriptions, captions"
+    },
+    {
+      "token_id": "color_line",
+      "category": "color",
+      "name": "--line",
+      "light_value": "#d3dee6 (Border Slate)",
+      "dark_value": "#1a4a63 (Subtle Dark Border)",
+      "usage": "Card borders, separators, subtle dividers"
+    },
+    {
+      "token_id": "font_display",
+      "category": "typography",
+      "name": "--font-serif",
+      "light_value": "\"Young Serif\", Georgia, \"Times New Roman\", serif",
+      "dark_value": "Same in dark",
+      "usage": "Editorial hero headlines, section headers, h1-h3 titles"
+    },
+    {
+      "token_id": "font_body",
+      "category": "typography",
+      "name": "--font-sans",
+      "light_value": "\"Hanken Grotesk\", system-ui, -apple-system, sans-serif",
+      "dark_value": "Same in dark",
+      "usage": "All UI elements, body copy, navigation, tables, forms"
+    },
+    {
+      "token_id": "elev_1",
+      "category": "elevation",
+      "name": "--elev-1",
+      "light_value": "0 1px 3px rgba(13,75,107,.07), 0 1px 2px rgba(13,75,107,.05)",
+      "dark_value": "Darker shadow",
+      "usage": "Subtle cards, filter chips, buttons"
+    },
+    {
+      "token_id": "elev_2",
+      "category": "elevation",
+      "name": "--elev-2",
+      "light_value": "0 4px 12px rgba(13,75,107,.10), 0 2px 4px rgba(13,75,107,.06)",
+      "dark_value": "Darker shadow",
+      "usage": "Interactive hover lifts, dropdown menus"
+    },
+    {
+      "token_id": "elev_3",
+      "category": "elevation",
+      "name": "--elev-3",
+      "light_value": "0 12px 28px rgba(13,75,107,.16), 0 4px 8px rgba(13,75,107,.08)",
+      "dark_value": "Darker shadow",
+      "usage": "Floating modals, image lightboxes, hero embeds"
+    },
+    {
+      "token_id": "container_max",
+      "category": "layout",
+      "name": "--container",
+      "light_value": "1120px",
+      "dark_value": "1120px",
+      "usage": "Main content container maximum width"
+    },
+    {
+      "token_id": "nav_height",
+      "category": "layout",
+      "name": "--nav-h",
+      "light_value": "68px",
+      "dark_value": "68px",
+      "usage": "Fixed top navigation bar height"
+    },
+    {
+      "token_id": "theme_engine",
+      "category": "philosophy",
+      "name": "Dynamic Theme Toggle",
+      "light_value": "localStorage + system preference IIFE",
+      "dark_value": "attribute data-theme=\"dark|light\"",
+      "usage": "Flash-free theme switcher via inline script in <head>"
+    },
+    {
+      "token_id": "zero_dep_ethos",
+      "category": "philosophy",
+      "name": "Zero Dependency Core",
+      "light_value": "Vanilla HTML5 / Modern CSS / Pure JS",
+      "dark_value": "No npm / No Webpack build step needed",
+      "usage": "Fast, secure, unhackable, permanent archival resilience"
+    }
+  ],
+  "structure_pages": [
+    {
+      "filename": "site/index.html",
+      "title": "Home / Welcome Portal",
+      "category": "public",
+      "purpose": "Landing portal with hero lede, dynamic impact counters, chronological story chapters, charism, ministries overview, prayer intentions, newsletter, and WhatsApp widget",
+      "key_components": [
+        "Hero with SVG cross",
+        "Animated Impact Stats",
+        "Chronological Story Chapters",
+        "Canva Book Embed",
+        "Prayer & Offerings Grid",
+        "Floating WhatsApp Widget",
+        "Back to Top Button"
+      ],
+      "data_dependencies": [
+        "/api/newsletter",
+        "js/main.js",
+        "js/gallery.js"
+      ],
+      "scripts": [
+        "js/main.js",
+        "js/gallery.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/communities.html",
+      "title": "Community Stations Directory",
+      "category": "archival",
+      "purpose": "Full filterable grid of all 32+ convent houses and mission stations across India, Germany, and Poland with live photo badges",
+      "key_components": [
+        "Search Bar",
+        "Country Filter Chips",
+        "Community Card Grid",
+        "Symbolic Fallback Badges",
+        "Pagination / Empty State"
+      ],
+      "data_dependencies": [
+        "data/communities.json",
+        "data/community-images.json",
+        "data/communities-data.js",
+        "/api/communities"
+      ],
+      "scripts": [
+        "js/main.js",
+        "data/communities-data.js",
+        "js/communities-grid.js"
+      ],
+      "styles": [
+        "css/style.css",
+        "css/communities.css"
+      ]
+    },
+    {
+      "filename": "site/community.html",
+      "title": "Community Detail Profile",
+      "category": "archival",
+      "purpose": "Archival dossier for a single community station with hero photo banner, sisters list, apostolates, photo gallery with pan-zoom lightbox, and interactive upload form",
+      "key_components": [
+        "Editorial Brutalist Hero",
+        "Inline Station Switcher",
+        "Tabbed Apostolates",
+        "Sisters & Roles Grid",
+        "Gallery with Lightbox Pan/Zoom",
+        "Sister Direct Contribution Upload Modal"
+      ],
+      "data_dependencies": [
+        "data/communities.json",
+        "data/community-images.json",
+        "data/communities-data.js",
+        "/api/communities",
+        "/api/station-uploads"
+      ],
+      "scripts": [
+        "js/main.js",
+        "data/communities-data.js",
+        "js/community-detail.js"
+      ],
+      "styles": [
+        "css/style.css",
+        "css/community.css"
+      ]
+    },
+    {
+      "filename": "site/map.html",
+      "title": "Interactive Geographic Map",
+      "category": "interactive",
+      "purpose": "Global interactive Leaflet map marking all convent houses, mission stations, and apostolates across India, Germany, and Poland",
+      "key_components": [
+        "Leaflet JS Map Container",
+        "Country Filter Chips",
+        "Custom Ocean Blue Pin Markers",
+        "Rich Popups with Photo & Link",
+        "Station Selector Sidebar"
+      ],
+      "data_dependencies": [
+        "data/communities.json",
+        "data/community-images.json",
+        "Leaflet CDN CSS/JS",
+        "OpenStreetMap / CartoDB tiles"
+      ],
+      "scripts": [
+        "js/main.js",
+        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      ],
+      "styles": [
+        "css/style.css",
+        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      ]
+    },
+    {
+      "filename": "site/memorial.html",
+      "title": "In Memoriam / Eternal Rest",
+      "category": "archival",
+      "purpose": "Reverent memorial archive honoring deceased sisters with death anniversary sorting, search, timeline filter, and biography modals",
+      "key_components": [
+        "Memorial Search",
+        "Century/Decade Filters",
+        "Photo Remembrance Cards",
+        "Sister Biography Modal",
+        "Burial Place & Quote Badges"
+      ],
+      "data_dependencies": [
+        "data/memorial.json",
+        "data/communities-data.js",
+        "/api/memorial"
+      ],
+      "scripts": [
+        "js/main.js",
+        "data/communities-data.js",
+        "js/memorial.js"
+      ],
+      "styles": [
+        "css/style.css",
+        "css/memorial.css"
+      ]
+    },
+    {
+      "filename": "site/foundress.html",
+      "title": "Mother Regina Woroniecka",
+      "category": "archival",
+      "purpose": "Comprehensive biographical archive of foundress Mother Regina (Sr. Jolanta) Woroniecka, Ursuline missionary, her charism and spirituality",
+      "key_components": [
+        "Archival Photo Gallery",
+        "Chronological Life Milestones",
+        "Spiritual Quotes",
+        "Historical Sources Accordion"
+      ],
+      "data_dependencies": [
+        "images/Mother_Regina_*.png",
+        "images/mother-*.jpg"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css",
+        "css/foundress.css"
+      ]
+    },
+    {
+      "filename": "site/news.html",
+      "title": "News & Announcements",
+      "category": "public",
+      "purpose": "Congregation announcements, feast day photos, pastoral letters, and jubilee bulletins with date badges and search",
+      "key_components": [
+        "News Article Cards",
+        "Date & Author Badges",
+        "Filter by Year",
+        "Article Detail Modal"
+      ],
+      "data_dependencies": [
+        "data/news.json",
+        "/api/news"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/events.html",
+      "title": "Calendar & Feast Days",
+      "category": "public",
+      "purpose": "Calendar of upcoming feast days, foundation anniversaries, retreats, and jubilees with countdowns and location markers",
+      "key_components": [
+        "Upcoming Events Timeline",
+        "Event Category Chips",
+        "Add to Calendar links",
+        "Location Badges"
+      ],
+      "data_dependencies": [
+        "data/events.json",
+        "/api/events"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/media.html",
+      "title": "Media & Publications",
+      "category": "archival",
+      "purpose": "Multimedia portal containing video reflections, audio hymns, Canva interactive booklets, and downloadable brochures",
+      "key_components": [
+        "Video Showcase",
+        "Canva Booklets Player",
+        "Photo Archive Grid",
+        "Document Downloads"
+      ],
+      "data_dependencies": [
+        "Canva Embed API",
+        "Local media assets"
+      ],
+      "scripts": [
+        "js/main.js",
+        "js/gallery.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/vocations.html",
+      "title": "Vocations & Formation",
+      "category": "public",
+      "purpose": "Guide for young women discerning religious life: stages of formation (Aspirancy, Postulancy, Novitiate, Juniorate, Final Vows), FAQ, and contact form",
+      "key_components": [
+        "Formation Stages Timeline",
+        "Sister Testimony Cards",
+        "Discernment FAQ Accordion",
+        "Direct Inquiry Form"
+      ],
+      "data_dependencies": [
+        "/api/contact"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/prayers.html",
+      "title": "Prayer Wall & Daily Office",
+      "category": "interactive",
+      "purpose": "Congregation prayers, Rosary intentions, and an interactive Prayer Request Wall where visitors can submit intentions",
+      "key_components": [
+        "Prayer Intention Form",
+        "Public Prayer Wall Grid",
+        "Daily Prayers Audio/Text",
+        "Sisters Daily Offering"
+      ],
+      "data_dependencies": [
+        "/api/prayers"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/donate.html",
+      "title": "Support & Foster Care Giving",
+      "category": "public",
+      "purpose": "Support mission apostolates: foster care for orphaned children, evening schools, medical aid, bank account details for India & overseas FCRA",
+      "key_components": [
+        "Apostolate Sponsorship Cards",
+        "Indian Banking NEFT/RTGS Info",
+        "Overseas FCRA Account Info",
+        "Tax Exemption Details"
+      ],
+      "data_dependencies": [
+        "static"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/contact.html",
+      "title": "Generalate Directory & Inquiries",
+      "category": "public",
+      "purpose": "Official communication channel with interactive message submission form, phone numbers, Generalate address, and Google Map link",
+      "key_components": [
+        "Interactive Contact Form",
+        "Generalate Postal Details",
+        "Direct Phone & Email Links",
+        "Office Hours"
+      ],
+      "data_dependencies": [
+        "/api/contact"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/admin.html",
+      "title": "Administrative Master Dashboard",
+      "category": "admin",
+      "purpose": "Comprehensive administrative control room for managing stations, sisters, uploads, photo galleries, memorial records, events, news, audit logs, and backups",
+      "key_components": [
+        "Secure Login Modal",
+        "Station CRUD Table",
+        "Multi-Photo Drag & Drop Uploader",
+        "Memorial Editor",
+        "Audit Trail with One-Click Revert",
+        "Database Status & JSON Re-Sync Tool"
+      ],
+      "data_dependencies": [
+        "/api/auth/login",
+        "/api/communities",
+        "/api/memorial",
+        "/api/events",
+        "/api/news",
+        "/api/response-log",
+        "/api/db/sync",
+        "/api/db/status"
+      ],
+      "scripts": [
+        "js/admin.js"
+      ],
+      "styles": [
+        "css/style.css",
+        "css/admin.css"
+      ]
+    },
+    {
+      "filename": "site/privacy.html",
+      "title": "Privacy Policy & Zero Tracker Notice",
+      "category": "legal",
+      "purpose": "Strict privacy pledge explaining zero third-party trackers, zero cookies, no analytics scripts, and GDPR compliance",
+      "key_components": [
+        "Data Handling Explainer",
+        "Rights Notice",
+        "Contact DPO"
+      ],
+      "data_dependencies": [
+        "static"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/impressum.html",
+      "title": "Impressum & Ecclesiastical Attribution",
+      "category": "legal",
+      "purpose": "Legal ownership statement, canonical affiliation, ecclesiastical research archive disclaimers, and copyright notices",
+      "key_components": [
+        "Diocesan Affiliation",
+        "Copyright Notice",
+        "Archival Sources Attribution"
+      ],
+      "data_dependencies": [
+        "static"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    },
+    {
+      "filename": "site/404.html",
+      "title": "Not Found Error Page",
+      "category": "public",
+      "purpose": "Branded 404 error page with navigation shortcuts and search suggestions",
+      "key_components": [
+        "Error Code Banner",
+        "Helpful Navigation Links"
+      ],
+      "data_dependencies": [
+        "static"
+      ],
+      "scripts": [
+        "js/main.js"
+      ],
+      "styles": [
+        "css/style.css"
+      ]
+    }
+  ],
+  "structure_backend": [
+    {
+      "component_id": "server_daemon",
+      "filepath": "scripts/serve.py",
+      "role": "Production/Local HTTP & REST Server daemon with built-in security, authentication, and database routing",
+      "primary_classes_functions": [
+        "SatyasevaServer (SimpleHTTPRequestHandler)",
+        "do_GET",
+        "do_POST",
+        "handle_upload",
+        "handle_login",
+        "handle_response_log_revert"
+      ],
+      "data_layer": "scripts/data/sscs.db via scripts/db.py",
+      "security_features": "PBKDF2-HMAC-SHA256 password hashing (100k rounds), rate-limiting per IP/endpoint, CORS domain whitelisting, 10MB payload cap, session tokens (8h TTL)"
+    },
+    {
+      "component_id": "database_manager",
+      "filepath": "scripts/db.py",
+      "role": "Portable zero-dependency SQLite abstraction layer with schema migrations, relational indexing, and automatic static JSON synchronization",
+      "primary_classes_functions": [
+        "init_db",
+        "get_connection",
+        "migrate_from_json",
+        "sync_all_to_json",
+        "get_stations",
+        "upsert_station",
+        "log_response_action",
+        "revert_response_log"
+      ],
+      "data_layer": "SQLite (sscs.db) with WAL mode & PRAGMA foreign_keys = ON",
+      "security_features": "Strict prepared SQL statements, transactional integrity, automatic timestamping, before/after JSON change snapshots"
+    },
+    {
+      "component_id": "image_synchronizer",
+      "filepath": "scripts/sync_images.py",
+      "role": "Filesystem scanner that reads site/images/communities/<id>/ and synchronizes community-images.json and communities.json automatically",
+      "primary_classes_functions": [
+        "sync()",
+        "get_paths()",
+        "natural_sort_key()"
+      ],
+      "data_layer": "Updates site/data/community-images.json and site/data/communities.json",
+      "security_features": "Sanitizes folder names, filters non-image files, supports .jpg, .jpeg, .png, .webp, .avif, .gif, .svg"
+    },
+    {
+      "component_id": "image_watcher",
+      "filepath": "scripts/watch_images.py",
+      "role": "Continuous filesystem watchdog that detects newly dropped photos and auto-triggers sync_images without manual CLI commands",
+      "primary_classes_functions": [
+        "main loop",
+        "polling / inotify handler"
+      ],
+      "data_layer": "Calls scripts/sync_images.py on change",
+      "security_features": "Throttled debounce timer to prevent thrashing during multi-file file manager drops"
+    },
+    {
+      "component_id": "pwa_service_worker",
+      "filepath": "site/sw.js",
+      "role": "Client-side progressive web app cache worker providing instant offline loading and stale-while-revalidate updates",
+      "primary_classes_functions": [
+        "install event",
+        "activate event",
+        "fetch event (stale-while-revalidate)",
+        "message event"
+      ],
+      "data_layer": "Client CacheStorage (satyaseva-v6)",
+      "security_features": "Explicitly bypasses /api/*, /admin.html, and /js/admin.js from cache to guarantee zero security credential or data caching"
+    }
+  ],
+  "dataflows": [
+    {
+      "flow_id": "client_data_cascade",
+      "name": "Client-Side Triple-Redundancy Cascade",
+      "tier": "client_fetch",
+      "trigger_event": "Page load on communities.html, community.html, or memorial.html",
+      "execution_order": [
+        "1. Check window.__INITIAL_COMMUNITIES__ from communities-data.js (Zero-delay render)",
+        "2. Simultaneously fire background fetch to /api/communities (if running on full Python backend)",
+        "3. If API responds (HTTP 200), update DOM with real-time database state and update cache",
+        "4. If API fails (e.g. static Git host like GitHub Pages), fallback to fetch(\"data/communities.json\")",
+        "5. If static JSON fetch fails (e.g. offline file:// protocol), rely 100% on window.__INITIAL_COMMUNITIES__"
+      ],
+      "fallback_strategy": "Guarantees the website renders flawlessly even if completely offline, on static hosting, or directly opened from a USB stick",
+      "key_files": [
+        "site/js/communities-grid.js",
+        "site/js/community-detail.js",
+        "site/data/communities-data.js"
+      ]
+    },
+    {
+      "flow_id": "admin_save_sync_cycle",
+      "name": "Admin Mutation & Auto-Sync Cycle",
+      "tier": "admin_sync",
+      "trigger_event": "Sister or Admin submits a change (station edit, new sister, event, or memorial record) via admin.html",
+      "execution_order": [
+        "1. Client sends JSON payload to POST /api/<entity> with Authorization: Bearer <session_token>",
+        "2. serve.py verifies token against in-memory active sessions and checks IP rate limit",
+        "3. serve.py calls db.py to take a JSON snapshot of the record BEFORE mutation",
+        "4. db.py writes mutation into SQLite tables within an ACID transaction",
+        "5. db.py records an entry in response_log with before/after snapshots and sister attribution",
+        "6. db.py triggers sync_all_to_json(), re-exporting communities.json, memorial.json, events.json, news.json, and communities-data.js",
+        "7. serve.py returns HTTP 200 JSON with updated entity ID and status"
+      ],
+      "fallback_strategy": "Transaction rollback on error; static JSON files always match SQLite state 1-to-1",
+      "key_files": [
+        "site/admin.html",
+        "site/js/admin.js",
+        "scripts/serve.py",
+        "scripts/db.py"
+      ]
+    },
+    {
+      "flow_id": "audit_revert_pipeline",
+      "name": "One-Click Response Log Audit & Revert",
+      "tier": "admin_sync",
+      "trigger_event": "Admin reviews response logs and clicks \"Revert\" on an erroneous edit or upload",
+      "execution_order": [
+        "1. Admin selects log entry in admin.html Audit Trail tab and clicks \"Revert\"",
+        "2. POST /api/response-log/revert sent with log ID",
+        "3. db.py retrieves snapshot_before from response_log table",
+        "4. db.py restores the exact previous state into the target table",
+        "5. db.py updates response_log status to \"reverted\"",
+        "6. db.py re-triggers sync_all_to_json() to reflect the rollback in static files",
+        "7. Admin UI updates with success alert and reloads table"
+      ],
+      "fallback_strategy": "Zero risk of data loss from sister mistakes; complete reversible history",
+      "key_files": [
+        "site/js/admin.js",
+        "scripts/serve.py",
+        "scripts/db.py"
+      ]
+    },
+    {
+      "flow_id": "photo_upload_pipeline",
+      "name": "Photo Upload & Synchronization Pipeline",
+      "tier": "photo_pipeline",
+      "trigger_event": "User drops a photo in admin.html or directly into site/images/communities/<id>/",
+      "execution_order": [
+        "1. If via browser: POST /api/upload with multipart/form-data (community ID + file)",
+        "2. serve.py validates file extension (.jpg, .jpeg, .png, .webp, .avif) and size (<10MB)",
+        "3. File written to disk at site/images/communities/<id>/<filename>",
+        "4. serve.py calls sync_images.sync()",
+        "5. sync_images scans folder, assigns hero image (if named hero.* or first image), builds manifest",
+        "6. Writes site/data/community-images.json and injects hero/gallery paths into communities.json",
+        "7. If SQLite active, adds record to station_gallery table"
+      ],
+      "fallback_strategy": "Auto-creates directories if missing; natural sorting on image numbers (img1, img2, img10)",
+      "key_files": [
+        "scripts/serve.py",
+        "scripts/sync_images.py",
+        "scripts/watch_images.py"
+      ]
+    },
+    {
+      "flow_id": "public_interactions_pipeline",
+      "name": "Public Contact, Prayer, & Newsletter Submission",
+      "tier": "public_submission",
+      "trigger_event": "Visitor submits contact message, prayer intention, or newsletter email",
+      "execution_order": [
+        "1. Browser fires fetch() to /api/contact, /api/prayers, or /api/newsletter",
+        "2. serve.py checks IP rate limiter (prevent spam floods: max 5-10 per minute)",
+        "3. Sanitizes strings and escapes HTML tags to neutralize XSS",
+        "4. Stores record in contact_messages, prayer_requests, or newsletter_subscribers table",
+        "5. If prayer request: initially marked \"pending\" until reviewed in admin portal",
+        "6. Returns HTTP 200 {\"success\": true}"
+      ],
+      "fallback_strategy": "Client-side optimistic UI with friendly thank you confirmation and graceful network error alerts",
+      "key_files": [
+        "site/index.html",
+        "site/contact.html",
+        "site/prayers.html",
+        "scripts/serve.py",
+        "scripts/db.py"
+      ]
+    }
+  ],
+  "deployments": [
+    {
+      "target_id": "github_pages",
+      "platform_name": "GitHub Pages (Recommended & Free)",
+      "nature": "edge_static",
+      "runtime": "Static Edge CDN (Fastly / GitHub Edge)",
+      "entrypoint": "site/index.html",
+      "config_files": [
+        ".github/workflows/deploy.yml",
+        "site/.nojekyll"
+      ],
+      "persistence_strategy": "Stateless static deployment; content updates pushed via Git commits. SQLite and backup files stripped before publish.",
+      "security_headers": "Strict Content-Security-Policy via meta tags + _headers; safe for public distribution",
+      "workflow_summary": "Git commit -> GitHub Actions runs Python script to compile fallbacks -> deploys site/ folder to gh-pages in ~60s"
+    },
+    {
+      "target_id": "cloudflare_pages",
+      "platform_name": "Cloudflare Pages (Global Edge CDN)",
+      "nature": "edge_static",
+      "runtime": "Cloudflare Global Edge Network",
+      "entrypoint": "site/index.html",
+      "config_files": [
+        "site/_headers"
+      ],
+      "persistence_strategy": "Stateless global edge cache with sub-second asset delivery",
+      "security_headers": "Native HTTP response headers applied via site/_headers: HSTS, CSP, X-Frame-Options, X-Content-Type-Options",
+      "workflow_summary": "Connect GitHub repository -> Framework preset: None -> Build output: site -> Live at *.pages.dev"
+    },
+    {
+      "target_id": "google_cloud_run",
+      "platform_name": "Google Cloud Run (Full Backend Container)",
+      "nature": "container_cloud",
+      "runtime": "Containerized Python 3.11-slim (Serverless Docker)",
+      "entrypoint": "scripts/serve.py (via Dockerfile)",
+      "config_files": [
+        "Dockerfile",
+        ".dockerignore",
+        "gcp-deployment-guide.md"
+      ],
+      "persistence_strategy": "Scale-to-zero serverless container. Persistent SQLite and photo uploads enabled via Cloud Storage FUSE volume mount.",
+      "security_headers": "HTTPS enforced by Google Cloud; CORS dynamically permits *.run.app and satyasevasisters.org; rate-limited endpoints",
+      "workflow_summary": "Cloud Build compiles Dockerfile -> Cloud Run starts container on $PORT (8080) -> Fully interactive REST & photo upload API live worldwide"
+    },
+    {
+      "target_id": "local_airgapped",
+      "platform_name": "Local Maintainer / Offline Air-Gapped Mode",
+      "nature": "cdn",
+      "runtime": "Local Python runtime (Zero dependencies) or direct file:// launch",
+      "entrypoint": "python3 scripts/serve.py 8000 OR double click site/index.html",
+      "config_files": [
+        "scripts/serve.py",
+        "site/index.html"
+      ],
+      "persistence_strategy": "Writes directly to local disk (scripts/data/sscs.db and site/images/communities/)",
+      "security_headers": "Binds to 127.0.0.1 or 0.0.0.0; password protected admin portal",
+      "workflow_summary": "Maintainer runs scripts/serve.py locally to make edits, then git commits changes for GitOps cloud sync"
+    }
+  ],
+  "api_endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/communities",
+      "auth_required": 0,
+      "rate_limit": "Unlimited",
+      "purpose": "Fetch all communities list with hero photos and ministries",
+      "payload_schema": "",
+      "response_schema": "Array of community objects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/communities",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Create or update community record",
+      "payload_schema": "Community JSON schema",
+      "response_schema": "{\"success\": true, \"id\": str}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/communities/delete",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Delete a community station record",
+      "payload_schema": "{\"id\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/memorial",
+      "auth_required": 0,
+      "rate_limit": "Unlimited",
+      "purpose": "Fetch all deceased sisters memorial records",
+      "payload_schema": "",
+      "response_schema": "Array of memorial sister objects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memorial",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Create or update memorial sister record",
+      "payload_schema": "Memorial sister JSON",
+      "response_schema": "{\"success\": true, \"id\": str}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memorial/delete",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Delete a memorial sister record",
+      "payload_schema": "{\"id\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/events",
+      "auth_required": 0,
+      "rate_limit": "Unlimited",
+      "purpose": "Fetch upcoming events and feast day celebrations",
+      "payload_schema": "",
+      "response_schema": "Array of event objects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/events",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Create new calendar event",
+      "payload_schema": "Event JSON",
+      "response_schema": "{\"success\": true, \"id\": int}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/events/update",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Update existing event",
+      "payload_schema": "Event JSON with id",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/events/delete",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Delete calendar event",
+      "payload_schema": "{\"id\": int}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/news",
+      "auth_required": 0,
+      "rate_limit": "Unlimited",
+      "purpose": "Fetch published news and pastoral announcements",
+      "payload_schema": "",
+      "response_schema": "Array of news objects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/news",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Create new news post",
+      "payload_schema": "News JSON",
+      "response_schema": "{\"success\": true, \"id\": int}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/news/update",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Update existing news post",
+      "payload_schema": "News JSON with id",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/news/delete",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Delete news post",
+      "payload_schema": "{\"id\": int}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/contact",
+      "auth_required": 0,
+      "rate_limit": "10 / min",
+      "purpose": "Submit public inquiry or vocation message",
+      "payload_schema": "{\"name\", \"email\", \"subject\", \"message\"}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/contact",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "View submitted contact inquiries in admin portal",
+      "payload_schema": "",
+      "response_schema": "Array of message objects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/contact/status",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Update message status (read/unread/replied)",
+      "payload_schema": "{\"id\": int, \"status\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/newsletter",
+      "auth_required": 0,
+      "rate_limit": "5 / min",
+      "purpose": "Public newsletter email subscription",
+      "payload_schema": "{\"email\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/newsletter",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "List newsletter subscriber emails",
+      "payload_schema": "",
+      "response_schema": "Array of subscriber emails"
+    },
+    {
+      "method": "POST",
+      "path": "/api/newsletter/delete",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Unsubscribe an email",
+      "payload_schema": "{\"email\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/prayers",
+      "auth_required": 0,
+      "rate_limit": "10 / min",
+      "purpose": "Submit prayer intention to prayer wall",
+      "payload_schema": "{\"name\", \"intention\"}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/prayers",
+      "auth_required": 0,
+      "rate_limit": "Unlimited",
+      "purpose": "Fetch approved public prayer intentions",
+      "payload_schema": "?status=approved",
+      "response_schema": "Array of prayer intentions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/prayers/status",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Approve or archive prayer intention",
+      "payload_schema": "{\"id\": int, \"status\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/upload",
+      "auth_required": 0,
+      "rate_limit": "30 / min",
+      "purpose": "Multi-file photo uploader for community stations",
+      "payload_schema": "multipart/form-data (station_id, photos)",
+      "response_schema": "{\"success\": true, \"uploaded\": int, \"files\": array}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/delete-photo",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Remove a photo from community gallery",
+      "payload_schema": "{\"path\": str, \"station_id\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/station-uploads",
+      "auth_required": 1,
+      "rate_limit": "15 / min",
+      "purpose": "List reports and chronicles submitted by sisters",
+      "payload_schema": "?station_id=<id>",
+      "response_schema": "Array of station upload objects"
+    },
+    {
+      "method": "POST",
+      "path": "/api/station-uploads",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Sister submits report, chronicle, or prayer request",
+      "payload_schema": "Upload payload",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "auth_required": 0,
+      "rate_limit": "5 / min",
+      "purpose": "Admin portal authentication (PBKDF2-HMAC-SHA256)",
+      "payload_schema": "{\"password\": str}",
+      "response_schema": "{\"success\": true, \"token\": str, \"expires_in\": int}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "auth_required": 0,
+      "rate_limit": "Unlimited",
+      "purpose": "Invalidate active session token",
+      "payload_schema": "",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/forgot-password",
+      "auth_required": 0,
+      "rate_limit": "3 / 5min",
+      "purpose": "Trigger OTP email reset link to ADMIN_EMAIL",
+      "payload_schema": "{\"email\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/reset-password",
+      "auth_required": 0,
+      "rate_limit": "5 / 5min",
+      "purpose": "Verify OTP code and set new admin password",
+      "payload_schema": "{\"code\": str, \"new_password\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/response-log",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Retrieve audit trail of changes made by sisters",
+      "payload_schema": "?page=1&status=pending",
+      "response_schema": "{\"logs\": array, \"total\": int}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/response-log/stats",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Get audit trail statistics and metrics",
+      "payload_schema": "",
+      "response_schema": "{\"total\": int, \"pending\": int, \"reviewed\": int}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/response-log/review",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Mark change log as reviewed by administrator",
+      "payload_schema": "{\"id\": int, \"status\": str, \"notes\": str}",
+      "response_schema": "{\"success\": true}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/response-log/revert",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Roll back a change using its historical before-snapshot",
+      "payload_schema": "{\"id\": int}",
+      "response_schema": "{\"success\": true, \"reverted_id\": int}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/response-log/export",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Download complete audit trail as CSV",
+      "payload_schema": "",
+      "response_schema": "CSV file stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/db/status",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Diagnostic stats: table record counts, file sizes, sync health",
+      "payload_schema": "",
+      "response_schema": "Diagnostic JSON object"
+    },
+    {
+      "method": "POST",
+      "path": "/api/db/sync",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Manually trigger SQLite to static JSON re-synchronization",
+      "payload_schema": "",
+      "response_schema": "{\"success\": true, \"synced_files\": array}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/db/download",
+      "auth_required": 1,
+      "rate_limit": "Standard",
+      "purpose": "Download full sscs.db SQLite database backup",
+      "payload_schema": "",
+      "response_schema": "Binary SQLite stream"
+    }
+  ],
+  "agent_quick_memorise": [
+    {
+      "id": 1,
+      "domain": "design",
+      "one_liner": "Spiritual, Archival & Dignified Aesthetic with Editorial Brutalism",
+      "golden_rules": [
+        "Primary Brand is Deep Ocean Blue (#0d4b6b), Accent is Warm Amber (#e8833a)",
+        "Headings MUST use Young Serif; UI and Body MUST use Hanken Grotesk",
+        "Dark Mode is controlled via data-theme=\"dark\" attribute with inline IIFE in <head> to prevent flash of unstyled content",
+        "Never add external npm packages or bulky web UI frameworks; preserve vanilla HTML5/CSS/JS purity",
+        "Photos must always feature fallback symbolic badges (Mission, Families, Service) if no image exists"
+      ],
+      "common_mistakes_to_avoid": "Do not use generic blue/red/green or bootstrap-style alert boxes. Stick to custom CSS tokens."
+    },
+    {
+      "id": 2,
+      "domain": "architecture",
+      "one_liner": "Static First JAMstack with Optional Cloud Run Server Container",
+      "golden_rules": [
+        "site/ is the complete deployable deliverable for static web hosting (GitHub Pages, Cloudflare Pages, Netlify)",
+        "scripts/ contains all Python backend, sync engines, and database tooling",
+        "Database sscs.db lives in scripts/data/sscs.db OUTSIDE the publicly-served site/ folder for security",
+        "GitHub Actions workflow in .github/workflows/deploy.yml strips .db and backups before publishing",
+        "PWA service worker site/sw.js explicitly excludes admin.html and admin.js from caching"
+      ],
+      "common_mistakes_to_avoid": "Never save sensitive databases, password hashes, or backup directories inside site/."
+    },
+    {
+      "id": 3,
+      "domain": "dataflow",
+      "one_liner": "Triple-Redundant Cascade: Global JS -> Fetch JSON -> REST API",
+      "golden_rules": [
+        "Always check window.__INITIAL_*__ first so pages render with zero latency offline",
+        "Whenever mutating data in admin.html or db.py, always call sync_all_to_json() to keep static files matching SQLite",
+        "Every mutation records a snapshot_before in response_log for instant one-click revertability",
+        "Images dropped into site/images/communities/<id>/ are auto-mapped by sync_images.py natural sort"
+      ],
+      "common_mistakes_to_avoid": "Never edit communities.json directly without syncing communities-data.js and sscs.db."
+    },
+    {
+      "id": 4,
+      "domain": "deployment",
+      "one_liner": "Zero-Cost Free Tier GitOps with 60-Second Auto Deployments",
+      "golden_rules": [
+        "GitHub Pages runs zero Python: purely static CDN delivering JSON and assets",
+        "Google Cloud Run container reads $PORT (8080), binds to 0.0.0.0, and scales to zero when idle ($0 cost)",
+        "Cloudflare Pages supports security headers directly via site/_headers",
+        "Cloud Storage FUSE can be mounted to /app/scripts/data and /app/site/images/communities for persistent Cloud Run storage"
+      ],
+      "common_mistakes_to_avoid": "Do not require a Python backend for public browsing; public site is 100% static-capable."
+    },
+    {
+      "id": 5,
+      "domain": "security",
+      "one_liner": "Defense in Depth: Strict CSP, PBKDF2 Password Hashing & Rate Limits",
+      "golden_rules": [
+        "Strict Content-Security-Policy restricts scripts to self and approved CDNs (Leaflet, unpkg)",
+        "PBKDF2-HMAC-SHA256 password hashing with 100,000 iterations for admin protection",
+        "Rate limits applied per client IP on login, uploads, forgot-password, and public submissions",
+        "Input escaping in frontend (esc() function) and parameter-binding in backend to defeat XSS and SQL injection"
+      ],
+      "common_mistakes_to_avoid": "Never send the admin password hash to the client. Keep sessions in-memory with 8-hour TTL."
+    }
+  ]
+}

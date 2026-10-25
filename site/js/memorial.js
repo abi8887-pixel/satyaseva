@@ -281,9 +281,15 @@
       renderGrid(sistersData);
     })
     .catch(function(err) {
+      if (window.__INITIAL_MEMORIAL__ && Array.isArray(window.__INITIAL_MEMORIAL__)) {
+        sistersData = window.__INITIAL_MEMORIAL__;
+        if (loadingEl) loadingEl.style.display = 'none';
+        renderGrid(sistersData);
+        return;
+      }
       console.error('Memorial load error:', err);
       if (loadingEl) {
-        loadingEl.innerHTML = '<p style="color:var(--mem-sage-deep);font-weight:700;">Unable to load memorial records at this time.</p>';
+        loadingEl.innerHTML = '<p style="color:var(--brand-deep);font-weight:700;">Unable to load memorial records at this time.</p>';
       }
     });
 

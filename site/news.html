@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+  </script>
   <title>News &amp; Updates — Satyaseva Catechist Sisters</title>
   <meta name="description" content="Latest news, announcements, and mission updates from the Satyaseva Catechist Sisters of the Families across India, Germany, and Poland.">
   <link rel="canonical" href="https://satyasevasisters.org/news.html">
@@ -10,7 +13,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=4">
   <style>
     /* ── News Header ───────────────────────────────────────── */
@@ -154,25 +157,27 @@
     .news-body.collapsed {
       display: -webkit-box;
       -webkit-line-clamp: 4;
+      line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
     .news-read-more {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
-      color: var(--sage-deep);
+      color: var(--brand-ink);
       cursor: pointer;
       background: none;
       border: none;
-      padding: 0;
+      padding: 4px 0;
       font-family: var(--font-sans);
       text-decoration: underline;
       text-underline-offset: 3px;
       margin-bottom: 16px;
       text-align: left;
+      transition: color var(--dur-fast) var(--ease);
     }
     .news-read-more:hover {
-      color: var(--gold-deep);
+      color: var(--accent);
     }
 
     .news-author {
@@ -240,13 +245,11 @@
       <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
         <a href="vocations.html">Vocations</a>
-        <a href="media.html">Media</a>
+        <a href="events.html">Events</a>
+        <a href="news.html" class="active" aria-current="page">News</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
+        <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
@@ -299,6 +302,7 @@
     </div>
   </footer>
 
+  <script src="data/communities-data.js?v=4"></script>
   <script>
   (function() {
     'use strict';
@@ -454,7 +458,6 @@
     }
   })();
   </script>
-  <script src="data/communities-data.js?v=4"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

@@ -28,7 +28,7 @@ import db
 PORT = 8000
 MAX_BODY_SIZE = 10 * 1024 * 1024  # 10 MB max POST body
 
-# ── Allowed origins for CORS (restrict to production + local dev) ──
+# ── Allowed origins for CORS (restrict to production + local dev + cloud deployments) ──
 ALLOWED_ORIGINS = [
     'https://satyasevasisters.org',
     'https://www.satyasevasisters.org',
@@ -37,6 +37,9 @@ ALLOWED_ORIGINS = [
     'https://localhost:8443',
     'https://127.0.0.1:8443',
 ]
+_extra_origins = os.environ.get('ALLOWED_ORIGINS', '')
+if _extra_origins:
+    ALLOWED_ORIGINS.extend([o.strip() for o in _extra_origins.split(',') if o.strip()])
 
 # ── Load environment variables from .env if present ──
 def _load_env():
@@ -297,7 +300,12 @@ class SistersHTTPRequestHandler(SimpleHTTPRequestHandler):
     def _get_cors_origin(self):
         """Return the allowed CORS origin for the request, or None."""
         origin = self.headers.get('Origin', '')
+        if not origin:
+            return None
         if origin in ALLOWED_ORIGINS:
+            return origin
+        # Also allow *.run.app, *.pages.dev, *.github.io, *.netlify.app for staging & preview
+        if origin.endswith('.run.app') or origin.endswith('.pages.dev') or origin.endswith('.github.io') or origin.endswith('.netlify.app'):
             return origin
         return None
 
@@ -1609,51 +1617,82 @@ def run(port=PORT, use_ssl=False):
     db.migrate_from_json()
 
     # Initial image sync
-    sync()
+    try:
+        sync()
+    except Exception as e:
+        print(f"[SYNC] Warning during image sync: {e}")
     _, site_dir, _, _, _ = get_paths()
+
+    env_port = os.environ.get('PORT')
+    if env_port:
+        try:
+            port = int(env_port)
+            use_ssl = False  # Cloud Run terminates SSL at the edge proxy
+        except ValueError:
+            pass
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     cert_path = os.path.join(script_dir, 'certs', 'cert.pem')
     key_path = os.path.join(script_dir, 'certs', 'key.pem')
 
-    # Ensure self-signed certificate exists
-    if not (os.path.exists(cert_path) and os.path.exists(key_path)):
-        import subprocess
-        os.makedirs(os.path.join(script_dir, 'certs'), exist_ok=True)
-        print("Generating self-signed SSL certificate...")
-        subprocess.run([
-            "openssl", "req", "-x509", "-newkey", "rsa:2048",
-            "-keyout", key_path, "-out", cert_path,
-            "-days", "3650", "-nodes", "-subj", "/CN=localhost"
-        ], check=True)
-
     servers = []
 
-    if use_ssl and port not in (8000, 8443):
+    # Single-port HTTP mode (Cloud Run / container / direct port)
+    if env_port or (not use_ssl and port not in (8000, 8443)):
+        http_server = HTTPServer(('0.0.0.0', port), SistersHTTPRequestHandler)
+        servers.append((http_server, f"http://0.0.0.0:{port}"))
+    elif use_ssl and port not in (8000, 8443):
+        # Ensure self-signed certificate exists
+        if not (os.path.exists(cert_path) and os.path.exists(key_path)):
+            import subprocess
+            os.makedirs(os.path.join(script_dir, 'certs'), exist_ok=True)
+            print("Generating self-signed SSL certificate...")
+            try:
+                subprocess.run([
+                    "openssl", "req", "-x509", "-newkey", "rsa:2048",
+                    "-keyout", key_path, "-out", cert_path,
+                    "-days", "3650", "-nodes", "-subj", "/CN=localhost"
+                ], check=True)
+            except Exception as e:
+                print(f"Warning: Could not generate SSL certificate: {e}")
         import ssl
-        httpd = HTTPServer(('', port), SistersHTTPRequestHandler)
+        httpd = HTTPServer(('0.0.0.0', port), SistersHTTPRequestHandler)
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         context.load_cert_chain(certfile=cert_path, keyfile=key_path)
         httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
-        servers.append((httpd, f"https://localhost:{port}"))
+        servers.append((httpd, f"https://0.0.0.0:{port}"))
     else:
-        # Dual-mode: Run HTTP on 8000 and HTTPS on 8443 concurrently
+        # Dual-mode (Local development): Run HTTP on 8000 and HTTPS on 8443 concurrently
+        if not (os.path.exists(cert_path) and os.path.exists(key_path)):
+            import subprocess
+            os.makedirs(os.path.join(script_dir, 'certs'), exist_ok=True)
+            print("Generating self-signed SSL certificate...")
+            try:
+                subprocess.run([
+                    "openssl", "req", "-x509", "-newkey", "rsa:2048",
+                    "-keyout", key_path, "-out", cert_path,
+                    "-days", "3650", "-nodes", "-subj", "/CN=localhost"
+                ], check=True)
+            except Exception as e:
+                print(f"Warning: Could not generate SSL certificate: {e}")
         import ssl
-        http_server = HTTPServer(('', 8000), SistersHTTPRequestHandler)
-        https_server = HTTPServer(('', 8443), SistersHTTPRequestHandler)
-        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        context.load_cert_chain(certfile=cert_path, keyfile=key_path)
-        https_server.socket = context.wrap_socket(https_server.socket, server_side=True)
-
-        servers.append((http_server, "http://localhost:8000"))
-        servers.append((https_server, "https://localhost:8443"))
+        http_server = HTTPServer(('0.0.0.0', 8000), SistersHTTPRequestHandler)
+        servers.append((http_server, "http://0.0.0.0:8000"))
+        try:
+            https_server = HTTPServer(('0.0.0.0', 8443), SistersHTTPRequestHandler)
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+            context.load_cert_chain(certfile=cert_path, keyfile=key_path)
+            https_server.socket = context.wrap_socket(https_server.socket, server_side=True)
+            servers.append((https_server, "https://0.0.0.0:8443"))
+        except Exception as e:
+            print(f"[HTTPS] Dual-mode note: HTTPS listener on 8443 skipped ({e})")
 
     print("===================================================================")
     print(f"Satyaseva Sisters Portable Database & Upload Server")
     for _, url in servers:
         icon = "🔒" if "https" in url else "🌐"
         print(f"Server URL:        {url} {icon}")
-    print(f"Database File:     {db.DB_PATH} ({round(os.path.getsize(db.DB_PATH)/1024, 1)} KB)")
+    print(f"Database File:     {db.DB_PATH} ({round(os.path.getsize(db.DB_PATH)/1024, 1) if os.path.exists(db.DB_PATH) else 0} KB)")
     print(f"Serving directory: {site_dir}")
     print(f"HSTS Header:       max-age=31536000; includeSubDomains; preload")
     print("===================================================================")
@@ -1673,5 +1712,6 @@ if __name__ == '__main__':
     args = sys.argv[1:]
     use_ssl = ('--ssl' in args) or ('-s' in args)
     args = [a for a in args if a not in ('--ssl', '-s')]
-    port = int(args[0]) if args else (8443 if use_ssl else PORT)
-    run(port, use_ssl=use_ssl)
+    env_port = os.environ.get('PORT')
+    port = int(env_port) if env_port else (int(args[0]) if args else (8443 if use_ssl else PORT))
+    run(port, use_ssl=use_ssl and not env_port)

@@ -4,14 +4,14 @@
 
 .bio-container { max-width: 1100px; margin: 0 auto; padding: 60px 32px; }
 .hero-section { text-align: center; margin-bottom: 60px; border-bottom: 2px solid var(--ink); padding-bottom: 60px; }
-.hero-section h1 { font-size: clamp(32px, 5vw, 48px); margin: 16px 0; font-family: 'Playfair Display', serif; }
+.hero-section h1 { font-size: clamp(32px, 5vw, 48px); margin: 16px 0; font-family: var(--font-serif); }
 .hero-section p.subtitle { font-size: 18px; color: var(--ink-soft); max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
 .bio-content p { margin-bottom: 24px; font-size: 16px; color: var(--ink-soft); line-height: 1.8; }
 
 .bio-image { margin: 32px 0; border: 1px solid var(--line); overflow: hidden; box-shadow: var(--elev-2); }
 .bio-image img { width: 100%; height: auto; display: block; border-bottom: 2px solid var(--ink); }
-.bio-image-caption { font-size: 13px; color: var(--ink); text-align: center; margin-top: 12px; font-style: italic; margin-bottom: 16px; font-family: 'Playfair Display', serif; }
+.bio-image-caption { font-size: 13px; color: var(--ink); text-align: center; margin-top: 12px; font-style: italic; margin-bottom: 16px; font-family: var(--font-serif); }
 
 .image-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; }
 .image-grid .bio-image { margin: 0; }
@@ -19,7 +19,7 @@
 .bio-content blockquote {
   margin: 40px 0; padding: 32px;
   background: var(--card); border: 1px solid var(--line);
-  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; font-style: italic;
+  font-family: var(--font-serif); font-size: 22px; font-weight: 700; font-style: italic;
   color: var(--ink); line-height: 1.6;
   box-shadow: var(--elev-2); text-align: center;
 }
@@ -30,7 +30,7 @@
   border-radius: var(--r-lg);
   box-shadow: var(--elev-2);
 }
-.milestones-card h2 { font-size: 24px; margin-bottom: 24px; font-family: 'Playfair Display', serif; text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 16px; }
+.milestones-card h2 { font-size: 24px; margin-bottom: 24px; font-family: var(--font-serif); text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 16px; }
 .milestones-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px; margin-top: 14px;
@@ -46,7 +46,7 @@
   box-shadow: none; background: var(--bg);
 }
 .m-year {
-  display: block; font-family: 'Inter', sans-serif;
+  display: block; font-family: var(--font-sans);
   font-size: 14px; font-weight: 700; color: var(--ink);
   letter-spacing: 0.1em; text-transform: uppercase;
   border-bottom: 1px solid var(--ink); padding-bottom: 4px; margin-bottom: 8px;

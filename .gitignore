@@ -1,5 +1,6 @@
 # Database & sensitive credentials
 *.db
+!memory.db
 .env
 .env.*
 scripts/data/sscs.db

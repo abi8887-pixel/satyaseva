@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+  </script>
   <title>Page Not Found (404) — Satyaseva Catechist Sisters</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
     .error-container {
@@ -21,15 +24,15 @@
       padding: 40px 20px;
     }
     .error-code {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: var(--font-serif);
       font-size: clamp(72px, 15vw, 140px);
       font-weight: 700;
-      color: var(--sage-deep);
+      color: var(--brand);
       line-height: 1;
       margin: 0;
     }
     .error-title {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: var(--font-serif);
       font-size: clamp(24px, 4vw, 36px);
       margin: 16px 0 12px;
       color: var(--ink);
@@ -58,21 +61,34 @@
       transition: all 0.2s ease;
     }
     .btn-primary {
-      background: var(--sage-deep);
-      color: #ffffff;
+      background: var(--brand);
+      color: #ffffff !important;
+      border: 2px solid var(--brand);
+    }
+    .btn-primary:visited {
+      color: #ffffff !important;
     }
     .btn-primary:hover {
-      background: #0e7490;
+      background: var(--brand-deep);
+      border-color: var(--brand-deep);
+      color: #ffffff !important;
       transform: translateY(-2px);
+      box-shadow: var(--elev-2);
     }
     .btn-secondary {
       background: var(--card);
-      border: 1.5px solid var(--ink);
-      color: var(--ink);
+      border: 2px solid var(--line);
+      color: var(--ink) !important;
+    }
+    .btn-secondary:visited {
+      color: var(--ink) !important;
     }
     .btn-secondary:hover {
-      background: #f3f4f6;
+      background: var(--surface-alt);
+      border-color: var(--brand-border);
+      color: var(--brand) !important;
       transform: translateY(-2px);
+      box-shadow: var(--elev-2);
     }
   </style>
 </head>

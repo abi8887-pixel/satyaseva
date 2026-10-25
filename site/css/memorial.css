@@ -4,33 +4,69 @@
    ================================================================ */
 
 :root {
-  --mem-bg: #faf8f4;
-  --mem-card: #ffffff;
-  --mem-ink: #1a1815;
-  --mem-ink-soft: #3d3934;
-  --mem-ink-faint: #756e65;
+  --mem-bg: var(--bg, #f2f6f9);
+  --mem-card: var(--card, #ffffff);
+  --mem-ink: var(--ink, #0f2433);
+  --mem-ink-soft: var(--ink-soft, #475c6b);
+  --mem-ink-faint: var(--ink-faint, #8daab8);
 
-  --mem-gold: #c59b27;
-  --mem-gold-deep: #997514;
-  --mem-gold-light: #faf4e8;
+  --mem-gold: var(--accent, #e8833a);
+  --mem-gold-deep: var(--accent-deep, #c96820);
+  --mem-gold-light: var(--accent-tint, #fdf1e7);
 
-  --mem-sage: #2d5a43;
-  --mem-sage-deep: #1b3d2b;
-  --mem-sage-light: #edf5f0;
-  --mem-sage-glow: #f5f9f6;
+  --mem-sage: var(--brand, #0d4b6b);
+  --mem-sage-deep: var(--brand-deep, #083649);
+  --mem-sage-light: var(--brand-tint, #e1eef6);
+  --mem-sage-glow: var(--brand-tint, #e1eef6);
 
-  --mem-line: #dcd5c9;
-  --mem-line-strong: #1b3d2b;
-  --mem-shadow: 4px 4px 0 rgba(27, 61, 43, 0.15);
-  --mem-shadow-deep: 6px 6px 0 #1b3d2b;
-  --mem-shadow-gold: 4px 4px 0 #c59b27;
+  --mem-line: var(--line, #d3dee6);
+  --mem-line-strong: var(--brand, #0d4b6b);
+  --mem-shadow: var(--elev-1);
+  --mem-shadow-deep: var(--elev-2);
+  --mem-shadow-gold: var(--elev-1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --mem-bg: var(--bg, #0b1822);
+    --mem-card: var(--card, #122431);
+    --mem-ink: var(--ink, #e8f1f7);
+    --mem-ink-soft: var(--ink-soft, #a3b8c6);
+    --mem-ink-faint: var(--ink-faint, #5c7d90);
+    --mem-gold: var(--accent, #f09a5c);
+    --mem-gold-deep: var(--accent, #f09a5c);
+    --mem-gold-light: var(--accent-tint, #2a1a0a);
+    --mem-sage: var(--brand, #1f7aa5);
+    --mem-sage-deep: var(--brand-ink, #8cd0ee);
+    --mem-sage-light: var(--brand-tint, #0d2535);
+    --mem-sage-glow: var(--brand-tint, #0d2535);
+    --mem-line: var(--line, #24394a);
+    --mem-line-strong: var(--line-strong, #2e4e63);
+  }
+}
+
+:root[data-theme="dark"] {
+  --mem-bg: var(--bg, #0b1822);
+  --mem-card: var(--card, #122431);
+  --mem-ink: var(--ink, #e8f1f7);
+  --mem-ink-soft: var(--ink-soft, #a3b8c6);
+  --mem-ink-faint: var(--ink-faint, #5c7d90);
+  --mem-gold: var(--accent, #f09a5c);
+  --mem-gold-deep: var(--accent, #f09a5c);
+  --mem-gold-light: var(--accent-tint, #2a1a0a);
+  --mem-sage: var(--brand, #1f7aa5);
+  --mem-sage-deep: var(--brand-ink, #8cd0ee);
+  --mem-sage-light: var(--brand-tint, #0d2535);
+  --mem-sage-glow: var(--brand-tint, #0d2535);
+  --mem-line: var(--line, #24394a);
+  --mem-line-strong: var(--line-strong, #2e4e63);
 }
 
 body.memorial-page {
   background-color: var(--mem-bg);
   color: var(--mem-ink);
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -63,7 +99,7 @@ body.memorial-page {
 
 .back-link {
   color: var(--mem-sage-deep) !important;
-  font-family: 'Playfair Display', serif !important;
+  font-family: var(--font-serif) !important;
   font-weight: 700 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -132,7 +168,7 @@ body.memorial-page {
 }
 
 .memorial-hero h1 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: clamp(34px, 5vw, 54px);
   color: var(--mem-sage-deep);
   margin: 0 0 16px;
@@ -311,7 +347,7 @@ body.memorial-page {
 }
 
 .sister-card-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
   margin: 0 0 6px;
   color: var(--mem-sage-deep);
@@ -319,7 +355,7 @@ body.memorial-page {
 }
 
 .sister-card-title {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -397,7 +433,7 @@ body.memorial-page {
 }
 
 .prayer-card h3 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 24px;
   color: var(--mem-sage-deep);
   margin: 0 0 12px;
@@ -458,24 +494,30 @@ body.memorial-page {
 
 .modal-close-btn {
   position: absolute;
-  top: 18px;
-  right: 20px;
-  background: transparent;
-  border: 2px solid transparent;
-  font-size: 26px;
+  top: 16px;
+  right: 18px;
+  background: var(--mem-card);
+  border: 1px solid var(--mem-line);
+  border-radius: 50%;
+  font-size: 22px;
   line-height: 1;
-  color: var(--mem-sage-deep);
+  color: var(--mem-ink);
   cursor: pointer;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  z-index: 10;
+  box-shadow: var(--elev-1);
+  transition: all 0.15s ease;
 }
 
 .modal-close-btn:hover {
-  border-color: var(--mem-sage);
+  background: var(--mem-gold-light);
+  border-color: var(--mem-gold);
+  color: var(--mem-gold-deep);
+  transform: scale(1.05);
 }
 
 .modal-header-hero {
@@ -519,7 +561,7 @@ body.memorial-page {
 }
 
 .modal-hero-details h2 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: clamp(22px, 3.5vw, 30px);
   margin: 0 0 6px;
   color: var(--mem-sage-deep);
@@ -563,7 +605,7 @@ body.memorial-page {
 }
 
 .modal-section h4 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 18px;
   color: var(--mem-sage-deep);
   margin: 0 0 10px;
@@ -627,20 +669,25 @@ body.memorial-page {
 }
 
 .btn-close-modal {
-  padding: 8px 20px;
-  background: var(--mem-sage);
-  color: #ffffff;
-  border: 2px solid var(--mem-line-strong);
-  font-size: 12px;
+  padding: 10px 24px;
+  background: var(--brand, #0d4b6b);
+  color: #ffffff !important;
+  border: 2px solid var(--brand, #0d4b6b);
+  border-radius: 999px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   cursor: pointer;
-  box-shadow: 3px 3px 0 var(--mem-shadow);
+  box-shadow: var(--elev-2);
+  transition: all 0.15s ease;
 }
 
 .btn-close-modal:hover {
-  background: var(--mem-gold);
+  background: var(--accent, #e8833a);
+  border-color: var(--accent, #e8833a);
+  transform: translateY(-1px);
+  box-shadow: var(--elev-3);
 }
 
 /* ── Loading Spinner & Empty State ──────────────────────────── */
@@ -667,17 +714,26 @@ body.memorial-page {
   padding: 60px 20px;
   border: 2px dashed var(--mem-line);
   background: var(--mem-card);
+  border-radius: 8px;
 }
 
 .btn-clear-filter {
-  padding: 8px 18px;
-  background: var(--mem-sage);
-  color: #fff;
-  border: 2px solid var(--mem-line-strong);
-  font-size: 12px;
+  padding: 10px 22px;
+  background: var(--brand, #0d4b6b);
+  color: #ffffff !important;
+  border: 2px solid var(--brand, #0d4b6b);
+  border-radius: 999px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   margin-top: 12px;
+  box-shadow: var(--elev-1);
+  transition: all 0.15s ease;
+}
+.btn-clear-filter:hover {
+  background: var(--accent, #e8833a);
+  border-color: var(--accent, #e8833a);
+  transform: translateY(-1px);
 }
 
 /* ── Responsive Mobile Rules ────────────────────────────────── */
@@ -725,10 +781,11 @@ body.memorial-page {
   align-items: center;
   gap: 8px;
   background: var(--mem-card);
-  color: var(--mem-sage-deep);
-  border: 2px solid var(--mem-line-strong);
-  box-shadow: 2px 2px 0 var(--mem-line-strong);
-  padding: 8px 16px;
+  color: var(--mem-ink);
+  border: 1px solid var(--mem-line);
+  box-shadow: var(--elev-1);
+  padding: 8px 18px;
+  border-radius: 999px;
   font-family: inherit;
   font-size: 12px;
   font-weight: 700;
@@ -741,8 +798,10 @@ body.memorial-page {
 
 .btn-print-memorial:hover {
   background: var(--mem-gold-light);
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 var(--mem-line-strong);
+  border-color: var(--mem-gold);
+  color: var(--mem-gold-deep);
+  transform: translateY(-1px);
+  box-shadow: var(--elev-2);
 }
 
 @media print {

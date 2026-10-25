@@ -204,7 +204,7 @@
   /* ── Service Worker Registration + Update Notification (PWA) ── */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      navigator.serviceWorker.register('sw.js').then(function(reg) {
         console.log('Satyaseva PWA Service Worker registered:', reg.scope);
 
         // Check for updates periodically
@@ -304,14 +304,12 @@
 
   /* ── Universal Dark Mode Toggle ──────────────────────────────── */
   function initTheme() {
-    var savedTheme = localStorage.getItem('sscs-theme');
-    var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
-
-    if (currentTheme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (document.documentElement.style) {
+        document.documentElement.style.colorScheme = theme;
+      }
+      updateThemeButtons(theme);
     }
 
     function updateThemeButtons(theme) {
@@ -322,21 +320,32 @@
       });
     }
 
-    updateThemeButtons(currentTheme);
+    var savedTheme = localStorage.getItem('sscs-theme');
+    var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
+
+    applyTheme(currentTheme);
 
     document.addEventListener('click', function(e) {
       var btn = e.target.closest('.theme-toggle-btn');
       if (!btn) return;
-      var active = document.documentElement.getAttribute('data-theme') === 'dark';
-      var newTheme = active ? 'light' : 'dark';
-      if (newTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-      }
-      localStorage.setItem('sscs-theme', newTheme);
-      updateThemeButtons(newTheme);
+      var activeTheme = document.documentElement.getAttribute('data-theme');
+      var newTheme = (activeTheme === 'dark') ? 'light' : 'dark';
+      applyTheme(newTheme);
+      try {
+        localStorage.setItem('sscs-theme', newTheme);
+      } catch (err) {}
     });
+
+    if (window.matchMedia) {
+      try {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          if (!localStorage.getItem('sscs-theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      } catch (err) {}
+    }
   }
 
   /* ── Animated Impact Statistics Counter ───────────────────────── */

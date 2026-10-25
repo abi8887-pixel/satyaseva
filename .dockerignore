@@ -1,0 +1,17 @@
+.git
+.github
+.gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+scripts/certs/*.pem
+scripts/tests/
+scripts/test_*.js
+scripts/data/backups/
+deploy.md
+README.md
+LICENSE
+node_modules/

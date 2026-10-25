@@ -6,31 +6,31 @@
 
 /* ── 1. Tokens ──────────────────────────────────────────────────── */
 :root {
-  --bg:          #f4f2ee;
-  --bg-deep:     #ebe8e1;
+  --bg:          #f2f6f9;
+  --bg-deep:     #e5edf3;
   --card:        #ffffff;
-  --card-hover:  #faf9f6;
-  --surface-alt: #f8f6f2;
+  --card-hover:  #fafcff;
+  --surface-alt: #eaf1f7;
 
-  --ink:         #201d19;
-  --ink-soft:    #4a453d;
-  --ink-faint:   #857d70;
+  --ink:         #0f2433;
+  --ink-soft:    #475c6b;
+  --ink-faint:   #8daab8;
 
-  --sage:        #2e5641;
-  --sage-deep:   #1d3a2b;
-  --sage-tint:   #e9f1ec;
-  --sage-border: #c9d8cf;
+  --sage:        #0d4b6b;
+  --sage-deep:   #083649;
+  --sage-tint:   #e1eef6;
+  --sage-border: #b5d4e7;
 
-  --gold:        #b9891f;
-  --gold-deep:   #8f6a14;
-  --gold-tint:   #faf3e3;
-  --gold-border: #e4d3a6;
+  --gold:        #e8833a;
+  --gold-deep:   #c96820;
+  --gold-tint:   #fdf1e7;
+  --gold-border: #f5c896;
 
-  --line:        #e2ddd3;
-  --line-strong: #d4cec2;
+  --line:        #d3dee6;
+  --line-strong: #b5c8d5;
 
-  --rose:        #b3261e;
-  --rose-tint:   #fdeceb;
+  --rose:        #cc3333;
+  --rose-tint:   #fdf0f0;
   --green:       #2e7d32;
   --green-tint:  #e8f5e9;
 
@@ -38,44 +38,44 @@
   --radius-sm: 6px;
   --radius-lg: 14px;
 
-  --elev-1: 0 1px 2px rgba(29,58,43,.06), 0 1px 3px rgba(29,58,43,.05);
-  --elev-2: 0 2px 4px rgba(29,58,43,.07), 0 6px 16px rgba(29,58,43,.08);
-  --elev-3: 0 8px 24px rgba(29,58,43,.14), 0 2px 6px rgba(29,58,43,.08);
-  --elev-modal: 0 24px 64px rgba(20,30,24,.3), 0 4px 12px rgba(20,30,24,.18);
+  --elev-1: 0 1px 3px rgba(13,75,107,.07), 0 1px 2px rgba(13,75,107,.05);
+  --elev-2: 0 4px 12px rgba(13,75,107,.10), 0 2px 4px rgba(13,75,107,.06);
+  --elev-3: 0 12px 28px rgba(13,75,107,.16), 0 4px 8px rgba(13,75,107,.08);
+  --elev-modal: 0 24px 64px rgba(13,75,107,.25), 0 4px 12px rgba(13,75,107,.15);
 
   --shadow-sm: var(--elev-1);
   --shadow:    var(--elev-2);
   --shadow-lg: var(--elev-3);
 
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-sans:  "Hanken Grotesk", system-ui, -apple-system, sans-serif;
 
   --transition: .15s cubic-bezier(.4, 0, .2, 1);
 }
 
 [data-theme="dark"] {
-  --bg:          #141d18;
-  --bg-deep:     #0f1712;
-  --card:        #1c2821;
-  --card-hover:  #223028;
-  --surface-alt: #1f2b23;
+  --bg:          #0b1822;
+  --bg-deep:     #08121a;
+  --card:        #122431;
+  --card-hover:  #182e3e;
+  --surface-alt: #1a2f3e;
 
-  --ink:         #ece9e2;
-  --ink-soft:    #c3beb2;
-  --ink-faint:   #8f897c;
+  --ink:         #e8f1f7;
+  --ink-soft:    #a3b8c6;
+  --ink-faint:   #5c7d90;
 
-  --sage:        #6fa285;
-  --sage-deep:   #b5d4c2;
-  --sage-tint:   #223327;
-  --sage-border: #3a5244;
+  --sage:        #1f7aa5;
+  --sage-deep:   #8cd0ee;
+  --sage-tint:   #0d2535;
+  --sage-border: #1a4a63;
 
-  --gold:        #d4a83c;
-  --gold-deep:   #e0bd6a;
-  --gold-tint:   #2e2716;
-  --gold-border: #54461f;
+  --gold:        #f09a5c;
+  --gold-deep:   #e8833a;
+  --gold-tint:   #2a1a0a;
+  --gold-border: #7a3e12;
 
-  --line:        #2c382f;
-  --line-strong: #3d4c41;
+  --line:        #24394a;
+  --line-strong: #2e4e63;
 
   --rose:        #f47168;
   --rose-tint:   #3a2421;

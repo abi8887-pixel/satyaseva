@@ -78,14 +78,13 @@
     });
   }
 
-  /* Fetch both communities data and community-images manifest */
-  var cacheBuster = '?t=' + Date.now();
+  /* Fetch both communities data and community-images manifest (cached by SW) */
   Promise.all([
-    fetch('data/communities.json' + cacheBuster).then(function(res) {
+    fetch('data/communities.json').then(function(res) {
       if (!res.ok) throw new Error('Failed to load communities data');
       return res.json();
     }),
-    fetch('data/community-images.json' + cacheBuster).then(function(res) {
+    fetch('data/community-images.json').then(function(res) {
       return res.ok ? res.json() : {};
     }).catch(function() {
       return {};

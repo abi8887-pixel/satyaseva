@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+  </script>
   <title>Interactive Community Map — Satyaseva Catechist Sisters</title>
   <meta name="description" content="Explore the global locations, convents, and mission stations of the Satyaseva Catechist Sisters across India, Germany, and Poland.">
   <link rel="canonical" href="https://satyasevasisters.org/map.html">
@@ -10,7 +13,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=3">
 
   <!-- Leaflet CSS & JS -->
@@ -143,7 +146,7 @@
       background: var(--gold-tint);
     }
     .station-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-serif);
       font-weight: 700;
       font-size: 15px;
       margin: 0 0 4px;
@@ -201,7 +204,7 @@
       border: 1px solid var(--line) !important;
     }
     .popup-inner strong {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-serif);
       font-size: 15px;
       color: var(--ink);
       display: block;
@@ -252,13 +255,11 @@
       <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
+        <a href="vocations.html">Vocations</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
+        <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
       </div>
       <div class="nav-actions">
@@ -317,7 +318,7 @@
       <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
       <h3>Satyaseva Catechist Sisters of the Families</h3>
       <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--sage-deep); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>

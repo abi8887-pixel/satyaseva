@@ -786,7 +786,7 @@
   var params = new URLSearchParams(window.location.search);
   var requestedId = params.get('id');
 
-  var cacheBuster = '?t=' + Date.now();
+  var cacheBuster = '';
   function displayCommunity(communities, imagesManifest) {
     if (!communities || !communities.length) {
       throw new Error('Community catalog is empty');
@@ -852,13 +852,13 @@
     renderNav(communities, idx);
   }
 
-  /* Fetch both communities data and community-images manifest */
+  /* Fetch both communities data and community-images manifest (cached by SW) */
   Promise.all([
-    fetch('data/communities.json' + cacheBuster).then(function(res) {
+    fetch('data/communities.json').then(function(res) {
       if (!res.ok) throw new Error('Failed to load communities data');
       return res.json();
     }),
-    fetch('data/community-images.json' + cacheBuster).then(function(res) {
+    fetch('data/community-images.json').then(function(res) {
       return res.ok ? res.json() : {};
     }).catch(function() {
       return {};

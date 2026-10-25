@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
 <title>Community — Satyaseva Sisters</title>
 <meta name="description" content="Explore this community of the Satyaseva Catechist Sisters — members, ministries, stories, and more.">
 <meta property="og:title" content="Community — Satyaseva Sisters">
@@ -11,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/community.css">
 </head>
@@ -31,12 +34,12 @@
     </a>
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
-      <a href="communities.html" class="active">Communities</a>
-      <a href="map.html">Map</a>
+      <a href="communities.html" class="active" aria-current="page">Communities</a>
+      <a href="vocations.html">Vocations</a>
       <a href="events.html">Events</a>
       <a href="news.html">News</a>
-      <a href="vocations.html">Vocations</a>
-      <a href="donate.html">Donate</a>
+      <a href="prayers.html">Prayers</a>
+      <a href="donate.html" class="nav-donate">Donate</a>
       <a href="contact.html">Contact</a>
     </div>
     <div class="nav-actions">
@@ -120,10 +123,10 @@
       <span>Supports JPG, PNG, WEBP files</span>
     </div>
 
-    <div class="upload-options" style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
-      <input type="text" id="upload-sister-name" placeholder="Your name (e.g. Sr. Philomena SCS)" style="padding:8px 12px;border:1.5px solid #222;font-size:13px;width:100%;box-sizing:border-box;font-family:inherit;">
-      <input type="text" id="upload-photo-caption" placeholder="Photo caption / note (optional)" style="padding:8px 12px;border:1.5px solid #222;font-size:13px;width:100%;box-sizing:border-box;font-family:inherit;">
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;">
+    <div class="upload-options" style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
+      <input type="text" id="upload-sister-name" class="modern-input" placeholder="Your name (e.g. Sr. Philomena SCS)">
+      <input type="text" id="upload-photo-caption" class="modern-input" placeholder="Photo caption / note (optional)">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink-soft);">
         <input type="checkbox" id="upload-is-hero">
         <span>Set as community banner / cover photo (hero.jpg)</span>
       </label>
@@ -154,7 +157,6 @@
     <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
   </div>
 </footer>
-
 <script src="data/communities-data.js?v=3"></script>
 <script src="js/community-detail.js"></script>
 <script src="js/main.js" defer></script>

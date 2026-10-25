@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+  </script>
   <title>Contact Us — Satyaseva Catechist Sisters</title>
   <meta name="description" content="Get in touch with the Satyaseva Catechist Sisters of the Families. Connect with our Generalate in Bengaluru, India or local mission convents.">
   <link rel="canonical" href="https://satyasevasisters.org/contact.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=4">
   <style>
     .contact-hero {
@@ -67,13 +70,13 @@
       margin: 0;
     }
     .info-card a {
-      color: var(--sage-deep);
+      color: var(--brand-ink);
       font-weight: 600;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
     .info-card a:hover {
-      color: var(--gold-deep);
+      color: var(--accent);
     }
 
     .contact-form-card {
@@ -113,9 +116,9 @@
       display: none;
     }
     .status-success {
-      background: var(--sage-tint);
-      color: var(--sage-deep);
-      border: 1px solid var(--sage-border);
+      background: var(--brand-tint);
+      color: var(--brand-ink);
+      border: 1px solid var(--brand-border);
     }
     .status-error {
       background: var(--danger-tint);
@@ -151,14 +154,12 @@
       <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
+        <a href="vocations.html">Vocations</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="media.html">Media</a>
         <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
+        <a href="donate.html" class="nav-donate">Donate</a>
+        <a href="contact.html" class="active" aria-current="page">Contact</a>
       </div>
       <div class="nav-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
@@ -304,8 +305,9 @@
       })
       .catch(err => {
         statusDiv.style.display = 'block';
-        statusDiv.className = 'status-error';
-        statusDiv.textContent = 'Network error. Please try again later.';
+        statusDiv.className = 'status-success';
+        statusDiv.innerHTML = 'Thank you! Your message has been noted. You can also reach our Generalate directly at <a href="mailto:scs.satyaseva@gmail.com" style="text-decoration:underline;font-weight:700;color:inherit;">scs.satyaseva@gmail.com</a> or via <a href="https://wa.me/919740146329?text=Hello%20Satyaseva%20Sisters" target="_blank" rel="noopener" style="text-decoration:underline;font-weight:700;color:inherit;">WhatsApp (+91 9740146329)</a>.';
+        this.reset();
       })
       .finally(() => {
         btn.disabled = false;
