@@ -26,7 +26,8 @@
     "stories": [],
     "heroImage": "images/communities/mariyapura/hero.jpg",
     "gallery": [
-      "images/communities/mariyapura/early_years.jpg"
+      "images/communities/mariyapura/early_years.jpg",
+      "images/communities/mariyapura/hero_mockup.jpg"
     ]
   },
   {
@@ -49,7 +50,7 @@
     ],
     "members": [],
     "stories": [],
-    "heroImage": "",
+    "heroImage": "images/communities/amaljyothi/ChatGPT Image Oct 4 2026 01_17_17 PM.png",
     "gallery": [
       "images/communities/amaljyothi/ChatGPT Image Oct 4 2026 01_17_17 PM.png"
     ]
@@ -125,6 +126,7 @@
     "heroImage": "images/communities/generalate/hero.jpg",
     "gallery": [
       "images/communities/generalate/community_life.jpeg",
+      "images/communities/generalate/hero_mockup.jpg",
       "images/communities/generalate/prayer_meeting.jpeg"
     ]
   },
@@ -216,8 +218,10 @@
     ],
     "members": [],
     "stories": [],
-    "heroImage": "",
-    "gallery": []
+    "heroImage": "images/communities/juist/hero_mockup.jpg",
+    "gallery": [
+      "images/communities/juist/hero_mockup.jpg"
+    ]
   },
   {
     "id": "maranahalli",
@@ -430,8 +434,10 @@
     ],
     "members": [],
     "stories": [],
-    "heroImage": "",
-    "gallery": []
+    "heroImage": "images/communities/maruthavu/hero_mockup.jpg",
+    "gallery": [
+      "images/communities/maruthavu/hero_mockup.jpg"
+    ]
   },
   {
     "id": "sahodaraprema",
@@ -598,7 +604,9 @@
     "members": [],
     "stories": [],
     "heroImage": "images/communities/bydgosh-jp2/hero.jpg",
-    "gallery": []
+    "gallery": [
+      "images/communities/bydgosh-jp2/hero_mockup.jpg"
+    ]
   },
   {
     "id": "kadampady",
@@ -645,8 +653,10 @@
     ],
     "members": [],
     "stories": [],
-    "heroImage": "",
-    "gallery": []
+    "heroImage": "images/communities/prakashpalaya/hero_mockup.jpg",
+    "gallery": [
+      "images/communities/prakashpalaya/hero_mockup.jpg"
+    ]
   },
   {
     "id": "mathura",
@@ -691,7 +701,9 @@
     "members": [],
     "stories": [],
     "heroImage": "images/communities/frankfurt/hero.png",
-    "gallery": []
+    "gallery": [
+      "images/communities/frankfurt/hero_mockup.jpg"
+    ]
   },
   {
     "id": "mariamangala",
@@ -801,7 +813,9 @@
     ],
     "members": [],
     "stories": [],
-    "heroImage": "",
-    "gallery": []
+    "heroImage": "images/communities/unkel/hero_mockup.jpg",
+    "gallery": [
+      "images/communities/unkel/hero_mockup.jpg"
+    ]
   }
 ]
