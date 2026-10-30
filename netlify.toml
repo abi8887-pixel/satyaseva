@@ -1,0 +1,41 @@
+[build]
+  publish = "site"
+  command = '''
+    if [ -f scripts/sync_images.py ]; then python3 scripts/sync_images.py || true; fi
+    python3 - <<'PY'
+import json, os
+c = os.path.join('site', 'data', 'communities.json')
+m = os.path.join('site', 'data', 'memorial.json')
+out = os.path.join('site', 'data', 'communities-data.js')
+if os.path.exists(c) and os.path.exists(m):
+    comm = json.load(open(c, encoding='utf-8'))
+    mem = json.load(open(m, encoding='utf-8'))
+    with open(out, 'w', encoding='utf-8') as f:
+        f.write('// Auto-generated fallback data\n')
+        f.write('window.__INITIAL_COMMUNITIES__ = ' + json.dumps(comm) + ';\n')
+        f.write('window.__INITIAL_MEMORIAL__ = ' + json.dumps(mem) + ';\n')
+    print('Fallback dataset updated')
+else:
+    print('Skipping fallback dataset: data files not found')
+PY
+    rm -rf site/data/backups scripts/data/backups
+    rm -f site/data/*.db scripts/data/*.db scripts/data/.admin_hash
+  '''
+
+[build.environment]
+  PYTHON_VERSION = "3.10"
+
+# Pretty 404 for unknown URLs
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Basic security headers (site/_headers is also picked up if present)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
