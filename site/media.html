@@ -312,53 +312,68 @@
   <div class="ambient-blob blob-gold" style="top: 300px; right: -80px;"></div>
   <div class="ambient-blob blob-blue" style="bottom: 100px; left: 15%;"></div>
 
-  <nav id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-pill">
-      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
-        <span class="brand-text">
-          <span class="brand-line-1">Satyaseva Sisters</span>
-          <span class="brand-line-2">SCS &bull; Est. 1976</span>
-        </span>
+  <header class="top-nav-bar" id="nav" role="banner">
+    <div class="top-nav-container">
+      <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+          <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2" fill="currentColor"/>
+        </svg>
+        <div class="brand-titles">
+          <span class="brand-name">Satyaseva Catechist Sisters</span>
+          <span class="brand-tagline">of the Families</span>
+        </div>
       </a>
-      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
+
+      <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
         <a href="foundress.html">Our Foundress</a>
+        <a href="communities.html">Our Communities</a>
+        <a href="map.html">Mission Map</a>
         <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="media.html" class="active" aria-current="page">Media</a>
         <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-actions">
+      </nav>
+
+      <div class="top-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
         <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>English</option>
-          <option value="pl">Polski</option>
+          <option value="en" selected>EN</option>
+          <option value="pl">PL</option>
         </select>
-        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
-          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main id="main-content">
-
-    <!-- Hero Header -->
-    <header class="media-hero reveal">
-      <span class="badge-gold">Multimedia &amp; Archives</span>
-      <h1>Media Library</h1>
-      <p>Watch mission documentaries, explore community photo galleries, listen to sacred hymns, and download spiritual catechetical resources.</p>
-    </header>
+    <section class="comm-hero-section media-hero-section" id="hero">
+      <div class="comm-hero-container">
+        <div class="comm-hero-content">
+          <div class="badge-gold">
+            <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 1v18M3 6h14"/></svg>
+            Multimedia &amp; Archives
+          </div>
+          <h1 class="comm-hero-title">Media Library</h1>
+          <p class="comm-hero-subtitle">Watch mission documentaries, explore community photo galleries, listen to sacred hymns, and download spiritual catechetical resources.</p>
+          <div class="comm-hero-flourish" aria-hidden="true">
+            <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="comm-hero-photo-wrap">
+          <img src="images/FrankfurtCommunity.png" alt="Satyaseva Sisters International Community" class="comm-hero-photo" width="460" height="310">
+        </div>
+      </div>
+    </section>
 
     <!-- Section Tabs -->
     <div class="media-tabs reveal reveal-d1" id="media-tabs" role="tablist">

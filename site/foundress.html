@@ -203,64 +203,67 @@
 
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <nav id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-pill">
-      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
-        <span class="brand-text">
-          <span class="brand-line-1">Satyaseva Sisters</span>
-          <span class="brand-line-2">SCS &bull; Est. 1976</span>
-        </span>
+  <header class="top-nav-bar" id="nav" role="banner">
+    <div class="top-nav-container">
+      <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+          <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2" fill="currentColor"/>
+        </svg>
+        <div class="brand-titles">
+          <span class="brand-name">Satyaseva Catechist Sisters</span>
+          <span class="brand-tagline">of the Families</span>
+        </div>
       </a>
-      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
+
+      <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
         <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
         <a href="foundress.html" class="active" aria-current="page">Our Foundress</a>
+        <a href="communities.html">Our Communities</a>
+        <a href="map.html">Mission Map</a>
         <a href="memorial.html">In Memoriam</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
         <a href="media.html">Media</a>
         <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html" class="nav-donate">Donate</a>
         <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-actions">
+      </nav>
+
+      <div class="top-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
         <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>English</option>
-          <option value="pl">Polski</option>
+          <option value="en" selected>EN</option>
+          <option value="pl">PL</option>
         </select>
-        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
-          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main id="main">
 
-    <section class="fnd-hero" aria-labelledby="page-title">
-      <div class="wrap">
-        <div>
-          <p class="crumbs"><a href="index.html">Home</a> / Our Foundress</p>
-          <h1 id="page-title">Mother Regina<br>Woroniecka</h1>
-          <p class="fnd-dates">Sister Jolanta &middot; 1921 &ndash; 2012</p>
-          <p class="fnd-lede">An orphan from Poland who became a teacher, an artist and a missionary &mdash; and who walked the roads of Karnataka to bring the faith into the homes of the poor.</p>
-        </div>
-        <figure class="portrait">
-          <div class="ph-wrap">
-            <div class="ph" role="img" aria-label="Portrait of Mother Regina Woroniecka">
-              <img src="images/Mother_Regina_Woroniecka_3.png" alt="Mother Regina Woroniecka" onerror="this.style.display='none'">
-              <span>Mother Regina Woroniecka</span>
-            </div>
+    <section class="comm-hero-section fnd-hero-section" id="hero" aria-labelledby="page-title">
+      <div class="comm-hero-container">
+        <div class="comm-hero-content">
+          <div class="badge-gold">
+            <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 1v18M3 6h14"/></svg>
+            Foundress of the Satyaseva Sisters · 1921 – 2012
           </div>
-          <figcaption>Rev. Mother Regina (Sr Jolanta) Woroniecka, Foundress of the SCS</figcaption>
-        </figure>
+          <h1 class="comm-hero-title" id="page-title">Rev. Mother Regina Woroniecka</h1>
+          <p class="comm-hero-subtitle">An orphan from Poland who became a teacher, artist, and missionary — who walked the roads of Karnataka to bring the faith into the homes of the poor.</p>
+          <div class="comm-hero-flourish" aria-hidden="true">
+            <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="comm-hero-photo-wrap">
+          <img src="images/Mother_Regina_Woroniecka_3.png" alt="Rev. Mother Regina Woroniecka, Foundress of the SCS" class="comm-hero-photo" width="440" height="320">
+        </div>
       </div>
     </section>
 
