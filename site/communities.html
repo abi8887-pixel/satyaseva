@@ -6,124 +6,149 @@
 <script>
   (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
 </script>
-<title>Communities &amp; Geographic Reach — Satyaseva Sisters</title>
-<meta name="description" content="Explore the 32 communities of the Satyaseva Catechist Sisters serving across India, Germany, and Poland through catechesis, family visits, and social ministry.">
-<meta property="og:title" content="Communities — Satyaseva Sisters">
-<meta property="og:description" content="Discover our 32 communities across India, Germany, and Poland.">
+<title>Our Communities — Satyaseva Catechist Sisters of the Families</title>
+<meta name="description" content="Discover the 32 communities of the Satyaseva Catechist Sisters of the Families serving across India, Germany, and Poland through catechesis, education, and family ministry.">
+<meta property="og:title" content="Our Communities — Satyaseva Catechist Sisters">
+<meta property="og:description" content="Discover our communities across India, Germany, and Poland living the Gospel through catechesis and family presence.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://satyasevasisters.org/communities.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Google Fonts for Stately Display & Clean Body -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/communities.css">
 </head>
-<body>
+<body class="communities-page">
 
-<nav id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-pill">
-      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
-        <span class="brand-text">
-          <span class="brand-line-1">Satyaseva Sisters</span>
-          <span class="brand-line-2">SCS &bull; Est. 1976</span>
-        </span>
-      </a>
-      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
-        <a href="index.html">Home</a>
-        <a href="communities.html" class="active" aria-current="page">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html" class="nav-donate">Donate</a>
-        <a href="contact.html">Contact</a>
+<header class="top-nav-bar" id="nav" role="banner">
+  <div class="top-nav-container">
+    <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+      <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+        <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="16" cy="10" r="2" fill="currentColor"/>
+      </svg>
+      <div class="brand-titles">
+        <span class="brand-name">Satyaseva Catechist Sisters</span>
+        <span class="brand-tagline">of the Families</span>
       </div>
-      <div class="nav-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>English</option>
-          <option value="pl">Polski</option>
-        </select>
-        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
-          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-        </button>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
+    </a>
 
-<main class="container">
-  <div class="hero-section">
-    <div class="mesh-bg">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-    </div>
-    <div class="hero-content">
-      <div class="eyebrow reveal-up">Our Reach</div>
-      <h1 class="reveal-up delay-1">Communities</h1>
-      <p class="subtitle reveal-up delay-2">Discover the 32 communities of the Satyaseva Sisters serving across India, Germany, and Poland.</p>
-    </div>
-  </div>
-  
-  <div class="comm-filters">
-    <div class="filter-tabs" id="filter-tabs" role="tablist">
-      <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All (32)</button>
-      <button class="filter-tab" data-filter="India" role="tab" aria-selected="false">India 🇮🇳</button>
-      <button class="filter-tab" data-filter="Germany" role="tab" aria-selected="false">Germany 🇩🇪</button>
-      <button class="filter-tab" data-filter="Poland" role="tab" aria-selected="false">Poland 🇵🇱</button>
-    </div>
-    <div class="filter-actions-right">
-      <div class="filter-search-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="button" aria-label="Focus search input"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" id="comm-search" class="filter-search" placeholder="Search by name, state, or ministry…" aria-label="Search communities" autocomplete="off">
-        <button type="button" id="comm-search-clear" class="search-clear-btn" aria-label="Clear search query" style="display:none;" title="Clear search">&times;</button>
-      </div>
-      <button type="button" class="btn-print-directory" id="btn-print-directory" onclick="window.print()" title="Print archival station directory sheet">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-        Print Directory
+    <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+      <a href="index.html">Home</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="communities.html" class="active" aria-current="page">Our Communities</a>
+      <a href="map.html">Mission Map</a>
+      <a href="memorial.html">In Memoriam</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="media.html">Media</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="top-actions">
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      <select id="lang-select" aria-label="Select language">
+        <option value="en" selected>EN</option>
+        <option value="pl">PL</option>
+      </select>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </div>
-  
-  <div class="comm-grid" id="comm-grid">
-    <div class="grid-loading">
-      <div class="spinner"></div>
-      <p>Loading communities…</p>
+</header>
+
+<main id="main-content">
+  <!-- Hero Section matching mockup with sisters illustration -->
+  <section class="comm-hero-section">
+    <div class="comm-hero-container">
+      <div class="comm-hero-content">
+        <h1 class="comm-hero-title">Our Communities</h1>
+        <p class="comm-hero-subtitle">The Satyaseva Catechist Sisters of the Families serve in different parts of the world, living the Gospel through catechesis, education, family ministry and a presence of love in everyday life.</p>
+        <div class="comm-hero-flourish" aria-hidden="true">
+          <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="comm-hero-photo-wrap">
+        <img src="images/hero_sisters.jpg" alt="Satyaseva Sisters looking toward the garden cross in contemplative prayer" class="comm-hero-photo" width="380" height="250">
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Pills & Search Bar -->
+  <div class="comm-controls-wrapper">
+    <div class="comm-filters" id="comm-filters">
+      <div class="filter-tabs" id="filter-tabs" role="tablist" aria-label="Filter communities by country">
+        <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All Communities</button>
+        <button class="filter-tab" data-filter="India" role="tab" aria-selected="false">India</button>
+        <button class="filter-tab" data-filter="Germany" role="tab" aria-selected="false">Germany</button>
+        <button class="filter-tab" data-filter="Poland" role="tab" aria-selected="false">Poland</button>
+      </div>
+
+      <div class="filter-actions-right">
+        <div class="filter-search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="comm-search" class="filter-search" placeholder="Search by community name, town or diocese…" aria-label="Search communities" autocomplete="off">
+          <button type="button" id="comm-search-clear" class="search-clear-btn" aria-label="Clear search query" style="display:none;" title="Clear search">&times;</button>
+        </div>
+        <button type="button" class="btn-print-directory" id="btn-print-directory" onclick="window.print()" title="Print archival station directory sheet">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print Directory
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- Community Card Grid Container -->
+  <div class="communities-container">
+    <div class="comm-grid" id="comm-grid">
+      <div class="grid-loading">
+        <div class="spinner"></div>
+        <p>Loading communities…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Scripture & Community Motto Banner -->
+  <section class="comm-closing-banner-wrap" aria-label="More communities and congregational motto">
+    <img src="images/footer_banner_hd.jpg" alt="More communities will be added as we grow. We are called to be instruments of God’s love in the lives of families." class="comm-closing-banner-img" loading="lazy">
+  </section>
 </main>
 
 <footer id="contact">
-    <div class="footer-glass reveal">
-      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  <div class="footer-glass reveal">
+    <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
+    <h3>Satyaseva Catechist Sisters of the Families</h3>
+    <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+    Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="map.html">Map</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="memorial.html">In Memoriam</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="media.html">Media</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="prayers.html">Prayers</a>
+      <a href="donate.html">Donate</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="impressum.html">Impressum</a>
     </div>
-  </footer>
+    <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  </div>
+</footer>
 
 <script src="data/communities-data.js?v=3"></script>
 <script src="js/communities-grid.js"></script>

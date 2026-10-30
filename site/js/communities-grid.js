@@ -18,51 +18,58 @@
 
   /* SVG icon templates */
   var pinIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
-  var arrowIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-  var cameraIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>';
-
-  var missionIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4 8h16"/></svg>';
-  var familiesIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
-  var serviceIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-9C1 8 3 4 7 4c2 0 4 1.5 5 3 1-1.5 3-3 5-3 4 0 6 4 4.5 8-2.5 4.65-9.5 9-9.5 9Z"/></svg>';
+  var calIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>';
+  var arrowIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
 
   function renderCard(c, imagesManifest) {
-    var flag = flags[c.country] || '';
-    var badgeText = c.badge || ('Est. ' + c.established);
-
     // Check for images in manifest or community record
     var folderData = imagesManifest[c.id] || null;
     var heroImage = (folderData && folderData.hero) || c.heroImage || '';
-    var totalPhotos = (folderData && folderData.totalImages) || (c.gallery ? c.gallery.length : 0);
+
+    // Check aliases if not found directly
+    if (!heroImage) {
+      if (c.id === 'mariapura' && imagesManifest['mariyapura']) heroImage = imagesManifest['mariyapura'].hero;
+      if (c.id === 'prakashpalya' && imagesManifest['prakashpalaya']) heroImage = imagesManifest['prakashpalaya'].hero;
+      if (c.id === 'bydgoszcz-home' && imagesManifest['bydgosh-jp2']) heroImage = imagesManifest['bydgosh-jp2'].hero;
+    }
 
     var card = document.createElement('a');
     card.className = 'comm-card';
     card.href = 'community.html?id=' + encodeURIComponent(c.id);
     card.id = 'card-' + c.id;
-    card.setAttribute('aria-label', 'View details for ' + c.name);
+    card.setAttribute('aria-label', 'View history and mission of ' + c.name);
 
-    var previewHTML = '';
+    var imgHTML = '';
     if (heroImage) {
-      var badgeLabel = totalPhotos > 1 ? (totalPhotos + ' Photos') : 'Photo';
-      previewHTML =
-        '<div class="card-photo-banner" style="background-image:url(\'' + heroImage + '\')">' +
-          '<span class="photo-badge">' + cameraIcon + ' ' + badgeLabel + '</span>' +
+      imgHTML =
+        '<div class="card-img-wrap">' +
+          '<img src="' + heroImage + '" alt="' + c.name + '" class="card-photo" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\'<div class=\\\'card-img-placeholder\\\'><svg viewBox=\\\'0 0 24 24\\\' width=\\\'28\\\' height=\\\'28\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' stroke-width=\\\'1.8\\\'><path d=\\\'M12 2v20M4 8h16\\\'/></svg><span>' + c.name + '</span></div>\';">' +
         '</div>';
     } else {
-      previewHTML =
-        '<div class="symbolic-gallery">' +
-          '<div class="sym-tile" title="Community Mission">' + missionIcon + '<span>Mission</span></div>' +
-          '<div class="sym-tile" title="Family Formation">' + familiesIcon + '<span>Families</span></div>' +
-          '<div class="sym-tile" title="Charity &amp; Service">' + serviceIcon + '<span>Service</span></div>' +
+      imgHTML =
+        '<div class="card-img-wrap">' +
+          '<div class="card-img-placeholder">' +
+            '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4 8h16"/></svg>' +
+            '<span>' + c.name + '</span>' +
+          '</div>' +
         '</div>';
     }
 
+    var estText = c.established ? ('Established ' + c.established) : '';
+
     card.innerHTML =
-      '<div class="badge">' + badgeText + '</div>' +
-      '<h3>' + c.name + '</h3>' +
-      '<div class="location">' + pinIcon + ' ' + (flag ? flag + ' ' : '') + c.location + '</div>' +
-      previewHTML +
-      '<div class="desc"><p>' + c.description + '</p></div>' +
-      '<div class="card-cta">Explore Community ' + arrowIcon + '</div>';
+      imgHTML +
+      '<div class="card-body">' +
+        '<h3 class="card-title">' + c.name + '</h3>' +
+        '<div class="card-meta">' +
+          (c.location ? '<div class="card-meta-row"><span class="meta-icon pin-icon">' + pinIcon + '</span><span class="meta-text">' + c.location + '</span></div>' : '') +
+          (estText ? '<div class="card-meta-row"><span class="meta-icon cal-icon">' + calIcon + '</span><span class="meta-text">' + estText + '</span></div>' : '') +
+        '</div>' +
+        '<div class="card-desc"><p>' + (c.description || 'Dedicated to catechesis, prayer, and pastoral presence in family life.') + '</p></div>' +
+        '<div class="card-action">' +
+          '<span class="card-btn">View History &amp; Mission ' + arrowIcon + '</span>' +
+        '</div>' +
+      '</div>';
 
     return card;
   }
@@ -70,7 +77,7 @@
   function renderGrid(communities, imagesManifest) {
     grid.innerHTML = '';
     if (communities.length === 0) {
-      grid.innerHTML = '<div class="grid-empty">No communities found matching your criteria.</div>';
+      grid.innerHTML = '<div class="grid-empty"><p>No communities found matching your criteria.</p><button type="button" class="btn-reset-filters" onclick="document.getElementById(\'comm-search\').value=\'\'; document.querySelector(\'.filter-tab[data-filter=\\\'all\\\']\').click();">Reset Filters</button></div>';
       return;
     }
     communities.forEach(function(c) {
@@ -212,10 +219,10 @@
       });
       
       // Update "All" tab count dynamically
+      // Update "All Communities" tab label
       var allTab = document.querySelector('.filter-tab[data-filter="all"]');
       if (allTab) {
-        allTab.textContent = 'All (' + (searchQuery ? filtered.length : allCommunities.length) + ')';
-        // If "all" is active, update pill width since text changed
+        allTab.textContent = searchQuery ? ('All Communities (' + filtered.length + ')') : 'All Communities';
         if (currentCountry === 'all') updatePill(allTab);
       }
     }

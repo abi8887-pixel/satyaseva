@@ -1,472 +1,660 @@
 /* ================================================================
    memorial.css — In Memoriam / Past Sisters Page Styles
-   Warm High-Performance Hybrid: Sacred Sage, Amber Gold, Warm Cream
+   Warm Sacred Aesthetic: Burgundy, Antique Gold, Warm Ivory Cream
    ================================================================ */
 
 :root {
-  --mem-bg: var(--bg, #f2f6f9);
-  --mem-card: var(--card, #ffffff);
-  --mem-ink: var(--ink, #0f2433);
-  --mem-ink-soft: var(--ink-soft, #475c6b);
-  --mem-ink-faint: var(--ink-faint, #8daab8);
+  /* Catholic Heritage Editorial Palette */
+  --memorial-burgundy: #650F25;
+  --memorial-burgundy-dark: #4A0B1B;
+  --memorial-burgundy-light: #7E142F;
+  --memorial-gold: #C99A45;
+  --memorial-gold-light: #DFBA6D;
+  --memorial-gold-soft: rgba(201, 154, 69, 0.16);
+  --memorial-ivory: #F7F0E2;
+  --memorial-text: #29231F;
+  --memorial-muted: #75695C;
 
-  --mem-gold: var(--accent, #e8833a);
-  --mem-gold-deep: var(--accent-deep, #c96820);
-  --mem-gold-light: var(--accent-tint, #fdf1e7);
+  /* Aliases for compatibility */
+  --mem-burgundy: var(--memorial-burgundy);
+  --mem-burgundy-dark: var(--memorial-burgundy-dark);
+  --mem-burgundy-light: var(--memorial-burgundy-light);
+  --mem-burgundy-tint: rgba(101, 15, 37, 0.08);
+  --mem-gold: var(--memorial-gold);
+  --mem-gold-light: var(--memorial-gold-light);
+  --mem-gold-soft: var(--memorial-gold-soft);
 
-  --mem-sage: var(--brand, #0d4b6b);
-  --mem-sage-deep: var(--brand-deep, #083649);
-  --mem-sage-light: var(--brand-tint, #e1eef6);
-  --mem-sage-glow: var(--brand-tint, #e1eef6);
+  --mem-bg: var(--memorial-ivory);
+  --mem-card-bg: #FFFCF5;
+  --mem-card-border: #EADBCC;
+  --mem-card-shadow: 0 6px 22px rgba(75, 45, 20, 0.08);
+  --mem-card-hover-shadow: 0 16px 36px rgba(101, 15, 37, 0.14);
 
-  --mem-line: var(--line, #d3dee6);
-  --mem-line-strong: var(--brand, #0d4b6b);
-  --mem-shadow: var(--elev-1);
-  --mem-shadow-deep: var(--elev-2);
-  --mem-shadow-gold: var(--elev-1);
+  --mem-text-title: var(--memorial-burgundy);
+  --mem-text-meta: #5D4B42;
+  --mem-text-body: var(--memorial-text);
+  --mem-text-muted: var(--memorial-muted);
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, 'Young Serif', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-serif);
+  --font-body: var(--font-sans);
+
+  --content-width: 1180px;
+  --section-spacing: clamp(48px, 7vw, 88px);
+  --card-gap: 28px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --mem-bg: var(--bg, #0b1822);
-    --mem-card: var(--card, #122431);
-    --mem-ink: var(--ink, #e8f1f7);
-    --mem-ink-soft: var(--ink-soft, #a3b8c6);
-    --mem-ink-faint: var(--ink-faint, #5c7d90);
-    --mem-gold: var(--accent, #f09a5c);
-    --mem-gold-deep: var(--accent, #f09a5c);
-    --mem-gold-light: var(--accent-tint, #2a1a0a);
-    --mem-sage: var(--brand, #1f7aa5);
-    --mem-sage-deep: var(--brand-ink, #8cd0ee);
-    --mem-sage-light: var(--brand-tint, #0d2535);
-    --mem-sage-glow: var(--brand-tint, #0d2535);
-    --mem-line: var(--line, #24394a);
-    --mem-line-strong: var(--line-strong, #2e4e63);
-  }
-}
+[data-theme="dark"] {
+  --mem-bg: #141012;
+  --mem-card-bg: #1E171A;
+  --mem-card-border: #3A2A30;
+  --mem-card-shadow: 0 4px 22px rgba(0, 0, 0, 0.45);
+  --mem-card-hover-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
 
-:root[data-theme="dark"] {
-  --mem-bg: var(--bg, #0b1822);
-  --mem-card: var(--card, #122431);
-  --mem-ink: var(--ink, #e8f1f7);
-  --mem-ink-soft: var(--ink-soft, #a3b8c6);
-  --mem-ink-faint: var(--ink-faint, #5c7d90);
-  --mem-gold: var(--accent, #f09a5c);
-  --mem-gold-deep: var(--accent, #f09a5c);
-  --mem-gold-light: var(--accent-tint, #2a1a0a);
-  --mem-sage: var(--brand, #1f7aa5);
-  --mem-sage-deep: var(--brand-ink, #8cd0ee);
-  --mem-sage-light: var(--brand-tint, #0d2535);
-  --mem-sage-glow: var(--brand-tint, #0d2535);
-  --mem-line: var(--line, #24394a);
-  --mem-line-strong: var(--line-strong, #2e4e63);
+  --mem-text-title: #F5D3D8;
+  --mem-text-meta: #DFC3C8;
+  --mem-text-body: #D8CBC7;
+  --mem-text-muted: #A3938E;
 }
 
 body.memorial-page {
   background-color: var(--mem-bg);
-  color: var(--mem-ink);
+  color: var(--mem-text-body);
+  font-family: var(--font-body);
+  line-height: 1.7;
   margin: 0;
-  font-family: var(--font-sans);
+  padding: 0;
   overflow-x: hidden;
-  box-sizing: border-box;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
+.memorial-page h1,
+.memorial-page h2,
+.memorial-page h3,
+.memorial-page h4 {
+  font-family: var(--font-heading);
+  color: var(--memorial-burgundy);
+  font-weight: 500;
+  line-height: 1.25;
 }
 
-/* ── Navigation Header Adjustments ──────────────────────────── */
-.nav-header {
-  background: var(--mem-card) !important;
-  border-bottom: 2px solid var(--mem-line-strong) !important;
-  padding: 16px 32px !important;
-  width: 100% !important;
+/* ── 1. Top Navigation Bar ────────────────────────────────────────── */
+.top-nav-bar {
+  background-color: var(--mem-burgundy);
+  color: #ffffff;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(197, 155, 72, 0.25);
 }
 
-.nav-header-inner {
-  max-width: 100%;
-  width: 100%;
-  margin: 0;
+.top-nav-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.top-brand {
+  display: flex;
+  align-items: center;
   gap: 12px;
-}
-
-.back-link {
-  color: var(--mem-sage-deep) !important;
-  font-family: var(--font-serif) !important;
-  font-weight: 700 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-
-.back-link svg {
-  color: var(--mem-gold) !important;
-}
-
-.nav-links {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  flex-wrap: wrap !important;
-}
-
-.nav-links a {
-  color: var(--mem-ink) !important;
   text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 8px 14px;
-  border: 2px solid transparent;
-  transition: all 0.15s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.active-nav {
-  background: var(--mem-gold-light) !important;
-  border-color: var(--mem-line-strong) !important;
-  color: var(--mem-sage-deep) !important;
-  box-shadow: 2px 2px 0 var(--mem-line-strong);
-}
-
-/* ── Hero Section ───────────────────────────────────────────── */
-.memorial-hero {
-  border-bottom: 2px solid var(--mem-line-strong);
-  background: var(--mem-gold-light);
-  padding: 60px 24px 50px;
-  text-align: center;
-}
-
-.memorial-hero-inner {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-.memorial-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--mem-gold-deep);
-  background: var(--mem-card);
-  border: 2px solid var(--mem-gold);
-  padding: 6px 14px;
-  box-shadow: 2px 2px 0 var(--mem-gold);
-  margin-bottom: 20px;
-}
-
-.memorial-hero h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(34px, 5vw, 54px);
-  color: var(--mem-sage-deep);
-  margin: 0 0 16px;
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-.memorial-subtitle {
-  font-size: 17px;
-  line-height: 1.75;
-  color: var(--mem-ink-soft);
-  margin: 0 auto 28px;
-  max-width: 740px;
-}
-
-.memorial-scripture-box {
-  background: var(--mem-card);
-  border: 2px solid var(--mem-line-strong);
-  padding: 20px 28px;
-  box-shadow: 4px 4px 0 var(--mem-shadow);
-  max-width: 680px;
-  margin: 0 auto;
-  font-style: italic;
-}
-
-.scripture-text {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--mem-sage-deep);
-  margin: 0 0 6px;
-}
-
-.scripture-cite {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--mem-gold-deep);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-style: normal;
-}
-
-/* ── Container & Main Content ───────────────────────────────── */
-.memorial-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 48px 24px 80px;
-}
-
-/* ── Search & Filter Toolbar ────────────────────────────────── */
-.memorial-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 40px;
-  padding: 18px 24px;
-  background: var(--mem-card);
-  border: 2px solid var(--mem-line-strong);
-  box-shadow: 5px 5px 0 var(--mem-shadow);
-}
-
-.search-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1 1 320px;
-  border: 2px solid var(--mem-line);
-  background: var(--mem-bg);
-  padding: 8px 14px;
-  transition: border-color 0.15s ease;
-}
-
-.search-wrap:focus-within {
-  border-color: var(--mem-gold);
-  background: #ffffff;
-}
-
-.search-wrap svg {
-  color: var(--mem-sage);
+  color: #ffffff;
   flex-shrink: 0;
 }
 
-.memorial-search-input {
-  border: none;
-  background: transparent;
-  width: 100%;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: var(--mem-ink);
-  outline: none;
+.brand-crest {
+  width: 32px;
+  height: 32px;
+  color: var(--mem-gold);
 }
 
-.memorial-count-tag {
-  font-family: 'Inter', monospace, sans-serif;
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.brand-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
   font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--mem-sage-deep);
-  background: var(--mem-sage-light);
-  border: 1px solid var(--mem-sage);
-  padding: 6px 12px;
+  color: var(--mem-gold-light);
+  line-height: 1.1;
 }
 
-/* ── Sisters Grid ───────────────────────────────────────────── */
-.memorial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 32px;
-}
-
-.sister-card {
-  background: var(--mem-card);
-  border: 2px solid var(--mem-line-strong);
-  box-shadow: 6px 6px 0 var(--mem-shadow);
+.top-links {
   display: flex;
-  flex-direction: column;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.15s ease;
-  cursor: pointer;
-  overflow: hidden;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.top-links a {
   text-decoration: none;
-  color: inherit;
-}
-
-.sister-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0 var(--mem-shadow-deep);
-  border-color: var(--mem-gold);
-}
-
-.sister-card-photo-box {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 6px 0;
   position: relative;
-  width: 100%;
-  aspect-ratio: 4/3;
-  background-size: cover;
-  background-position: center top;
-  border-bottom: 2px solid var(--mem-line-strong);
-  background-color: var(--mem-sage-glow);
+  transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
-.sister-card-photo-placeholder {
+.top-links a:hover {
+  color: #ffffff;
+}
+
+.top-links a.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.top-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--mem-gold);
+  border-radius: 2px;
+}
+
+.top-actions {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.top-actions .theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  color: var(--mem-sage);
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s ease;
 }
 
-.sister-card-photo-placeholder svg {
-  width: 40px;
-  height: 40px;
+.top-actions select#lang-select {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.card-lifespan-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--mem-gold-light);
-  color: var(--mem-gold-deep);
-  border: 2px solid var(--mem-gold);
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  box-shadow: 2px 2px 0 var(--mem-gold);
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
 }
 
-.sister-card-body {
-  padding: 24px;
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.2s ease;
+}
+
+/* ── 2. Split Hero Section ────────────────────────────────────────── */
+.memorial-split-hero {
+  padding: 56px 24px 36px;
+  background: radial-gradient(circle at top center, rgba(197, 155, 72, 0.08) 0%, transparent 70%);
+}
+
+.memorial-hero-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-text-col {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: center;
 }
 
-.sister-card-name {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  margin: 0 0 6px;
-  color: var(--mem-sage-deep);
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mem-gold);
+  font-size: 13px;
   font-weight: 700;
-}
-
-.sister-card-title {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--mem-gold-deep);
   margin-bottom: 12px;
 }
 
-.sister-card-communities {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 16px;
+.kicker-cross {
+  width: 16px;
+  height: 16px;
+  color: var(--mem-gold);
 }
 
-.comm-pill {
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--mem-sage-light);
-  color: var(--mem-sage-deep);
-  border: 1px solid var(--mem-sage);
-  padding: 2px 8px;
-}
-
-.sister-card-quote {
-  font-style: italic;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--mem-ink-soft);
-  margin: 0 0 20px;
-  border-left: 3px solid var(--mem-gold);
-  padding-left: 12px;
-}
-
-.sister-card-cta {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
+.hero-headline {
+  font-family: var(--font-serif);
+  font-size: 46px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--mem-sage-deep);
-  border-top: 1.5px solid var(--mem-line);
-  padding-top: 14px;
+  color: var(--mem-burgundy);
+  line-height: 1.15;
+  margin: 0 0 18px;
+  letter-spacing: -0.01em;
 }
 
-/* ── Prayer Section ─────────────────────────────────────────── */
-.remembrance-prayer-section {
-  margin-top: 60px;
+[data-theme="dark"] .hero-headline {
+  color: var(--mem-text-title);
 }
 
-.prayer-card {
-  background: var(--mem-gold-light);
-  border: 2px solid var(--mem-gold);
-  padding: 40px 32px;
-  box-shadow: 6px 6px 0 var(--mem-shadow);
-  text-align: center;
-  max-width: 800px;
+.hero-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--mem-text-meta);
+  margin: 0 0 24px;
+  border-left: 3px solid var(--mem-gold);
+  padding-left: 18px;
+}
+
+.hero-flourish {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.flourish-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--mem-gold), transparent);
+}
+
+.hero-flourish .flourish-line:first-child {
+  background: linear-gradient(270deg, var(--mem-gold), transparent);
+}
+
+.flourish-cross {
+  color: var(--mem-gold);
+  font-size: 16px;
+}
+
+.hero-media-col {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image-frame {
+  width: 100%;
+  max-width: 490px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(74, 19, 34, 0.12);
+  border: 2px solid rgba(197, 155, 72, 0.4);
+  background: #ffffff;
+}
+
+[data-theme="dark"] .hero-image-frame {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(197, 155, 72, 0.3);
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── 3. Beloved Sisters Gallery ───────────────────────────────────── */
+.beloved-sisters-section {
+  padding: 36px 24px 64px;
+}
+
+.beloved-container {
+  max-width: 1180px;
   margin: 0 auto;
 }
 
-.prayer-crest {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 16px;
-  background: var(--mem-card);
-  border: 2px solid var(--mem-gold);
-  color: var(--mem-gold-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 3px 3px 0 var(--mem-gold);
+.section-title-wrap {
+  text-align: center;
+  margin-bottom: 46px;
 }
 
-.prayer-card h3 {
+.section-title {
   font-family: var(--font-serif);
-  font-size: 24px;
-  color: var(--mem-sage-deep);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--mem-burgundy);
   margin: 0 0 12px;
 }
 
-.prayer-card p {
-  font-style: italic;
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--mem-ink);
-  max-width: 620px;
-  margin: 0 auto 16px;
+[data-theme="dark"] .section-title {
+  color: var(--mem-text-title);
 }
 
-.prayer-note {
-  display: block;
+.section-sub {
+  font-size: 15.5px;
+  color: var(--mem-text-meta);
+  max-width: 680px;
+  margin: 0 auto 16px;
+  line-height: 1.55;
+}
+
+.section-divider-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.motif-line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mem-gold));
+}
+
+.section-divider-motif .motif-line:last-child {
+  background: linear-gradient(90deg, var(--mem-gold), transparent);
+}
+
+.motif-gem {
+  color: var(--mem-gold);
   font-size: 13px;
-  color: var(--mem-ink-faint);
-  font-style: normal;
-  max-width: 560px;
+}
+
+/* ── Sisters Two-Tier Layout ── */
+.sisters-tier {
+  display: grid;
+  gap: 26px;
+  justify-content: center;
+}
+
+/* Tier 1: 3 cards (Center Mother Regina) */
+.tier-top {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 980px;
+  margin: 0 auto 36px;
+  align-items: end;
+}
+
+/* Tier 2: 4 cards */
+.tier-bottom {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1140px;
   margin: 0 auto;
 }
 
-/* ── Memorial Modal ─────────────────────────────────────────── */
+/* Sister Card Base */
+.memorial-sister-card {
+  background: var(--mem-card-bg);
+  border: 1px solid var(--mem-card-border);
+  border-radius: 16px;
+  padding: 26px 18px 22px;
+  text-align: center;
+  box-shadow: var(--mem-card-shadow);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  outline: none;
+}
+
+.memorial-sister-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(201, 154, 69, 0.22);
+  border-radius: 12px;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.memorial-sister-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--memorial-gold);
+  box-shadow: var(--mem-card-hover-shadow);
+}
+
+.memorial-sister-card:hover::before {
+  border-color: rgba(201, 154, 69, 0.55);
+}
+
+.memorial-sister-card:focus-visible {
+  box-shadow: 0 0 0 3px var(--memorial-gold);
+}
+
+/* Filigree Oval Frame */
+.card-filigree-frame {
+  position: relative;
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 50% / 46%;
+  box-shadow: 0 0 0 2px var(--memorial-gold), 0 0 0 6px rgba(201, 154, 69, 0.2);
+  background: #FFFCF5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.memorial-sister-card:hover .card-filigree-frame {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 3px var(--memorial-gold), 0 0 0 8px rgba(201, 154, 69, 0.32);
+}
+
+.portrait-oval {
+  width: 124px;
+  height: 152px;
+  border-radius: 50% / 46%;
+  overflow: hidden;
+  background: #f0ebe4;
+}
+
+.sister-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Card Meta & Texts */
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.sister-name {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--memorial-burgundy);
+  margin: 0;
+  line-height: 1.25;
+}
+
+[data-theme="dark"] .sister-name {
+  color: var(--mem-text-title);
+}
+
+.sister-pass-date {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #7A5714;
+  letter-spacing: 0.04em;
+  background: rgba(201, 154, 69, 0.14);
+  border: 1px solid rgba(201, 154, 69, 0.28);
+  padding: 3px 12px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+[data-theme="dark"] .sister-pass-date {
+  color: var(--memorial-gold-light);
+  background: rgba(201, 154, 69, 0.22);
+  border-color: rgba(201, 154, 69, 0.4);
+}
+
+/* Special Hero Center Card: Mother Regina Foundress */
+.card-foundress {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF8 100%);
+  border-color: var(--memorial-gold);
+  box-shadow: 0 8px 30px rgba(201, 154, 69, 0.2);
+  padding: 30px 20px 26px;
+}
+
+[data-theme="dark"] .card-foundress {
+  background: linear-gradient(180deg, #1C1518 0%, #161013 100%);
+  border-color: var(--memorial-gold);
+}
+
+.frame-foundress {
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 0 0 3px var(--memorial-gold), 0 0 0 8px rgba(201, 154, 69, 0.28);
+}
+
+.portrait-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0ebe4;
+}
+
+.foundress-honor-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mem-burgundy);
+  background: var(--mem-gold-soft);
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-bottom: 2px;
+}
+
+[data-theme="dark"] .foundress-honor-tag {
+  color: var(--mem-gold-light);
+  background: rgba(197, 155, 72, 0.25);
+}
+
+.foundress-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.foundress-date {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #8c6820;
+  background: rgba(197, 155, 72, 0.18);
+}
+
+[data-theme="dark"] .foundress-date {
+  color: var(--mem-gold-light);
+}
+
+/* ── 4. Bottom Panoramic Landscape Banner ─────────────────────────── */
+.memorial-panoramic-section {
+  padding: 10px 24px 64px;
+}
+
+.panoramic-banner-wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.panoramic-banner-media {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(74, 19, 34, 0.14);
+  border: 2px solid rgba(197, 155, 72, 0.4);
+  max-height: 220px;
+  background: var(--mem-burgundy);
+}
+
+.panoramic-bg-img {
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.85);
+}
+
+.panoramic-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(74, 19, 34, 0.25) 0%, rgba(55, 13, 24, 0.82) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 28px;
+  text-align: center;
+}
+
+.panoramic-blessing {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  max-width: 760px;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* ── 5. Tribute Modal ─────────────────────────────────────────────── */
 .memorial-modal {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 2000;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .memorial-modal.active {
@@ -476,171 +664,155 @@ body.memorial-page {
 .modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(20, 30, 24, 0.85);
+  background: rgba(20, 10, 14, 0.68);
+  backdrop-filter: blur(4px);
 }
 
 .memorial-modal-card {
   position: relative;
-  background: var(--mem-card);
-  border: 2px solid var(--mem-line-strong);
-  max-width: 740px;
-  width: 100%;
-  max-height: 92vh;
-  overflow-y: auto;
-  box-shadow: 10px 10px 0 var(--mem-shadow-deep);
   z-index: 2;
-  box-sizing: border-box;
+  background: var(--mem-card-bg);
+  border: 1px solid rgba(201, 154, 69, 0.4);
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 0 1px rgba(201, 154, 69, 0.35), 0 24px 60px rgba(0, 0, 0, 0.38);
+  padding: 32px 28px 24px;
 }
 
 .modal-close-btn {
   position: absolute;
-  top: 16px;
-  right: 18px;
-  background: var(--mem-card);
-  border: 1px solid var(--mem-line);
+  top: 14px;
+  right: 16px;
+  background: rgba(201, 154, 69, 0.1);
+  border: 1px solid rgba(201, 154, 69, 0.25);
   border-radius: 50%;
-  font-size: 22px;
-  line-height: 1;
-  color: var(--mem-ink);
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  box-shadow: var(--elev-1);
-  transition: all 0.15s ease;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--memorial-burgundy);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .modal-close-btn:hover {
-  background: var(--mem-gold-light);
-  border-color: var(--mem-gold);
-  color: var(--mem-gold-deep);
-  transform: scale(1.05);
+  background: var(--memorial-burgundy);
+  color: #FFFFFF;
+  border-color: var(--memorial-burgundy);
 }
 
 .modal-header-hero {
   display: flex;
-  border-bottom: 2px solid var(--mem-line-strong);
-  background: var(--mem-gold-light);
-  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--mem-card-border);
+  padding-bottom: 20px;
 }
 
 .modal-photo-col {
-  width: 260px;
-  min-height: 240px;
-  background-size: cover;
-  background-position: center top;
-  border-right: 2px solid var(--mem-line-strong);
-  background-color: var(--mem-sage-glow);
+  width: 120px;
+  height: 148px;
   flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(101, 15, 37, 0.16);
+  border: 2px solid var(--memorial-gold);
 }
 
-.modal-hero-details {
-  padding: 32px 28px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.modal-lifespan-tag {
-  display: inline-block;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--mem-gold-deep);
-  background: #ffffff;
-  border: 1px solid var(--mem-gold);
-  padding: 3px 8px;
-  align-self: flex-start;
-  margin-bottom: 10px;
+.modal-photo-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .modal-hero-details h2 {
   font-family: var(--font-serif);
-  font-size: clamp(22px, 3.5vw, 30px);
-  margin: 0 0 6px;
-  color: var(--mem-sage-deep);
+  font-size: 24px;
+  color: var(--mem-burgundy);
+  margin: 4px 0 6px;
+}
+
+[data-theme="dark"] .modal-hero-details h2 {
+  color: var(--mem-gold-light);
+}
+
+.modal-lifespan-tag {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mem-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .modal-title-role {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--mem-gold-deep);
-  margin-bottom: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--mem-text-meta);
+  margin-bottom: 6px;
 }
 
 .modal-dates-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--mem-ink-soft);
-  font-weight: 600;
-}
-
-.modal-body-content {
-  padding: 32px;
+  font-size: 12.5px;
+  color: var(--mem-text-muted);
 }
 
 .modal-quote-box {
-  background: var(--mem-sage-glow);
-  border: 2px solid var(--mem-sage);
-  padding: 16px 20px;
-  margin-bottom: 24px;
+  background: var(--mem-bg);
+  border-left: 3px solid var(--mem-gold);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 0 8px 8px 0;
 }
 
 .modal-quote-box p {
+  font-family: var(--font-serif);
   font-style: italic;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--mem-sage-deep);
+  font-size: 14.5px;
+  color: var(--mem-text-body);
   margin: 0;
+}
+
+.modal-section {
+  margin-bottom: 20px;
 }
 
 .modal-section h4 {
   font-family: var(--font-serif);
-  font-size: 18px;
-  color: var(--mem-sage-deep);
-  margin: 0 0 10px;
-  border-bottom: 1.5px solid var(--mem-line);
-  padding-bottom: 6px;
+  font-size: 16px;
+  color: var(--mem-burgundy);
+  margin: 0 0 8px;
+}
+
+[data-theme="dark"] .modal-section h4 {
+  color: var(--mem-gold-light);
 }
 
 .modal-bio-text {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--mem-ink);
-  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--mem-text-body);
+  margin: 0;
 }
 
 .modal-details-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  background: var(--mem-bg);
-  border: 2px solid var(--mem-line);
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13.5px;
+  margin-bottom: 24px;
 }
 
 .modal-detail-item strong {
+  color: var(--mem-text-title);
   display: block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--mem-sage);
   margin-bottom: 4px;
-}
-
-.modal-detail-item span {
-  font-size: 14px;
-  color: var(--mem-ink);
 }
 
 .communities-tags-wrap {
@@ -650,338 +822,186 @@ body.memorial-page {
   margin-top: 4px;
 }
 
+.comm-pill {
+  font-size: 12px;
+  color: var(--mem-text-title);
+  background: var(--mem-gold-soft);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(197, 155, 72, 0.3);
+}
+
 .modal-footer-bar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 18px 32px;
-  background: var(--mem-gold-light);
-  border-top: 2px solid var(--mem-line-strong);
+  align-items: center;
+  border-top: 1px solid var(--mem-card-border);
+  padding-top: 16px;
 }
 
 .pious-tag {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--mem-gold-deep);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--mem-gold);
 }
 
 .btn-close-modal {
-  padding: 10px 24px;
-  background: var(--brand, #0d4b6b);
-  color: #ffffff !important;
-  border: 2px solid var(--brand, #0d4b6b);
-  border-radius: 999px;
+  background: var(--mem-burgundy);
+  color: #ffffff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 9999px;
   font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--elev-2);
-  transition: all 0.15s ease;
 }
 
-.btn-close-modal:hover {
-  background: var(--accent, #e8833a);
-  border-color: var(--accent, #e8833a);
-  transform: translateY(-1px);
-  box-shadow: var(--elev-3);
-}
-
-/* ── Loading Spinner & Empty State ──────────────────────────── */
-.memorial-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
-  gap: 16px;
-}
-
-.memorial-loading .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid var(--mem-line);
-  border-top-color: var(--mem-sage);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-.memorial-empty {
-  text-align: center;
-  padding: 60px 20px;
-  border: 2px dashed var(--mem-line);
-  background: var(--mem-card);
-  border-radius: 8px;
-}
-
-.btn-clear-filter {
-  padding: 10px 22px;
-  background: var(--brand, #0d4b6b);
-  color: #ffffff !important;
-  border: 2px solid var(--brand, #0d4b6b);
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 12px;
-  box-shadow: var(--elev-1);
-  transition: all 0.15s ease;
-}
-.btn-clear-filter:hover {
-  background: var(--accent, #e8833a);
-  border-color: var(--accent, #e8833a);
-  transform: translateY(-1px);
-}
-
-/* ── Responsive Mobile Rules ────────────────────────────────── */
-@media (max-width: 768px) {
-  .nav-header {
-    padding: 12px 18px !important;
+/* ── 6. Responsive Media Queries ──────────────────────────────────── */
+@media (max-width: 990px) {
+  .tier-top {
+    gap: 20px;
   }
-  .memorial-hero {
-    padding: 40px 16px 36px;
+  .tier-bottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 600px;
   }
-  .memorial-container {
-    padding: 32px 16px 60px;
+}
+
+@media (max-width: 860px) {
+  .top-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: var(--mem-burgundy);
+    flex-direction: column;
+    padding: 20px 24px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(197, 155, 72, 0.3);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+    z-index: 999;
   }
-  .memorial-grid {
+  .top-links.open {
+    display: flex;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+
+  .memorial-hero-container {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 32px;
+    text-align: center;
+  }
+  .hero-quote {
+    border-left: none;
+    border-top: 2px solid var(--mem-gold);
+    border-bottom: 2px solid var(--mem-gold);
+    padding: 14px 0;
+  }
+  .hero-flourish {
+    justify-content: center;
+  }
+  .hero-kicker {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .memorial-split-hero {
+    padding: 36px 16px 28px;
+  }
+  .beloved-sisters-section {
+    padding: 24px 16px 48px;
+  }
+  .tier-top {
+    grid-template-columns: 1fr;
+    max-width: min(100%, 340px);
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .tier-top .memorial-sister-card:nth-child(2) {
+    order: -1; /* Mother Regina first on mobile */
+  }
+  .tier-bottom {
+    grid-template-columns: 1fr;
+    max-width: min(100%, 340px);
+    gap: 20px;
+  }
+  .memorial-sister-card {
+    padding: 22px 16px 20px;
+  }
+  .card-foundress {
+    padding: 26px 18px 22px;
+  }
+  .hero-headline {
+    font-size: clamp(28px, 6.5vw, 36px);
+  }
+  .section-title {
+    font-size: clamp(24px, 5.5vw, 30px);
+  }
+  .panoramic-blessing {
+    font-size: clamp(15px, 4vw, 18px);
+    padding: 14px 16px;
+  }
+  .memorial-panoramic-section {
+    padding: 6px 16px 48px;
+  }
+}
+
+@media (max-width: 580px) {
+  .memorial-modal-card {
+    padding: 24px 18px 20px;
+    max-height: 92vh;
   }
   .modal-header-hero {
     flex-direction: column;
+    text-align: center;
+    gap: 14px;
+    padding-bottom: 16px;
   }
   .modal-photo-col {
-    width: 100%;
-    min-height: 220px;
-    border-right: none;
-    border-bottom: 2px solid var(--mem-line-strong);
+    margin: 0 auto;
   }
-  .modal-hero-details {
-    padding: 24px 20px;
-  }
-  .modal-body-content {
-    padding: 20px;
+  .modal-hero-details h2 {
+    font-size: 20px;
   }
 }
 
-/* ── Print Commemorative Booklet Styles ─────────────────────── */
-.memorial-toolbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+/* ── 7. Memorial Page Footer Harmonization ────────────────────────── */
+body.memorial-page footer {
+  background: var(--memorial-burgundy) !important;
+  color: var(--memorial-ivory);
+  border-top: 2px solid var(--memorial-gold);
 }
 
-.btn-print-memorial {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--mem-card);
-  color: var(--mem-ink);
-  border: 1px solid var(--mem-line);
-  box-shadow: var(--elev-1);
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
+body.memorial-page footer .footer-glass {
+  background: transparent;
 }
 
-.btn-print-memorial:hover {
-  background: var(--mem-gold-light);
-  border-color: var(--mem-gold);
-  color: var(--mem-gold-deep);
-  transform: translateY(-1px);
-  box-shadow: var(--elev-2);
+body.memorial-page footer h3 {
+  color: #FFFFFF;
+  font-family: var(--font-heading);
 }
 
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 1.5cm;
-  }
-
-  body.memorial-page {
-    background: #fff !important;
-    color: #000 !important;
-    font-size: 10pt;
-  }
-
-  /* Hide screen-only interactive elements */
-  nav,
-  .nav-header,
-  .nav-toggle,
-  .floating-contact,
-  .cookie-banner-overlay,
-  .memorial-toolbar,
-  .btn-print-memorial,
-  .memorial-loading,
-  .memorial-empty,
-  .memorial-modal,
-  footer {
-    display: none !important;
-  }
-
-  /* Dignified Booklet Header */
-  .memorial-hero {
-    background: #fff !important;
-    border-bottom: 2pt solid #000 !important;
-    padding: 0 0 16pt 0 !important;
-    margin-bottom: 18pt !important;
-    text-align: center;
-  }
-
-  .memorial-kicker {
-    color: #333 !important;
-    font-size: 9pt !important;
-    letter-spacing: 0.1em;
-  }
-
-  .memorial-hero h1 {
-    font-size: 24pt !important;
-    color: #000 !important;
-    margin: 6pt 0 !important;
-  }
-
-  .memorial-subtitle {
-    font-size: 9.5pt !important;
-    color: #333 !important;
-    max-width: 90% !important;
-    margin: 0 auto 10pt auto !important;
-  }
-
-  .memorial-scripture-box {
-    background: #fdfdfd !important;
-    border: 1pt solid #444 !important;
-    padding: 8pt !important;
-    margin: 8pt auto 0 auto !important;
-  }
-
-  .scripture-text {
-    font-size: 9.5pt !important;
-    color: #000 !important;
-  }
-
-  .scripture-cite {
-    font-size: 8pt !important;
-    color: #555 !important;
-  }
-
-  /* Container */
-  .memorial-container {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  /* Grid: 2 columns on paper, avoiding breaks inside cards */
-  .memorial-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 14pt !important;
-    page-break-after: auto;
-  }
-
-  .sister-card {
-    border: 1.5pt solid #000 !important;
-    box-shadow: none !important;
-    background: #fff !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    margin-bottom: 12pt;
-    padding: 0 !important;
-  }
-
-  .card-photo-wrap {
-    height: 160px !important;
-    border-bottom: 1.5pt solid #000 !important;
-  }
-
-  .card-photo {
-    filter: grayscale(100%);
-  }
-
-  .card-body {
-    padding: 10pt !important;
-  }
-
-  .sister-name {
-    font-size: 13pt !important;
-    color: #000 !important;
-    margin-bottom: 3pt !important;
-  }
-
-  .lifespan-pill {
-    background: #f0f0f0 !important;
-    color: #000 !important;
-    border: 1pt solid #666 !important;
-    font-size: 8pt !important;
-  }
-
-  .sister-ministry-summary {
-    font-size: 8.5pt !important;
-    color: #333 !important;
-    line-height: 1.35 !important;
-  }
-
-  .card-footer {
-    border-top: 1pt solid #ccc !important;
-    padding-top: 6pt !important;
-    font-size: 8pt !important;
-    color: #444 !important;
-  }
-
-  .card-click-cue {
-    display: none !important;
-  }
-
-  /* Concluding Prayer section */
-  .remembrance-prayer-section {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    margin-top: 20pt !important;
-    border: 2pt solid #000 !important;
-    background: #fff !important;
-    box-shadow: none !important;
-    padding: 14pt !important;
-    text-align: center;
-  }
-
-  .prayer-card {
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
-
-  .prayer-crest {
-    border: 1.5pt solid #000 !important;
-    background: #fff !important;
-    color: #000 !important;
-  }
-
-  .prayer-card h3 {
-    font-size: 14pt !important;
-    color: #000 !important;
-  }
-
-  .prayer-card p {
-    font-size: 10.5pt !important;
-    color: #111 !important;
-    line-height: 1.5 !important;
-  }
-
-  .prayer-note {
-    font-size: 8pt !important;
-    color: #555 !important;
-  }
+body.memorial-page footer p,
+body.memorial-page .footer-fine {
+  color: rgba(247, 240, 226, 0.85);
 }
 
+body.memorial-page .cross-mark {
+  color: var(--memorial-gold);
+}
+
+body.memorial-page .footer-links a {
+  color: var(--memorial-ivory);
+  border-color: rgba(201, 154, 69, 0.35);
+  transition: all 0.2s ease;
+}
+
+body.memorial-page .footer-links a:hover {
+  color: var(--memorial-gold-light);
+  border-color: var(--memorial-gold);
+}

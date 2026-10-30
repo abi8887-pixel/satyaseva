@@ -1,88 +1,106 @@
 [
   {
-    "id": "sr-bernadette-kurian",
-    "name": "Sr. Bernadette Kurian SCS",
-    "title": "Mission Pioneer",
-    "birthDate": "1946-09-18",
-    "professionDate": "1981-10-15",
-    "departureDate": "2023-01-04",
-    "photo": "images/mother-002.jpg",
-    "communities": [
-      "St. Mary Convent Bareilly",
-      "St. Patrick Convent Agra"
-    ],
-    "ministry": "North India Mission Expansion, Women's Self-Help Groups & Adult Catechesis",
-    "biography": "A brave pioneer of the congregation's mission in Northern India, Sr. Bernadette learned local dialects and founded self-help skill centers for village women. Her joyful courage and deep trust in divine providence inspired everyone who worked beside her.",
-    "quote": "Prayer is the golden key that opens the morning and seals the peace of the night.",
-    "burialPlace": "St. Mary's Cemetery, Bareilly, Uttar Pradesh"
-  },
-  {
-    "id": "sr-agnes-mary-varkey",
-    "name": "Sr. Agnes Mary Varkey SCS",
-    "title": "Formation Directress & Educator",
-    "birthDate": "1944-01-22",
-    "professionDate": "1983-06-12",
-    "departureDate": "2021-04-17",
-    "photo": "images/mother-005.jpg",
-    "communities": [
-      "Sacred Heart Convent Maruthavu",
-      "St. Aloysius Kadampady"
-    ],
-    "ministry": "Novitiate Directress, Parish School Teaching & Youth Pastoral Ministry",
-    "biography": "Sr. Agnes Mary devoted over three decades to nurturing the spiritual formation of young candidates and novices. Her deep Marian spirituality and patient educational guidance molded dozens of sisters in the congregation. Even during her illness, she remained an apostle of intercessory prayer.",
-    "quote": "Joy in quiet perseverance, and unconditional love for the little ones.",
-    "burialPlace": "Kannur Catholic Cemetery, Kerala"
-  },
-  {
-    "id": "sr-clara-anthony",
-    "name": "Sr. Clara Anthony SCS",
-    "title": "Village Catechist & Family Pillar",
-    "birthDate": "1950-12-03",
-    "professionDate": "1987-05-24",
-    "departureDate": "2020-09-15",
-    "photo": "images/mother-007.jpg",
-    "communities": [
-      "St. Joseph Convent Prakashpalaya",
-      "Sacred Heart Thanjavur"
-    ],
-    "ministry": "Evening Schools for Poor Children, Tailoring Units & Rosary Circles",
-    "biography": "Sr. Clara spent her life among the poor rural farming communities of Karnataka and Tamil Nadu. She gathered children every evening under the village trees for remedial schooling and faith lessons, leaving a legacy of literacy and faith.",
-    "quote": "Let our footsteps bring Christ's peace to every doorstep we cross.",
-    "burialPlace": "Prakashpalaya Parish Cemetery, Karnataka"
-  },
-  {
-    "id": "sr-therese-dmello",
-    "name": "Sr. M. Therese D'Mello SCS",
-    "title": "Pioneer Catechist",
-    "birthDate": "1938-07-14",
-    "professionDate": "1978-05-31",
-    "departureDate": "2018-11-09",
-    "photo": "images/mother-004.jpg",
+    "id": "sr-clare",
+    "name": "Sr. Clare SCS",
+    "title": "Pillar of Catechesis & Family Apostolate",
+    "birthDate": "1954-04-12",
+    "professionDate": "1982-05-15",
+    "departureDate": "2024-06-15",
+    "photo": "images/memorial/sr_clare.jpg",
     "communities": [
       "Marianiketan Mariyapura",
-      "St. Joseph Convent Prakashpalaya"
+      "Generalate Bangalore",
+      "Prakashpalya"
     ],
-    "ministry": "Village Evangelization, Family Home Visits & Sacramental Formation",
-    "biography": "Sr. Therese was among the first novices to answer Mother Regina's invitation. Known for her gentle humility and tireless energy, she walked countless miles through dusty rural footpaths, sitting with elderly widows, preparing generations of village children for Holy Communion, and reconciling families through prayer.",
-    "quote": "In every humble home, Christ is waiting for someone to listen with love.",
-    "burialPlace": "Mariyapura Motherhouse Cemetery"
+    "ministry": "Catechesis, Family Ministry, Parish Animation & Prayer Leadership",
+    "biography": "Sr. Clare was a beloved, devoted member of the Satyaseva Sisters who served the congregation with unwavering gentleness, joy, and deep pastoral commitment to families and children.",
+    "quote": "Let love and humility guide every step of our mission.",
+    "burialPlace": "Mariyapura Motherhouse Cemetery, Karnataka, India"
   },
   {
-    "id": "sr-philomena-joseph",
-    "name": "Sr. Philomena Joseph SCS",
-    "title": "Healthcare & Social Apostolate",
-    "birthDate": "1941-10-05",
-    "professionDate": "1982-02-02",
-    "departureDate": "2017-08-28",
-    "photo": "images/mother-001.jpg",
+    "id": "sr-tresa-mary",
+    "name": "Sr. Tresa Mary SCS",
+    "title": "Contemplative Heart & Steadfast Educator",
+    "birthDate": "1953-08-14",
+    "professionDate": "1983-02-11",
+    "departureDate": "2022-08-06",
+    "photo": "images/memorial/sr_tresa_mary.jpg",
     "communities": [
-      "Generalate Mysore",
-      "Nirmal Hriday Varanasi"
+      "St. Jude's Convent Mariamangala",
+      "Generalate Mysore"
     ],
-    "ministry": "Rural Dispensary, First Aid, Leprosy & Destitute Outreach",
-    "biography": "Sr. Philomena was a compassionate healer who established mobile medical clinics across impoverished hamlets. Day and night, she dressed wounds, administered life-saving medications, and comforted the dying with gentle prayer and maternal solicitude.",
-    "quote": "To bandage a wound or hold the hand of the dying is to touch the living Body of Christ.",
-    "burialPlace": "Mysore Catholic Cemetery, Karnataka"
+    "ministry": "Eucharistic Adoration, Senior Sister Care & Pastoral Mentoring",
+    "biography": "Sr. Tresa Mary served the congregation through her profound spirit of adoration, patience in teaching, and maternal solicitude for the poorest.",
+    "quote": "Perpetual adoration is the heartbeat of our spiritual family.",
+    "burialPlace": "Mariamangala Cemetery, Karnataka"
+  },
+  {
+    "id": "sr-james",
+    "name": "Sr. James SCS",
+    "title": "Minister of Sacraments & Humble Service",
+    "birthDate": "1968-11-25",
+    "professionDate": "1995-05-10",
+    "departureDate": "2022-02-18",
+    "photo": "images/memorial/sr_james.jpg",
+    "communities": [
+      "St. Joseph Convent Prakashpalya",
+      "Christ the King Jaggeri"
+    ],
+    "ministry": "Care for Sick & Elderly, Sacristy Service & Family Prayer Circles",
+    "biography": "With radiant warmth and selfless charity, Sr. James touched the hearts of the sick and elderly, bringing Christ's peace to every household she entered.",
+    "quote": "To serve the little ones is to serve Christ Himself.",
+    "burialPlace": "Prakashpalya Parish Cemetery, Karnataka"
+  },
+  {
+    "id": "sr-justin",
+    "name": "Sr. Justin SCS",
+    "title": "Apostle of Quiet Prayer & Educational Mission",
+    "birthDate": "1962-09-10",
+    "professionDate": "1989-06-20",
+    "departureDate": "2020-07-25",
+    "photo": "images/memorial/sr_justin.jpg",
+    "communities": [
+      "Sacred Heart Convent Maruthavu",
+      "Generalate Bangalore"
+    ],
+    "ministry": "Education, Remedial Schooling & Family Accompaniment",
+    "biography": "Sr. Justin dedicated her life to the education of children and accompanied countless families through compassionate home visits and prayer.",
+    "quote": "In silent trust, God works wonders in humble hearts.",
+    "burialPlace": "Maruthavu Catholic Cemetery, Kerala"
+  },
+  {
+    "id": "sr-rosalia",
+    "name": "Sr. Rosalia SCS",
+    "title": "Devoted Missionary & Caregiver of Families",
+    "birthDate": "1951-03-08",
+    "professionDate": "1980-04-18",
+    "departureDate": "2016-10-18",
+    "photo": "images/memorial/sr_rosalia.jpg",
+    "communities": [
+      "Karunaniketan Maranahalli",
+      "Marianiketan Mariyapura"
+    ],
+    "ministry": "Slum Outreach, Crèche Ministry & Women's Empowerment",
+    "biography": "Sr. Rosalia poured her energy into village outreach, rural welfare, and supporting women and children across the mission stations.",
+    "quote": "Where there is love, there is God.",
+    "burialPlace": "Mariyapura Motherhouse Cemetery, Karnataka"
+  },
+  {
+    "id": "sr-annamma",
+    "name": "Sr. Annamma SCS",
+    "title": "Early Mission Pioneer & Pastoral Servant",
+    "birthDate": "1945-02-17",
+    "professionDate": "1977-10-04",
+    "departureDate": "2006-04-27",
+    "photo": "images/memorial/sr_annamma.jpg",
+    "communities": [
+      "Marianiketan Mariyapura",
+      "St. Joseph Convent Prakashpalya"
+    ],
+    "ministry": "Founding Mission Outreach, Catechetical Instruction & Village Visits",
+    "biography": "One of the steadfast early pillars who walked the rural trails in faith beside Mother Regina, planting seeds of hope and Christian solidarity among needy families.",
+    "quote": "God's providence never fails those who put their trust in Him.",
+    "burialPlace": "Mariyapura Motherhouse Cemetery, Karnataka"
   },
   {
     "id": "mother-regina-woroniecka",
@@ -91,7 +109,7 @@
     "birthDate": "1920-03-24",
     "professionDate": "1948-08-15",
     "departureDate": "2002-12-18",
-    "photo": "images/Mother_Regina_Woroniecka_1.jpg",
+    "photo": "images/memorial/mother_regina.jpg",
     "communities": [
       "Marianiketan Mariyapura",
       "Generalate Mysore",

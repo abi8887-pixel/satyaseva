@@ -6,130 +6,234 @@
 <script>
   (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
 </script>
-<title>In Memoriam — Remembering Our Departed Sisters | Satyaseva Sisters</title>
-<meta name="description" content="In loving memory of the departed sisters of the Satyaseva Catechist Sisters of the Families. Honoring their lives of faith, prayer, and selfless service to families.">
-<meta property="og:title" content="In Memoriam — Satyaseva Sisters">
-<meta property="og:description" content="Remembering our departed sisters, their lives, ministries, and enduring spiritual legacy.">
+<title>In Memoriam — With Gratitude &amp; Sacred Remembrance | Satyaseva Sisters</title>
+<meta name="description" content="In loving memory of the dedicated members of the Satyaseva Catechist Sisters of the Families who have gone before us to the eternal home.">
+<meta property="og:title" content="In Memoriam — With Gratitude and Remembrance">
+<meta property="og:description" content="We lovingly remember the dedicated sisters of our congregation who have gone before us to the eternal home.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://satyasevasisters.org/memorial.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Google Fonts for Dignified Display & Crisp Body -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/memorial.css">
 </head>
 <body class="memorial-page">
 
-<!-- ── Navigation Header ── -->
-<nav id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-pill">
-      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg>
-        <span class="brand-text">
-          <span class="brand-line-1">Satyaseva Sisters</span>
-          <span class="brand-line-2">SCS &bull; Est. 1976</span>
-        </span>
-      </a>
-      <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html" class="active" aria-current="page">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html" class="nav-donate">Donate</a>
-        <a href="contact.html">Contact</a>
+<!-- ── Regal Top Navigation Bar ── -->
+<header class="top-nav-bar" id="nav" role="banner">
+  <div class="top-nav-container">
+    <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+      <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+        <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="16" cy="10" r="2" fill="currentColor"/>
+      </svg>
+      <div class="brand-titles">
+        <span class="brand-name">Satyaseva Catechist Sisters</span>
+        <span class="brand-tagline">of the Families</span>
       </div>
-      <div class="nav-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>English</option>
-          <option value="pl">Polski</option>
-        </select>
-        <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
-          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-        </button>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
+    </a>
 
-<!-- ── Hero Tribute Header ── -->
-<section class="memorial-hero">
-  <div class="memorial-hero-inner">
-    <div class="memorial-kicker">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="5" y1="8" x2="19" y2="8"></line></svg>
-      Communion of Saints &amp; Sacred Memory
-    </div>
-    <h1>In Loving Memory</h1>
-    <p class="memorial-subtitle">
-      Remembering the faithful sisters of the Satyaseva Catechist Sisters of the Families who walked before us in humility, gave their lives in prayer and catechesis, and now rest in the eternal peace of Christ.
-    </p>
+    <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+      <a href="index.html">Home</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="communities.html">Our Communities</a>
+      <a href="map.html">Mission Map</a>
+      <a href="memorial.html" class="active" aria-current="page">In Memoriam</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="media.html">Media</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="contact.html">Contact</a>
+    </nav>
 
-    <div class="memorial-scripture-box">
-      <p class="scripture-text">"Blessed are the dead who die in the Lord from now on... that they may rest from their labors, and their works follow them."</p>
-      <cite class="scripture-cite">Revelation 14:13</cite>
-    </div>
-  </div>
-</section>
-
-<!-- ── Main Memorial Register ── -->
-<main class="memorial-container">
-  
-  <!-- Search & Stats Toolbar -->
-  <div class="memorial-toolbar">
-    <div class="search-wrap">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <input type="text" id="memorial-search" class="memorial-search-input" placeholder="Search by sister's name, ministry, or community..." aria-label="Search departed sisters">
-      <button type="button" id="btn-clear-search" class="search-clear-btn" aria-label="Clear search" style="display:none;" title="Clear search">&times;</button>
-    </div>
-    <div class="memorial-toolbar-actions">
-      <div class="memorial-count-tag" id="memorial-count-tag">
-        Showing all records
-      </div>
-      <button type="button" class="btn-print-memorial" id="btn-print-memorial" onclick="window.print()" title="Print archival commemorative memorial booklet">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-        Print Booklet
+    <div class="top-actions">
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
+      <select id="lang-select" aria-label="Select language">
+        <option value="en" selected>EN</option>
+        <option value="pl">PL</option>
+      </select>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </div>
+</header>
 
-  <!-- Loading State -->
-  <div class="memorial-loading" id="memorial-loading">
-    <div class="spinner"></div>
-    <p>Opening the Register of Eternal Memory…</p>
-  </div>
+<main id="main-content">
 
-  <!-- Sisters Cards Grid -->
-  <div class="memorial-grid" id="memorial-grid" style="display:none"></div>
-
-  <!-- Empty Search Feedback -->
-  <div class="memorial-empty" id="memorial-empty" style="display:none">
-    <p>No sister records found matching your search.</p>
-    <button type="button" class="btn-clear-filter" id="btn-clear-search">View All Sisters</button>
-  </div>
-
-  <!-- ── Spiritual Communion & Prayer Card ── -->
-  <section class="remembrance-prayer-section">
-    <div class="prayer-card">
-      <div class="prayer-crest">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="5" y1="8" x2="19" y2="8"></line></svg>
+  <!-- ── 1. Sacred Split Hero Section ── -->
+  <section class="memorial-split-hero" aria-label="In Loving Memory Hero">
+    <div class="memorial-hero-container">
+      <div class="hero-text-col">
+        <div class="hero-kicker">
+          <svg class="kicker-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <line x1="12" y1="2" x2="12" y2="22"></line>
+            <line x1="5" y1="8" x2="19" y2="8"></line>
+          </svg>
+          <span>IN LOVING MEMORY</span>
+        </div>
+        <h1 class="hero-headline">In Loving Memory</h1>
+        <blockquote class="hero-quote">
+          “Their lives continue to inspire us in faith, service and love.”
+        </blockquote>
+        <div class="hero-flourish" aria-hidden="true">
+          <span class="flourish-line"></span>
+          <span class="flourish-cross">✝</span>
+          <span class="flourish-line"></span>
+        </div>
       </div>
-      <h3>Prayer for Our Departed Sisters</h3>
-      <p>
-        "Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May the souls of all our departed sisters, through the mercy of God, rest in peace. Amen."
-      </p>
-      <span class="prayer-note">The Satyaseva Sisters offer the Holy Sacrifice of the Mass and the daily Rosary for all departed members of our congregation, benefactors, and families.</span>
+      <div class="hero-media-col">
+        <div class="hero-image-frame">
+          <img src="images/memorial/hero_candle_cross.jpg" alt="Sacred cross, lit memorial candle, and white lilies" class="hero-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. Gallery of Our Beloved 7 Sisters ── -->
+  <section class="beloved-sisters-section" id="beloved-sisters" aria-label="Our Beloved Sisters">
+    <div class="beloved-container">
+      
+      <!-- Section Header -->
+      <header class="section-title-wrap">
+        <h2 class="section-title">Our Beloved Sisters</h2>
+        <p class="section-sub">Their dedication, faith and untiring service remain a living legacy in our congregation and in the lives of the people we serve.</p>
+        <div class="section-divider-motif" aria-hidden="true">
+          <span class="motif-line"></span>
+          <span class="motif-gem">✦</span>
+          <span class="motif-line"></span>
+        </div>
+      </header>
+
+      <!-- Tier 1: 3 Featured Sisters (Center: Mother Regina Foundress) -->
+      <div class="sisters-tier tier-top" role="region" aria-label="Foundress and Senior Sisters">
+        
+        <!-- Sr. Clare SCS -->
+        <article class="memorial-sister-card" data-sister-id="sr-clare" tabindex="0" role="button" aria-label="View memorial tribute for Sr. Clare SCS">
+          <div class="card-filigree-frame">
+            <div class="portrait-oval">
+              <img src="images/memorial/sr_clare.png" alt="Sr. Clare SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <h3 class="sister-name">Sr. Clare SCS</h3>
+            <span class="sister-pass-date">15.06.2024</span>
+          </div>
+        </article>
+
+        <!-- Rev. Mother Regina Woroniecka SCS (Foundress - Hero Center) -->
+        <article class="memorial-sister-card card-foundress" data-sister-id="mother-regina-woroniecka" tabindex="0" role="button" aria-label="View memorial tribute for Rev. Mother Regina Woroniecka, Foundress">
+          <div class="card-filigree-frame frame-foundress">
+            <div class="portrait-circle">
+              <img src="images/memorial/mother_regina.jpg" alt="Rev. Mother Regina Woroniecka SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <span class="foundress-honor-tag">Foundress &amp; Mother General</span>
+            <h3 class="sister-name foundress-name">Rev. Mother Regina Woroniecka SCS</h3>
+            <span class="sister-pass-date foundress-date">1920 – 2002</span>
+          </div>
+        </article>
+
+        <!-- Sr. Justin SCS -->
+        <article class="memorial-sister-card" data-sister-id="sr-justin" tabindex="0" role="button" aria-label="View memorial tribute for Sr. Justin SCS">
+          <div class="card-filigree-frame">
+            <div class="portrait-oval">
+              <img src="images/memorial/sr_justin.png" alt="Sr. Justin SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <h3 class="sister-name">Sr. Justin SCS</h3>
+            <span class="sister-pass-date">25.07.2020</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Tier 2: 4 Sisters -->
+      <div class="sisters-tier tier-bottom" role="region" aria-label="Departed Sisters">
+        
+        <!-- Sr. James SCS -->
+        <article class="memorial-sister-card" data-sister-id="sr-james" tabindex="0" role="button" aria-label="View memorial tribute for Sr. James SCS">
+          <div class="card-filigree-frame">
+            <div class="portrait-oval">
+              <img src="images/memorial/sr_james.png" alt="Sr. James SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <h3 class="sister-name">Sr. James SCS</h3>
+            <span class="sister-pass-date">18.02.2022</span>
+          </div>
+        </article>
+
+        <!-- Sr. Rosalia SCS -->
+        <article class="memorial-sister-card" data-sister-id="sr-rosalia" tabindex="0" role="button" aria-label="View memorial tribute for Sr. Rosalia SCS">
+          <div class="card-filigree-frame">
+            <div class="portrait-oval">
+              <img src="images/memorial/sr_rosalia.png" alt="Sr. Rosalia SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <h3 class="sister-name">Sr. Rosalia SCS</h3>
+            <span class="sister-pass-date">18.10.2016</span>
+          </div>
+        </article>
+
+        <!-- Sr. Tresa Mary SCS -->
+        <article class="memorial-sister-card" data-sister-id="sr-tresa-mary" tabindex="0" role="button" aria-label="View memorial tribute for Sr. Tresa Mary SCS">
+          <div class="card-filigree-frame">
+            <div class="portrait-oval">
+              <img src="images/memorial/sr_tresa_mary.png" alt="Sr. Tresa Mary SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <h3 class="sister-name">Sr. Tresa Mary SCS</h3>
+            <span class="sister-pass-date">06.08.2022</span>
+          </div>
+        </article>
+
+        <!-- Sr. Annamma SCS -->
+        <article class="memorial-sister-card" data-sister-id="sr-annamma" tabindex="0" role="button" aria-label="View memorial tribute for Sr. Annamma SCS">
+          <div class="card-filigree-frame">
+            <div class="portrait-oval">
+              <img src="images/memorial/sr_annamma.png" alt="Sr. Annamma SCS portrait" class="sister-portrait-img">
+            </div>
+          </div>
+          <div class="card-meta">
+            <h3 class="sister-name">Sr. Annamma SCS</h3>
+            <span class="sister-pass-date">27.04.2006</span>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 3. Bottom Panoramic Landscape Banner ── -->
+  <section class="memorial-panoramic-section" aria-label="Commemorative Landscape Blessing">
+    <div class="panoramic-banner-wrap">
+      <div class="panoramic-banner-media">
+        <img src="images/memorial/footer_chapel_banner.jpg" alt="Panoramic view with cross and chapel spire" class="panoramic-bg-img">
+        <div class="panoramic-overlay">
+          <p class="panoramic-blessing">
+            “May their souls and the souls of all the faithful departed rest in peace.”
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
 </main>
 
-<!-- ── Memorial Tribute Modal ── -->
+<!-- ── Sister Memorial Tribute Modal ── -->
 <div class="memorial-modal" id="memorial-modal" role="dialog" aria-label="Sister Memorial Tribute" aria-hidden="true">
   <div class="modal-backdrop" id="modal-backdrop"></div>
   <div class="memorial-modal-card">
@@ -181,31 +285,32 @@
   </div>
 </div>
 
+<!-- ── Site Footer ── -->
 <footer id="contact">
-    <div class="footer-glass reveal">
-      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  <div class="footer-glass reveal">
+    <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
+    <h3>Satyaseva Catechist Sisters of the Families</h3>
+    <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
+    Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="communities.html">Communities</a>
+      <a href="map.html">Map</a>
+      <a href="foundress.html">Our Foundress</a>
+      <a href="memorial.html">In Memoriam</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="media.html">Media</a>
+      <a href="vocations.html">Vocations</a>
+      <a href="prayers.html">Prayers</a>
+      <a href="donate.html">Donate</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="impressum.html">Impressum</a>
     </div>
-  </footer>
+    <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
+  </div>
+</footer>
 
 <script src="data/communities-data.js?v=4"></script>
 <script src="js/memorial.js"></script>
