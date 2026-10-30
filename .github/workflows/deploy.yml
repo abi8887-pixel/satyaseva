@@ -1,4 +1,4 @@
- name: Deploy Pre-Release Site to GitHub Pages
+name: Deploy static site to GitHub Pages
 
 on:
   push:
@@ -14,55 +14,68 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-         - name: Synchronize Data & Compile Fallbacks
+      - name: Sync site data and generate fallback files
         run: |
           python3 scripts/sync_images.py || true
-          python3 -c "
-          import json, os
-          if os.path.exists('site/data/communities.json') and os.path.exists('site/data/memorial.json'):
-              with open('site/data/communities.json', encoding='utf-8') as f:
+          python3 - <<'PY'
+          import json
+          import os
+
+          communities = os.path.join('site', 'data', 'communities.json')
+          memorial = os.path.join('site', 'data', 'memorial.json')
+          out_file = os.path.join('site', 'data', 'communities-data.js')
+
+          if os.path.exists(communities) and os.path.exists(memorial):
+              with open(communities, 'r', encoding='utf-8') as f:
                   comm = json.load(f)
-              with open('site/data/memorial.json', encoding='utf-8') as f:
+              with open(memorial, 'r', encoding='utf-8') as f:
                   mem = json.load(f)
-              with open('site/data/communities-data.js', 'w', encoding='utf-8') as f:
+
+              with open(out_file, 'w', encoding='utf-8') as f:
                   f.write('// Auto-generated fallback data for communities and memorial sisters\n')
                   f.write('window.__INITIAL_COMMUNITIES__ = ' + json.dumps(comm) + ';\n')
                   f.write('window.__INITIAL_MEMORIAL__ = ' + json.dumps(mem) + ';\n')
+
               print('Fallback dataset updated successfully')
-          " || true
+          else:
+              print('Skipping fallback dataset generation: data files not found')
+          PY
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Clean Sensitive Data & Backups
+      - name: Remove sensitive data and backups
         run: |
-          rm -rf site/data/backups
-          rm -f site/data/*.db
-          rm -f *.db
-          rm -rf scripts/data/backups
-          rm -f scripts/data/*.db
-          rm -f scripts/data/.admin_hash
+          rm -rf site/data/backups || true
+          rm -f site/data/*.db || true
+          rm -f *.db || true
+          rm -rf scripts/data/backups || true
+          rm -f scripts/data/*.db || true
+          rm -f scripts/data/.admin_hash || true
 
-      - name: Upload Static Site Artifact
+      - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './site'
+          path: '.'
 
       - name: Deploy to GitHub Pages
         id: deployment
