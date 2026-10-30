@@ -1,4 +1,4 @@
-name: Deploy Pre-Release Site to GitHub Pages
+ name: Deploy Pre-Release Site to GitHub Pages
 
 on:
   push:
@@ -27,17 +27,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Synchronize Data & Compile Fallbacks
+         - name: Synchronize Data & Compile Fallbacks
         run: |
           python3 scripts/sync_images.py || true
           python3 -c "
@@ -69,7 +62,7 @@ jobs:
       - name: Upload Static Site Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'site/'
+          path: './site'
 
       - name: Deploy to GitHub Pages
         id: deployment
