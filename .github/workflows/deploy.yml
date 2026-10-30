@@ -60,13 +60,22 @@ jobs:
           test -f site/index.html || (echo "site/index.html missing" && ls -la && exit 1)
           touch site/.nojekyll
 
+      - name: Stage clean copy of site
+        run: |
+          rm -rf _site
+          mkdir _site
+          # regular files only: skips symlinks/special files that break tar
+          rsync -rt --no-links --exclude '.git' site/ _site/
+          chmod -R a+rX _site
+          find _site -type f | wc -l
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
