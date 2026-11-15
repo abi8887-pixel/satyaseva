@@ -11,6 +11,9 @@
   <link rel="canonical" href="https://satyasevasisters.org/map.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=3">
 
   <!-- Local Leaflet CSS & JS (Self-hosted) -->
@@ -99,7 +102,7 @@
     .map-search-input {
       width: 100%;
       padding: 12px 16px;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-sans);
       font-size: 13.5px;
       border: 1px solid var(--line);
       background: var(--card);
@@ -154,7 +157,7 @@
       gap: 8px;
     }
     .station-badge {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
@@ -193,7 +196,7 @@
       border: 1px solid var(--line) !important;
       border-radius: 0 !important;
       box-shadow: 5px 5px 0 var(--ink) !important;
-      font-family: 'Inter', sans-serif !important;
+      font-family: var(--font-sans) !important;
       padding: 4px !important;
     }
     .leaflet-popup-tip {

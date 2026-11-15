@@ -511,7 +511,7 @@ section {
   color: #ffffff;
 }
 
-.nav-toggle {
+.top-actions .nav-toggle {
   display: none;
   background: none;
   border: none;
@@ -521,7 +521,7 @@ section {
   gap: 5px;
 }
 
-.nav-toggle span {
+.top-actions .nav-toggle span {
   display: block;
   width: 22px;
   height: 2px;
@@ -554,8 +554,8 @@ section {
 }
 
 /* ── 5. Primary Navigation (Legacy Fallback) ──────────────────────── */
-body > nav:not(.detail-nav),
-nav#nav:not(.detail-nav),
+body > nav:not(.detail-nav):not(.top-nav-bar),
+nav#nav:not(.detail-nav):not(.top-nav-bar),
 nav.site,
 header.site {
   position: fixed;
@@ -575,14 +575,14 @@ header.site {
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  body > nav:not(.detail-nav),
-  nav#nav:not(.detail-nav),
+  body > nav:not(.detail-nav):not(.top-nav-bar),
+  nav#nav:not(.detail-nav):not(.top-nav-bar),
   nav.site,
   header.site { background: var(--bg); }
 }
 
-body > nav:not(.detail-nav).scrolled,
-nav#nav:not(.detail-nav).scrolled,
+body > nav:not(.detail-nav):not(.top-nav-bar).scrolled,
+nav#nav:not(.detail-nav):not(.top-nav-bar).scrolled,
 nav.site.scrolled,
 header.site.scrolled,
 .nav-header.scrolled { box-shadow: var(--elev-1); }
