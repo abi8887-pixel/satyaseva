@@ -389,6 +389,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
   <script src="data/communities-data.js?v=4"></script>
   <script>
   (function() {
@@ -397,8 +399,22 @@
     var allEvents = [];
     var currentView = 'upcoming';
 
-    /* ── Fetch events from API with static fallback ────────────── */
+    /* ── Fetch events from Supabase with static fallback ────────────── */
     function loadEvents() {
+      if (window.SSCS && window.SSCS.getEvents) {
+        window.SSCS.getEvents()
+          .then(function(events) {
+            allEvents = Array.isArray(events) ? events : [];
+            updateCounts();
+            renderEvents();
+          })
+          .catch(function() {
+            allEvents = window.__INITIAL_EVENTS__ || [];
+            updateCounts();
+            renderEvents();
+          });
+        return;
+      }
       fetch('/api/events')
         .then(function(r) {
           if (!r.ok) throw new Error('API unavailable');

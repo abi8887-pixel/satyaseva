@@ -787,8 +787,10 @@
       }
     ],
     "stories": [],
-    "heroImage": "",
-    "gallery": []
+    "heroImage": "images/communities/williamnagar/Northeast India.jpg",
+    "gallery": [
+      "images/communities/williamnagar/Northeast India.jpg"
+    ]
   },
   {
     "id": "unkel",

@@ -160,11 +160,14 @@
     attachCardListeners();
   }
 
-  fetch('data/memorial.json')
-    .then(function(res) {
-      if (!res.ok) throw new Error('Failed to load memorial records');
-      return res.json();
-    })
+  var memorialPromise = (window.SSCS && window.SSCS.getMemorial)
+    ? window.SSCS.getMemorial()
+    : fetch('data/memorial.json').then(function(res) {
+        if (!res.ok) throw new Error('Failed to load memorial records');
+        return res.json();
+      });
+
+  memorialPromise
     .then(function(data) {
       initData(data);
     })

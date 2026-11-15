@@ -456,6 +456,18 @@
 
     /* ── Init ──────────────────────────────────────────────── */
     function loadNews() {
+      if (window.SSCS && window.SSCS.getNews) {
+        window.SSCS.getNews()
+          .then(function(news) {
+            allNews = Array.isArray(news) ? news : [];
+            renderNews();
+          })
+          .catch(function() {
+            allNews = window.__INITIAL_NEWS__ || [];
+            renderNews();
+          });
+        return;
+      }
       fetch('/api/news')
         .then(function(r) {
           if (!r.ok) throw new Error('API unavailable');
@@ -491,6 +503,8 @@
     }
   })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

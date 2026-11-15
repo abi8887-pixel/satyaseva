@@ -253,13 +253,35 @@
         <h2>Submit Your Prayer Intention</h2>
         <p class="form-sub">Our sisters hold every prayer request in solemn remembrance during our daily Holy Mass, Rosary, and Adoration.</p>
 
-        <div style="display:flex; flex-direction:column; gap:16px; margin:28px 0 20px;">
-          <a href="mailto:scs.satyaseva@gmail.com?subject=Prayer%20Request" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px;">
+        <form id="prayer-form" style="margin-top: 20px;">
+          <div class="form-group">
+            <label for="prayer-name">Your Name (Optional)</label>
+            <input type="text" id="prayer-name" class="modern-input" placeholder="e.g. Sister, Benefactor, or Anonymous" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface); color: var(--ink);">
+          </div>
+          <div class="form-group">
+            <label for="prayer-intention">Your Prayer Intention *</label>
+            <textarea id="prayer-intention" rows="4" required class="modern-input" placeholder="Please pray for..." style="width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface); color: var(--ink); resize: vertical;"></textarea>
+          </div>
+          <button type="submit" id="prayer-submit-btn" class="modern-btn-primary" style="width: 100%; padding: 14px 20px; font-size: 16px; justify-content: center; cursor: pointer;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg>
+            Submit Prayer Intention
+          </button>
+          <div id="form-status" style="margin-top: 16px; padding: 12px 16px; border-radius: var(--r-md); display: none; font-size: 14px;"></div>
+        </form>
+
+        <div style="display:flex; align-items:center; gap:12px; margin:24px 0 16px;">
+          <hr style="flex:1; border:none; border-top:1px solid var(--line);">
+          <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--ink-soft); letter-spacing:0.06em;">Or Reach Sisters Directly</span>
+          <hr style="flex:1; border:none; border-top:1px solid var(--line);">
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <a href="mailto:scs.satyaseva@gmail.com?subject=Prayer%20Request" class="modern-btn-secondary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:12px 18px; font-size:15px; border-radius:var(--r-md); border:1px solid var(--line);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg>
             Email Your Prayer Request
           </a>
 
-          <a href="https://wa.me/919740146329?text=Dear%20Sisters,%20please%20pray%20for%20my%20intention:" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px; background:#25D366; border-color:#25D366; color:#ffffff;">
+          <a href="https://wa.me/919740146329?text=Dear%20Sisters,%20please%20pray%20for%20my%20intention:" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:12px 18px; font-size:15px; background:#25D366; border-color:#25D366; color:#ffffff; border-radius:var(--r-md);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.077-1.745-.371-.883-.357-1.472-1.229-1.517-1.29-.044-.061-.363-.483-.363-.92 0-.437.23-.652.312-.741.082-.089.179-.112.239-.112.06 0 .12 0 .172.005.055.006.128-.021.201.155.074.177.255.621.277.666.023.045.038.098.008.158-.03.06-.045.098-.09.15-.045.053-.095.118-.135.158-.046.046-.094.096-.04.188.053.092.237.391.509.633.35.312.645.409.737.455.092.045.145.038.2-.023.053-.061.226-.264.286-.355.06-.091.121-.076.202-.045.082.03 1.205.568 1.413.673.208.106.347.158.398.245.051.086.051.5-.093.905z"/>
             </svg>
@@ -267,7 +289,7 @@
           </a>
         </div>
 
-        <p style="margin-top:16px; font-size:14px; color:var(--ink-soft); text-align:center;">
+        <p style="margin-top:16px; font-size:13.5px; color:var(--ink-soft); text-align:center;">
           Intentions are treated with strict pastoral confidentiality.
         </p>
       </div>
@@ -276,7 +298,7 @@
       <div class="prayer-wall-card glass-card reveal reveal-d2">
         <h2>🙏 Community In Prayer</h2>
         <p class="prayer-wall-sub">Across our 32 convent stations in India, Germany, and Poland, the Satyaseva Catechist Sisters unite every evening to pray for:</p>
-        <div style="display:flex; flex-direction:column; gap:14px; margin-top:20px;">
+        <div id="prayer-wall-list" style="display:flex; flex-direction:column; gap:14px; margin-top:20px;">
           <div class="prayer-item">
             <p>"For all families undergoing spiritual trials, sickness, or separation — that Christ may heal their hearts and restore peace."</p>
             <div class="prayer-meta">— Generalate Community Prayer</div>
@@ -293,6 +315,74 @@
       </div>
     </div>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
   <script src="js/main.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const form = document.getElementById('prayer-form');
+      const statusDiv = document.getElementById('form-status');
+      const wallList = document.getElementById('prayer-wall-list');
+
+      async function loadPrayerWall() {
+        if (!window.SSCS) return;
+        try {
+          const prayers = await window.SSCS.getPrayers();
+          if (prayers && prayers.length > 0) {
+            prayers.forEach(p => {
+              const item = document.createElement('div');
+              item.className = 'prayer-item';
+              const nameSafe = p.name ? p.name.replace(/</g, '&lt;') : 'Anonymous Intention';
+              const textSafe = p.intention ? p.intention.replace(/</g, '&lt;') : '';
+              item.innerHTML = `<p>"${textSafe}"</p><div class="prayer-meta">— ${nameSafe}</div>`;
+              wallList.prepend(item);
+            });
+          }
+        } catch (e) {
+          console.warn('Could not load prayer wall:', e);
+        }
+      }
+      loadPrayerWall();
+
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const nameInput = document.getElementById('prayer-name');
+          const intentionInput = document.getElementById('prayer-intention');
+          const btn = document.getElementById('prayer-submit-btn');
+
+          const name = nameInput.value.trim();
+          const intention = intentionInput.value.trim();
+          if (!intention) return;
+
+          btn.disabled = true;
+          btn.textContent = 'Submitting Intention...';
+          statusDiv.style.display = 'none';
+
+          try {
+            await window.SSCS.submitPrayer(name, intention);
+            statusDiv.className = 'status-success';
+            statusDiv.textContent = '🙏 Your prayer intention has been received and lifted up in our community prayers.';
+            statusDiv.style.display = 'block';
+            form.reset();
+
+            const item = document.createElement('div');
+            item.className = 'prayer-item';
+            const nameSafe = name ? name.replace(/</g, '&lt;') : 'Anonymous Intention';
+            const textSafe = intention.replace(/</g, '&lt;');
+            item.innerHTML = `<p>"${textSafe}"</p><div class="prayer-meta">— ${nameSafe} (Just submitted)</div>`;
+            wallList.prepend(item);
+          } catch (err) {
+            statusDiv.className = 'status-error';
+            statusDiv.textContent = 'Unable to submit prayer intention online. Please try WhatsApp or Email below.';
+            statusDiv.style.display = 'block';
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 8h14"/></svg> Submit Prayer Intention`;
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

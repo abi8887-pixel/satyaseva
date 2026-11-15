@@ -85,12 +85,16 @@
     });
   }
 
-  /* Fetch both communities data and community-images manifest (cached by SW) */
+  /* Fetch both communities data (Supabase with JSON fallback) and images manifest */
+  var commPromise = (window.SSCS && window.SSCS.getCommunities)
+    ? window.SSCS.getCommunities()
+    : fetch('data/communities.json').then(function(res) {
+        if (!res.ok) throw new Error('Failed to load communities data');
+        return res.json();
+      });
+
   Promise.all([
-    fetch('data/communities.json').then(function(res) {
-      if (!res.ok) throw new Error('Failed to load communities data');
-      return res.json();
-    }),
+    commPromise,
     fetch('data/community-images.json').then(function(res) {
       return res.ok ? res.json() : {};
     }).catch(function() {

@@ -242,9 +242,13 @@
     "totalImages": 0
   },
   "williamnagar": {
-    "hero": "",
-    "gallery": [],
-    "allImages": [],
-    "totalImages": 0
+    "hero": "images/communities/williamnagar/Northeast India.jpg",
+    "gallery": [
+      "images/communities/williamnagar/Northeast India.jpg"
+    ],
+    "allImages": [
+      "images/communities/williamnagar/Northeast India.jpg"
+    ],
+    "totalImages": 1
   }
 }
