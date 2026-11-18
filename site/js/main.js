@@ -6,6 +6,9 @@
 (function(){
   'use strict';
 
+  /* Mark body so CSS reveal animation only activates with JS */
+  document.body.classList.add('js-ready');
+
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── Ambient sky rays ─────────────────────────────────────────── */
@@ -189,7 +192,7 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
       revealTargets.forEach(function(t) { io.observe(t); });
     } else {
       revealTargets.forEach(function(t) { t.classList.add('visible'); });

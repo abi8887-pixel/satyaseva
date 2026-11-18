@@ -327,17 +327,19 @@ section {
 }
 .skip-link:focus, .skip:focus { top: 16px; }
 
-/* Reveal on scroll */
-.reveal {
+/* Reveal on scroll — only animate when JS is ready (body.js-ready set by main.js) */
+body.js-ready .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity .6s ease-out, transform .6s ease-out;
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1.visible { transition-delay: .12s; }
-.reveal-d2.visible { transition-delay: .24s; }
-.reveal-d3.visible { transition-delay: .36s; }
-.reveal-d4.visible { transition-delay: .48s; }
+/* Without js-ready, reveal elements are always visible */
+.reveal { opacity: 1; transform: none; }
+body.js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
+body.js-ready .reveal-d1.visible { transition-delay: .12s; }
+body.js-ready .reveal-d2.visible { transition-delay: .24s; }
+body.js-ready .reveal-d3.visible { transition-delay: .36s; }
+body.js-ready .reveal-d4.visible { transition-delay: .48s; }
 
 /* Lift hover */
 .lift { transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease); }
