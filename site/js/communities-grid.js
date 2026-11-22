@@ -21,6 +21,16 @@
   var calIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>';
   var arrowIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
 
+  function escapeHTML(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function renderCard(c, imagesManifest) {
     // Check for images in manifest or community record
     var folderData = imagesManifest[c.id] || null;
@@ -33,39 +43,42 @@
       if (c.id === 'bydgoszcz-home' && imagesManifest['bydgosh-jp2']) heroImage = imagesManifest['bydgosh-jp2'].hero;
     }
 
+    var safeName = escapeHTML(c.name);
+    var safeHeroImage = escapeHTML(heroImage);
+
     var card = document.createElement('a');
     card.className = 'comm-card';
     card.href = 'community.html?id=' + encodeURIComponent(c.id);
-    card.id = 'card-' + c.id;
-    card.setAttribute('aria-label', 'View history and mission of ' + c.name);
+    card.id = 'card-' + encodeURIComponent(c.id);
+    card.setAttribute('aria-label', 'View history and mission of ' + safeName);
 
     var imgHTML = '';
     if (heroImage) {
       imgHTML =
         '<div class="card-img-wrap">' +
-          '<img src="' + heroImage + '" alt="' + c.name + '" class="card-photo" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\'<div class=\\\'card-img-placeholder\\\'><svg viewBox=\\\'0 0 24 24\\\' width=\\\'28\\\' height=\\\'28\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' stroke-width=\\\'1.8\\\'><path d=\\\'M12 2v20M4 8h16\\\'/></svg><span>' + c.name + '</span></div>\';">' +
+          '<img src="' + safeHeroImage + '" alt="' + safeName + '" class="card-photo" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\'<div class=\\\'card-img-placeholder\\\'><svg viewBox=\\\'0 0 24 24\\\' width=\\\'28\\\' height=\\\'28\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' stroke-width=\\\'1.8\\\'><path d=\\\'M12 2v20M4 8h16\\\'/></svg><span>' + safeName + '</span></div>\';">' +
         '</div>';
     } else {
       imgHTML =
         '<div class="card-img-wrap">' +
           '<div class="card-img-placeholder">' +
             '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4 8h16"/></svg>' +
-            '<span>' + c.name + '</span>' +
+            '<span>' + safeName + '</span>' +
           '</div>' +
         '</div>';
     }
 
-    var estText = c.established ? ('Established ' + c.established) : '';
+    var estText = c.established ? ('Established ' + escapeHTML(c.established)) : '';
 
     card.innerHTML =
       imgHTML +
       '<div class="card-body">' +
-        '<h3 class="card-title">' + c.name + '</h3>' +
+        '<h3 class="card-title">' + safeName + '</h3>' +
         '<div class="card-meta">' +
-          (c.location ? '<div class="card-meta-row"><span class="meta-icon pin-icon">' + pinIcon + '</span><span class="meta-text">' + c.location + '</span></div>' : '') +
+          (c.location ? '<div class="card-meta-row"><span class="meta-icon pin-icon">' + pinIcon + '</span><span class="meta-text">' + escapeHTML(c.location) + '</span></div>' : '') +
           (estText ? '<div class="card-meta-row"><span class="meta-icon cal-icon">' + calIcon + '</span><span class="meta-text">' + estText + '</span></div>' : '') +
         '</div>' +
-        '<div class="card-desc"><p>' + (c.description || 'Dedicated to catechesis, prayer, and pastoral presence in family life.') + '</p></div>' +
+        '<div class="card-desc"><p>' + escapeHTML(c.description || 'Dedicated to catechesis, prayer, and pastoral presence in family life.') + '</p></div>' +
         '<div class="card-action">' +
           '<span class="card-btn">View History &amp; Mission ' + arrowIcon + '</span>' +
         '</div>' +

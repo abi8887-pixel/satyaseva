@@ -1,433 +1,608 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
-  </script>
-  <title>Vocations &amp; Discernment — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Explore religious life and discernment with the Congregation of the Satyaseva Catechist Sisters of the Families. Learn about our formation stages and submit a confidential vocation inquiry.">
-  <link rel="canonical" href="https://satyasevasisters.org/vocations.html">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.json">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4">
-  <style>
-    .voc-hero {
-      text-align: center;
-      padding: clamp(96px, 15vw, 136px) clamp(16px, 4vw, 32px) clamp(32px, 5vw, 48px);
-      max-width: 860px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .voc-hero h1 {
-      font-size: clamp(32px, 5vw, 50px);
-      line-height: 1.15;
-      margin: 16px 0 16px;
-    }
-    .voc-hero p {
-      font-size: clamp(15px, 1.8vw, 18px);
-      color: var(--ink-soft);
-      line-height: 1.65;
-      margin-bottom: 30px;
-    }
-
-    /* Pillars Section */
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      margin-top: 36px;
-    }
-    .pillar-card {
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
-      border-radius: var(--r-lg);
-      transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
-    }
-    .pillar-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--elev-3);
-      border-color: var(--accent-border);
-    }
-    .pillar-icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-      display: inline-block;
-    }
-    .pillar-card h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .pillar-card p {
-      font-size: 14px;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* Timeline Section */
-    .timeline-wrap {
-      max-width: 860px;
-      margin: 40px auto 0;
-      position: relative;
-    }
-    .timeline-wrap::before {
-      content: '';
-      position: absolute;
-      left: 24px;
-      top: 24px;
-      bottom: 24px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent), var(--brand));
-      z-index: 0;
-    }
-    .timeline-item {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 32px;
-      position: relative;
-      z-index: 1;
-    }
-    .timeline-badge {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--card);
-      border: 2px solid var(--accent);
-      box-shadow: var(--elev-2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-weight: 700;
-      font-size: 18px;
-      flex-shrink: 0;
-      color: var(--accent-deep);
-    }
-    .timeline-item:last-child .timeline-badge {
-      background: linear-gradient(135deg, var(--accent), var(--brand));
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 0 14px rgba(232, 131, 58, 0.4);
-    }
-    .timeline-card {
-      padding: 24px 28px;
-      flex-grow: 1;
-      border-radius: var(--r-lg);
-    }
-    .timeline-duration {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--brand-ink);
-      background: var(--brand-tint);
-      border: 1px solid var(--brand-border);
-      border-radius: var(--r-pill);
-      padding: 3px 10px;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-    .timeline-card h3 {
-      font-size: 21px;
-      margin-bottom: 8px;
-    }
-    .timeline-card p {
-      font-size: 14px;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* Vocation Form Card */
-    .voc-form-wrapper {
-      max-width: 780px;
-      margin: 0 auto 80px;
-      padding: clamp(24px, 5vw, 48px);
-      border-radius: var(--r-lg);
-    }
-    .voc-form-wrapper h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    .voc-form-wrapper .lead-text {
-      text-align: center;
-      color: var(--ink-soft);
-      font-size: 14.5px;
-      margin-bottom: 32px;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    .form-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    @media (max-width: 768px) {
-      .form-row, .form-row-3 {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .timeline-wrap::before {
-        left: 20px;
-      }
-      .timeline-badge {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-      }
-      .timeline-item {
-        gap: 16px;
-      }
-    }
-    .voc-form-group {
-      margin-bottom: 20px;
-    }
-    .voc-form-group label {
-      display: block;
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-      color: var(--ink);
-    }
-    #voc-msg {
-      margin-top: 18px;
-      padding: 14px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: var(--r-md);
-      text-align: center;
-      display: none;
-    }
-    .msg-success {
-      background: var(--brand-tint);
-      color: var(--brand);
-      border: 1px solid var(--brand-border);
-    }
-    .msg-error {
-      background: var(--danger-tint);
-      color: var(--danger);
-      border: 1px solid var(--danger);
-    }
-  </style>
-</head>
-<body class="ambient-mesh-wrap">
-  <!-- Skip navigation for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <!-- Ambient background mesh blobs -->
-  <div class="ambient-blob blob-sage" style="top: 80px; left: -80px;"></div>
-  <div class="ambient-blob blob-gold" style="top: 340px; right: -100px;"></div>
-  <div class="ambient-blob blob-blue" style="bottom: 120px; left: 25%;"></div>
-
-  <!-- Standard Uniform Navigation -->
-  <header class="top-nav-bar" id="nav" role="banner">
-    <div class="top-nav-container">
-      <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
-        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
-          <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <circle cx="16" cy="10" r="2" fill="currentColor"/>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
+    <title>
+      Vocations &amp; Discernment — Satyaseva Catechist Sisters
+    </title>
+    <meta name="description" content="Explore religious life and discernment with the Congregation of the Satyaseva Catechist Sisters of the Families. Learn about our formation stages and submit a confidential vocation inquiry.">
+    <link rel="canonical" href="https://satyasevasisters.org/vocations.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <style>
+.voc-hero {
+  text-align: center;
+  padding: clamp(96px, 15vw, 136px) clamp(16px, 4vw, 32px) clamp(32px, 5vw, 48px);
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+}
+.voc-hero h1 {
+  font-size: clamp(32px, 5vw, 50px);
+  line-height: 1.15;
+  margin: 16px 0 16px;
+}
+.voc-hero p {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 30px;
+}
+/* Pillars Section */ .pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 36px;
+}
+.pillar-card {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
+}
+.pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elev-3);
+  border-color: var(--accent-border);
+}
+.pillar-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+.pillar-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.pillar-card p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+/* Timeline Section */ .timeline-wrap {
+  max-width: 860px;
+  margin: 40px auto 0;
+  position: relative;
+}
+.timeline-wrap::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--brand));
+  z-index: 0;
+}
+.timeline-item {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+.timeline-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--accent);
+  box-shadow: var(--elev-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  color: var(--accent-deep);
+}
+.timeline-item:last-child .timeline-badge {
+  background: linear-gradient(135deg, var(--accent), var(--brand));
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 0 14px rgba(232, 131, 58, 0.4);
+}
+.timeline-card {
+  padding: 24px 28px;
+  flex-grow: 1;
+  border-radius: var(--r-lg);
+}
+.timeline-duration {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--r-pill);
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.timeline-card h3 {
+  font-size: 21px;
+  margin-bottom: 8px;
+}
+.timeline-card p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+/* Vocation Form Card */ .voc-form-wrapper {
+  max-width: 780px;
+  margin: 0 auto 80px;
+  padding: clamp(24px, 5vw, 48px);
+  border-radius: var(--r-lg);
+}
+.voc-form-wrapper h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.voc-form-wrapper .lead-text {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  margin-bottom: 32px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+  .form-row, .form-row-3 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .timeline-wrap::before {
+    left: 20px;
+  }
+  .timeline-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .timeline-item {
+    gap: 16px;
+  }
+}
+.voc-form-group {
+  margin-bottom: 20px;
+}
+.voc-form-group label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+#voc-msg {
+  margin-top: 18px;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--r-md);
+  text-align: center;
+  display: none;
+}
+.msg-success {
+  background: var(--brand-tint);
+  color: var(--brand);
+  border: 1px solid var(--brand-border);
+}
+.msg-error {
+  background: var(--danger-tint);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+</style>
+  </head>
+  <body class="ambient-mesh-wrap">
+    <!-- Skip navigation for accessibility -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+    <!-- Ambient background mesh blobs -->
+    <div class="ambient-blob blob-sage" style="top: 80px; left: -80px;">
+    </div>
+    <div class="ambient-blob blob-gold" style="top: 340px; right: -100px;">
+    </div>
+    <div class="ambient-blob blob-blue" style="bottom: 120px; left: 25%;">
+    </div>
+    <!-- Standard Uniform Navigation -->
+    <header class="top-nav-bar" id="nav" role="banner">
+      <div class="top-nav-container">
+        <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+          <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+            <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2" fill="currentColor"/>
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-name">
+              Satyaseva Catechist Sisters
+            </span>
+            <span class="brand-tagline">
+              of the Families
+            </span>
+          </div>
+        </a>
+        <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="communities.html">
+            Our Communities
+          </a>
+          <a href="map.html">
+            Mission Map
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html" class="active" aria-current="page">
+            Vocations
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+        </nav>
+        <div class="top-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+            🌙
+          </button>
+          <select id="lang-select" aria-label="Select language">
+            <option value="en" selected>
+              EN
+            </option>
+            <option value="pl">
+              PL
+            </option>
+          </select>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span>
+            </span>
+            <span>
+            </span>
+            <span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main-content">
+      <!-- Split Hero Banner -->
+      <section class="comm-hero-section voc-hero-section" id="hero">
+        <div class="comm-hero-container">
+          <div class="comm-hero-content">
+            <div class="badge-gold">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 1v18M3 6h14"/>
+              </svg>
+              Discernment &amp; Religious Life
+            </div>
+            <h1 class="comm-hero-title">
+              “Come and See” — Is God Calling You?
+            </h1>
+            <p class="comm-hero-subtitle">
+              Discover a joyful consecrated life of prayer, community, catechetical teaching, and compassionate service to Christ in the family and the poorest of God's people.
+            </p>
+            <div class="comm-hero-flourish" aria-hidden="true">
+              <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="comm-hero-photo-wrap">
+            <img src="images/hero_sisters.jpg" alt="Satyaseva Sisters looking toward the garden cross in contemplative prayer" class="comm-hero-photo" width="460" height="310">
+          </div>
+        </div>
+      </section>
+      <!-- Four Pillars -->
+      <section style="padding: 60px 0;">
+        <div class="container">
+          <div style="text-align:center; max-width:680px; margin:0 auto;" >
+            <span class="badge-blue">
+              The Heart of Our Vocation
+            </span>
+            <h2 style="font-size:clamp(26px, 4vw, 36px); margin:12px 0;">
+              The Four Pillars of Our Life
+            </h2>
+            <p style="color:var(--ink-soft); font-size:15px;">
+              Rooted in the charism of our Foundress, Mother Regina Woroniecka, and devoted to Truth (Satya) and Loving Service (Seva).
+            </p>
+          </div>
+          <div class="pillars-grid">
+            <div class="pillar-card glass-card">
+              <span class="pillar-icon">
+                🙏
+              </span>
+              <h3>
+                Eucharistic Prayer
+              </h3>
+              <p>
+                Daily Holy Mass, Eucharistic Adoration, and the Liturgy of the Hours form the spiritual fountain from which all our community apostolate flows.
+              </p>
+            </div>
+            <div class="pillar-card glass-card">
+              <span class="pillar-icon">
+                📖
+              </span>
+              <h3>
+                Catechesis &amp; Truth
+              </h3>
+              <p>
+                Teaching Catholic faith, preparing children and families for sacraments, and building active basic Christian parish communities.
+              </p>
+            </div>
+            <div class="pillar-card glass-card">
+              <span class="pillar-icon">
+                🏘️
+              </span>
+              <h3>
+                Fraternal Community
+              </h3>
+              <p>
+                Living together in Gospel simplicity, sharing meals and recreation, and supporting each other in deep sisterly affection across cultures.
+              </p>
+            </div>
+            <div class="pillar-card glass-card">
+              <span class="pillar-icon">
+                ❤️
+              </span>
+              <h3>
+                Compassionate Service
+              </h3>
+              <p>
+                Loving service to the poorest families, village children, foster girls, widows, and senior persons in rural mission stations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Stages of Formation -->
+      <section style="padding: 70px 0; border-top: 1px solid var(--line);">
+        <div class="container">
+          <div style="text-align:center; max-width:680px; margin:0 auto;" >
+            <span class="badge-gold">
+              Spiritual Growth
+            </span>
+            <h2 style="font-size:clamp(26px, 4vw, 36px); margin:12px 0;">
+              Journey of Religious Formation
+            </h2>
+            <p style="color:var(--ink-soft); font-size:15px;">
+              A gradual and loving path of deepening intimacy with Jesus Christ and understanding religious vows.
+            </p>
+          </div>
+          <div class="timeline-wrap">
+            <!-- Stage 1 -->
+            <div class="timeline-item">
+              <div class="timeline-badge">
+                1
+              </div>
+              <div class="timeline-card glass-card">
+                <span class="timeline-duration">
+                  6 Months – 1 Year
+                </span>
+                <h3>
+                  Aspirancy ("Come &amp; See")
+                </h3>
+                <p>
+                  Live with our Sisters, participate in community prayer and daily apostolic life while discerning God's voice in your heart.
+                </p>
+              </div>
+            </div>
+            <!-- Stage 2 -->
+            <div class="timeline-item">
+              <div class="timeline-badge">
+                2
+              </div>
+              <div class="timeline-card glass-card">
+                <span class="timeline-duration">
+                  1 – 2 Years
+                </span>
+                <h3>
+                  Postulancy
+                </h3>
+                <p>
+                  Deeper spiritual grounding, catechism and Bible study, language learning, and active participation in family apostolate.
+                </p>
+              </div>
+            </div>
+            <!-- Stage 3 -->
+            <div class="timeline-item">
+              <div class="timeline-badge">
+                3
+              </div>
+              <div class="timeline-card glass-card">
+                <span class="timeline-duration">
+                  2 Canonical Years
+                </span>
+                <h3>
+                  Novitiate
+                </h3>
+                <p>
+                  An intense period of contemplative prayer, study of the Evangelical Counsels (Chastity, Poverty, Obedience), and spiritual transformation at Marianiketan Motherhouse.
+                </p>
+              </div>
+            </div>
+            <!-- Stage 4 -->
+            <div class="timeline-item">
+              <div class="timeline-badge">
+                4
+              </div>
+              <div class="timeline-card glass-card">
+                <span class="timeline-duration">
+                  5 – 6 Years
+                </span>
+                <h3>
+                  Juniorate (Temporary Vows)
+                </h3>
+                <p>
+                  First religious profession of vows. Sisters are assigned to mission stations, higher academic education, or healthcare and teaching ministry.
+                </p>
+              </div>
+            </div>
+            <!-- Stage 5 -->
+            <div class="timeline-item">
+              <div class="timeline-badge">
+                5
+              </div>
+              <div class="timeline-card glass-card" style="border-left: 4px solid var(--accent);">
+                <span class="timeline-duration" style="background:var(--accent-tint); color:var(--accent-deep); border-color:var(--accent-border);">
+                  Perpetual Consecration
+                </span>
+                <h3>
+                  Final Profession of Vows
+                </h3>
+                <p>
+                  Forever consecrated to Christ as a full member of the Satyaseva Sisters, wearing the golden cross and ring of spousal devotion to the Lord.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Inquiry Form -->
+      <section id="vocation-form" style="padding: 70px 0; border-top: 1px solid var(--line);">
+        <div class="container">
+          <div class="voc-form-wrapper glass-card">
+            <div style="text-align:center; margin-bottom:12px;">
+              <span class="badge-gold">
+                Confidential Inquiry
+              </span>
+            </div>
+            <h2>
+              Begin Your Discernment
+            </h2>
+            <p class="lead-text">
+              All inquiries are kept strictly confidential. Our Vocation Directress will reach out to you with warm sisterly guidance and prayer.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:16px; margin:28px 0 20px;">
+              <a href="mailto:scs.satyaseva@gmail.com?subject=Vocations%20Inquiry%20(Confidential)" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Email Vocation Directress (Confidential)
+              </a>
+              <a href="https://wa.me/919740146329?text=Hello%20Sister,%20I%20would%20like%20to%20know%20more%20about%20joining%20Satyaseva%20Sisters" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px; background:#25D366; border-color:#25D366; color:#ffffff;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.077-1.745-.371-.883-.357-1.472-1.229-1.517-1.29-.044-.061-.363-.483-.363-.92 0-.437.23-.652.312-.741.082-.089.179-.112.239-.112.06 0 .12 0 .172.005.055.006.128-.021.201.155.074.177.255.621.277.666.023.045.038.098.008.158-.03.06-.045.098-.09.15-.045.053-.095.118-.135.158-.046.046-.094.096-.04.188.053.092.237.391.509.633.35.312.645.409.737.455.092.045.145.038.2-.023.053-.061.226-.264.286-.355.06-.091.121-.076.202-.045.082.03 1.205.568 1.413.673.208.106.347.158.398.245.051.086.051.5-.093.905z"/>
+                </svg>
+                Connect via WhatsApp (+91 9740146329)
+              </a>
+            </div>
+            <p style="margin-top:16px; font-size:14px; color:var(--ink-soft); text-align:center;">
+              Our directress answers all inquiries personally with warm guidance and discretion.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer id="contact">
+      <div class="footer-glass">
+        <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 1v18M3 6h14"/>
         </svg>
-        <div class="brand-titles">
-          <span class="brand-name">Satyaseva Catechist Sisters</span>
-          <span class="brand-tagline">of the Families</span>
-        </div>
-      </a>
-
-      <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
-        <a href="index.html">Home</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="communities.html">Our Communities</a>
-        <a href="map.html">Mission Map</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html" class="active" aria-current="page">Vocations</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-
-      <div class="top-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>EN</option>
-          <option value="pl">PL</option>
-        </select>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main id="main-content">
-    <!-- Split Hero Banner -->
-    <section class="comm-hero-section voc-hero-section" id="hero">
-      <div class="comm-hero-container">
-        <div class="comm-hero-content">
-          <div class="badge-gold">
-            <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 1v18M3 6h14"/></svg>
-            Discernment &amp; Religious Life
-          </div>
-          <h1 class="comm-hero-title">“Come and See” — Is God Calling You?</h1>
-          <p class="comm-hero-subtitle">Discover a joyful consecrated life of prayer, community, catechetical teaching, and compassionate service to Christ in the family and the poorest of God's people.</p>
-          <div class="comm-hero-flourish" aria-hidden="true">
-            <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-            </svg>
-          </div>
-        </div>
-        <div class="comm-hero-photo-wrap">
-          <img src="images/hero_sisters.jpg" alt="Satyaseva Sisters looking toward the garden cross in contemplative prayer" class="comm-hero-photo" width="460" height="310">
-        </div>
-      </div>
-    </section>
-
-    <!-- Four Pillars -->
-    <section style="padding: 60px 0;">
-      <div class="container">
-        <div style="text-align:center; max-width:680px; margin:0 auto;" class="reveal">
-          <span class="badge-blue">The Heart of Our Vocation</span>
-          <h2 style="font-size:clamp(26px, 4vw, 36px); margin:12px 0;">The Four Pillars of Our Life</h2>
-          <p style="color:var(--ink-soft); font-size:15px;">Rooted in the charism of our Foundress, Mother Regina Woroniecka, and devoted to Truth (Satya) and Loving Service (Seva).</p>
-        </div>
-
-        <div class="pillars-grid reveal reveal-d1">
-          <div class="pillar-card glass-card">
-            <span class="pillar-icon">🙏</span>
-            <h3>Eucharistic Prayer</h3>
-            <p>Daily Holy Mass, Eucharistic Adoration, and the Liturgy of the Hours form the spiritual fountain from which all our community apostolate flows.</p>
-          </div>
-          <div class="pillar-card glass-card">
-            <span class="pillar-icon">📖</span>
-            <h3>Catechesis &amp; Truth</h3>
-            <p>Teaching Catholic faith, preparing children and families for sacraments, and building active basic Christian parish communities.</p>
-          </div>
-          <div class="pillar-card glass-card">
-            <span class="pillar-icon">🏘️</span>
-            <h3>Fraternal Community</h3>
-            <p>Living together in Gospel simplicity, sharing meals and recreation, and supporting each other in deep sisterly affection across cultures.</p>
-          </div>
-          <div class="pillar-card glass-card">
-            <span class="pillar-icon">❤️</span>
-            <h3>Compassionate Service</h3>
-            <p>Loving service to the poorest families, village children, foster girls, widows, and senior persons in rural mission stations.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Stages of Formation -->
-    <section style="padding: 70px 0; border-top: 1px solid var(--line);">
-      <div class="container">
-        <div style="text-align:center; max-width:680px; margin:0 auto;" class="reveal">
-          <span class="badge-gold">Spiritual Growth</span>
-          <h2 style="font-size:clamp(26px, 4vw, 36px); margin:12px 0;">Journey of Religious Formation</h2>
-          <p style="color:var(--ink-soft); font-size:15px;">A gradual and loving path of deepening intimacy with Jesus Christ and understanding religious vows.</p>
-        </div>
-
-        <div class="timeline-wrap reveal reveal-d1">
-          <!-- Stage 1 -->
-          <div class="timeline-item">
-            <div class="timeline-badge">1</div>
-            <div class="timeline-card glass-card">
-              <span class="timeline-duration">6 Months – 1 Year</span>
-              <h3>Aspirancy ("Come &amp; See")</h3>
-              <p>Live with our Sisters, participate in community prayer and daily apostolic life while discerning God's voice in your heart.</p>
-            </div>
-          </div>
-
-          <!-- Stage 2 -->
-          <div class="timeline-item">
-            <div class="timeline-badge">2</div>
-            <div class="timeline-card glass-card">
-              <span class="timeline-duration">1 – 2 Years</span>
-              <h3>Postulancy</h3>
-              <p>Deeper spiritual grounding, catechism and Bible study, language learning, and active participation in family apostolate.</p>
-            </div>
-          </div>
-
-          <!-- Stage 3 -->
-          <div class="timeline-item">
-            <div class="timeline-badge">3</div>
-            <div class="timeline-card glass-card">
-              <span class="timeline-duration">2 Canonical Years</span>
-              <h3>Novitiate</h3>
-              <p>An intense period of contemplative prayer, study of the Evangelical Counsels (Chastity, Poverty, Obedience), and spiritual transformation at Marianiketan Motherhouse.</p>
-            </div>
-          </div>
-
-          <!-- Stage 4 -->
-          <div class="timeline-item">
-            <div class="timeline-badge">4</div>
-            <div class="timeline-card glass-card">
-              <span class="timeline-duration">5 – 6 Years</span>
-              <h3>Juniorate (Temporary Vows)</h3>
-              <p>First religious profession of vows. Sisters are assigned to mission stations, higher academic education, or healthcare and teaching ministry.</p>
-            </div>
-          </div>
-
-          <!-- Stage 5 -->
-          <div class="timeline-item">
-            <div class="timeline-badge">5</div>
-            <div class="timeline-card glass-card" style="border-left: 4px solid var(--accent);">
-              <span class="timeline-duration" style="background:var(--accent-tint); color:var(--accent-deep); border-color:var(--accent-border);">Perpetual Consecration</span>
-              <h3>Final Profession of Vows</h3>
-              <p>Forever consecrated to Christ as a full member of the Satyaseva Sisters, wearing the golden cross and ring of spousal devotion to the Lord.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Inquiry Form -->
-    <section id="vocation-form" style="padding: 70px 0; border-top: 1px solid var(--line);">
-      <div class="container">
-        <div class="voc-form-wrapper glass-card reveal">
-          <div style="text-align:center; margin-bottom:12px;">
-            <span class="badge-gold">Confidential Inquiry</span>
-          </div>
-          <h2>Begin Your Discernment</h2>
-          <p class="lead-text">All inquiries are kept strictly confidential. Our Vocation Directress will reach out to you with warm sisterly guidance and prayer.</p>
-
-        <div style="display:flex; flex-direction:column; gap:16px; margin:28px 0 20px;">
-          <a href="mailto:scs.satyaseva@gmail.com?subject=Vocations%20Inquiry%20(Confidential)" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-            Email Vocation Directress (Confidential)
+        <h3>
+          Satyaseva Catechist Sisters of the Families
+        </h3>
+        <p>
+          Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India
+          <br>
+          Tel: +91 80-25496604 · Mob: +91 9740146329 · Email:
+          <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">
+            scs.satyaseva@gmail.com
           </a>
-
-          <a href="https://wa.me/919740146329?text=Hello%20Sister,%20I%20would%20like%20to%20know%20more%20about%20joining%20Satyaseva%20Sisters" target="_blank" rel="noopener" class="modern-btn-primary" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; text-decoration:none; padding:14px 20px; font-size:16px; background:#25D366; border-color:#25D366; color:#ffffff;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.077-1.745-.371-.883-.357-1.472-1.229-1.517-1.29-.044-.061-.363-.483-.363-.92 0-.437.23-.652.312-.741.082-.089.179-.112.239-.112.06 0 .12 0 .172.005.055.006.128-.021.201.155.074.177.255.621.277.666.023.045.038.098.008.158-.03.06-.045.098-.09.15-.045.053-.095.118-.135.158-.046.046-.094.096-.04.188.053.092.237.391.509.633.35.312.645.409.737.455.092.045.145.038.2-.023.053-.061.226-.264.286-.355.06-.091.121-.076.202-.045.082.03 1.205.568 1.413.673.208.106.347.158.398.245.051.086.051.5-.093.905z"/>
-            </svg>
-            Connect via WhatsApp (+91 9740146329)
-          </a>
-        </div>
-        <p style="margin-top:16px; font-size:14px; color:var(--ink-soft); text-align:center;">
-          Our directress answers all inquiries personally with warm guidance and discretion.
         </p>
+        <div class="footer-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+          <a href="privacy.html">
+            Privacy Policy
+          </a>
+          <a href="impressum.html">
+            Impressum
+          </a>
+        </div>
+        <div class="footer-fine">
+          © <script>
+  document.write(new Date().getFullYear())
+</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.
+        </div>
       </div>
-    </div>
-  </section>
-</main>
-<script src="js/main.js" defer></script>
-</body>
+    </footer>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

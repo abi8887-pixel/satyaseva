@@ -1,592 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
-  </script>
-  <title>Events &amp; Calendar — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Upcoming events, feasts, and community gatherings of the Satyaseva Catechist Sisters of the Families across India, Germany, and Poland.">
-  <link rel="canonical" href="https://satyasevasisters.org/events.html">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.json">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4">
-  <style>
-    /* ── Events Header ─────────────────────────────────────── */
-    .events-header {
-      text-align: center;
-      padding: 120px 24px 30px;
-      max-width: 820px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .events-header h1 {
-      font-size: clamp(32px, 5vw, 48px);
-      margin: 16px 0 14px;
-      line-height: 1.15;
-    }
-    .events-header p {
-      font-size: clamp(15px, 1.8vw, 18px);
-      color: var(--ink-soft);
-      line-height: 1.65;
-      margin: 0 auto;
-      max-width: 640px;
-    }
-
-    /* ── Toggle Tabs ───────────────────────────────────────── */
-    .events-toggle {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      max-width: 440px;
-      margin: 32px auto 28px;
-      background: color-mix(in srgb, var(--card) 85%, transparent);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--line);
-      border-radius: var(--r-pill);
-      padding: 5px;
-      box-shadow: var(--elev-1);
-    }
-    .events-toggle button {
-      flex: 1;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      background: none;
-      border: none;
-      color: var(--ink-soft);
-      cursor: pointer;
-      border-radius: var(--r-pill);
-      transition: all var(--dur-fast) var(--ease);
-      font-family: var(--font-sans);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .events-toggle button.active {
-      background: var(--brand);
-      color: #ffffff !important;
-      box-shadow: var(--elev-1);
-    }
-    .events-toggle button:not(.active):hover {
-      color: var(--brand);
-      background: var(--brand-tint);
-    }
-    .events-count {
-      font-size: 11px;
-      background: var(--accent);
-      color: #ffffff;
-      border-radius: var(--r-pill);
-      padding: 1px 7px;
-      margin-left: 6px;
-      font-weight: 700;
-    }
-    .events-toggle button.active .events-count {
-      background: rgba(255, 255, 255, 0.25);
-      color: #ffffff;
-    }
-
-    /* ── Events List ───────────────────────────────────────── */
-    .events-list {
-      max-width: 840px;
-      margin: 0 auto;
-      padding: 16px 24px 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    /* ── Event Card ────────────────────────────────────────── */
-    .event-card {
-      padding: 32px;
-      position: relative;
-      transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
-      animation: eventSlideIn 0.4s var(--ease) both;
-      border-left: 4px solid var(--gold);
-    }
-    .event-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--elev-3);
-      border-color: var(--gold-border);
-      border-left-color: var(--gold-deep);
-    }
-    @keyframes eventSlideIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .event-card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    .event-date {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--sage-deep);
-      background: var(--sage-tint);
-      border: 1px solid var(--sage-border);
-      padding: 4px 12px;
-      border-radius: var(--r-pill);
-      display: inline-block;
-    }
-    [data-theme="dark"] .event-date {
-      color: var(--sage);
-    }
-
-    /* Badges */
-    .event-badge {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      padding: 4px 12px;
-      border-radius: var(--r-pill);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .event-badge.happening-now {
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #86efac;
-      animation: badgePulse 2s ease infinite;
-    }
-    [data-theme="dark"] .event-badge.happening-now {
-      background: #064e3b;
-      color: #6ee7b7;
-      border-color: #047857;
-    }
-    .event-badge.coming-soon {
-      background: var(--gold-tint);
-      color: var(--gold-deep);
-      border: 1px solid var(--gold-border);
-    }
-    .event-badge.past {
-      background: var(--surface-alt);
-      color: var(--ink-faint);
-      border: 1px solid var(--line);
-    }
-    @keyframes badgePulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.3); }
-      50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-    }
-
-    .event-title {
-      font-family: var(--font-serif);
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      line-height: 1.3;
-      color: var(--ink);
-    }
-    .event-details {
-      font-size: 13.5px;
-      color: var(--ink-soft);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-    .event-details span {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .event-desc {
-      font-size: 14.5px;
-      line-height: 1.65;
-      color: var(--ink-soft);
-      margin: 0;
-    }
-
-    /* Countdown bar */
-    .event-countdown {
-      display: flex;
-      gap: 12px;
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-    }
-    .countdown-unit {
-      background: var(--surface-alt);
-      border: 1px solid var(--line);
-      border-radius: var(--r-md);
-      padding: 8px 14px;
-      text-align: center;
-      min-width: 60px;
-    }
-    .countdown-num {
-      font-size: 20px;
-      font-weight: 700;
-      font-family: var(--font-sans);
-      color: var(--gold-deep);
-      line-height: 1;
-    }
-    .countdown-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink-faint);
-      margin-top: 4px;
-    }
-
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 70px 32px;
-      border: 1px dashed var(--line);
-      border-radius: var(--r-lg);
-      color: var(--ink-soft);
-      font-weight: 500;
-      background: var(--surface-alt);
-    }
-    .empty-state .empty-icon {
-      font-size: 44px;
-      margin-bottom: 14px;
-      opacity: 0.6;
-    }
-    .empty-state p {
-      font-size: 15px;
-      max-width: 420px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 640px) {
-      .events-header { padding: 90px 16px 20px; }
-      .events-list { padding: 16px 16px 60px; gap: 18px; }
-      .event-card { padding: 22px; }
-      .event-card-top { flex-direction: column; gap: 10px; }
-      .event-title { font-size: 20px; }
-      .countdown-unit { padding: 6px 10px; min-width: 50px; }
-      .countdown-num { font-size: 17px; }
-    }
-  </style>
-</head>
-<body class="ambient-mesh-wrap">
-  <!-- Skip navigation for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <!-- Ambient background mesh blobs -->
-  <div class="ambient-blob blob-sage" style="top: 100px; left: -100px;"></div>
-  <div class="ambient-blob blob-gold" style="top: 260px; right: -80px;"></div>
-  <div class="ambient-blob blob-blue" style="bottom: 120px; left: 15%;"></div>
-
-  <header class="top-nav-bar" id="nav" role="banner">
-    <div class="top-nav-container">
-      <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
-        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
-          <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <circle cx="16" cy="10" r="2" fill="currentColor"/>
-        </svg>
-        <div class="brand-titles">
-          <span class="brand-name">Satyaseva Catechist Sisters</span>
-          <span class="brand-tagline">of the Families</span>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
+    <title>
+      Events &amp; Calendar — Satyaseva Catechist Sisters
+    </title>
+    <meta name="description" content="Upcoming events, feasts, and community gatherings of the Satyaseva Catechist Sisters of the Families across India, Germany, and Poland.">
+    <link rel="canonical" href="https://satyasevasisters.org/events.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <style>
+/* ── Events Header ─────────────────────────────────────── */ .events-header {
+  text-align: center;
+  padding: 120px 24px 30px;
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+}
+.events-header h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  margin: 16px 0 14px;
+  line-height: 1.15;
+}
+.events-header p {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 640px;
+}
+/* ── Toggle Tabs ───────────────────────────────────────── */ .events-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  max-width: 440px;
+  margin: 32px auto 28px;
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 5px;
+  box-shadow: var(--elev-1);
+}
+.events-toggle button {
+  flex: 1;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  transition: all var(--dur-fast) var(--ease);
+  font-family: var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.events-toggle button.active {
+  background: var(--brand);
+  color: #ffffff !important;
+  box-shadow: var(--elev-1);
+}
+.events-toggle button:not(.active):hover {
+  color: var(--brand);
+  background: var(--brand-tint);
+}
+.events-count {
+  font-size: 11px;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: var(--r-pill);
+  padding: 1px 7px;
+  margin-left: 6px;
+  font-weight: 700;
+}
+.events-toggle button.active .events-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+/* ── Events List ───────────────────────────────────────── */ .events-list {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 16px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+/* ── Event Card ────────────────────────────────────────── */ .event-card {
+  padding: 32px;
+  position: relative;
+  transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
+  animation: eventSlideIn 0.4s var(--ease) both;
+  border-left: 4px solid var(--gold);
+}
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--elev-3);
+  border-color: var(--gold-border);
+  border-left-color: var(--gold-deep);
+}
+@keyframes eventSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.event-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.event-date {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sage-deep);
+  background: var(--sage-tint);
+  border: 1px solid var(--sage-border);
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  display: inline-block;
+}
+[data-theme="dark"] .event-date {
+  color: var(--sage);
+}
+/* Badges */ .event-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.event-badge.happening-now {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+  animation: badgePulse 2s ease infinite;
+}
+[data-theme="dark"] .event-badge.happening-now {
+  background: #064e3b;
+  color: #6ee7b7;
+  border-color: #047857;
+}
+.event-badge.coming-soon {
+  background: var(--gold-tint);
+  color: var(--gold-deep);
+  border: 1px solid var(--gold-border);
+}
+.event-badge.past {
+  background: var(--surface-alt);
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+}
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+}
+.event-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.event-details {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.event-details span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.event-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+/* Countdown bar */ .event-countdown {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.countdown-unit {
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 8px 14px;
+  text-align: center;
+  min-width: 60px;
+}
+.countdown-num {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  color: var(--gold-deep);
+  line-height: 1;
+}
+.countdown-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+/* Empty state */ .empty-state {
+  text-align: center;
+  padding: 70px 32px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  color: var(--ink-soft);
+  font-weight: 500;
+  background: var(--surface-alt);
+}
+.empty-state .empty-icon {
+  font-size: 44px;
+  margin-bottom: 14px;
+  opacity: 0.6;
+}
+.empty-state p {
+  font-size: 15px;
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+@media (max-width: 640px) {
+  .events-header {
+    padding: 90px 16px 20px;
+  }
+  .events-list {
+    padding: 16px 16px 60px;
+    gap: 18px;
+  }
+  .event-card {
+    padding: 22px;
+  }
+  .event-card-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .event-title {
+    font-size: 20px;
+  }
+  .countdown-unit {
+    padding: 6px 10px;
+    min-width: 50px;
+  }
+  .countdown-num {
+    font-size: 17px;
+  }
+}
+</style>
+  </head>
+  <body class="ambient-mesh-wrap">
+    <!-- Skip navigation for accessibility -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+    <!-- Ambient background mesh blobs -->
+    <div class="ambient-blob blob-sage" style="top: 100px; left: -100px;">
+    </div>
+    <div class="ambient-blob blob-gold" style="top: 260px; right: -80px;">
+    </div>
+    <div class="ambient-blob blob-blue" style="bottom: 120px; left: 15%;">
+    </div>
+    <header class="top-nav-bar" id="nav" role="banner">
+      <div class="top-nav-container">
+        <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+          <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+            <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2" fill="currentColor"/>
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-name">
+              Satyaseva Catechist Sisters
+            </span>
+            <span class="brand-tagline">
+              of the Families
+            </span>
+          </div>
+        </a>
+        <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="communities.html">
+            Our Communities
+          </a>
+          <a href="map.html">
+            Mission Map
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html" class="active" aria-current="page">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+        </nav>
+        <div class="top-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+            🌙
+          </button>
+          <select id="lang-select" aria-label="Select language">
+            <option value="en" selected>
+              EN
+            </option>
+            <option value="pl">
+              PL
+            </option>
+          </select>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span>
+            </span>
+            <span>
+            </span>
+            <span>
+            </span>
+          </button>
         </div>
-      </a>
-
-      <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
-        <a href="index.html">Home</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="communities.html">Our Communities</a>
-        <a href="map.html">Mission Map</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html" class="active" aria-current="page">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-
-      <div class="top-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>EN</option>
-          <option value="pl">PL</option>
-        </select>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="comm-hero-section events-hero-section" id="hero">
+        <div class="comm-hero-container">
+          <div class="comm-hero-content">
+            <div class="badge-gold">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 1v18M3 6h14"/>
+              </svg>
+              Calendar &amp; Gatherings
+            </div>
+            <h1 class="comm-hero-title">
+              Congregation Events
+            </h1>
+            <p class="comm-hero-subtitle">
+              Feasts, spiritual retreats, jubilee celebrations, and mission gatherings from across our communities in India, Germany, and Poland.
+            </p>
+            <div class="comm-hero-flourish" aria-hidden="true">
+              <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="comm-hero-photo-wrap">
+            <img src="images/hero_sisters.jpg" alt="Satyaseva Sisters Community Gathering" class="comm-hero-photo" width="460" height="310">
+          </div>
+        </div>
+      </section>
+      <div class="events-toggle" id="events-toggle" role="tablist">
+        <button type="button" class="active" data-view="upcoming" role="tab" aria-selected="true" id="tab-upcoming">
+          Upcoming
+          <span class="events-count" id="count-upcoming">
+            0
+          </span>
+        </button>
+        <button type="button" data-view="past" role="tab" aria-selected="false" id="tab-past">
+          Past
+          <span class="events-count" id="count-past">
+            0
+          </span>
+        </button>
+        <button type="button" data-view="all" role="tab" aria-selected="false" id="tab-all">
+          All
         </button>
       </div>
-    </div>
-  </header>
-
-  <main id="main-content">
-    <section class="comm-hero-section events-hero-section" id="hero">
-      <div class="comm-hero-container">
-        <div class="comm-hero-content">
-          <div class="badge-gold">
-            <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 1v18M3 6h14"/></svg>
-            Calendar &amp; Gatherings
+      <section class="events-list" id="events-container" role="tabpanel">
+        <div class="empty-state">
+          <div class="empty-icon">
+            📅
           </div>
-          <h1 class="comm-hero-title">Congregation Events</h1>
-          <p class="comm-hero-subtitle">Feasts, spiritual retreats, jubilee celebrations, and mission gatherings from across our communities in India, Germany, and Poland.</p>
-          <div class="comm-hero-flourish" aria-hidden="true">
-            <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-            </svg>
-          </div>
+          <p>
+            Loading events...
+          </p>
         </div>
-        <div class="comm-hero-photo-wrap">
-          <img src="images/hero_sisters.jpg" alt="Satyaseva Sisters Community Gathering" class="comm-hero-photo" width="460" height="310">
+      </section>
+    </main>
+    <footer id="contact">
+      <div class="footer-glass">
+        <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 1v18M3 6h14"/>
+        </svg>
+        <h3>
+          Satyaseva Catechist Sisters of the Families
+        </h3>
+        <p>
+          Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India
+          <br>
+          Tel: +91 80-25496604 · Mob: +91 9740146329 · Email:
+          <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">
+            scs.satyaseva@gmail.com
+          </a>
+        </p>
+        <div class="footer-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+          <a href="privacy.html">
+            Privacy Policy
+          </a>
+          <a href="impressum.html">
+            Impressum
+          </a>
+        </div>
+        <div class="footer-fine">
+          © <script>
+  document.write(new Date().getFullYear())
+</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.
         </div>
       </div>
-    </section>
-
-    <div class="events-toggle reveal reveal-d1" id="events-toggle" role="tablist">
-      <button type="button" class="active" data-view="upcoming" role="tab" aria-selected="true" id="tab-upcoming">
-        Upcoming <span class="events-count" id="count-upcoming">0</span>
-      </button>
-      <button type="button" data-view="past" role="tab" aria-selected="false" id="tab-past">
-        Past <span class="events-count" id="count-past">0</span>
-      </button>
-      <button type="button" data-view="all" role="tab" aria-selected="false" id="tab-all">
-        All
-      </button>
-    </div>
-
-    <section class="events-list" id="events-container" role="tabpanel">
-      <div class="empty-state">
-        <div class="empty-icon">📅</div>
-        <p>Loading events...</p>
-      </div>
-    </section>
-  </main>
-
-  <footer id="contact">
-    <div class="footer-glass reveal">
-      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js"></script>
-  <script src="data/communities-data.js?v=4"></script>
-  <script>
-  (function() {
-    'use strict';
-
-    var allEvents = [];
-    var currentView = 'upcoming';
-
-    /* ── Fetch events from Supabase with static fallback ────────────── */
-    function loadEvents() {
-      if (window.SSCS && window.SSCS.getEvents) {
-        window.SSCS.getEvents()
-          .then(function(events) {
-            allEvents = Array.isArray(events) ? events : [];
-            updateCounts();
-            renderEvents();
-          })
-          .catch(function() {
-            allEvents = window.__INITIAL_EVENTS__ || [];
-            updateCounts();
-            renderEvents();
-          });
-        return;
-      }
-      fetch('/api/events')
-        .then(function(r) {
-          if (!r.ok) throw new Error('API unavailable');
-          return r.json();
-        })
-        .then(function(events) {
-          if (!Array.isArray(events)) events = [];
-          allEvents = events;
-          updateCounts();
-          renderEvents();
-        })
-        .catch(function() {
-          fetch('data/events.json')
-            .then(function(r) {
-              if (!r.ok) throw new Error('JSON unavailable');
-              return r.json();
-            })
-            .then(function(events) {
-              if (!Array.isArray(events)) events = [];
-              allEvents = events;
-              updateCounts();
-              renderEvents();
-            })
-            .catch(function() {
-              allEvents = window.__INITIAL_EVENTS__ || [];
-              updateCounts();
-              renderEvents();
-            });
-        });
-    }
-
-    /* ── Classify events ───────────────────────────────────── */
-    function classifyEvent(event) {
-      var now = new Date();
-      var eventDate = new Date(event.date);
-      if (isNaN(eventDate)) return 'upcoming';
-
-      var diffMs = eventDate.getTime() - now.getTime();
-      var diffHours = diffMs / (1000 * 60 * 60);
-
-      if (diffHours >= -24 && diffHours <= 24) return 'happening';
-      if (diffMs > 0) return 'upcoming';
-      return 'past';
-    }
-
-    function getFilteredEvents() {
-      if (currentView === 'all') return allEvents.slice();
-      return allEvents.filter(function(e) {
-        var cls = classifyEvent(e);
-        if (currentView === 'upcoming') return cls === 'upcoming' || cls === 'happening';
-        return cls === 'past';
-      });
-    }
-
-    /* ── Count badges ──────────────────────────────────────── */
-    function updateCounts() {
-      var upcoming = 0, past = 0;
-      allEvents.forEach(function(e) {
-        var cls = classifyEvent(e);
-        if (cls === 'past') past++;
-        else upcoming++;
-      });
-      document.getElementById('count-upcoming').textContent = upcoming;
-      document.getElementById('count-past').textContent = past;
-    }
-
-    /* ── Countdown helper ──────────────────────────────────── */
-    function getCountdown(dateStr) {
-      var now = new Date();
-      var target = new Date(dateStr);
-      var diff = target.getTime() - now.getTime();
-      if (diff <= 0) return null;
-
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      return { days: days, hours: hours, mins: mins };
-    }
-
-    /* ── Render ─────────────────────────────────────────────── */
-    function renderEvents() {
-      var container = document.getElementById('events-container');
-      var events = getFilteredEvents();
-
-      if (events.length === 0) {
-        var msg = currentView === 'upcoming'
-          ? 'No upcoming events scheduled at this time. Please check back later.'
-          : currentView === 'past'
-            ? 'No past events recorded yet.'
-            : 'No events found.';
-        container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><p>' + msg + '</p></div>';
-        return;
-      }
-
-      var html = '';
-      events.forEach(function(e, i) {
-        var d = new Date(e.date);
-        var dateStr = isNaN(d) ? e.date : d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        var cls = classifyEvent(e);
-
-        // Badge
-        var badge = '';
-        if (cls === 'happening') {
-          badge = '<span class="event-badge happening-now">● Happening Now</span>';
-        } else if (cls === 'upcoming') {
-          var cd = getCountdown(e.date);
-          if (cd && cd.days <= 7) {
-            badge = '<span class="event-badge coming-soon">In ' + (cd.days > 0 ? cd.days + 'd ' : '') + cd.hours + 'h</span>';
-          }
-        } else {
-          badge = '<span class="event-badge past">Past Event</span>';
-        }
-
-        // Countdown for upcoming events within 30 days
-        var countdownHtml = '';
-        if (cls === 'upcoming' || cls === 'happening') {
-          var cd = getCountdown(e.date);
-          if (cd && cd.days <= 30) {
-            countdownHtml = '<div class="event-countdown">' +
-              '<div class="countdown-unit"><div class="countdown-num">' + cd.days + '</div><div class="countdown-label">Days</div></div>' +
-              '<div class="countdown-unit"><div class="countdown-num">' + cd.hours + '</div><div class="countdown-label">Hours</div></div>' +
-              '<div class="countdown-unit"><div class="countdown-num">' + cd.mins + '</div><div class="countdown-label">Min</div></div>' +
-            '</div>';
-          }
-        }
-
-        html += '<div class="event-card glass-card" style="animation-delay:' + (i * 0.06) + 's;">' +
-          '<div class="event-card-top">' +
-            '<div class="event-date">' + dateStr + '</div>' +
-            badge +
-          '</div>' +
-          '<h3 class="event-title">' + (e.title || '') + '</h3>' +
-          '<div class="event-details">' +
-            (e.time ? '<span>⏱ ' + e.time + '</span>' : '') +
-            (e.location ? '<span>📍 ' + e.location + '</span>' : '') +
-          '</div>' +
-          (e.description ? '<p class="event-desc">' + e.description + '</p>' : '') +
-          countdownHtml +
-        '</div>';
-      });
-
-      container.innerHTML = html;
-    }
-
-    /* ── Tab switching ─────────────────────────────────────── */
-    var toggleContainer = document.getElementById('events-toggle');
-    if (toggleContainer) {
-      toggleContainer.addEventListener('click', function(ev) {
-        var btn = ev.target.closest('button[data-view]');
-        if (!btn) return;
-        currentView = btn.getAttribute('data-view');
-        toggleContainer.querySelectorAll('button').forEach(function(b) {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-        renderEvents();
-      });
-    }
-
-    /* ── Init ──────────────────────────────────────────────── */
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadEvents);
-    } else {
-      loadEvents();
-    }
-  })();
-  </script>
-  <script src="js/main.js" defer></script>
-</body>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <script src="js/supabase-config.js"></script> <script src="data/communities-data.js?v=4"></script> <script>
+  (function() {  'use strict';   var allEvents = [];  var currentView = 'upcoming';   /* ── Fetch events from Supabase with static fallback ────────────── */  function loadEvents() {  if (window.SSCS && window.SSCS.getEvents) {  window.SSCS.getEvents()  .then(function(events) {  allEvents = Array.isArray(events) ? events : [];  updateCounts();  renderEvents();  })  .catch(function() {  allEvents = window.__INITIAL_EVENTS__ || [];  updateCounts();  renderEvents();  });  return;  }  fetch('/api/events')  .then(function(r) {  if (!r.ok) throw new Error('API unavailable');  return r.json();  })  .then(function(events) {  if (!Array.isArray(events)) events = [];  allEvents = events;  updateCounts();  renderEvents();  })  .catch(function() {  fetch('data/events.json')  .then(function(r) {  if (!r.ok) throw new Error('JSON unavailable');  return r.json();  })  .then(function(events) {  if (!Array.isArray(events)) events = [];  allEvents = events;  updateCounts();  renderEvents();  })  .catch(function() {  allEvents = window.__INITIAL_EVENTS__ || [];  updateCounts();  renderEvents();  });  });  }   /* ── Classify events ───────────────────────────────────── */  function classifyEvent(event) {  var now = new Date();  var eventDate = new Date(event.date);  if (isNaN(eventDate)) return 'upcoming';   var diffMs = eventDate.getTime() - now.getTime();  var diffHours = diffMs / (1000 * 60 * 60);   if (diffHours > = -24 && diffHours <= 24) return 'happening';  if (diffMs >  0) return 'upcoming';  return 'past';  }   function getFilteredEvents() {  if (currentView === 'all') return allEvents.slice();  return allEvents.filter(function(e) {  var cls = classifyEvent(e);  if (currentView === 'upcoming') return cls === 'upcoming' || cls === 'happening';  return cls === 'past';  });  }   /* ── Count badges ──────────────────────────────────────── */  function updateCounts() {  var upcoming = 0, past = 0;  allEvents.forEach(function(e) {  var cls = classifyEvent(e);  if (cls === 'past') past++;  else upcoming++;  });  document.getElementById('count-upcoming').textContent = upcoming;  document.getElementById('count-past').textContent = past;  }   /* ── Countdown helper ──────────────────────────────────── */  function getCountdown(dateStr) {  var now = new Date();  var target = new Date(dateStr);  var diff = target.getTime() - now.getTime();  if (diff <= 0) return null;   var days = Math.floor(diff / (1000 * 60 * 60 * 24));  var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));  return { days: days, hours: hours, mins: mins };  }   /* ── Render ─────────────────────────────────────────────── */  function renderEvents() {  var container = document.getElementById('events-container');  var events = getFilteredEvents();   if (events.length === 0) {  var msg = currentView === 'upcoming'  ? 'No upcoming events scheduled at this time. Please check back later.'  : currentView === 'past'  ? 'No past events recorded yet.'  : 'No events found.';  container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><p>' + msg + '</p></div>';  return;  }   var html = '';  events.forEach(function(e, i) {  var d = new Date(e.date);  var dateStr = isNaN(d) ? e.date : d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });  var cls = classifyEvent(e);   // Badge  var badge = '';  if (cls === 'happening') {  badge = '<span class="event-badge happening-now">● Happening Now</span>';  } else if (cls === 'upcoming') {  var cd = getCountdown(e.date);  if (cd && cd.days <= 7) {  badge = '<span class="event-badge coming-soon">In ' + (cd.days >  0 ? cd.days + 'd ' : '') + cd.hours + 'h</span>';  }  } else {  badge = '<span class="event-badge past">Past Event</span>';  }   // Countdown for upcoming events within 30 days  var countdownHtml = '';  if (cls === 'upcoming' || cls === 'happening') {  var cd = getCountdown(e.date);  if (cd && cd.days <= 30) {  countdownHtml = '<div class="event-countdown">' +  '<div class="countdown-unit"><div class="countdown-num">' + cd.days + '</div><div class="countdown-label">Days</div></div>' +  '<div class="countdown-unit"><div class="countdown-num">' + cd.hours + '</div><div class="countdown-label">Hours</div></div>' +  '<div class="countdown-unit"><div class="countdown-num">' + cd.mins + '</div><div class="countdown-label">Min</div></div>' +  '</div>';  }  }   html += '<div class="event-card glass-card" style="animation-delay:' + (i * 0.06) + 's;">' +  '<div class="event-card-top">' +  '<div class="event-date">' + dateStr + '</div>' +  badge +  '</div>' +  '<h3 class="event-title">' + (e.title || '') + '</h3>' +  '<div class="event-details">' +  (e.time ? '<span>⏱ ' + e.time + '</span>' : '') +  (e.location ? '<span>📍 ' + e.location + '</span>' : '') +  '</div>' +  (e.description ? '<p class="event-desc">' + e.description + '</p>' : '') +  countdownHtml +  '</div>';  });   container.innerHTML = html;  }   /* ── Tab switching ─────────────────────────────────────── */  var toggleContainer = document.getElementById('events-toggle');  if (toggleContainer) {  toggleContainer.addEventListener('click', function(ev) {  var btn = ev.target.closest('button[data-view]');  if (!btn) return;  currentView = btn.getAttribute('data-view');  toggleContainer.querySelectorAll('button').forEach(function(b) {  b.classList.remove('active');  b.setAttribute('aria-selected', 'false');  });  btn.classList.add('active');  btn.setAttribute('aria-selected', 'true');  renderEvents();  });  }   /* ── Init ──────────────────────────────────────────────── */  if (document.readyState === 'loading') {  document.addEventListener('DOMContentLoaded', loadEvents);  } else {  loadEvents();  }  })();
+</script> <script src="js/main.js" defer></script>
+  </body>
 </html>

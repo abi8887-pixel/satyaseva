@@ -1,1 +1,0 @@
-# SSCS Test Suite

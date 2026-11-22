@@ -1,754 +1,815 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
-  </script>
-  <title>Media Library &amp; Archives — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Explore videos, photo galleries, sacred hymns, and downloadable spiritual resources from the Satyaseva Catechist Sisters across India, Germany, and Poland.">
-  <link rel="canonical" href="https://satyasevasisters.org/media.html">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.json">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4">
-  <style>
-    /* ── Media Header ──────────────────────────────────────── */
-    .media-hero {
-      text-align: center;
-      padding: 120px 24px 36px;
-      max-width: 860px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .media-hero h1 {
-      font-size: clamp(32px, 5vw, 48px);
-      line-height: 1.15;
-      margin: 16px 0 14px;
-    }
-    .media-hero p {
-      font-size: clamp(15px, 1.8vw, 18px);
-      color: var(--ink-soft);
-      line-height: 1.65;
-      margin-bottom: 28px;
-    }
-
-    /* ── Section Tabs ──────────────────────────────────────── */
-    .media-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      max-width: 540px;
-      margin: 0 auto 36px;
-      background: color-mix(in srgb, var(--card) 85%, transparent);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--line);
-      border-radius: var(--r-pill);
-      padding: 5px;
-      box-shadow: var(--elev-1);
-    }
-    .media-tabs button {
-      flex: 1;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      background: none;
-      border: none;
-      color: var(--ink-soft);
-      cursor: pointer;
-      border-radius: var(--r-pill);
-      transition: all var(--dur-fast) var(--ease);
-      font-family: var(--font-sans);
-      white-space: nowrap;
-    }
-    .media-tabs button.active {
-      background: linear-gradient(135deg, var(--sage-deep), var(--blue-deep));
-      color: #ffffff;
-      box-shadow: var(--elev-1);
-    }
-    .media-tabs button:not(.active):hover {
-      color: var(--ink);
-      background: var(--sage-tint);
-    }
-
-    .media-section { display: none; }
-    .media-section.active { display: block; }
-
-    /* ── Section Headers ───────────────────────────────────── */
-    .media-section-head {
-      max-width: 1100px;
-      margin: 0 auto 28px;
-      padding: 0 24px;
-      text-align: center;
-    }
-    .media-section-head h2 {
-      margin: 12px 0 8px;
-      font-size: 26px;
-    }
-    .media-section-head p {
-      color: var(--ink-soft);
-      font-size: 14.5px;
-      margin: 0;
-    }
-
-    /* ── Photo Gallery Grid ────────────────────────────────── */
-    .photo-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .photo-thumb {
-      aspect-ratio: 1;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      border: 1px solid var(--line);
-      border-radius: var(--r-md);
-      background: var(--surface-alt);
-      box-shadow: var(--elev-1);
-      transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-    }
-    .photo-thumb:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--elev-3);
-      border-color: var(--gold-border);
-      z-index: 1;
-    }
-    .photo-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s var(--ease);
-    }
-    .photo-thumb:hover img {
-      transform: scale(1.06);
-    }
-    .photo-thumb .photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(transparent 50%, rgba(15, 23, 42, 0.75));
-      opacity: 0;
-      transition: opacity 0.25s var(--ease);
-      display: flex;
-      align-items: flex-end;
-      padding: 12px;
-    }
-    .photo-thumb:hover .photo-overlay { opacity: 1; }
-    .photo-overlay span {
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 2px 8px;
-      border-radius: var(--r-pill);
-    }
-
-    /* Community filter */
-    .photo-filters {
-      max-width: 1100px;
-      margin: 0 auto 24px;
-      padding: 0 24px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .photo-filter-btn {
-      padding: 7px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid var(--line);
-      background: var(--card);
-      color: var(--ink-soft);
-      cursor: pointer;
-      border-radius: var(--r-pill);
-      box-shadow: var(--elev-1);
-      transition: all var(--dur-fast) var(--ease);
-      font-family: var(--font-sans);
-    }
-    .photo-filter-btn.active {
-      background: var(--brand);
-      color: #ffffff !important;
-      border-color: var(--brand);
-      box-shadow: var(--elev-2);
-    }
-    .photo-filter-btn:not(.active):hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-tint);
-    }
-    .photo-count {
-      font-size: 10px;
-      opacity: 0.8;
-      margin-left: 4px;
-    }
-
-    /* ── Video Cards ───────────────────────────────────────── */
-    .video-section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
-    }
-    .video-card {
-      border-radius: var(--r-lg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .video-frame {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      background: #0f172a;
-    }
-    .video-frame iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
-    .video-meta {
-      padding: 22px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .video-meta h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin: 8px 0;
-      line-height: 1.35;
-      color: var(--ink);
-    }
-    .video-meta p {
-      font-size: 13.5px;
-      color: var(--ink-soft);
-      line-height: 1.55;
-      margin: 0;
-    }
-
-    /* ── Audio Cards ───────────────────────────────────────── */
-    .audio-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-    .audio-card {
-      padding: 26px;
-      border-radius: var(--r-lg);
-      border-left: 4px solid var(--gold);
-    }
-    .audio-icon { font-size: 30px; margin-bottom: 10px; }
-    .audio-card h3 { font-size: 17px; margin: 0 0 4px; font-weight: 700; }
-    .audio-card .audio-sub { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 16px; }
-    .audio-card audio { width: 100%; border-radius: var(--r-pill); }
-
-    /* ── Download Cards ────────────────────────────────────── */
-    .downloads-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
-    .download-card {
-      padding: 22px 24px;
-      border-radius: var(--r-lg);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-    .download-card strong { display: block; font-size: 15px; color: var(--ink); }
-    .download-card .dl-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
-
-    /* ── Empty / Loading ───────────────────────────────────── */
-    .empty-state {
-      text-align: center;
-      padding: 60px 32px;
-      border: 1px dashed var(--line);
-      border-radius: var(--r-lg);
-      color: var(--ink-soft);
-      font-weight: 500;
-      background: var(--surface-alt);
-      max-width: 600px;
-      margin: 0 auto 60px;
-    }
-    .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
-
-    @media (max-width: 640px) {
-      .media-hero { padding: 90px 16px 24px; }
-      .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 0 16px 40px; }
-      .video-grid { grid-template-columns: 1fr; }
-      .media-tabs { flex-wrap: wrap; margin: 0 16px 28px; }
-      .media-tabs button { font-size: 12px; padding: 8px 12px; }
-    }
-  </style>
-</head>
-<body class="ambient-mesh-wrap">
-  <!-- Skip navigation for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <!-- Ambient background mesh blobs -->
-  <div class="ambient-blob blob-sage" style="top: 80px; left: -80px;"></div>
-  <div class="ambient-blob blob-gold" style="top: 300px; right: -80px;"></div>
-  <div class="ambient-blob blob-blue" style="bottom: 100px; left: 15%;"></div>
-
-  <header class="top-nav-bar" id="nav" role="banner">
-    <div class="top-nav-container">
-      <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
-        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
-          <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <circle cx="16" cy="10" r="2" fill="currentColor"/>
-        </svg>
-        <div class="brand-titles">
-          <span class="brand-name">Satyaseva Catechist Sisters</span>
-          <span class="brand-tagline">of the Families</span>
-        </div>
-      </a>
-
-      <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
-        <a href="index.html">Home</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="communities.html">Our Communities</a>
-        <a href="map.html">Mission Map</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html" class="active" aria-current="page">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-
-      <div class="top-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>EN</option>
-          <option value="pl">PL</option>
-        </select>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
+    <title>
+      Media Library &amp; Archives — Satyaseva Catechist Sisters
+    </title>
+    <meta name="description" content="Explore videos, photo galleries, sacred hymns, and downloadable spiritual resources from the Satyaseva Catechist Sisters across India, Germany, and Poland.">
+    <link rel="canonical" href="https://satyasevasisters.org/media.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <style>
+/* ── Media Header ──────────────────────────────────────── */ .media-hero {
+  text-align: center;
+  padding: 120px 24px 36px;
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+}
+.media-hero h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.15;
+  margin: 16px 0 14px;
+}
+.media-hero p {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+/* ── Section Tabs ──────────────────────────────────────── */ .media-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  max-width: 540px;
+  margin: 0 auto 36px;
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 5px;
+  box-shadow: var(--elev-1);
+}
+.media-tabs button {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  transition: all var(--dur-fast) var(--ease);
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+.media-tabs button.active {
+  background: linear-gradient(135deg, var(--sage-deep), var(--blue-deep));
+  color: #ffffff;
+  box-shadow: var(--elev-1);
+}
+.media-tabs button:not(.active):hover {
+  color: var(--ink);
+  background: var(--sage-tint);
+}
+.media-section {
+  display: none;
+}
+.media-section.active {
+  display: block;
+}
+/* ── Section Headers ───────────────────────────────────── */ .media-section-head {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  padding: 0 24px;
+  text-align: center;
+}
+.media-section-head h2 {
+  margin: 12px 0 8px;
+  font-size: 26px;
+}
+.media-section-head p {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  margin: 0;
+}
+/* ── Photo Gallery Grid ────────────────────────────────── */ .photo-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.photo-thumb {
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface-alt);
+  box-shadow: var(--elev-1);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.photo-thumb:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--elev-3);
+  border-color: var(--gold-border);
+  z-index: 1;
+}
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s var(--ease);
+}
+.photo-thumb:hover img {
+  transform: scale(1.06);
+}
+.photo-thumb .photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, rgba(15, 23, 42, 0.75));
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+}
+.photo-thumb:hover .photo-overlay {
+  opacity: 1;
+}
+.photo-overlay span {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+}
+/* Community filter */ .photo-filters {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.photo-filter-btn {
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  box-shadow: var(--elev-1);
+  transition: all var(--dur-fast) var(--ease);
+  font-family: var(--font-sans);
+}
+.photo-filter-btn.active {
+  background: var(--brand);
+  color: #ffffff !important;
+  border-color: var(--brand);
+  box-shadow: var(--elev-2);
+}
+.photo-filter-btn:not(.active):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-tint);
+}
+.photo-count {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+/* ── Video Cards ───────────────────────────────────────── */ .video-section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+.video-card {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.video-frame {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: #0f172a;
+}
+.video-frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.video-meta {
+  padding: 22px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.video-meta h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 8px 0;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.video-meta p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin: 0;
+}
+/* ── Audio Cards ───────────────────────────────────────── */ .audio-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+.audio-card {
+  padding: 26px;
+  border-radius: var(--r-lg);
+  border-left: 4px solid var(--gold);
+}
+.audio-icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.audio-card h3 {
+  font-size: 17px;
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+.audio-card .audio-sub {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+.audio-card audio {
+  width: 100%;
+  border-radius: var(--r-pill);
+}
+/* ── Download Cards ────────────────────────────────────── */ .downloads-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+.download-card {
+  padding: 22px 24px;
+  border-radius: var(--r-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.download-card strong {
+  display: block;
+  font-size: 15px;
+  color: var(--ink);
+}
+.download-card .dl-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+/* ── Empty / Loading ───────────────────────────────────── */ .empty-state {
+  text-align: center;
+  padding: 60px 32px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  color: var(--ink-soft);
+  font-weight: 500;
+  background: var(--surface-alt);
+  max-width: 600px;
+  margin: 0 auto 60px;
+}
+.empty-state .empty-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+@media (max-width: 640px) {
+  .media-hero {
+    padding: 90px 16px 24px;
+  }
+  .photo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    padding: 0 16px 40px;
+  }
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+  .media-tabs {
+    flex-wrap: wrap;
+    margin: 0 16px 28px;
+  }
+  .media-tabs button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+</style>
+  </head>
+  <body class="ambient-mesh-wrap">
+    <!-- Skip navigation for accessibility -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+    <!-- Ambient background mesh blobs -->
+    <div class="ambient-blob blob-sage" style="top: 80px; left: -80px;">
     </div>
-  </header>
-
-  <main id="main-content">
-    <section class="comm-hero-section media-hero-section" id="hero">
-      <div class="comm-hero-container">
-        <div class="comm-hero-content">
-          <div class="badge-gold">
-            <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 1v18M3 6h14"/></svg>
-            Multimedia &amp; Archives
-          </div>
-          <h1 class="comm-hero-title">Media Library</h1>
-          <p class="comm-hero-subtitle">Watch mission documentaries, explore community photo galleries, listen to sacred hymns, and download spiritual catechetical resources.</p>
-          <div class="comm-hero-flourish" aria-hidden="true">
-            <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-            </svg>
-          </div>
-        </div>
-        <div class="comm-hero-photo-wrap">
-          <img src="images/FrankfurtCommunity.png" alt="Satyaseva Sisters International Community" class="comm-hero-photo" width="460" height="310">
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Tabs -->
-    <div class="media-tabs reveal reveal-d1" id="media-tabs" role="tablist">
-      <button type="button" class="active" data-section="photos" role="tab" aria-selected="true">📷 Photos</button>
-      <button type="button" data-section="album" role="tab" aria-selected="false">📖 Archival Album</button>
-      <button type="button" data-section="videos" role="tab" aria-selected="false">🎬 Videos</button>
-      <button type="button" data-section="audio" role="tab" aria-selected="false">🎵 Hymns</button>
-      <button type="button" data-section="downloads" role="tab" aria-selected="false">📥 Resources</button>
+    <div class="ambient-blob blob-gold" style="top: 300px; right: -80px;">
     </div>
-
-    <!-- ════ CANVA ARCHIVAL ALBUM SECTION ════ -->
-    <section class="media-section" id="section-album" role="tabpanel">
-      <div class="media-section-head">
-        <span class="badge-gold">Interactive Presentation</span>
-        <h2>Archival Photo Album — B00K 1</h2>
-        <p>Browse through the historic archival presentation and photographic heritage of the Satyaseva Sisters.</p>
-      </div>
-
-      <div class="gallery-canva-wrap reveal" style="max-width: 820px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px);">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 141.5560%;
- padding-bottom: 0; box-shadow: var(--elev-3, 0 4px 16px rgba(0,0,0,0.12)); margin-top: 1.2em; margin-bottom: 1.5em; overflow: hidden;
- border-radius: var(--r-lg, 8px); will-change: transform; background: var(--card, #ffffff); border: 1px solid var(--line, #d3dee6);">
-          <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
-            src="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen" title="Satyaseva Sisters Presentation — B00K 1">
-          </iframe>
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 40px;">
-          <a href="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?utm_content=DAHUdPUwuwQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" class="modern-btn-secondary" style="font-size: 13px;">
-            ↗ Open in Canva Fullscreen
+    <div class="ambient-blob blob-blue" style="bottom: 100px; left: 15%;">
+    </div>
+    <header class="top-nav-bar" id="nav" role="banner">
+      <div class="top-nav-container">
+        <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+          <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+            <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2" fill="currentColor"/>
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-name">
+              Satyaseva Catechist Sisters
+            </span>
+            <span class="brand-tagline">
+              of the Families
+            </span>
+          </div>
+        </a>
+        <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+          <a href="index.html">
+            Home
           </a>
-          <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Satyaseva_History.pdf" class="modern-btn-primary" style="font-size: 13px; gap: 8px;">
-            📥 Download Archival Biography (PDF)
+          <a href="foundress.html">
+            Our Foundress
           </a>
-          <button type="button" onclick="window.print()" class="modern-btn-secondary" style="font-size: 13px; gap: 8px;">
-            🖨️ Print / Save as PDF
+          <a href="communities.html">
+            Our Communities
+          </a>
+          <a href="map.html">
+            Mission Map
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html" class="active" aria-current="page">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+        </nav>
+        <div class="top-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+            🌙
+          </button>
+          <select id="lang-select" aria-label="Select language">
+            <option value="en" selected>
+              EN
+            </option>
+            <option value="pl">
+              PL
+            </option>
+          </select>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span>
+            </span>
+            <span>
+            </span>
+            <span>
+            </span>
           </button>
         </div>
       </div>
-    </section>
-
-    <!-- ════ PHOTOS SECTION ════ -->
-    <section class="media-section active" id="section-photos" role="tabpanel">
-      <div class="media-section-head">
-        <span class="badge-sage">Community Archives</span>
-        <h2>Photo Gallery</h2>
-        <p>Photographs from our communities, liturgical celebrations, and family apostolate across India, Germany, and Poland.</p>
-      </div>
-
-      <div class="photo-filters" id="photo-filters">
-        <button class="photo-filter-btn active" data-filter="all">All</button>
-        <!-- dynamically populated -->
-      </div>
-
-      <div class="photo-grid" id="photo-grid">
-        <div class="empty-state" style="grid-column:1/-1;">
-          <div class="empty-icon">📷</div>
-          <p>Loading photos...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ VIDEOS SECTION ════ -->
-    <section class="media-section" id="section-videos" role="tabpanel">
-      <div class="video-section-inner">
-        <div class="media-section-head" style="padding:0; margin-bottom:28px;">
-          <span class="badge-gold">Video Archives</span>
-          <h2>Documentaries &amp; Mission Stories</h2>
-          <p>Short films, feast celebrations, and missionary chronicles from India and Europe.</p>
-        </div>
-
-        <div class="video-grid">
-          <div class="video-card glass-card">
-            <div class="video-frame">
-              <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="The Life of Mother Regina Woroniecka" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </header>
+    <main id="main-content">
+      <section class="comm-hero-section media-hero-section" id="hero">
+        <div class="comm-hero-container">
+          <div class="comm-hero-content">
+            <div class="badge-gold">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 1v18M3 6h14"/>
+              </svg>
+              Multimedia &amp; Archives
             </div>
-            <div class="video-meta">
-              <span class="badge-gold" style="align-self:flex-start; margin-bottom:8px;">Foundress History</span>
-              <h3>Mother Regina — Missionary of the Poor</h3>
-              <p>A retrospective on the life of Mother Regina Woroniecka (1921–2012), from her roots in Poland to the founding of Satyaseva in Mariyapura, India.</p>
+            <h1 class="comm-hero-title">
+              Media Library
+            </h1>
+            <p class="comm-hero-subtitle">
+              Watch mission documentaries, explore community photo galleries, listen to sacred hymns, and download spiritual catechetical resources.
+            </p>
+            <div class="comm-hero-flourish" aria-hidden="true">
+              <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+              </svg>
             </div>
           </div>
-
-          <div class="video-card glass-card">
-            <div class="video-frame">
-              <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Golden Jubilee Celebrations" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="comm-hero-photo-wrap">
+            <img src="images/FrankfurtCommunity.png" alt="Satyaseva Sisters International Community" class="comm-hero-photo" width="460" height="310">
+          </div>
+        </div>
+      </section>
+      <!-- Section Tabs -->
+      <div class="media-tabs" id="media-tabs" role="tablist">
+        <button type="button" class="active" data-section="photos" role="tab" aria-selected="true">
+          📷 Photos
+        </button>
+        <button type="button" data-section="album" role="tab" aria-selected="false">
+          📖 Archival Album
+        </button>
+        <button type="button" data-section="videos" role="tab" aria-selected="false">
+          🎬 Videos
+        </button>
+        <button type="button" data-section="audio" role="tab" aria-selected="false">
+          🎵 Hymns
+        </button>
+        <button type="button" data-section="downloads" role="tab" aria-selected="false">
+          📥 Resources
+        </button>
+      </div>
+      <!-- ════ CANVA ARCHIVAL ALBUM SECTION ════ -->
+      <section class="media-section" id="section-album" role="tabpanel">
+        <div class="media-section-head">
+          <span class="badge-gold">
+            Interactive Presentation
+          </span>
+          <h2>
+            Archival Photo Album — B00K 1
+          </h2>
+          <p>
+            Browse through the historic archival presentation and photographic heritage of the Satyaseva Sisters.
+          </p>
+        </div>
+        <div class="gallery-canva-wrap" style="max-width: 820px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px);">
+          <div style="position: relative; width: 100%; height: 0; padding-top: 141.5560%; padding-bottom: 0; box-shadow: var(--elev-3, 0 4px 16px rgba(0,0,0,0.12)); margin-top: 1.2em; margin-bottom: 1.5em; overflow: hidden; border-radius: var(--r-lg, 8px); will-change: transform; background: var(--card, #ffffff); border: 1px solid var(--line, #d3dee6);">
+            <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen" title="Satyaseva Sisters Presentation — B00K 1">
+            </iframe>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 40px;">
+            <a href="https://www.canva.com/design/DAHUdPUwuwQ/mE8YZ-Wh6J14VcxfC13ELQ/watch?utm_content=DAHUdPUwuwQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" class="modern-btn-secondary" style="font-size: 13px;">
+              ↗ Open in Canva Fullscreen
+            </a>
+            <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Satyaseva_History.pdf" class="modern-btn-primary" style="font-size: 13px; gap: 8px;">
+              📥 Download Archival Biography (PDF)
+            </a>
+            <button type="button" onclick="window.print()" class="modern-btn-secondary" style="font-size: 13px; gap: 8px;">
+              🖨️ Print / Save as PDF
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- ════ PHOTOS SECTION ════ -->
+      <section class="media-section active" id="section-photos" role="tabpanel">
+        <div class="media-section-head">
+          <span class="badge-sage">
+            Community Archives
+          </span>
+          <h2>
+            Photo Gallery
+          </h2>
+          <p>
+            Photographs from our communities, liturgical celebrations, and family apostolate across India, Germany, and Poland.
+          </p>
+        </div>
+        <div class="photo-filters" id="photo-filters">
+          <button class="photo-filter-btn active" data-filter="all">
+            All
+          </button>
+          <!-- dynamically populated -->
+        </div>
+        <div class="photo-grid" id="photo-grid">
+          <div class="empty-state" style="grid-column:1/-1;">
+            <div class="empty-icon">
+              📷
             </div>
-            <div class="video-meta">
-              <span class="badge-sage" style="align-self:flex-start; margin-bottom:8px;">Celebrations</span>
-              <h3>Jubilee of the Satyaseva Congregation</h3>
-              <p>Highlights of the thanksgiving Holy Mass and celebration gathering sisters from all 32 stations across India, Germany, and Poland.</p>
+            <p>
+              Loading photos...
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- ════ VIDEOS SECTION ════ -->
+      <section class="media-section" id="section-videos" role="tabpanel">
+        <div class="video-section-inner">
+          <div class="media-section-head" style="padding:0; margin-bottom:28px;">
+            <span class="badge-gold">
+              Video Archives
+            </span>
+            <h2>
+              Documentaries &amp; Mission Stories
+            </h2>
+            <p>
+              Short films, feast celebrations, and missionary chronicles from India and Europe.
+            </p>
+          </div>
+          <div class="video-grid">
+            <div class="video-card glass-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="The Life of Mother Regina Woroniecka" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-meta">
+                <span class="badge-gold" style="align-self:flex-start; margin-bottom:8px;">
+                  Foundress History
+                </span>
+                <h3>
+                  Mother Regina — Missionary of the Poor
+                </h3>
+                <p>
+                  A retrospective on the life of Mother Regina Woroniecka (1921–2012), from her roots in Poland to the founding of Satyaseva in Mariyapura, India.
+                </p>
+              </div>
+            </div>
+            <div class="video-card glass-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Golden Jubilee Celebrations" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-meta">
+                <span class="badge-sage" style="align-self:flex-start; margin-bottom:8px;">
+                  Celebrations
+                </span>
+                <h3>
+                  Jubilee of the Satyaseva Congregation
+                </h3>
+                <p>
+                  Highlights of the thanksgiving Holy Mass and celebration gathering sisters from all 32 stations across India, Germany, and Poland.
+                </p>
+              </div>
+            </div>
+            <div class="video-card glass-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Mission in Rural Villages" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-meta">
+                <span class="badge-blue" style="align-self:flex-start; margin-bottom:8px;">
+                  Village Ministry
+                </span>
+                <h3>
+                  Presence in the Villages
+                </h3>
+                <p>
+                  Following our catechist sisters as they walk between rural homes, visit the sick, and teach catechism under village banyan trees.
+                </p>
+              </div>
             </div>
           </div>
-
-          <div class="video-card glass-card">
-            <div class="video-frame">
-              <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Mission in Rural Villages" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </section>
+      <!-- ════ AUDIO SECTION ════ -->
+      <section class="media-section" id="section-audio" role="tabpanel">
+        <div class="media-section-head">
+          <span class="badge-blue">
+            Sacred Music
+          </span>
+          <h2>
+            Hymns &amp; Liturgical Chants
+          </h2>
+          <p>
+            Kannada, Hindi, English, and Polish devotional hymns sung during daily chapel adoration and festive celebrations.
+          </p>
+        </div>
+        <div class="audio-grid">
+          <div class="audio-card glass-card">
+            <div class="audio-icon">
+              🕊️
             </div>
-            <div class="video-meta">
-              <span class="badge-blue" style="align-self:flex-start; margin-bottom:8px;">Village Ministry</span>
-              <h3>Presence in the Villages</h3>
-              <p>Following our catechist sisters as they walk between rural homes, visit the sick, and teach catechism under village banyan trees.</p>
+            <h3>
+              Satyaseva Congregation Anthem
+            </h3>
+            <div class="audio-sub">
+              Sung by SCS Novices at Marianiketan
             </div>
+            <audio controls preload="none">
+              <source src="assets/audio/anthem.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="audio-card glass-card">
+            <div class="audio-icon">
+              🌹
+            </div>
+            <h3>
+              Magnificat — Song of Mary
+            </h3>
+            <div class="audio-sub">
+              Evening Vespers recording
+            </div>
+            <audio controls preload="none">
+              <source src="assets/audio/magnificat.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="audio-card glass-card">
+            <div class="audio-icon">
+              ✝️
+            </div>
+            <h3>
+              St. Joseph, Guardian of Families
+            </h3>
+            <div class="audio-sub">
+              Feast day hymn
+            </div>
+            <audio controls preload="none">
+              <source src="assets/audio/st-joseph.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- ════ AUDIO SECTION ════ -->
-    <section class="media-section" id="section-audio" role="tabpanel">
-      <div class="media-section-head">
-        <span class="badge-blue">Sacred Music</span>
-        <h2>Hymns &amp; Liturgical Chants</h2>
-        <p>Kannada, Hindi, English, and Polish devotional hymns sung during daily chapel adoration and festive celebrations.</p>
-      </div>
-
-      <div class="audio-grid">
-        <div class="audio-card glass-card">
-          <div class="audio-icon">🕊️</div>
-          <h3>Satyaseva Congregation Anthem</h3>
-          <div class="audio-sub">Sung by SCS Novices at Marianiketan</div>
-          <audio controls preload="none">
-            <source src="assets/audio/anthem.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
+      </section>
+      <!-- ════ DOWNLOADS SECTION ════ -->
+      <section class="media-section" id="section-downloads" role="tabpanel">
+        <div class="media-section-head">
+          <span class="badge-gold">
+            Resources
+          </span>
+          <h2>
+            Catechetical &amp; Spiritual Downloads
+          </h2>
+          <p>
+            Free PDF resources for family prayer, catechism teachers, and vocation seekers.
+          </p>
         </div>
-
-        <div class="audio-card glass-card">
-          <div class="audio-icon">🌹</div>
-          <h3>Magnificat — Song of Mary</h3>
-          <div class="audio-sub">Evening Vespers recording</div>
-          <audio controls preload="none">
-            <source src="assets/audio/magnificat.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div class="audio-card glass-card">
-          <div class="audio-icon">✝️</div>
-          <h3>St. Joseph, Guardian of Families</h3>
-          <div class="audio-sub">Feast day hymn</div>
-          <audio controls preload="none">
-            <source src="assets/audio/st-joseph.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ DOWNLOADS SECTION ════ -->
-    <section class="media-section" id="section-downloads" role="tabpanel">
-      <div class="media-section-head">
-        <span class="badge-gold">Resources</span>
-        <h2>Catechetical &amp; Spiritual Downloads</h2>
-        <p>Free PDF resources for family prayer, catechism teachers, and vocation seekers.</p>
-      </div>
-
-      <div class="downloads-grid">
-        <div class="download-card glass-card">
-          <div>
-            <strong>Mother Regina Woroniecka — Biography &amp; Spiritual Legacy (PDF)</strong>
-            <span class="dl-sub">Full historical biography by Sr. Iwona Naglik OSU &amp; Sr. Małgorzata Kloza OSU • 1.4 MB</span>
+        <div class="downloads-grid">
+          <div class="download-card glass-card">
+            <div>
+              <strong>
+                Mother Regina Woroniecka — Biography &amp; Spiritual Legacy (PDF)
+              </strong>
+              <span class="dl-sub">
+                Full historical biography by Sr. Iwona Naglik OSU &amp; Sr. Małgorzata Kloza OSU • 1.4 MB
+              </span>
+            </div>
+            <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Biography.pdf" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">
+              Download PDF
+            </a>
           </div>
-          <a href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Biography.pdf" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download PDF</a>
-        </div>
-
-        <div class="download-card glass-card">
-          <div>
-            <strong>Family Prayer Booklet (PDF)</strong>
-            <span class="dl-sub">Daily prayers and scripture for Catholic homes</span>
+          <div class="download-card glass-card">
+            <div>
+              <strong>
+                Family Prayer Booklet (PDF)
+              </strong>
+              <span class="dl-sub">
+                Daily prayers and scripture for Catholic homes
+              </span>
+            </div>
+            <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">
+              Download
+            </a>
           </div>
-          <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download</a>
-        </div>
-
-        <div class="download-card glass-card">
-          <div>
-            <strong>Rule of Life &amp; Constitutions Summary</strong>
-            <span class="dl-sub">Introduction to SCS spiritual charism</span>
+          <div class="download-card glass-card">
+            <div>
+              <strong>
+                Rule of Life &amp; Constitutions Summary
+              </strong>
+              <span class="dl-sub">
+                Introduction to SCS spiritual charism
+              </span>
+            </div>
+            <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">
+              Download
+            </a>
           </div>
-          <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download</a>
-        </div>
-
-        <div class="download-card glass-card">
-          <div>
-            <strong>Novena to Mother Regina Woroniecka</strong>
-            <span class="dl-sub">9-day prayer for special family graces</span>
+          <div class="download-card glass-card">
+            <div>
+              <strong>
+                Novena to Mother Regina Woroniecka
+              </strong>
+              <span class="dl-sub">
+                9-day prayer for special family graces
+              </span>
+            </div>
+            <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">
+              Download
+            </a>
           </div>
-          <a href="#" class="modern-btn-primary" style="padding: 8px 18px; font-size: 11px;">Download</a>
-        </div>
-
-        <div class="download-card glass-card">
-          <div>
-            <strong>Catechist Teaching Handbook</strong>
-            <span class="dl-sub">Parish Pastoral Guidelines • Coming Soon</span>
+          <div class="download-card glass-card">
+            <div>
+              <strong>
+                Catechist Teaching Handbook
+              </strong>
+              <span class="dl-sub">
+                Parish Pastoral Guidelines • Coming Soon
+              </span>
+            </div>
+            <span class="badge-sage">
+              Coming Soon
+            </span>
           </div>
-          <span class="badge-sage">Coming Soon</span>
+        </div>
+      </section>
+    </main>
+    <footer id="contact">
+      <div class="footer-glass">
+        <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 1v18M3 6h14"/>
+        </svg>
+        <h3>
+          Satyaseva Catechist Sisters of the Families
+        </h3>
+        <p>
+          Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India
+          <br>
+          Tel: +91 80-25496604 · Mob: +91 9740146329 · Email:
+          <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">
+            scs.satyaseva@gmail.com
+          </a>
+        </p>
+        <div class="footer-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+          <a href="privacy.html">
+            Privacy Policy
+          </a>
+          <a href="impressum.html">
+            Impressum
+          </a>
+        </div>
+        <div class="footer-fine">
+          © <script>
+  document.write(new Date().getFullYear())
+</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.
         </div>
       </div>
-    </section>
-
-  </main>
-
-  <footer id="contact">
-    <div class="footer-glass reveal">
-      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
-    </div>
-  </footer>
-
-  <!-- Lightbox (shared from gallery.js) -->
-  <script src="js/gallery.js"></script>
-  <script>
-  (function() {
-    'use strict';
-
-    /* ── Section Tab switching ─────────────────────────────── */
-    var tabBar = document.getElementById('media-tabs');
-    if (tabBar) {
-      tabBar.addEventListener('click', function(ev) {
-        var btn = ev.target.closest('button[data-section]');
-        if (!btn) return;
-        var section = btn.getAttribute('data-section');
-
-        tabBar.querySelectorAll('button').forEach(function(b) {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-
-        document.querySelectorAll('.media-section').forEach(function(s) {
-          s.classList.remove('active');
-        });
-        var target = document.getElementById('section-' + section);
-        if (target) target.classList.add('active');
-      });
-    }
-
-    /* ── Photo Gallery: load from community images JSON ────── */
-    var allPhotos = [];
-    var currentFilter = 'all';
-
-    function loadPhotos() {
-      fetch('data/community-images.json')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var photos = [];
-          Object.keys(data).forEach(function(communityId) {
-            var val = data[communityId];
-            var imgList = [];
-            if (Array.isArray(val)) {
-              imgList = val;
-            } else if (val && Array.isArray(val.allImages)) {
-              imgList = val.allImages;
-            } else if (val && Array.isArray(val.gallery)) {
-              imgList = val.gallery;
-            }
-            imgList.forEach(function(imgPath) {
-              if (!imgPath) return;
-              var fullSrc = imgPath.indexOf('/') === 0 || imgPath.indexOf('images/') === 0 ? imgPath : ('images/communities/' + communityId + '/' + imgPath);
-              photos.push({
-                src: fullSrc,
-                community: communityId,
-                label: communityId.replace(/-/g, ' ').replace(/_/g, ' ')
-              });
-            });
-          });
-          allPhotos = photos;
-          buildFilters();
-          renderPhotos();
-        })
-        .catch(function() {
-          allPhotos = [];
-          renderPhotos();
-        });
-    }
-
-    function buildFilters() {
-      var filtersEl = document.getElementById('photo-filters');
-      if (!filtersEl) return;
-
-      var communities = {};
-      allPhotos.forEach(function(p) {
-        if (!communities[p.community]) communities[p.community] = 0;
-        communities[p.community]++;
-      });
-
-      var html = '<button class="photo-filter-btn active" data-filter="all">All<span class="photo-count">(' + allPhotos.length + ')</span></button>';
-      Object.keys(communities).sort().forEach(function(c) {
-        var label = c.replace(/-/g, ' ').replace(/_/g, ' ');
-        label = label.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
-        html += '<button class="photo-filter-btn" data-filter="' + c + '">' + label + '<span class="photo-count">(' + communities[c] + ')</span></button>';
-      });
-      filtersEl.innerHTML = html;
-
-      filtersEl.addEventListener('click', function(ev) {
-        var btn = ev.target.closest('.photo-filter-btn');
-        if (!btn) return;
-        currentFilter = btn.getAttribute('data-filter');
-        filtersEl.querySelectorAll('.photo-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        renderPhotos();
-      });
-    }
-
-    function renderPhotos() {
-      var grid = document.getElementById('photo-grid');
-      if (!grid) return;
-
-      var photos = currentFilter === 'all'
-        ? allPhotos
-        : allPhotos.filter(function(p) { return p.community === currentFilter; });
-
-      if (photos.length === 0) {
-        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📷</div><p>No photos available' + (currentFilter !== 'all' ? ' for this community' : '') + ' yet.</p></div>';
-        return;
-      }
-
-      var html = '';
-      photos.forEach(function(p, i) {
-        html += '<div class="photo-thumb" data-index="' + i + '" role="button" tabindex="0" aria-label="View photo from ' + p.label + '">' +
-          '<img src="' + p.src + '" alt="Photo from ' + p.label + ' community" loading="lazy">' +
-          '<div class="photo-overlay"><span>' + p.label + '</span></div>' +
-        '</div>';
-      });
-
-      grid.innerHTML = html;
-
-      // Wire lightbox
-      var thumbs = grid.querySelectorAll('.photo-thumb');
-      var imageSrcs = photos.map(function(p) { return p.src; });
-
-      thumbs.forEach(function(thumb) {
-        function openLightbox() {
-          var idx = parseInt(thumb.getAttribute('data-index'), 10) || 0;
-          if (window.SatyasevaLightbox) {
-            window.SatyasevaLightbox.open(imageSrcs, idx);
-          }
-        }
-        thumb.addEventListener('click', openLightbox);
-        thumb.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); }
-        });
-      });
-    }
-
-    /* ── Init ──────────────────────────────────────────────── */
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadPhotos);
-    } else {
-      loadPhotos();
-    }
-  })();
-  </script>
-  <script src="js/main.js" defer></script>
-</body>
+    </footer>
+    <!-- Lightbox (shared from gallery.js) -->
+    <script src="js/gallery.js"></script> <script>
+  (function() {  'use strict';   /* ── Section Tab switching ─────────────────────────────── */  var tabBar = document.getElementById('media-tabs');  if (tabBar) {  tabBar.addEventListener('click', function(ev) {  var btn = ev.target.closest('button[data-section]');  if (!btn) return;  var section = btn.getAttribute('data-section');   tabBar.querySelectorAll('button').forEach(function(b) {  b.classList.remove('active');  b.setAttribute('aria-selected', 'false');  });  btn.classList.add('active');  btn.setAttribute('aria-selected', 'true');   document.querySelectorAll('.media-section').forEach(function(s) {  s.classList.remove('active');  });  var target = document.getElementById('section-' + section);  if (target) target.classList.add('active');  });  }   /* ── Photo Gallery: load from community images JSON ────── */  var allPhotos = [];  var currentFilter = 'all';   function loadPhotos() {  fetch('data/community-images.json')  .then(function(r) { return r.json(); })  .then(function(data) {  var photos = [];  Object.keys(data).forEach(function(communityId) {  var val = data[communityId];  var imgList = [];  if (Array.isArray(val)) {  imgList = val;  } else if (val && Array.isArray(val.allImages)) {  imgList = val.allImages;  } else if (val && Array.isArray(val.gallery)) {  imgList = val.gallery;  }  imgList.forEach(function(imgPath) {  if (!imgPath) return;  var fullSrc = imgPath.indexOf('/') === 0 || imgPath.indexOf('images/') === 0 ? imgPath : ('images/communities/' + communityId + '/' + imgPath);  photos.push({  src: fullSrc,  community: communityId,  label: communityId.replace(/-/g, ' ').replace(/_/g, ' ')  });  });  });  allPhotos = photos;  buildFilters();  renderPhotos();  })  .catch(function() {  allPhotos = [];  renderPhotos();  });  }   function buildFilters() {  var filtersEl = document.getElementById('photo-filters');  if (!filtersEl) return;   var communities = {};  allPhotos.forEach(function(p) {  if (!communities[p.community]) communities[p.community] = 0;  communities[p.community]++;  });   var html = '<button class="photo-filter-btn active" data-filter="all">All<span class="photo-count">(' + allPhotos.length + ')</span></button>';  Object.keys(communities).sort().forEach(function(c) {  var label = c.replace(/-/g, ' ').replace(/_/g, ' ');  label = label.replace(/\b\w/g, function(l) { return l.toUpperCase(); });  html += '<button class="photo-filter-btn" data-filter="' + c + '">' + label + '<span class="photo-count">(' + communities[c] + ')</span></button>';  });  filtersEl.innerHTML = html;   filtersEl.addEventListener('click', function(ev) {  var btn = ev.target.closest('.photo-filter-btn');  if (!btn) return;  currentFilter = btn.getAttribute('data-filter');  filtersEl.querySelectorAll('.photo-filter-btn').forEach(function(b) { b.classList.remove('active'); });  btn.classList.add('active');  renderPhotos();  });  }   function renderPhotos() {  var grid = document.getElementById('photo-grid');  if (!grid) return;   var photos = currentFilter === 'all'  ? allPhotos  : allPhotos.filter(function(p) { return p.community === currentFilter; });   if (photos.length === 0) {  grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📷</div><p>No photos available' + (currentFilter !== 'all' ? ' for this community' : '') + ' yet.</p></div>';  return;  }   var html = '';  photos.forEach(function(p, i) {  html += '<div class="photo-thumb" data-index="' + i + '" role="button" tabindex="0" aria-label="View photo from ' + p.label + '">' +  '<img src="' + p.src + '" alt="Photo from ' + p.label + ' community" loading="lazy">' +  '<div class="photo-overlay"><span>' + p.label + '</span></div>' +  '</div>';  });   grid.innerHTML = html;   // Wire lightbox  var thumbs = grid.querySelectorAll('.photo-thumb');  var imageSrcs = photos.map(function(p) { return p.src; });   thumbs.forEach(function(thumb) {  function openLightbox() {  var idx = parseInt(thumb.getAttribute('data-index'), 10) || 0;  if (window.SatyasevaLightbox) {  window.SatyasevaLightbox.open(imageSrcs, idx);  }  }  thumb.addEventListener('click', openLightbox);  thumb.addEventListener('keydown', function(e) {  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); }  });  });  }   /* ── Init ──────────────────────────────────────────────── */  if (document.readyState === 'loading') {  document.addEventListener('DOMContentLoaded', loadPhotos);  } else {  loadPhotos();  }  })();
+</script> <script src="js/main.js" defer></script>
+  </body>
 </html>

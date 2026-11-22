@@ -16,6 +16,16 @@
   /* ── Icons ── */
   var crossIcon = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="5" y1="8" x2="19" y2="8"></line></svg>';
 
+  function escapeHTML(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   /* ── Format Lifespan Years ── */
   function formatLifespan(s) {
     if (s.dateDisplay) return 'Rest in Peace ' + s.dateDisplay;
@@ -62,7 +72,7 @@
 
     if (photoCol) {
       if (sister.photo) {
-        photoCol.innerHTML = '<img src="' + sister.photo + '" alt="' + sister.name + '">';
+        photoCol.innerHTML = '<img src="' + escapeHTML(sister.photo) + '" alt="' + escapeHTML(sister.name) + '">';
       } else {
         photoCol.innerHTML = '<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--mem-burgundy);">' + crossIcon + '<span>SCS Archive</span></div>';
       }
@@ -71,9 +81,9 @@
     /* Dates breakdown */
     if (datesRow) {
       var datesHtml = '';
-      if (sister.birthDate) datesHtml += '<span>Born: ' + formatFullDate(sister.birthDate) + '</span>';
-      if (sister.professionDate) datesHtml += '<span> • Vows: ' + formatFullDate(sister.professionDate) + '</span>';
-      if (sister.departureDate) datesHtml += '<span> • Departed: ' + (sister.dateDisplay || formatFullDate(sister.departureDate)) + '</span>';
+      if (sister.birthDate) datesHtml += '<span>Born: ' + escapeHTML(formatFullDate(sister.birthDate)) + '</span>';
+      if (sister.professionDate) datesHtml += '<span> • Vows: ' + escapeHTML(formatFullDate(sister.professionDate)) + '</span>';
+      if (sister.departureDate) datesHtml += '<span> • Departed: ' + escapeHTML(sister.dateDisplay || formatFullDate(sister.departureDate)) + '</span>';
       datesRow.innerHTML = datesHtml;
     }
 
@@ -92,15 +102,20 @@
 
     /* Communities */
     if (commTags) {
-      var commHtml = '';
+      commTags.innerHTML = '';
       if (sister.communities && sister.communities.length) {
         sister.communities.forEach(function(c) {
-          commHtml += '<span class="comm-pill">' + c + '</span>';
+          var pill = document.createElement('span');
+          pill.className = 'comm-pill';
+          pill.textContent = c;
+          commTags.appendChild(pill);
         });
       } else {
-        commHtml = '<span style="color:var(--mem-text-muted);font-size:13px;">General Mission Service</span>';
+        var defaultPill = document.createElement('span');
+        defaultPill.style.cssText = 'color:var(--mem-text-muted);font-size:13px;';
+        defaultPill.textContent = 'General Mission Service';
+        commTags.appendChild(defaultPill);
       }
-      commTags.innerHTML = commHtml;
     }
 
     /* Burial */

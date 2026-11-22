@@ -105,10 +105,14 @@
   --danger:      #b32d2e;
   --danger-tint: #fbeeed;
 
-  /* Elevation with warm amber/burgundy shadows */
+  /* Elevation system (Material-3 inspired warm burgundy palette) */
+  --shadow-color: rgba(74, 19, 34, 0.08);
+  --elev-0: none;
   --elev-1: 0 1px 3px rgba(74, 19, 34, 0.06), 0 1px 2px rgba(74, 19, 34, 0.04);
-  --elev-2: 0 4px 14px rgba(74, 19, 34, 0.08), 0 2px 4px rgba(74, 19, 34, 0.04);
-  --elev-3: 0 12px 28px rgba(74, 19, 34, 0.12), 0 4px 8px rgba(74, 19, 34, 0.06);
+  --elev-2: 0 4px 12px rgba(74, 19, 34, 0.08), 0 2px 4px rgba(74, 19, 34, 0.04);
+  --elev-3: 0 8px 20px rgba(74, 19, 34, 0.10), 0 4px 8px rgba(74, 19, 34, 0.06);
+  --elev-4: 0 12px 28px rgba(74, 19, 34, 0.12), 0 6px 12px rgba(74, 19, 34, 0.08);
+  --elev-5: 0 16px 36px rgba(74, 19, 34, 0.14), 0 8px 16px rgba(74, 19, 34, 0.10);
   --elev-float: 0 16px 36px rgba(74, 19, 34, 0.16), 0 4px 12px rgba(74, 19, 34, 0.08);
 
   /* Radius & spacing */
@@ -175,9 +179,13 @@
     --danger:      #f47168;
     --danger-tint: #3a2220;
 
+    --shadow-color: rgba(0, 0, 0, 0.40);
+    --elev-0: none;
     --elev-1: 0 1px 2px rgba(0,0,0,.30), 0 1px 3px rgba(0,0,0,.25);
     --elev-2: 0 2px 6px rgba(0,0,0,.35), 0 8px 20px rgba(0,0,0,.30);
-    --elev-3: 0 10px 28px rgba(0,0,0,.50), 0 3px 8px rgba(0,0,0,.35);
+    --elev-3: 0 8px 20px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.35);
+    --elev-4: 0 12px 28px rgba(0,0,0,.52), 0 4px 10px rgba(0,0,0,.40);
+    --elev-5: 0 16px 36px rgba(0,0,0,.60), 0 6px 14px rgba(0,0,0,.45);
     --elev-float: 0 14px 36px rgba(0,0,0,.55), 0 4px 12px rgba(0,0,0,.40);
 
     color-scheme: dark;
@@ -228,9 +236,13 @@
   --danger:      #f47168;
   --danger-tint: #3a2220;
 
+  --shadow-color: rgba(0, 0, 0, 0.40);
+  --elev-0: none;
   --elev-1: 0 1px 2px rgba(0,0,0,.30), 0 1px 3px rgba(0,0,0,.25);
   --elev-2: 0 2px 6px rgba(0,0,0,.35), 0 8px 20px rgba(0,0,0,.30);
-  --elev-3: 0 10px 28px rgba(0,0,0,.50), 0 3px 8px rgba(0,0,0,.35);
+  --elev-3: 0 8px 20px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.35);
+  --elev-4: 0 12px 28px rgba(0,0,0,.52), 0 4px 10px rgba(0,0,0,.40);
+  --elev-5: 0 16px 36px rgba(0,0,0,.60), 0 6px 14px rgba(0,0,0,.45);
   --elev-float: 0 14px 36px rgba(0,0,0,.55), 0 4px 12px rgba(0,0,0,.40);
 
   color-scheme: dark;
@@ -273,7 +285,7 @@ h3 { font-size: 1.25rem; margin: 0 0 .5em; }
 
 a { color: var(--brand-ink); }
 
-/* Focus */
+/* ── WCAG 2.1 AA Accessible Focus States & Usability Defaults ── */
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
@@ -281,11 +293,32 @@ a { color: var(--brand-ink); }
 }
 :focus:not(:focus-visible) { outline: none; }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
 .nav-links a:focus-visible,
+.top-links a:focus-visible,
 .service-card:focus-visible,
+.card:focus-visible,
 .tile:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
+  outline: 3px solid var(--accent) !important;
+  outline-offset: 3px !important;
+}
+
+/* Enhanced touch targets for better mobile accessibility (min 44-48px target) */
+@media (pointer: coarse) {
+  .nav-links a,
+  .top-links a,
+  .top-actions .theme-toggle-btn,
+  .top-actions select#lang-select,
+  .btn,
+  .nav-cta {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 /* Transitions */
@@ -381,8 +414,9 @@ body.js-ready .reveal-d4.visible { transition-delay: .48s; }
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--elev-3);
   border-bottom: 1px solid rgba(197, 155, 72, 0.25);
+  transition: box-shadow var(--dur-med) var(--ease), background var(--dur-med) var(--ease);
 }
 
 .top-nav-container {
@@ -394,6 +428,12 @@ body.js-ready .reveal-d4.visible { transition-delay: .48s; }
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  animation: nav-enter 0.4s var(--ease) forwards;
+}
+
+@keyframes nav-enter {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .top-brand {
@@ -1351,18 +1391,23 @@ section { padding: clamp(2rem, 5vw, 3.5rem) 0; }
   border-top: 4px solid var(--accent);
   border-radius: var(--r-lg);
   background: var(--bg);
-  box-shadow: var(--elev-1);
-  transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
+  box-shadow: var(--elev-2);
+  transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
 }
-.impact-card:hover { transform: translateY(-4px); box-shadow: var(--elev-2); }
+.impact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--elev-4);
+  border-top-color: var(--gold-light, #fbbf24);
+}
 
 .impact-number {
   font-family: var(--font-serif);
   font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3rem);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--brand);
   line-height: 1.1;
   margin-bottom: var(--sp-2);
+  font-variant-numeric: tabular-nums;
 }
 
 .impact-label {
@@ -2544,14 +2589,402 @@ button.modern-btn-accent:active {
   section { border-bottom: 1px solid #000; }
 }
 
-/* ── 36. Reduced Motion ─────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+/* ── 37. Sacred Heritage Atmospheric & Component Enhancements ─── */
+/* Procedural paper grain overlay */
+.grain {
+  position: fixed; inset: -50%; width: 200%; height: 200%;
+  pointer-events: none; z-index: 1; opacity: .28;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+  animation: grain-shift 7s steps(6) infinite;
+}
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -2%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* Stately Hero breathing aura */
+.hero-halo {
+  position: absolute; right: -8vw; top: 4vh; width: 52vw; height: 52vw; max-width: 720px; max-height: 720px;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(197, 155, 72, .25), rgba(74, 19, 34, .12) 45%, transparent 70%);
+  filter: blur(12px); animation: hero-breathe 9s ease-in-out infinite;
+}
+@keyframes hero-breathe {
+  0%, 100% { transform: scale(1); opacity: .85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+/* Sacred Marquee Banner */
+.sacred-marquee {
+  overflow: hidden; white-space: nowrap; padding: 1.1rem 0;
+  background: var(--brand); color: #ffffff;
+  transform: rotate(-0.8deg) scale(1.01); margin: 3.5rem 0;
+  border-top: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+}
+.sacred-marquee-track {
+  display: inline-flex; gap: 3rem; animation: marquee-scroll 28s linear infinite; will-change: transform;
+}
+.sacred-marquee-track span {
+  font-family: var(--font-serif); font-size: clamp(1.1rem, 2vw, 1.6rem); font-style: italic;
+  display: inline-flex; align-items: center; gap: 2.5rem;
+}
+.sacred-marquee-track b {
+  font-style: normal; font-weight: 400; opacity: .7; font-size: .65em; letter-spacing: .25em;
+  text-transform: uppercase; font-family: var(--font-sans); color: var(--accent);
+}
+@keyframes marquee-scroll { to { transform: translateX(-50%); } }
+
+/* Interactive Spotlight Cards */
+.spotlight-card {
+  position: relative; overflow: hidden;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: 2rem 2.2rem;
+  transition: transform .45s cubic-bezier(.2, .7, .2, 1), box-shadow .45s, border-color .45s;
+}
+.spotlight-card::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(197, 155, 72, .14), transparent 45%);
+  opacity: 0; transition: opacity .4s; pointer-events: none;
+}
+.spotlight-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -18px rgba(74, 19, 34, .25);
+  border-color: var(--accent);
+}
+.spotlight-card:hover::before { opacity: 1; }
+
+/* Interactive Pastoral / Ministry Cards with Expanding Gold Base */
+.ministry-card {
+  border: 1px solid var(--line); border-radius: var(--r-lg); padding: 2.2rem;
+  background: var(--surface); position: relative; overflow: hidden;
+  transition: transform .5s cubic-bezier(.2, .7, .2, 1), box-shadow .5s;
+}
+.ministry-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px -20px rgba(74, 19, 34, .2);
+}
+.ministry-card::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transition: width .5s cubic-bezier(.2, .7, .2, 1);
+}
+.ministry-card:hover::after { width: 100%; }
+
+/* Elegant Liturgical Timeline */
+.timeline-liturgical { position: relative; margin-top: 3.5rem; }
+.timeline-liturgical::before {
+  content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(rgba(74, 19, 34, 0), var(--brand) 8%, var(--brand) 92%, rgba(74, 19, 34, 0));
+}
+.timeline-item {
+  position: relative; width: 50%; padding: 0 2.5rem 3.5rem;
+}
+.timeline-item:nth-child(odd) { left: 0; text-align: right; }
+.timeline-item:nth-child(even) { left: 50%; text-align: left; }
+.timeline-dot {
+  position: absolute; top: .4rem; width: 15px; height: 15px; border-radius: 50%;
+  background: var(--bg); border: 3px solid var(--accent); z-index: 2;
+}
+.timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
+.timeline-item:nth-child(even) .timeline-dot { left: -8px; }
+@media (max-width: 820px) {
+  .timeline-liturgical::before { left: 9px; }
+  .timeline-item { width: 100%; padding: 0 0 2.5rem 2.2rem; text-align: left !important; left: 0 !important; }
+  .timeline-item .timeline-dot { left: 2px !important; right: auto !important; }
+}
+
+/* ── 38. Micro-Animations, Usability & Global Elevation Utilities ─ */
+/* Animation keyframes */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
-  .reveal { opacity: 1; transform: none; }
-  .ambient-blob { animation: none !important; display: none !important; }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtle-scale {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 0.28; transform: scale(1); }
+  50% { opacity: 0.38; transform: scale(1.02); }
+}
+
+/* Reusable utility classes */
+.animate-fade-up {
+  animation: fade-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.animate-hover-scale {
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.animate-hover-scale:hover {
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: var(--elev-3);
+}
+
+.animate-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+/* Component upgrades for enhanced elevation & tactile feel */
+.counter,
+.counter-animate {
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+}
+
+.card,
+.event-card,
+.news-card,
+.service-card,
+.glass-card,
+.pillar-card,
+.timeline-card,
+.memorial-sister-card,
+.prayer-item,
+.prayer-wall-card,
+.audio-card,
+.video-card,
+.download-card,
+.bank-card,
+.campaign-card,
+.donate-panel,
+.wall-card,
+.portrait-card,
+.station-card,
+.foundress-wisdom-wrap,
+.vigil-candle-wrapper,
+.lift {
+  box-shadow: var(--elev-2);
+  transition: transform var(--dur-med) var(--ease),
+              box-shadow var(--dur-med) var(--ease),
+              border-color var(--dur-med) var(--ease);
+}
+
+.card:hover,
+.event-card:hover,
+.news-card:hover,
+.service-card:hover,
+.glass-card:hover,
+.pillar-card:hover,
+.timeline-card:hover,
+.memorial-sister-card:hover,
+.prayer-item:hover,
+.prayer-wall-card:hover,
+.audio-card:hover,
+.video-card:hover,
+.download-card:hover,
+.bank-card:hover,
+.campaign-card:hover,
+.donate-panel:hover,
+.wall-card:hover,
+.portrait-card:hover,
+.station-card:hover,
+.foundress-wisdom-wrap:hover,
+.vigil-candle-wrapper:hover,
+.lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--elev-4);
+  border-color: var(--brand-border);
+}
+
+.card:active,
+.event-card:active,
+.news-card:active,
+.service-card:active,
+.glass-card:active,
+.pillar-card:active,
+.timeline-card:active,
+.prayer-item:active,
+.lift:active {
+  transform: translateY(-1px);
+  box-shadow: var(--elev-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .event-card:hover,
+  .news-card:hover,
+  .service-card:hover,
+  .glass-card:hover,
+  .pillar-card:hover,
+  .timeline-card:hover,
+  .memorial-sister-card:hover,
+  .prayer-item:hover,
+  .prayer-wall-card:hover,
+  .audio-card:hover,
+  .video-card:hover,
+  .download-card:hover,
+  .bank-card:hover,
+  .campaign-card:hover,
+  .donate-panel:hover,
+  .wall-card:hover,
+  .portrait-card:hover,
+  .station-card:hover,
+  .foundress-wisdom-wrap:hover,
+  .vigil-candle-wrapper:hover,
+  .lift:hover,
+  .card:active,
+  .lift:active {
+    transform: none !important;
+  }
+}
+
+.footer-glass {
+  transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.footer-glass:hover {
+  box-shadow: var(--elev-3);
+}
+
+/* ── 40. Interactive Spiritual Innovations (Candle & Wisdom) ── */
+/* Virtual Vigil Candle */
+.vigil-candle-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: clamp(24px, 4vw, 36px);
+  text-align: center;
+  box-shadow: var(--elev-2);
+  position: relative;
+  overflow: hidden;
+  margin: 32px 0;
+}
+
+.candle-stage {
+  width: 80px;
+  height: 120px;
+  margin: 0 auto 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.candle-body {
+  width: 32px;
+  height: 70px;
+  background: linear-gradient(180deg, #fdfbf7 0%, #ecdcc6 100%);
+  border-radius: 4px 4px 2px 2px;
+  box-shadow: inset 0 -4px 6px rgba(74, 19, 34, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.candle-wick {
+  width: 3px;
+  height: 12px;
+  background: #372a24;
+  border-radius: 2px;
+  margin-bottom: -2px;
+}
+
+.candle-flame {
+  width: 18px;
+  height: 28px;
+  background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #ffde59 30%, #ff914d 70%, rgba(255, 49, 49, 0) 100%);
+  border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 0 12px rgba(255, 174, 66, 0.8));
+}
+
+.candle-flame.lit {
+  opacity: 1;
+  transform: scale(1);
+  animation: flame-flicker 2.5s infinite ease-in-out alternate;
+}
+
+@keyframes flame-flicker {
+  0% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 10px rgba(255, 174, 66, 0.7)); }
+  25% { transform: scale(1.05, 0.95) rotate(1.5deg); }
+  50% { transform: scale(0.96, 1.04) rotate(-1deg); filter: drop-shadow(0 0 16px rgba(255, 174, 66, 0.9)); }
+  75% { transform: scale(1.02, 0.98) rotate(1deg); }
+  100% { transform: scale(1) rotate(-1.5deg); filter: drop-shadow(0 0 12px rgba(255, 174, 66, 0.8)); }
+}
+
+.vigil-counter {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--accent-deep);
+  font-weight: 600;
+  margin: 12px 0 6px;
+}
+
+/* Words of the Foundress Card */
+.foundress-wisdom-wrap {
+  background: var(--surface-alt);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r-lg);
+  padding: clamp(28px, 4vw, 42px);
+  position: relative;
+  box-shadow: var(--elev-2);
+  margin: 40px auto;
+  max-width: 840px;
+}
+.foundress-wisdom-wrap blockquote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.foundress-wisdom-wrap cite {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-deep);
+  font-style: normal;
+}
+.wisdom-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Map Region Tabs */
+.map-region-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 28px 0;
+  flex-wrap: wrap;
+}
+.map-region-tab {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+  padding: 8px 20px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.map-region-tab:hover {
+  border-color: var(--accent);
+  color: var(--brand);
+}
+.map-region-tab.active {
+  background: var(--brand);
+  color: #ffffff;
+  border-color: var(--brand);
+  box-shadow: var(--elev-2);
 }

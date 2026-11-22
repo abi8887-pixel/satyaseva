@@ -1,428 +1,649 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>
-    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
-  </script>
-  <title>Mother Regina Woroniecka, Our Foundress | Satyaseva Sisters</title>
-  <meta name="description" content="The life of Mother Regina (Sister Jolanta) Woroniecka, 1921-2012: a Polish Ursuline missionary who founded the Satyaseva Catechist Sisters of the Families in Karnataka, India.">
-  <link rel="canonical" href="https://satyasevasisters.org/foundress.html">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.json">
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Mother Regina Woroniecka, Our Foundress">
-  <meta property="og:description" content="From a Polish orphan to a missionary among the poor of India.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=5">
-  <script type="application/ld+json">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
+    <title>
+      Mother Regina Woroniecka, Our Foundress | Satyaseva Sisters
+    </title>
+    <meta name="description" content="The life of Mother Regina (Sister Jolanta) Woroniecka, 1921-2012: a Polish Ursuline missionary who founded the Satyaseva Catechist Sisters of the Families in Karnataka, India.">
+    <link rel="canonical" href="https://satyasevasisters.org/foundress.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Mother Regina Woroniecka, Our Foundress">
+    <meta property="og:description" content="From a Polish orphan to a missionary among the poor of India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=5">
+    <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Regina Woroniecka","alternateName":"Sister Jolanta","birthDate":"1921-09-12","birthPlace":"Bydgoszcz, Poland","deathDate":"2012-09-23","deathPlace":"Poznan-Pokrzywno, Poland","description":"Founder of the Satyaseva Catechist Sisters of the Families"}
-  </script>
-  <style>
-    /* ── Foundress page-specific layout ────────────────────────── */
-
-    .fnd-hero {
-      padding: clamp(6rem, 14vw, 9rem) 0 clamp(2rem, 5vw, 3.5rem);
-    }
-    .fnd-hero .wrap {
-      display: grid;
-      grid-template-columns: 1.3fr .7fr;
-      gap: clamp(1.5rem, 5vw, 4rem);
-      align-items: end;
-    }
-    .fnd-dates {
-      font-family: var(--font-serif);
-      font-size: 1.4rem;
-      color: var(--brand-ink);
-      margin: 0 0 .9rem;
-    }
-    .fnd-lede {
-      font-size: 1.15rem;
-      color: var(--ink-soft);
-      max-width: 36rem;
-      margin: 0;
-      line-height: 1.7;
-    }
-    .crumbs {
-      font-size: .92rem;
-      color: var(--ink-faint);
-      margin: 0 0 1rem;
-    }
-    .crumbs a { color: var(--brand-ink); text-decoration: none; }
-    .crumbs a:hover { text-decoration: underline; }
-
-    /* Portrait */
-    .portrait { margin: 0; }
-    .ph-wrap {
-      position: relative;
-      border-radius: var(--r-md);
-      overflow: hidden;
-    }
-    .ph {
-      aspect-ratio: 4/5;
-      border-radius: var(--r-md);
-      background: linear-gradient(170deg, var(--brand), #06263a);
-      border: 2px solid var(--brand);
-      display: grid;
-      place-items: end start;
-      padding: 1.1rem;
-      color: #fff;
-      font-size: .95rem;
-      overflow: hidden;
-      position: relative;
-    }
-    .ph img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .ph span { position: relative; z-index: 1; }
-    .portrait figcaption {
-      font-size: .88rem;
-      color: var(--ink-faint);
-      margin-top: .5rem;
-    }
-    @media (max-width: 820px) {
-      .fnd-hero .wrap { grid-template-columns: 1fr; }
-      .ph { aspect-ratio: 16/10; }
-    }
-
-    /* At-a-glance */
-    .glance {
-      background: var(--surface);
-      border-block: 1px solid var(--line);
-    }
-    .glance dl {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin: 0;
-      padding: 1.75rem 0;
-    }
-    .glance dt {
-      font-weight: 700;
-      font-size: .88rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: .25rem;
-    }
-    .glance dd {
-      margin: 0;
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      color: var(--ink);
-    }
-    @media (max-width: 700px) {
-      .glance dl { grid-template-columns: 1fr; }
-    }
-
-    /* Chapter timeline */
-    .timeline { padding: clamp(1rem, 2vw, 2rem) 0; }
-    .chapter-row {
-      display: grid;
-      grid-template-columns: minmax(0, .55fr) minmax(0, 1.45fr);
-      gap: clamp(1rem, 5vw, 4rem);
-      padding: clamp(2rem, 5vw, 3.5rem) 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .chapter-row:last-child { border-bottom: none; }
-    .ch-when {
-      position: sticky;
-      top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
-      align-self: start;
-    }
-    .ch-when b {
-      display: block;
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: clamp(1.9rem, 4.5vw, 3rem);
-      line-height: 1;
-      color: var(--brand-ink);
-    }
-    .ch-when span {
-      display: block;
-      margin-top: .5rem;
-      color: var(--ink-faint);
-      font-size: .95rem;
-    }
-    .ch-body { max-width: 40rem; }
-    .ch-body h2 {
-      font-size: clamp(1.3rem, 2.5vw, 1.75rem);
-      margin: 0 0 .75em;
-    }
-    .ch-body p {
-      margin: 0 0 1em;
-      color: var(--ink-soft);
-      line-height: 1.8;
-    }
-    .ch-body p:last-child { margin-bottom: 0; }
-    @media (max-width: 760px) {
-      .chapter-row { grid-template-columns: 1fr; }
-      .ch-when { position: static; }
-      .ch-when b { font-size: clamp(1.5rem, 6vw, 2.2rem); }
-    }
-
-    /* Pull quote */
-    .pull {
-      padding: clamp(2.5rem, 6vw, 4.5rem) 0;
-      background: var(--brand);
-      color: var(--on-brand);
-    }
-    .pull blockquote {
-      margin: 0;
-      font-family: var(--font-serif);
-      font-size: clamp(1.7rem, 4.2vw, 3rem);
-      line-height: 1.2;
-      max-width: 38rem;
-      color: #fff;
-    }
-    .pull .attr {
-      margin: 1rem 0 0;
-      color: #b5d4e7;
-      font-size: 1rem;
-    }
-
-    /* Her work continues */
-    .fnd-next { padding: clamp(2.5rem, 6vw, 4rem) 0; }
-    .fnd-next h2 { margin-bottom: .5em; }
-    .fnd-next .fnd-body { max-width: 40rem; color: var(--ink-soft); margin: 0 0 1.5rem; line-height: 1.7; }
-    .fnd-next .row { display: flex; flex-wrap: wrap; gap: .75rem; }
-    .src {
-      font-size: .88rem;
-      color: var(--ink-faint);
-      max-width: 40rem;
-      padding: 1.5rem 0 0;
-      line-height: 1.65;
-    }
-  </style>
-</head>
-<body>
-
-  <a class="skip-link" href="#main">Skip to main content</a>
-
-  <header class="top-nav-bar" id="nav" role="banner">
-    <div class="top-nav-container">
-      <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
-        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
-          <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
-          <circle cx="16" cy="10" r="2" fill="currentColor"/>
+</script> <style>
+/* ── Foundress page-specific layout ────────────────────────── */ .fnd-hero {
+  padding: clamp(6rem, 14vw, 9rem) 0 clamp(2rem, 5vw, 3.5rem);
+}
+.fnd-hero .wrap {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: end;
+}
+.fnd-dates {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--brand-ink);
+  margin: 0 0 .9rem;
+}
+.fnd-lede {
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  max-width: 36rem;
+  margin: 0;
+  line-height: 1.7;
+}
+.crumbs {
+  font-size: .92rem;
+  color: var(--ink-faint);
+  margin: 0 0 1rem;
+}
+.crumbs a {
+  color: var(--brand-ink);
+  text-decoration: none;
+}
+.crumbs a:hover {
+  text-decoration: underline;
+}
+/* Portrait */ .portrait {
+  margin: 0;
+}
+.ph-wrap {
+  position: relative;
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.ph {
+  aspect-ratio: 4/5;
+  border-radius: var(--r-md);
+  background: linear-gradient(170deg, var(--brand), #06263a);
+  border: 2px solid var(--brand);
+  display: grid;
+  place-items: end start;
+  padding: 1.1rem;
+  color: #fff;
+  font-size: .95rem;
+  overflow: hidden;
+  position: relative;
+}
+.ph img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ph span {
+  position: relative;
+  z-index: 1;
+}
+.portrait figcaption {
+  font-size: .88rem;
+  color: var(--ink-faint);
+  margin-top: .5rem;
+}
+@media (max-width: 820px) {
+  .fnd-hero .wrap {
+    grid-template-columns: 1fr;
+  }
+  .ph {
+    aspect-ratio: 16/10;
+  }
+}
+/* At-a-glance */ .glance {
+  background: var(--surface);
+  border-block: 1px solid var(--line);
+}
+.glance dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 0;
+  padding: 1.75rem 0;
+}
+.glance dt {
+  font-weight: 700;
+  font-size: .88rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: .25rem;
+}
+.glance dd {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+@media (max-width: 700px) {
+  .glance dl {
+    grid-template-columns: 1fr;
+  }
+}
+/* Chapter timeline */ .timeline {
+  padding: clamp(1rem, 2vw, 2rem) 0;
+}
+.chapter-row {
+  display: grid;
+  grid-template-columns: minmax(0, .55fr) minmax(0, 1.45fr);
+  gap: clamp(1rem, 5vw, 4rem);
+  padding: clamp(2rem, 5vw, 3.5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.chapter-row:last-child {
+  border-bottom: none;
+}
+.ch-when {
+  position: sticky;
+  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
+  align-self: start;
+}
+.ch-when b {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  line-height: 1;
+  color: var(--brand-ink);
+}
+.ch-when span {
+  display: block;
+  margin-top: .5rem;
+  color: var(--ink-faint);
+  font-size: .95rem;
+}
+.ch-body {
+  max-width: 40rem;
+}
+.ch-body h2 {
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  margin: 0 0 .75em;
+}
+.ch-body p {
+  margin: 0 0 1em;
+  color: var(--ink-soft);
+  line-height: 1.8;
+}
+.ch-body p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 760px) {
+  .chapter-row {
+    grid-template-columns: 1fr;
+  }
+  .ch-when {
+    position: static;
+  }
+  .ch-when b {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+}
+/* Pull quote */ .pull {
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  background: var(--brand);
+  color: var(--on-brand);
+}
+.pull blockquote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 4.2vw, 3rem);
+  line-height: 1.2;
+  max-width: 38rem;
+  color: #fff;
+}
+.pull .attr {
+  margin: 1rem 0 0;
+  color: #b5d4e7;
+  font-size: 1rem;
+}
+/* Her work continues */ .fnd-next {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+.fnd-next h2 {
+  margin-bottom: .5em;
+}
+.fnd-next .fnd-body {
+  max-width: 40rem;
+  color: var(--ink-soft);
+  margin: 0 0 1.5rem;
+  line-height: 1.7;
+}
+.fnd-next .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+.src {
+  font-size: .88rem;
+  color: var(--ink-faint);
+  max-width: 40rem;
+  padding: 1.5rem 0 0;
+  line-height: 1.65;
+}
+</style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to main content
+    </a>
+    <header class="top-nav-bar" id="nav" role="banner">
+      <div class="top-nav-container">
+        <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+          <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+            <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2" fill="currentColor"/>
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-name">
+              Satyaseva Catechist Sisters
+            </span>
+            <span class="brand-tagline">
+              of the Families
+            </span>
+          </div>
+        </a>
+        <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="foundress.html" class="active" aria-current="page">
+            Our Foundress
+          </a>
+          <a href="communities.html">
+            Our Communities
+          </a>
+          <a href="map.html">
+            Mission Map
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+        </nav>
+        <div class="top-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+            🌙
+          </button>
+          <select id="lang-select" aria-label="Select language">
+            <option value="en" selected>
+              EN
+            </option>
+            <option value="pl">
+              PL
+            </option>
+          </select>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span>
+            </span>
+            <span>
+            </span>
+            <span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="comm-hero-section fnd-hero-section" id="hero" aria-labelledby="page-title">
+        <div class="comm-hero-container">
+          <div class="comm-hero-content">
+            <div class="badge-gold">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 1v18M3 6h14"/>
+              </svg>
+              Foundress of the Satyaseva Sisters · 1921 – 2012
+            </div>
+            <h1 class="comm-hero-title" id="page-title">
+              Rev. Mother Regina Woroniecka
+            </h1>
+            <p class="comm-hero-subtitle">
+              An orphan from Poland who became a teacher, artist, and missionary — who walked the roads of Karnataka to bring the faith into the homes of the poor.
+            </p>
+            <div class="comm-hero-flourish" aria-hidden="true">
+              <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="comm-hero-photo-wrap">
+            <img src="images/Mother_Regina_Woroniecka_3.png" alt="Rev. Mother Regina Woroniecka, Foundress of the SCS" class="comm-hero-photo" width="440" height="320">
+          </div>
+        </div>
+      </section>
+      <div class="glance">
+        <div class="wrap">
+          <dl>
+            <div>
+              <dt>
+                Born
+              </dt>
+              <dd>
+                12 September 1921 &middot; Bydgoszcz, Poland
+              </dd>
+            </div>
+            <div>
+              <dt>
+                Congregation founded
+              </dt>
+              <dd>
+                1976 &middot; Diocese of Mysore, Karnataka
+              </dd>
+            </div>
+            <div>
+              <dt>
+                Died
+              </dt>
+              <dd>
+                23 September 2012 &middot; Pozna&#324;-Pokrzywno, Poland
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="wrap">
+          <article>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  1921 &ndash; 1943
+                </b>
+                <span>
+                  Bydgoszcz &middot; Pozna&#324; &middot; Warsaw
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c1">
+                  An orphan finds a school
+                </h2>
+                <p>
+                  Regina was born in Bydgoszcz on 12 September 1921. She lost both parents when she was eight, and her guardians placed her in the Ursuline boarding school in Pozna&#324;.
+                </p>
+                <p>
+                  There she completed her primary and secondary education, passing her
+                  <em>
+                    matura
+                  </em>
+                  exam in Warsaw in August 1940. She would later write that she was always grateful for the school&rsquo;s atmosphere of faith and its respect for each girl&rsquo;s individuality.
+                </p>
+              </div>
+            </div>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  1943 &ndash; 1969
+                </b>
+                <span>
+                  Krak&oacute;w &middot; Tarn&oacute;w &middot; Pozna&#324; &middot; Lublin
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c2">
+                  Sister Jolanta &mdash; teacher and artist
+                </h2>
+                <p>
+                  In 1943 she asked to join the Ursulines of the Roman Union, formed in the spirituality of St Angela Merici. She entered the novitiate in Krak&oacute;w in 1944 and took the name Jolanta. She made her first vows in 1946 and her final profession in Lublin in 1949.
+                </p>
+                <p>
+                  Within the convent she studied Roman philology, archaeology and theology, spending a year at the Academy of Fine Arts in Krak&oacute;w. Her superiors gave her work in education: she formed candidates in Tarn&oacute;w, taught in Krak&oacute;w and Pozna&#324;, and ran a dormitory in Lublin, where she was prioress from 1965.
+                </p>
+                <p>
+                  Even then she turned toward the poor. In Tarn&oacute;w she opened an after-school club for neglected children; in Lublin she cared for her students&rsquo; spiritual and material needs alongside their academic formation.
+                </p>
+              </div>
+            </div>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  1969 &ndash; 1971
+                </b>
+                <span>
+                  Athens &middot; Turkey
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c3">
+                  A first mission among the poor
+                </h2>
+                <p>
+                  In 1969 she asked to go on the missions. Her superiors sent her to a monastery in Greece, and she spent two years working among the poor of Athens. She also travelled briefly to Turkey, where she carried on her pastoral work discreetly.
+                </p>
+              </div>
+            </div>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  1971 &ndash; 1974
+                </b>
+                <span>
+                  Prakashpalayam, India
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c4">
+                  India &mdash; a call that would not leave
+                </h2>
+                <p>
+                  Her longing to be a missionary kept growing. On 12 December 1971 she left for Prakashpalayam, India, to join Polish missionaries there.
+                </p>
+                <p>
+                  She saw how much the poor families around her needed their faith strengthened, and she gave herself to informal catechesis in their homes. She received this as God&rsquo;s call and obtained special permission to stay beyond her original year.
+                </p>
+              </div>
+            </div>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  1974 &ndash; 1981
+                </b>
+                <span>
+                  Mariapura, Karnataka
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c5">
+                  A new family begins
+                </h2>
+                <p>
+                  In 1974, with great heartache, she asked to be released from her Ursuline vows. She had discerned that her path lay elsewhere. A group of young women was already gathering around her, drawn to the same calling.
+                </p>
+                <p>
+                  In 1976, with their bishop&rsquo;s consent, they decided to live together. On
+                  <strong>
+                    5 May 1977
+                  </strong>
+                  they moved into their first house in Mariapura &mdash; the date the congregation counts as its beginning. The Church approved temporary Constitutions on 11 November 1980, and Mother Regina made vows in the new congregation in 1981.
+                </p>
+              </div>
+            </div>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  The early years
+                </b>
+                <span>
+                  Poverty and the Eucharist
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c6">
+                  Among the poorest
+                </h2>
+                <p>
+                  From the start, the sisters worked among the poorest and lived in hard conditions. Through patience and perseverance, Mother Regina won the trust of the people.
+                </p>
+                <p>
+                  The Eucharist was the source of her strength. She often walked many kilometres so that she could attend Mass every day &mdash; a practice her sisters inherited from her.
+                </p>
+              </div>
+            </div>
+            <div class="chapter-row">
+              <div class="ch-when">
+                <b>
+                  2003 &ndash; 2012
+                </b>
+                <span>
+                  Pozna&#324;-Pokrzywno, Poland
+                </span>
+              </div>
+              <div class="ch-body">
+                <h2 id="c7">
+                  Return and rest
+                </h2>
+                <p>
+                  She never forgot her Ursuline roots and kept contact with the Ursulines of the Roman Union throughout her life. During a visit to Poland in 2003 she fell ill and understood it was time to set down her responsibilities.
+                </p>
+                <p>
+                  She asked to stay with the Ursuline community in Pozna&#324;-Pokrzywno, and she died there on
+                  <strong>
+                    23 September 2012
+                  </strong>
+                  , surrounded by sisters from both of her religious families.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <section class="pull" aria-label="Quotation from Mother Regina">
+        <div class="wrap">
+          <blockquote>
+            &#8220;My path was, however, serving the poor.&#8221;
+          </blockquote>
+          <p class="attr">
+            &mdash; Mother Regina, looking back on her life
+          </p>
+        </div>
+      </section>
+      <section class="fnd-next">
+        <div class="wrap">
+          <h2>
+            Her work continues
+          </h2>
+          <p class="fnd-body">
+            Her spiritual daughters carry on her mission. Today the Satyaseva Sisters serve in dioceses across India &mdash; including Bangalore, Delhi, Agra, Mysore, Varanasi, Bareilly and Assam &mdash; and in Germany and Poland, the homeland of their foundress.
+          </p>
+          <div class="row">
+            <a class="btn solid" href="communities.html">
+              See where we serve
+            </a>
+            <a class="btn line" href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Biography.pdf">
+              📥 Download Biography (PDF)
+            </a>
+            <a class="btn line" href="memorial.html">
+              In memoriam
+            </a>
+            <a class="btn line" href="vocations.html">
+              Join us
+            </a>
+          </div>
+          <p class="src">
+            Source: the biography edited by Sr. Iwona Naglik OSU and translated by Sr. Ma&#322;gorzata Kloza OSU, published in
+            <em>
+              Serviam
+            </em>
+            , the bulletin of the Ursulines of the Roman Union, February 2013. This page retells it in our own words.
+          </p>
+        </div>
+      </section>
+    </main>
+    <div class="border" aria-hidden="true">
+    </div>
+    <footer id="contact">
+      <div class="footer-glass">
+        <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 1v18M3 6h14"/>
         </svg>
-        <div class="brand-titles">
-          <span class="brand-name">Satyaseva Catechist Sisters</span>
-          <span class="brand-tagline">of the Families</span>
+        <h3>
+          Satyaseva Catechist Sisters of the Families
+        </h3>
+        <p>
+          Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India
+          <br>
+          Tel: +91 80-25496604 · Mob: +91 9740146329 · Email:
+          <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">
+            scs.satyaseva@gmail.com
+          </a>
+        </p>
+        <div class="footer-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+          <a href="privacy.html">
+            Privacy Policy
+          </a>
+          <a href="impressum.html">
+            Impressum
+          </a>
         </div>
-      </a>
-
-      <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
-        <a href="index.html">Home</a>
-        <a href="foundress.html" class="active" aria-current="page">Our Foundress</a>
-        <a href="communities.html">Our Communities</a>
-        <a href="map.html">Mission Map</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-
-      <div class="top-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>EN</option>
-          <option value="pl">PL</option>
-        </select>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main id="main">
-
-    <section class="comm-hero-section fnd-hero-section" id="hero" aria-labelledby="page-title">
-      <div class="comm-hero-container">
-        <div class="comm-hero-content">
-          <div class="badge-gold">
-            <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 1v18M3 6h14"/></svg>
-            Foundress of the Satyaseva Sisters · 1921 – 2012
-          </div>
-          <h1 class="comm-hero-title" id="page-title">Rev. Mother Regina Woroniecka</h1>
-          <p class="comm-hero-subtitle">An orphan from Poland who became a teacher, artist, and missionary — who walked the roads of Karnataka to bring the faith into the homes of the poor.</p>
-          <div class="comm-hero-flourish" aria-hidden="true">
-            <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-            </svg>
-          </div>
-        </div>
-        <div class="comm-hero-photo-wrap">
-          <img src="images/Mother_Regina_Woroniecka_3.png" alt="Rev. Mother Regina Woroniecka, Foundress of the SCS" class="comm-hero-photo" width="440" height="320">
+        <div class="footer-fine">
+          © <script>
+  document.write(new Date().getFullYear())
+</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.
         </div>
       </div>
-    </section>
-
-    <div class="glance">
-      <div class="wrap">
-        <dl>
-          <div><dt>Born</dt><dd>12 September 1921 &middot; Bydgoszcz, Poland</dd></div>
-          <div><dt>Congregation founded</dt><dd>1976 &middot; Diocese of Mysore, Karnataka</dd></div>
-          <div><dt>Died</dt><dd>23 September 2012 &middot; Pozna&#324;-Pokrzywno, Poland</dd></div>
-        </dl>
-      </div>
-    </div>
-
-    <div class="timeline">
-      <div class="wrap">
-        <article>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>1921 &ndash; 1943</b>
-              <span>Bydgoszcz &middot; Pozna&#324; &middot; Warsaw</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c1">An orphan finds a school</h2>
-              <p>Regina was born in Bydgoszcz on 12 September 1921. She lost both parents when she was eight, and her guardians placed her in the Ursuline boarding school in Pozna&#324;.</p>
-              <p>There she completed her primary and secondary education, passing her <em>matura</em> exam in Warsaw in August 1940. She would later write that she was always grateful for the school&rsquo;s atmosphere of faith and its respect for each girl&rsquo;s individuality.</p>
-            </div>
-          </div>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>1943 &ndash; 1969</b>
-              <span>Krak&oacute;w &middot; Tarn&oacute;w &middot; Pozna&#324; &middot; Lublin</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c2">Sister Jolanta &mdash; teacher and artist</h2>
-              <p>In 1943 she asked to join the Ursulines of the Roman Union, formed in the spirituality of St Angela Merici. She entered the novitiate in Krak&oacute;w in 1944 and took the name Jolanta. She made her first vows in 1946 and her final profession in Lublin in 1949.</p>
-              <p>Within the convent she studied Roman philology, archaeology and theology, spending a year at the Academy of Fine Arts in Krak&oacute;w. Her superiors gave her work in education: she formed candidates in Tarn&oacute;w, taught in Krak&oacute;w and Pozna&#324;, and ran a dormitory in Lublin, where she was prioress from 1965.</p>
-              <p>Even then she turned toward the poor. In Tarn&oacute;w she opened an after-school club for neglected children; in Lublin she cared for her students&rsquo; spiritual and material needs alongside their academic formation.</p>
-            </div>
-          </div>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>1969 &ndash; 1971</b>
-              <span>Athens &middot; Turkey</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c3">A first mission among the poor</h2>
-              <p>In 1969 she asked to go on the missions. Her superiors sent her to a monastery in Greece, and she spent two years working among the poor of Athens. She also travelled briefly to Turkey, where she carried on her pastoral work discreetly.</p>
-            </div>
-          </div>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>1971 &ndash; 1974</b>
-              <span>Prakashpalayam, India</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c4">India &mdash; a call that would not leave</h2>
-              <p>Her longing to be a missionary kept growing. On 12 December 1971 she left for Prakashpalayam, India, to join Polish missionaries there.</p>
-              <p>She saw how much the poor families around her needed their faith strengthened, and she gave herself to informal catechesis in their homes. She received this as God&rsquo;s call and obtained special permission to stay beyond her original year.</p>
-            </div>
-          </div>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>1974 &ndash; 1981</b>
-              <span>Mariapura, Karnataka</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c5">A new family begins</h2>
-              <p>In 1974, with great heartache, she asked to be released from her Ursuline vows. She had discerned that her path lay elsewhere. A group of young women was already gathering around her, drawn to the same calling.</p>
-              <p>In 1976, with their bishop&rsquo;s consent, they decided to live together. On <strong>5 May 1977</strong> they moved into their first house in Mariapura &mdash; the date the congregation counts as its beginning. The Church approved temporary Constitutions on 11 November 1980, and Mother Regina made vows in the new congregation in 1981.</p>
-            </div>
-          </div>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>The early years</b>
-              <span>Poverty and the Eucharist</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c6">Among the poorest</h2>
-              <p>From the start, the sisters worked among the poorest and lived in hard conditions. Through patience and perseverance, Mother Regina won the trust of the people.</p>
-              <p>The Eucharist was the source of her strength. She often walked many kilometres so that she could attend Mass every day &mdash; a practice her sisters inherited from her.</p>
-            </div>
-          </div>
-
-          <div class="chapter-row">
-            <div class="ch-when">
-              <b>2003 &ndash; 2012</b>
-              <span>Pozna&#324;-Pokrzywno, Poland</span>
-            </div>
-            <div class="ch-body">
-              <h2 id="c7">Return and rest</h2>
-              <p>She never forgot her Ursuline roots and kept contact with the Ursulines of the Roman Union throughout her life. During a visit to Poland in 2003 she fell ill and understood it was time to set down her responsibilities.</p>
-              <p>She asked to stay with the Ursuline community in Pozna&#324;-Pokrzywno, and she died there on <strong>23 September 2012</strong>, surrounded by sisters from both of her religious families.</p>
-            </div>
-          </div>
-
-        </article>
-      </div>
-    </div>
-
-    <section class="pull" aria-label="Quotation from Mother Regina">
-      <div class="wrap">
-        <blockquote>&#8220;My path was, however, serving the poor.&#8221;</blockquote>
-        <p class="attr">&mdash; Mother Regina, looking back on her life</p>
-      </div>
-    </section>
-
-    <section class="fnd-next">
-      <div class="wrap">
-        <h2>Her work continues</h2>
-        <p class="fnd-body">Her spiritual daughters carry on her mission. Today the Satyaseva Sisters serve in dioceses across India &mdash; including Bangalore, Delhi, Agra, Mysore, Varanasi, Bareilly and Assam &mdash; and in Germany and Poland, the homeland of their foundress.</p>
-        <div class="row">
-          <a class="btn solid" href="communities.html">See where we serve</a>
-          <a class="btn line" href="images/Mother_Regina_Woroniecka_English_revised.pdf" download="Mother_Regina_Woroniecka_Biography.pdf">📥 Download Biography (PDF)</a>
-          <a class="btn line" href="memorial.html">In memoriam</a>
-          <a class="btn line" href="vocations.html">Join us</a>
-        </div>
-        <p class="src">Source: the biography edited by Sr. Iwona Naglik OSU and translated by Sr. Ma&#322;gorzata Kloza OSU, published in <em>Serviam</em>, the bulletin of the Ursulines of the Roman Union, February 2013. This page retells it in our own words.</p>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="border" aria-hidden="true"></div>
-
-  <footer id="contact">
-    <div class="footer-glass reveal">
-      <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v18M3 6h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India<br>
-      Tel: +91 80-25496604 · Mob: +91 9740146329 · Email: <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">scs.satyaseva@gmail.com</a></p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="map.html">Map</a>
-        <a href="foundress.html">Our Foundress</a>
-        <a href="memorial.html">In Memoriam</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="media.html">Media</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
-    </div>
-  </footer>
-
-  <script src="js/main.js" defer></script>
-</body>
+    </footer>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

@@ -115,14 +115,35 @@
     }, duration);
   }
 
-  // ─── Authentication (server-side session tokens) ───
+  // ─── Authentication (Supabase Auth with local server fallback) ───
   function isAuthenticated() {
     return !!sessionStorage.getItem(SESSION_KEY);
   }
 
-  async function authenticate(code) {
+  async function authenticate(code, email) {
     const input = (code || '').trim();
     if (!input) return false;
+
+    // 1. Try Supabase Auth first
+    try {
+      const sb = window.SSCS && window.SSCS.getClient ? window.SSCS.getClient() : null;
+      if (sb && sb.auth) {
+        const userEmail = (email || '').trim() || 'scs.satyaseva@gmail.com';
+        const { data, error } = await sb.auth.signInWithPassword({
+          email: userEmail,
+          password: input
+        });
+        if (!error && data && data.session) {
+          sessionStorage.setItem(SESSION_KEY, data.session.access_token);
+          sessionStorage.setItem('sscs_admin_user', JSON.stringify(data.user));
+          return true;
+        }
+      }
+    } catch (sbErr) {
+      console.warn('[SSCS Admin] Supabase auth attempt:', sbErr);
+    }
+
+    // 2. Fallback to local python server API
     try {
       const res = await originalFetch('/api/auth/login', {
         method: 'POST',
@@ -135,12 +156,19 @@
         return true;
       }
     } catch(e) {
-      console.error('Auth error:', e);
+      console.error('Local auth error:', e);
     }
     return false;
   }
 
   function logout() {
+    try {
+      const sb = window.SSCS && window.SSCS.getClient ? window.SSCS.getClient() : null;
+      if (sb && sb.auth) {
+        sb.auth.signOut().catch(() => {});
+      }
+    } catch (e) {}
+
     const token = sessionStorage.getItem(SESSION_KEY);
     if (token) {
       originalFetch('/api/auth/logout', {
@@ -149,6 +177,7 @@
       }).catch(() => {});
     }
     sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem('sscs_admin_user');
     location.reload();
   }
 
@@ -196,8 +225,19 @@
     if (form) {
       form.addEventListener('submit', async e => {
         e.preventDefault();
+        const emailInput = $('#login-email');
+        const email = emailInput ? emailInput.value.trim() : '';
         const pwd = ($('#login-password').value || '').trim();
-        const isValid = await authenticate(pwd);
+        const submitBtn = $('#login-submit-btn');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Verifying...';
+        }
+        const isValid = await authenticate(pwd, email);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Unlock Dashboard';
+        }
         if (isValid) {
           showApp();
         } else {

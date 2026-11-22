@@ -1,11 +1,11 @@
 # Database & sensitive credentials
 *.db
-!memory.db
 *.sqlite
 *.sqlite3
 *.bak
 .env
 .env.*
+!.env.example
 scripts/data/sscs.db
 scripts/data/.admin_hash
 scripts/data/backups/
@@ -17,9 +17,11 @@ site/data/*.sqlite3
 # SSL Certificates
 scripts/certs/
 
-# Python cache
+# Python cache & virtual environment
 __pycache__/
 *.pyc
+.venv/
+.deps/
 
 # OS / Editor artifacts
 .DS_Store
@@ -27,3 +29,18 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# Codebase knowledge graph & agent artifacts (local-only)
+graphify-out/
+.agents/
+memory.db
+memory.json
+MEMORY.md
+deploy.md
+
+# Local dev server & test scripts (local-only)
+scripts/
+js/
+
+# Local root preview mirror (site/ is canonical for Netlify deployment)
+index.html
