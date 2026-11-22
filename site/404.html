@@ -1,140 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
-  </script>
-  <title>Page Not Found (404) — Satyaseva Catechist Sisters</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .error-container {
-      min-height: 70vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .error-code {
-      font-family: var(--font-serif);
-      font-size: clamp(72px, 15vw, 140px);
-      font-weight: 700;
-      color: var(--brand);
-      line-height: 1;
-      margin: 0;
-    }
-    .error-title {
-      font-family: var(--font-serif);
-      font-size: clamp(24px, 4vw, 36px);
-      margin: 16px 0 12px;
-      color: var(--ink);
-    }
-    .error-desc {
-      max-width: 520px;
-      color: var(--ink-soft);
-      font-size: 16px;
-      margin-bottom: 32px;
-    }
-    .error-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .btn-action {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .btn-primary {
-      background: var(--brand);
-      color: #ffffff !important;
-      border: 2px solid var(--brand);
-    }
-    .btn-primary:visited {
-      color: #ffffff !important;
-    }
-    .btn-primary:hover {
-      background: var(--brand-deep);
-      border-color: var(--brand-deep);
-      color: #ffffff !important;
-      transform: translateY(-2px);
-      box-shadow: var(--elev-2);
-    }
-    .btn-secondary {
-      background: var(--card);
-      border: 2px solid var(--line);
-      color: var(--ink) !important;
-    }
-    .btn-secondary:visited {
-      color: var(--ink) !important;
-    }
-    .btn-secondary:hover {
-      background: var(--surface-alt);
-      border-color: var(--brand-border);
-      color: var(--brand) !important;
-      transform: translateY(-2px);
-      box-shadow: var(--elev-2);
-    }
-  </style>
-</head>
-<body>
-
-<header class="nav-header">
-  <div class="nav-header-inner">
-    <a href="index.html" class="back-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Satyaseva Sisters
-    </a>
-  </div>
-</header>
-
-<main class="error-container">
-  <div class="error-code">404</div>
-  <h1 class="error-title">Page Not Found</h1>
-  <p class="error-desc">The page you are looking for might have been moved, renamed, or is temporarily unavailable. Let us guide you back to our community.</p>
-  <div class="error-actions">
-    <a href="index.html" class="btn-action btn-primary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Return Home
-    </a>
-    <a href="communities.html" class="btn-action btn-secondary">
-      Explore Communities
-    </a>
-    <a href="prayers.html" class="btn-action btn-secondary">
-      Prayers
-    </a>
-  </div>
-</main>
-
-<footer id="contact">
-  <div class="footer-glass">
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="communities.html">Communities</a>
-      <a href="foundress.html">Our Foundress</a>
-      <a href="memorial.html">In Memoriam</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="impressum.html">Impressum</a>
-    </div>
-    <div class="footer-fine">© <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.</div>
-  </div>
-</footer>
-
-<script src="js/main.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
+    <title>
+      Page Not Found (404) — Satyaseva Catechist Sisters
+    </title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+.error-container {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+.error-code {
+  font-family: var(--font-serif);
+  font-size: clamp(72px, 15vw, 140px);
+  font-weight: 700;
+  color: var(--brand);
+  line-height: 1;
+  margin: 0;
+}
+.error-title {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 4vw, 36px);
+  margin: 16px 0 12px;
+  color: var(--ink);
+}
+.error-desc {
+  max-width: 520px;
+  color: var(--ink-soft);
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+.error-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.btn-primary {
+  background: var(--brand);
+  color: #ffffff !important;
+  border: 2px solid var(--brand);
+}
+.btn-primary:visited {
+  color: #ffffff !important;
+}
+.btn-primary:hover {
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: var(--elev-2);
+}
+.btn-secondary {
+  background: var(--card);
+  border: 2px solid var(--line);
+  color: var(--ink) !important;
+}
+.btn-secondary:visited {
+  color: var(--ink) !important;
+}
+.btn-secondary:hover {
+  background: var(--surface-alt);
+  border-color: var(--brand-border);
+  color: var(--brand) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--elev-2);
+}
+</style>
+  </head>
+  <body>
+    <nav id="nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-pill">
+        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M10 1v18M3 6h14"/>
+          </svg>
+          <span class="brand-text">
+            <span class="brand-line-1">
+              Satyaseva Sisters
+            </span>
+            <span class="brand-line-2">
+              SCS &bull; Est. 1976
+            </span>
+          </span>
+        </a>
+        <div class="nav-links" id="navLinks" role="navigation" aria-label="Main menu">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html" class="nav-donate">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+        </div>
+        <div class="nav-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+            🌙
+          </button>
+          <select id="lang-select" aria-label="Select language">
+            <option value="en" selected>
+              English
+            </option>
+            <option value="pl">
+              Polski
+            </option>
+          </select>
+          <button type="button" class="nav-collapse-btn" id="navCollapse" aria-label="Collapse navigation" title="Collapse / Expand navigation">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </button>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span>
+            </span>
+            <span>
+            </span>
+            <span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <main class="error-container">
+      <div class="error-code">
+        404
+      </div>
+      <h1 class="error-title">
+        Page Not Found
+      </h1>
+      <p class="error-desc">
+        The page you are looking for might have been moved, renamed, or is temporarily unavailable. Let us guide you back to our community.
+      </p>
+      <div class="error-actions">
+        <a href="index.html" class="btn-action btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Return Home
+        </a>
+        <a href="communities.html" class="btn-action btn-secondary">
+          Explore Communities
+        </a>
+        <a href="prayers.html" class="btn-action btn-secondary">
+          Prayers
+        </a>
+      </div>
+    </main>
+    <footer id="contact">
+      <div class="footer-glass">
+        <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 1v18M3 6h14"/>
+        </svg>
+        <h3>
+          Satyaseva Catechist Sisters of the Families
+        </h3>
+        <p>
+          Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India
+          <br>
+          Tel: +91 80-25496604 · Mob: +91 9740146329 · Email:
+          <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">
+            scs.satyaseva@gmail.com
+          </a>
+        </p>
+        <div class="footer-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+          <a href="privacy.html">
+            Privacy Policy
+          </a>
+          <a href="impressum.html">
+            Impressum
+          </a>
+        </div>
+        <div class="footer-fine">
+          © <script>
+  document.write(new Date().getFullYear())
+</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.
+        </div>
+      </div>
+    </footer>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

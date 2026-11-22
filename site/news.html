@@ -1,463 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
-  </script>
-  <title>News &amp; Updates — Satyaseva Catechist Sisters</title>
-  <meta name="description" content="Latest news, announcements, and mission updates from the Satyaseva Catechist Sisters of the Families across India, Germany, and Poland.">
-  <link rel="canonical" href="https://satyasevasisters.org/news.html">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
-  <style>
-    /* ── News Header ───────────────────────────────────────── */
-    .news-header {
-      text-align: center;
-      padding: 120px 24px 32px;
-      max-width: 820px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .news-header h1 {
-      font-size: clamp(32px, 5vw, 48px);
-      margin: 16px 0 14px;
-      line-height: 1.15;
-    }
-    .news-header p {
-      font-size: clamp(15px, 1.8vw, 18px);
-      color: var(--ink-soft);
-      line-height: 1.65;
-      margin: 0 auto;
-      max-width: 640px;
-    }
-
-    /* ── News Grid ─────────────────────────────────────────── */
-    .news-grid {
-      max-width: 1100px;
-      margin: 24px auto 0;
-      padding: 0 24px 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
-    }
-
-    /* ── News Card ─────────────────────────────────────────── */
-    .news-card {
-      display: flex;
-      flex-direction: column;
-      border-radius: var(--r-lg);
-      transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
-      animation: newsSlideIn 0.4s var(--ease) both;
-      overflow: hidden;
-    }
-    .news-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--elev-3);
-      border-color: var(--gold-border);
-    }
-    @keyframes newsSlideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Image section */
-    .news-image-wrap {
-      position: relative;
-      width: 100%;
-      height: 210px;
-      overflow: hidden;
-      border-bottom: 1px solid var(--line);
-      background: var(--surface-alt);
-    }
-    .news-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s var(--ease);
-    }
-    .news-card:hover .news-image {
-      transform: scale(1.05);
-    }
-    .news-image-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 44px;
-      color: var(--gold);
-      opacity: 0.35;
-      background: linear-gradient(135deg, var(--surface-alt), var(--gold-tint));
-    }
-
-    /* Content section */
-    .news-content {
-      padding: 24px 26px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .news-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .news-date {
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--sage-deep);
-    }
-    [data-theme="dark"] .news-date {
-      color: var(--sage);
-    }
-    .news-badge-new {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: var(--gold-tint);
-      color: var(--gold-deep);
-      border: 1px solid var(--gold-border);
-      padding: 2px 8px;
-      border-radius: var(--r-pill);
-    }
-    .news-title {
-      font-family: var(--font-serif);
-      font-size: 21px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      line-height: 1.32;
-      color: var(--ink);
-      cursor: pointer;
-      transition: color var(--dur-fast) var(--ease);
-    }
-    .news-title:hover {
-      color: var(--sage-deep);
-    }
-    [data-theme="dark"] .news-title:hover {
-      color: var(--gold);
-    }
-
-    .news-body {
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--ink-soft);
-      margin: 0 0 16px;
-      flex-grow: 1;
-    }
-    .news-body.collapsed {
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      line-clamp: 4;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .news-read-more {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--brand-ink);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px 0;
-      font-family: var(--font-sans);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      margin-bottom: 16px;
-      text-align: left;
-      transition: color var(--dur-fast) var(--ease);
-    }
-    .news-read-more:hover {
-      color: var(--accent);
-    }
-
-    .news-author {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink-faint);
-      border-top: 1px solid var(--line);
-      padding-top: 12px;
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Load More */
-    .load-more-wrap {
-      text-align: center;
-      padding: 16px 24px 80px;
-    }
-
-    /* Empty state */
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 70px 32px;
-      border: 1px dashed var(--line);
-      border-radius: var(--r-lg);
-      color: var(--ink-soft);
-      font-weight: 500;
-      background: var(--surface-alt);
-    }
-    .empty-state .empty-icon {
-      font-size: 44px;
-      margin-bottom: 14px;
-      opacity: 0.6;
-    }
-    .empty-state p {
-      font-size: 15px;
-      max-width: 420px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 640px) {
-      .news-grid { padding: 0 16px 24px; gap: 20px; grid-template-columns: 1fr; }
-      .news-header { padding: 90px 16px 20px; }
-      .load-more-wrap { padding: 16px 16px 60px; }
-    }
-  </style>
-</head>
-<body class="ambient-mesh-wrap">
-  <!-- Skip navigation for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <!-- Ambient background mesh blobs -->
-  <div class="ambient-blob blob-sage" style="top: 100px; right: -80px;"></div>
-  <div class="ambient-blob blob-gold" style="top: 320px; left: -100px;"></div>
-  <div class="ambient-blob blob-blue" style="bottom: 140px; right: 10%;"></div>
-
-  <nav id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-pill">
-      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 1v18M3 6h14"/></svg><span>Satyaseva <span class="brand-full">Catechist </span>Sisters<span class="brand-full"> of the Families</span></span>
-      </a>
-      <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="vocations.html">Vocations</a>
-        <a href="events.html">Events</a>
-        <a href="news.html" class="active" aria-current="page">News</a>
-        <a href="prayers.html">Prayers</a>
-        <a href="donate.html" class="nav-donate">Donate</a>
-        <a href="contact.html">Contact</a>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+  (function(){try{var s=localStorage.getItem('sscs-theme');var d=s?s==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(document.documentElement.style)document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();
+</script>
+    <title>
+      News &amp; Updates — Satyaseva Catechist Sisters
+    </title>
+    <meta name="description" content="Latest news, announcements, and mission updates from the Satyaseva Catechist Sisters of the Families across India, Germany, and Poland.">
+    <link rel="canonical" href="https://satyasevasisters.org/news.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <style>
+/* ── News Header ───────────────────────────────────────── */ .news-header {
+  text-align: center;
+  padding: 120px 24px 32px;
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+}
+.news-header h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  margin: 16px 0 14px;
+  line-height: 1.15;
+}
+.news-header p {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 640px;
+}
+/* ── News Grid ─────────────────────────────────────────── */ .news-grid {
+  max-width: 1100px;
+  margin: 24px auto 0;
+  padding: 0 24px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+/* ── News Card ─────────────────────────────────────────── */ .news-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
+  animation: newsSlideIn 0.4s var(--ease) both;
+  overflow: hidden;
+}
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elev-3);
+  border-color: var(--gold-border);
+}
+@keyframes newsSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Image section */ .news-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-alt);
+}
+.news-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+.news-card:hover .news-image {
+  transform: scale(1.05);
+}
+.news-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: var(--gold);
+  opacity: 0.35;
+  background: linear-gradient(135deg, var(--surface-alt), var(--gold-tint));
+}
+/* Content section */ .news-content {
+  padding: 24px 26px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.news-date {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sage-deep);
+}
+[data-theme="dark"] .news-date {
+  color: var(--sage);
+}
+.news-badge-new {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--gold-tint);
+  color: var(--gold-deep);
+  border: 1px solid var(--gold-border);
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+}
+.news-title {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.32;
+  color: var(--ink);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+}
+.news-title:hover {
+  color: var(--sage-deep);
+}
+[data-theme="dark"] .news-title:hover {
+  color: var(--gold);
+}
+.news-body {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+  flex-grow: 1;
+}
+.news-body.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.news-read-more {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-ink);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  font-family: var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-bottom: 16px;
+  text-align: left;
+  transition: color var(--dur-fast) var(--ease);
+}
+.news-read-more:hover {
+  color: var(--accent);
+}
+.news-author {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* Load More */ .load-more-wrap {
+  text-align: center;
+  padding: 16px 24px 80px;
+}
+/* Empty state */ .empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 70px 32px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  color: var(--ink-soft);
+  font-weight: 500;
+  background: var(--surface-alt);
+}
+.empty-state .empty-icon {
+  font-size: 44px;
+  margin-bottom: 14px;
+  opacity: 0.6;
+}
+.empty-state p {
+  font-size: 15px;
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+@media (max-width: 640px) {
+  .news-grid {
+    padding: 0 16px 24px;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  .news-header {
+    padding: 90px 16px 20px;
+  }
+  .load-more-wrap {
+    padding: 16px 16px 60px;
+  }
+}
+</style>
+  </head>
+  <body class="ambient-mesh-wrap">
+    <!-- Skip navigation for accessibility -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+    <!-- Ambient background mesh blobs -->
+    <div class="ambient-blob blob-sage" style="top: 100px; right: -80px;">
+    </div>
+    <div class="ambient-blob blob-gold" style="top: 320px; left: -100px;">
+    </div>
+    <div class="ambient-blob blob-blue" style="bottom: 140px; right: 10%;">
+    </div>
+    <header class="top-nav-bar" id="nav" role="banner">
+      <div class="top-nav-container">
+        <a href="index.html" class="top-brand" aria-label="Satyaseva Sisters Home">
+          <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+            <path d="M16 2v28M6 10h20" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M10 6c3 0 6 2 6 5s-3 5-6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 6c-3 0-6 2-6 5s3 5 6 5" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="16" cy="10" r="2" fill="currentColor"/>
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-name">
+              Satyaseva Catechist Sisters
+            </span>
+            <span class="brand-tagline">
+              of the Families
+            </span>
+          </div>
+        </a>
+        <nav class="top-links" id="navLinks" role="navigation" aria-label="Main menu">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="communities.html">
+            Our Communities
+          </a>
+          <a href="map.html">
+            Mission Map
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html" class="active" aria-current="page">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+        </nav>
+        <div class="top-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+            🌙
+          </button>
+          <select id="lang-select" aria-label="Select language">
+            <option value="en" selected>
+              EN
+            </option>
+            <option value="pl">
+              PL
+            </option>
+          </select>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span>
+            </span>
+            <span>
+            </span>
+            <span>
+            </span>
+          </button>
+        </div>
       </div>
-      <div class="nav-actions">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle Dark/Light Mode">🌙</button>
-        <select id="lang-select" aria-label="Select language">
-          <option value="en" selected>English</option>
-          <option value="pl">Polski</option>
-        </select>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
+    </header>
+    <main id="main-content">
+      <section class="comm-hero-section news-hero-section" id="hero">
+        <div class="comm-hero-container">
+          <div class="comm-hero-content">
+            <div class="badge-gold">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 1v18M3 6h14"/>
+              </svg>
+              From Our Communities
+            </div>
+            <h1 class="comm-hero-title">
+              News &amp; Chronicles
+            </h1>
+            <p class="comm-hero-subtitle">
+              Announcements, apostolic stories, and spiritual reflections from the Satyaseva Sisters serving across India, Germany, and Poland.
+            </p>
+            <div class="comm-hero-flourish" aria-hidden="true">
+              <svg class="flourish-cross" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="comm-hero-photo-wrap">
+            <img src="images/hero_sisters.jpg" alt="Satyaseva Sisters Community Life" class="comm-hero-photo" width="460" height="310">
+          </div>
+        </div>
+      </section>
+      <section class="news-grid" id="news-container">
+        <div class="empty-state">
+          <div class="empty-icon">
+            📰
+          </div>
+          <p>
+            Loading news...
+          </p>
+        </div>
+      </section>
+      <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+        <button type="button" class="modern-btn-primary" id="load-more-btn">
+          Load More Articles
         </button>
       </div>
-    </div>
-  </nav>
-
-  <main id="main-content">
-    <header class="news-header reveal">
-      <span class="badge-gold">From Our Communities</span>
-      <h1>News &amp; Updates</h1>
-      <p>Announcements, apostolic stories, and spiritual reflections from the Satyaseva Sisters across India, Germany, and Poland.</p>
-    </header>
-
-    <section class="news-grid" id="news-container">
-      <div class="empty-state">
-        <div class="empty-icon">📰</div>
-        <p>Loading news...</p>
+    </main>
+    <footer id="contact">
+      <div class="footer-glass">
+        <svg class="cross-mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 1v18M3 6h14"/>
+        </svg>
+        <h3>
+          Satyaseva Catechist Sisters of the Families
+        </h3>
+        <p>
+          Generalate: No. 1/2, Cookson Road, Richard's Town, Bengaluru 560 005, Karnataka, India
+          <br>
+          Tel: +91 80-25496604 · Mob: +91 9740146329 · Email:
+          <a href="mailto:scs.satyaseva@gmail.com" style="color:var(--brand-ink); text-decoration:underline;">
+            scs.satyaseva@gmail.com
+          </a>
+        </p>
+        <div class="footer-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="communities.html">
+            Communities
+          </a>
+          <a href="map.html">
+            Map
+          </a>
+          <a href="foundress.html">
+            Our Foundress
+          </a>
+          <a href="memorial.html">
+            In Memoriam
+          </a>
+          <a href="events.html">
+            Events
+          </a>
+          <a href="news.html">
+            News
+          </a>
+          <a href="media.html">
+            Media
+          </a>
+          <a href="vocations.html">
+            Vocations
+          </a>
+          <a href="prayers.html">
+            Prayers
+          </a>
+          <a href="donate.html">
+            Donate
+          </a>
+          <a href="contact.html">
+            Contact
+          </a>
+          <a href="privacy.html">
+            Privacy Policy
+          </a>
+          <a href="impressum.html">
+            Impressum
+          </a>
+        </div>
+        <div class="footer-fine">
+          © <script>
+  document.write(new Date().getFullYear())
+</script> Satyaseva Catechist Sisters of the Families (SCS). All are welcome.
+        </div>
       </div>
-    </section>
-
-    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
-      <button type="button" class="modern-btn-primary" id="load-more-btn">Load More Articles</button>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-glass">
-      <svg class="cross-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8h14"/></svg>
-      <h3>Satyaseva Catechist Sisters of the Families</h3>
-      <p>Service to God's Truth since 1976.</p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="communities.html">Communities</a>
-        <a href="events.html">Events</a>
-        <a href="news.html">News</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div class="footer-fine">&copy; <script>document.write(new Date().getFullYear())</script> Satyaseva Catechist Sisters of the Families (SCS).</div>
-    </div>
-  </footer>
-
-  <script src="data/communities-data.js?v=4"></script>
-  <script>
-  (function() {
-    'use strict';
-
-    var PAGE_SIZE = 6;
-    var allNews = [];
-    var visibleCount = PAGE_SIZE;
-
-    /* ── Helpers ────────────────────────────────────────────── */
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
-
-    function isNew(dateStr) {
-      var d = new Date(dateStr);
-      if (isNaN(d)) return false;
-      var diff = Date.now() - d.getTime();
-      return diff < 7 * 24 * 60 * 60 * 1000; // within 7 days
-    }
-
-    function relativeTime(dateStr) {
-      var d = new Date(dateStr);
-      if (isNaN(d)) return dateStr;
-      var diff = Date.now() - d.getTime();
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      if (days === 0) return 'Today';
-      if (days === 1) return 'Yesterday';
-      if (days < 7) return days + ' days ago';
-      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-    }
-
-    /* ── Render ─────────────────────────────────────────────── */
-    function renderNews() {
-      var container = document.getElementById('news-container');
-      var loadMoreWrap = document.getElementById('load-more-wrap');
-
-      if (!allNews.length) {
-        container.innerHTML = '<div class="empty-state"><div class="empty-icon">📰</div><p>No news or updates available yet. Please check back later.</p></div>';
-        loadMoreWrap.style.display = 'none';
-        return;
-      }
-
-      var toShow = allNews.slice(0, visibleCount);
-      var html = '';
-
-      toShow.forEach(function(n, i) {
-        var dateStr = relativeTime(n.date);
-        var newBadge = isNew(n.date) ? '<span class="news-badge-new">New</span>' : '';
-
-        var imageHtml;
-        if (n.image_path) {
-          imageHtml = '<div class="news-image-wrap"><img src="' + n.image_path + '" class="news-image" alt="' + escapeHtml(n.title) + '" loading="lazy"></div>';
-        } else {
-          imageHtml = '<div class="news-image-wrap"><div class="news-image-placeholder">✝</div></div>';
-        }
-
-        var safeContent = escapeHtml(n.content).replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
-        var needsExpand = n.content && n.content.length > 200;
-
-        html += '<div class="news-card glass-card" style="animation-delay:' + (i * 0.05) + 's;">' +
-          imageHtml +
-          '<div class="news-content">' +
-            '<div class="news-meta">' +
-              '<span class="news-date">' + dateStr + '</span>' +
-              newBadge +
-            '</div>' +
-            '<h3 class="news-title" data-news-id="' + (n.id || i) + '">' + escapeHtml(n.title) + '</h3>' +
-            '<div class="news-body' + (needsExpand ? ' collapsed' : '') + '" id="news-body-' + (n.id || i) + '">' + safeContent + '</div>' +
-            (needsExpand ? '<button type="button" class="news-read-more" data-target="news-body-' + (n.id || i) + '">Read more →</button>' : '') +
-            '<div class="news-author">✍ By ' + escapeHtml(n.author || 'Admin') + '</div>' +
-          '</div>' +
-        '</div>';
-      });
-
-      container.innerHTML = html;
-
-      // Show/hide load more
-      if (visibleCount < allNews.length) {
-        loadMoreWrap.style.display = '';
-        document.getElementById('load-more-btn').textContent = 'Load More (' + (allNews.length - visibleCount) + ' remaining)';
-      } else {
-        loadMoreWrap.style.display = 'none';
-      }
-
-      // Wire expand/collapse
-      container.querySelectorAll('.news-read-more').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          var target = document.getElementById(btn.getAttribute('data-target'));
-          if (!target) return;
-          var isCollapsed = target.classList.contains('collapsed');
-          target.classList.toggle('collapsed');
-          btn.textContent = isCollapsed ? '← Show less' : 'Read more →';
-        });
-      });
-
-      // Title click also toggles
-      container.querySelectorAll('.news-title').forEach(function(title) {
-        title.addEventListener('click', function() {
-          var card = title.closest('.news-card');
-          var btn = card ? card.querySelector('.news-read-more') : null;
-          if (btn) btn.click();
-        });
-      });
-    }
-
-    /* ── Load More ─────────────────────────────────────────── */
-    document.getElementById('load-more-btn').addEventListener('click', function() {
-      visibleCount += PAGE_SIZE;
-      renderNews();
-      // Smooth scroll to the first new card
-      var cards = document.querySelectorAll('.news-card');
-      var newCard = cards[visibleCount - PAGE_SIZE];
-      if (newCard) {
-        newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-
-    /* ── Init ──────────────────────────────────────────────── */
-    function loadNews() {
-      fetch('/api/news')
-        .then(function(r) {
-          if (!r.ok) throw new Error('API unavailable');
-          return r.json();
-        })
-        .then(function(news) {
-          if (!Array.isArray(news)) news = [];
-          allNews = news;
-          renderNews();
-        })
-        .catch(function() {
-          fetch('data/news.json')
-            .then(function(r) {
-              if (!r.ok) throw new Error('JSON unavailable');
-              return r.json();
-            })
-            .then(function(news) {
-              if (!Array.isArray(news)) news = [];
-              allNews = news;
-              renderNews();
-            })
-            .catch(function() {
-              allNews = window.__INITIAL_NEWS__ || [];
-              renderNews();
-            });
-        });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadNews);
-    } else {
-      loadNews();
-    }
-  })();
-  </script>
-  <script src="js/main.js" defer></script>
-</body>
+    </footer>
+    <script src="data/communities-data.js?v=4"></script> <script>
+  (function() {  'use strict';   var PAGE_SIZE = 6;  var allNews = [];  var visibleCount = PAGE_SIZE;   /* ── Helpers ────────────────────────────────────────────── */  function escapeHtml(str) {  if (!str) return '';  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');  }   function isNew(dateStr) {  var d = new Date(dateStr);  if (isNaN(d)) return false;  var diff = Date.now() - d.getTime();  return diff < 7 * 24 * 60 * 60 * 1000; // within 7 days  }   function relativeTime(dateStr) {  var d = new Date(dateStr);  if (isNaN(d)) return dateStr;  var diff = Date.now() - d.getTime();  var days = Math.floor(diff / (1000 * 60 * 60 * 24));  if (days === 0) return 'Today';  if (days === 1) return 'Yesterday';  if (days < 7) return days + ' days ago';  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });  }   /* ── Render ─────────────────────────────────────────────── */  function renderNews() {  var container = document.getElementById('news-container');  var loadMoreWrap = document.getElementById('load-more-wrap');   if (!allNews.length) {  container.innerHTML = '<div class="empty-state"><div class="empty-icon">📰</div><p>No news or updates available yet. Please check back later.</p></div>';  loadMoreWrap.style.display = 'none';  return;  }   var toShow = allNews.slice(0, visibleCount);  var html = '';   toShow.forEach(function(n, i) {  var dateStr = relativeTime(n.date);  var newBadge = isNew(n.date) ? '<span class="news-badge-new">New</span>' : '';   var imageHtml;  if (n.image_path) {  imageHtml = '<div class="news-image-wrap"><img src="' + n.image_path + '" class="news-image" alt="' + escapeHtml(n.title) + '" loading="lazy"></div>';  } else {  imageHtml = '<div class="news-image-wrap"><div class="news-image-placeholder">✝</div></div>';  }   var safeContent = escapeHtml(n.content).replace(/\\n/g, '<br>').replace(/\n/g, '<br>');  var needsExpand = n.content && n.content.length >  200;   html += '<div class="news-card glass-card" style="animation-delay:' + (i * 0.05) + 's;">' +  imageHtml +  '<div class="news-content">' +  '<div class="news-meta">' +  '<span class="news-date">' + dateStr + '</span>' +  newBadge +  '</div>' +  '<h3 class="news-title" data-news-id="' + (n.id || i) + '">' + escapeHtml(n.title) + '</h3>' +  '<div class="news-body' + (needsExpand ? ' collapsed' : '') + '" id="news-body-' + (n.id || i) + '">' + safeContent + '</div>' +  (needsExpand ? '<button type="button" class="news-read-more" data-target="news-body-' + (n.id || i) + '">Read more →</button>' : '') +  '<div class="news-author">✍ By ' + escapeHtml(n.author || 'Admin') + '</div>' +  '</div>' +  '</div>';  });   container.innerHTML = html;   // Show/hide load more  if (visibleCount < allNews.length) {  loadMoreWrap.style.display = '';  document.getElementById('load-more-btn').textContent = 'Load More (' + (allNews.length - visibleCount) + ' remaining)';  } else {  loadMoreWrap.style.display = 'none';  }   // Wire expand/collapse  container.querySelectorAll('.news-read-more').forEach(function(btn) {  btn.addEventListener('click', function() {  var target = document.getElementById(btn.getAttribute('data-target'));  if (!target) return;  var isCollapsed = target.classList.contains('collapsed');  target.classList.toggle('collapsed');  btn.textContent = isCollapsed ? '← Show less' : 'Read more →';  });  });   // Title click also toggles  container.querySelectorAll('.news-title').forEach(function(title) {  title.addEventListener('click', function() {  var card = title.closest('.news-card');  var btn = card ? card.querySelector('.news-read-more') : null;  if (btn) btn.click();  });  });  }   /* ── Load More ─────────────────────────────────────────── */  document.getElementById('load-more-btn').addEventListener('click', function() {  visibleCount += PAGE_SIZE;  renderNews();  // Smooth scroll to the first new card  var cards = document.querySelectorAll('.news-card');  var newCard = cards[visibleCount - PAGE_SIZE];  if (newCard) {  newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });  }  });   /* ── Init ──────────────────────────────────────────────── */  function loadNews() {  if (window.SSCS && window.SSCS.getNews) {  window.SSCS.getNews()  .then(function(news) {  allNews = Array.isArray(news) ? news : [];  renderNews();  })  .catch(function() {  allNews = window.__INITIAL_NEWS__ || [];  renderNews();  });  return;  }  fetch('/api/news')  .then(function(r) {  if (!r.ok) throw new Error('API unavailable');  return r.json();  })  .then(function(news) {  if (!Array.isArray(news)) news = [];  allNews = news;  renderNews();  })  .catch(function() {  fetch('data/news.json')  .then(function(r) {  if (!r.ok) throw new Error('JSON unavailable');  return r.json();  })  .then(function(news) {  if (!Array.isArray(news)) news = [];  allNews = news;  renderNews();  })  .catch(function() {  allNews = window.__INITIAL_NEWS__ || [];  renderNews();  });  });  }   if (document.readyState === 'loading') {  document.addEventListener('DOMContentLoaded', loadNews);  } else {  loadNews();  }  })();
+</script> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <script src="js/supabase-config.js"></script> <script src="js/main.js" defer></script>
+  </body>
 </html>

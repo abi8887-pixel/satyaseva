@@ -1,9 +1,9 @@
-name: Deploy static site to GitHub Pages
+name: Backup Deploy to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
 
 permissions:
   contents: read

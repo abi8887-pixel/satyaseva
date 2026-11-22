@@ -6,6 +6,25 @@
 (function(){
   'use strict';
 
+  /* Safe storage helpers */
+  function safeGetStorage(key, fallback) {
+    try {
+      var val = localStorage.getItem(key);
+      return val !== null ? val : fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  function safeSetStorage(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {}
+  }
+
+  /* Mark body so CSS reveal animation only activates with JS */
+  document.body.classList.add('js-ready');
+
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── Ambient sky rays ─────────────────────────────────────────── */
@@ -51,18 +70,38 @@
     });
   }
 
+  /* ── Navbar collapse/expand toggle ('^' / 'v') ─────────────────── */
+  var navCollapse = document.getElementById('navCollapse');
+  if (nav && navCollapse) {
+    navCollapse.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isCollapsed = nav.classList.toggle('nav-collapsed');
+      navCollapse.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      navCollapse.setAttribute('title', isCollapsed ? 'Expand navigation' : 'Collapse navigation');
+      try { sessionStorage.setItem('sscs-nav-collapsed', isCollapsed ? '1' : '0'); } catch(err){}
+    });
+    // Restore collapsed preference in session if desired
+    try {
+      if (sessionStorage.getItem('sscs-nav-collapsed') === '1') {
+        nav.classList.add('nav-collapsed');
+        navCollapse.setAttribute('aria-expanded', 'false');
+        navCollapse.setAttribute('title', 'Expand navigation');
+      }
+    } catch(err){}
+  }
+
   /* ── Language switching ───────────────────────────────────────── */
   var langSelect = document.getElementById('lang-select');
   if (langSelect) {
     // Detect language from URL params or localStorage
     var params = new URLSearchParams(window.location.search);
-    var savedLang = params.get('lang') || localStorage.getItem('sscs-lang') || 'en';
+    var savedLang = params.get('lang') || safeGetStorage('sscs-lang', 'en');
     langSelect.value = savedLang;
     document.documentElement.lang = savedLang;
 
     langSelect.addEventListener('change', function(){
       var lang = this.value;
-      localStorage.setItem('sscs-lang', lang);
+      safeSetStorage('sscs-lang', lang);
       document.documentElement.lang = lang;
       // Update URL without reload for bookmarkability
       var url = new URL(window.location);
@@ -169,7 +208,7 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
       revealTargets.forEach(function(t) { io.observe(t); });
     } else {
       revealTargets.forEach(function(t) { t.classList.add('visible'); });
@@ -264,7 +303,7 @@
 
   /* ── GDPR Cookie Consent Banner ──────────────────────────────── */
   function initCookieConsent() {
-    var consent = localStorage.getItem('sscs-cookie-consent');
+    var consent = safeGetStorage('sscs-cookie-consent', null);
     if (consent) return; // User already interacted
 
     var banner = document.createElement('div');
@@ -289,14 +328,14 @@
 
     if (acceptBtn) {
       acceptBtn.addEventListener('click', function() {
-        localStorage.setItem('sscs-cookie-consent', 'all');
+        safeSetStorage('sscs-cookie-consent', 'all');
         banner.remove();
       });
     }
 
     if (essentialBtn) {
       essentialBtn.addEventListener('click', function() {
-        localStorage.setItem('sscs-cookie-consent', 'essential');
+        safeSetStorage('sscs-cookie-consent', 'essential');
         banner.remove();
       });
     }
@@ -320,7 +359,7 @@
       });
     }
 
-    var savedTheme = localStorage.getItem('sscs-theme');
+    var savedTheme = safeGetStorage('sscs-theme', null);
     var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     var currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
 
@@ -332,15 +371,13 @@
       var activeTheme = document.documentElement.getAttribute('data-theme');
       var newTheme = (activeTheme === 'dark') ? 'light' : 'dark';
       applyTheme(newTheme);
-      try {
-        localStorage.setItem('sscs-theme', newTheme);
-      } catch (err) {}
+      safeSetStorage('sscs-theme', newTheme);
     });
 
     if (window.matchMedia) {
       try {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-          if (!localStorage.getItem('sscs-theme')) {
+          if (!safeGetStorage('sscs-theme', null)) {
             applyTheme(e.matches ? 'dark' : 'light');
           }
         });
@@ -353,30 +390,60 @@
     var counters = document.querySelectorAll('.counter-animate');
     if (!counters.length) return;
 
-    function animate(el) {
+    var isReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function renderFinal(el) {
       var target = parseInt(el.getAttribute('data-target'), 10) || 0;
       var prefix = el.getAttribute('data-prefix') || '';
       var suffix = el.getAttribute('data-suffix') || '';
-      var duration = 1800; // ms
+      el.textContent = prefix + target.toLocaleString() + suffix;
+      el.setAttribute('data-counted', 'true');
+    }
+
+    function animate(el) {
+      // Skip if already animating or done
+      var counted = el.getAttribute('data-counted');
+      if (counted === 'true' || counted === 'animating') return;
+      el.setAttribute('data-counted', 'animating');
+
+      if (isReduced) {
+        renderFinal(el);
+        return;
+      }
+
+      var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+      var prefix = el.getAttribute('data-prefix') || '';
+      var suffix = el.getAttribute('data-suffix') || '';
+      var duration = 1800;
       var startTime = null;
 
       function step(timestamp) {
         if (!startTime) startTime = timestamp;
         var progress = Math.min((timestamp - startTime) / duration, 1);
-        // Easing out cubic
         var easeOut = 1 - Math.pow(1 - progress, 3);
-        var current = Math.floor(easeOut * target);
-        el.textContent = prefix + current.toLocaleString() + suffix;
+        el.textContent = prefix + Math.floor(easeOut * target).toLocaleString() + suffix;
         if (progress < 1) {
           window.requestAnimationFrame(step);
         } else {
-          el.textContent = prefix + target.toLocaleString() + suffix;
+          renderFinal(el);
         }
       }
 
       window.requestAnimationFrame(step);
     }
 
+    function checkAndAnimate() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      counters.forEach(function(c) {
+        var rect = c.getBoundingClientRect();
+        // Trigger when element top is within viewport + 100px buffer
+        if (rect.top < vh + 100 && rect.bottom > -100) {
+          animate(c);
+        }
+      });
+    }
+
+    // Try IntersectionObserver first
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -385,12 +452,21 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.2 });
+      }, {
+        threshold: 0,
+        rootMargin: '0px 0px 200px 0px'  // fire 200px before entering viewport
+      });
 
       counters.forEach(function(c) { observer.observe(c); });
-    } else {
-      counters.forEach(function(c) { animate(c); });
     }
+
+    // Fallback scroll listener (also covers cases where observer misfires)
+    window.addEventListener('scroll', checkAndAnimate, { passive: true });
+
+    // Always run a check after a short delay (catches above-fold counters and
+    // cases where the observer fires too late due to deferred script timing)
+    setTimeout(checkAndAnimate, 300);
+    setTimeout(checkAndAnimate, 800); // second safety pass
   }
 
   /* ── Back to Top Floating Arrow Button ───────────────────────────── */
